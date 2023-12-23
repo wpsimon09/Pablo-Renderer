@@ -14,19 +14,21 @@ class Texture
         unsigned int ID;
         GLenum type;
         const char* path;
-        Texture(GLenum type, const char * path, glm::vec2 dimensions, GLenum colorChannels);
+        const char* shaderName;
 
-    private:
+        Texture(GLenum type, const char * path,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels);
+        glm::vec2 getDimentions();
+private:
         glm::vec2 dimensions;
         GLenum colorChannels;
 
 };
 
-Texture::Texture(GLenum type, const char *path, glm::vec2 dimensions, GLenum colorChannels) {
+Texture::Texture(GLenum type, const char *path,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels) {
     glGenTextures(1, &this->ID);
     glBindTexture(type, this->ID);
     this->dimensions = dimensions;
-
+    this->shaderName = shaderName;
     if (type == GL_TEXTURE_CUBE_MAP)
     {
         for (int i = 0; i < 6; ++i)
@@ -47,6 +49,13 @@ Texture::Texture(GLenum type, const char *path, glm::vec2 dimensions, GLenum col
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
+
+    this->type=type;
 }
+
+glm::vec2 Texture::getDimentions() {
+    return this->dimensions;
+}
+
 
 #endif //CLIONTEST_TEXTURE_H
