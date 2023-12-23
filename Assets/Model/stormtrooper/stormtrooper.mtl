@@ -1,0 +1,12 @@
+#
+#
+#
+
+newmtl  Mesh_Stormtrooper
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ns 96.078430
+map_Kd Stormtrooper_D.tga
+map_bump Stormtrooper_N.tga

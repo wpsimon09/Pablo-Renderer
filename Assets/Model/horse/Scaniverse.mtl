@@ -1,0 +1,12 @@
+#
+#
+#
+
+newmtl mesh Mesh_texture_diffuse0
+illum 2
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ns 100.000000
+map_Kd Scaniverse.jpg
+

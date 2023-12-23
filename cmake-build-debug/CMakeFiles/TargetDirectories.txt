@@ -1,0 +1,4 @@
+/home/wpsimon09/Desktop/OpenGL/CLionTest/cmake-build-debug/CMakeFiles/CLionTest.dir
+/home/wpsimon09/Desktop/OpenGL/CLionTest/cmake-build-debug/CMakeFiles/glad.dir
+/home/wpsimon09/Desktop/OpenGL/CLionTest/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/wpsimon09/Desktop/OpenGL/CLionTest/cmake-build-debug/CMakeFiles/rebuild_cache.dir

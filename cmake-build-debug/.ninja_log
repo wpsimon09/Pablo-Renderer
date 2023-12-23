@@ -1,0 +1,8 @@
+# ninja log v5
+1	56	1703256440865434597	CMakeFiles/glad.dir/3rdPartyLybraries/Includes/glad/glad.c.o	85aff6c85b1f7cc
+0	16	1703320827463861925	build.ninja	9bf397348d5ffa18
+1069	1121	1703257127278436692	CLionTest	5cf1f4674b43387c
+56	79	1703256440886434597	libglad.a	574603b36f6074f7
+1	1069	1703257127226436692	CMakeFiles/CLionTest.dir/source/main.cpp.o	2c65e91190240f6e
+0	274	1703256096398433546	CMakeFiles/CLionTest.dir/main.cpp.o	3bc4cc26dab1ed15
+1	525	1703256689005435354	CMakeFiles/CLionTest.dir/source/stb_image.cpp.o	126cd3dfb18be7f

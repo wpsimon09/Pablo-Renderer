@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.27)
+project(CLionTest)
+
+set(CMAKE_CXX_STANDARD 23)
+
+# Add the source files
+add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
+        source/stb_image.cpp
+        Includes/FrameBuffer/FrameBuffer.h
+        Includes/FrameBuffer/Texture.h)
+
+set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+        CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}"
+)
+
+# Add the include directories
+target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
+        ${CMAKE_SOURCE_DIR}/Includes
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes)
+
+add_library(glad STATIC 3rdPartyLybraries/Includes/glad/glad.c)
+target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
+
+# Include and link Glad
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glad)
+
+# Find GLFW3 package and link against it
+find_package(glfw3 REQUIRED)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glfw)
+
+# Find ASSIMP package and link against it
+find_package(ASSIMP REQUIRED)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
