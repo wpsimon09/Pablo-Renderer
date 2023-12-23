@@ -63,6 +63,34 @@ build CMakeFiles/CLionTest.dir/source/stb_image.cpp.o: CXX_COMPILER__CLionTest_u
   OBJECT_DIR = CMakeFiles/CLionTest.dir
   OBJECT_FILE_DIR = CMakeFiles/CLionTest.dir/source
 
+build CMakeFiles/CLionTest.dir/Includes/FrameBuffer/FrameBuffer.cpp.o: CXX_COMPILER__CLionTest_unscanned_Debug /home/wpsimon09/Desktop/OpenGL/CLionTest/Includes/FrameBuffer/FrameBuffer.cpp || cmake_object_order_depends_target_CLionTest
+  DEP_FILE = CMakeFiles/CLionTest.dir/Includes/FrameBuffer/FrameBuffer.cpp.o.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -I/home/wpsimon09/Desktop/OpenGL/CLionTest/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes/glad
+  OBJECT_DIR = CMakeFiles/CLionTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/CLionTest.dir/Includes/FrameBuffer
+
+build CMakeFiles/CLionTest.dir/Includes/Texture/Texture.cpp.o: CXX_COMPILER__CLionTest_unscanned_Debug /home/wpsimon09/Desktop/OpenGL/CLionTest/Includes/Texture/Texture.cpp || cmake_object_order_depends_target_CLionTest
+  DEP_FILE = CMakeFiles/CLionTest.dir/Includes/Texture/Texture.cpp.o.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -I/home/wpsimon09/Desktop/OpenGL/CLionTest/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes/glad
+  OBJECT_DIR = CMakeFiles/CLionTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/CLionTest.dir/Includes/Texture
+
+build CMakeFiles/CLionTest.dir/Includes/PBRPipline/PBRPipeline.cpp.o: CXX_COMPILER__CLionTest_unscanned_Debug /home/wpsimon09/Desktop/OpenGL/CLionTest/Includes/PBRPipline/PBRPipeline.cpp || cmake_object_order_depends_target_CLionTest
+  DEP_FILE = CMakeFiles/CLionTest.dir/Includes/PBRPipline/PBRPipeline.cpp.o.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -I/home/wpsimon09/Desktop/OpenGL/CLionTest/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes/glad
+  OBJECT_DIR = CMakeFiles/CLionTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/CLionTest.dir/Includes/PBRPipline
+
+build CMakeFiles/CLionTest.dir/Includes/PBRPipline/PBRPipelineStrategies/HDRToCubeMapStrategy.cpp.o: CXX_COMPILER__CLionTest_unscanned_Debug /home/wpsimon09/Desktop/OpenGL/CLionTest/Includes/PBRPipline/PBRPipelineStrategies/HDRToCubeMapStrategy.cpp || cmake_object_order_depends_target_CLionTest
+  DEP_FILE = CMakeFiles/CLionTest.dir/Includes/PBRPipline/PBRPipelineStrategies/HDRToCubeMapStrategy.cpp.o.d
+  FLAGS = -g -std=gnu++23 -fdiagnostics-color=always
+  INCLUDES = -I/home/wpsimon09/Desktop/OpenGL/CLionTest/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes -I/home/wpsimon09/Desktop/OpenGL/CLionTest/3rdPartyLybraries/Includes/glad
+  OBJECT_DIR = CMakeFiles/CLionTest.dir
+  OBJECT_FILE_DIR = CMakeFiles/CLionTest.dir/Includes/PBRPipline/PBRPipelineStrategies
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CLionTest
@@ -71,7 +99,7 @@ build CMakeFiles/CLionTest.dir/source/stb_image.cpp.o: CXX_COMPILER__CLionTest_u
 #############################################
 # Link the executable CLionTest
 
-build CLionTest: CXX_EXECUTABLE_LINKER__CLionTest_Debug CMakeFiles/CLionTest.dir/source/main.cpp.o CMakeFiles/CLionTest.dir/source/stb_image.cpp.o | libglad.a /usr/lib64/libglfw.so.3.3 || libglad.a
+build CLionTest: CXX_EXECUTABLE_LINKER__CLionTest_Debug CMakeFiles/CLionTest.dir/source/main.cpp.o CMakeFiles/CLionTest.dir/source/stb_image.cpp.o CMakeFiles/CLionTest.dir/Includes/FrameBuffer/FrameBuffer.cpp.o CMakeFiles/CLionTest.dir/Includes/Texture/Texture.cpp.o CMakeFiles/CLionTest.dir/Includes/PBRPipline/PBRPipeline.cpp.o CMakeFiles/CLionTest.dir/Includes/PBRPipline/PBRPipelineStrategies/HDRToCubeMapStrategy.cpp.o | libglad.a /usr/lib64/libglfw.so.3.3 || libglad.a
   FLAGS = -g
   LINK_LIBRARIES = libglad.a  /usr/lib64/libglfw.so.3.3  -lassimp
   OBJECT_DIR = CMakeFiles/CLionTest.dir

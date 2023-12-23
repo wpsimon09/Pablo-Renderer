@@ -1,31 +1,10 @@
 //
 // Created by wpsimon09 on 23/12/23.
 //
+#include "Texture.h"
 
-#ifndef CLIONTEST_TEXTURE_H
-#define CLIONTEST_TEXTURE_H
-#include "glad.h"
-#include "GLFW/glfw3.h"
-#include "glm/glm.hpp"
-
-class Texture
-{
-    public:
-        unsigned int ID;
-        GLenum type;
-        const char* path;
-        const char* shaderName;
-
-        Texture(GLenum type, const char * path,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels);
-        glm::vec2 getDimentions();
-private:
-        glm::vec2 dimensions;
-        GLenum colorChannels;
-
-};
-
-Texture::Texture(GLenum type, const char *path,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels) {
-    glGenTextures(1, &this->ID);
+Texture::Texture(GLenum type, unsigned int texture,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels) {
+    this->ID = texture;
     glBindTexture(type, this->ID);
     this->dimensions = dimensions;
     this->shaderName = shaderName;
@@ -56,6 +35,3 @@ Texture::Texture(GLenum type, const char *path,const char*shaderName, glm::vec2 
 glm::vec2 Texture::getDimentions() {
     return this->dimensions;
 }
-
-
-#endif //CLIONTEST_TEXTURE_H
