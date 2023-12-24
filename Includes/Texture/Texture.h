@@ -7,17 +7,31 @@
 #include "glad.h"
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
+#include "Shader.h"
 
 class Texture
 {
     public:
         unsigned int ID;
         GLenum type;
+        Shader *shader;
         const char* path;
         const char* shaderName;
 
-        Texture(GLenum type, unsigned int texture,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels);
+        Texture(GLenum type, const char*shaderName, glm::vec2 dimensions, GLenum colorChannels);
+        void updateDimentions(glm::vec2 dimentions);
+
         glm::vec2 getDimentions();
+        void setShader(Shader shader)
+        {
+            this->shader= &shader;
+        }
+
+        void setFromExisting(unsigned int texutureID)
+        {
+            this->ID=texutureID;
+        }
+
 private:
         glm::vec2 dimensions;
         GLenum colorChannels;

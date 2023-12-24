@@ -11,18 +11,19 @@
 #include "Texture/Texture.h"
 #include "Shader.h"
 
-#define SHAPE_CUBE 1;
-#define SHAPE_PLANE 2;
-
 class FrameBuffer {
     public:
+        std::string name;
         unsigned int ID;
         Texture *texture;
 
         FrameBuffer();
         void use();
-        void mountTexture(Texture *texture);
+        void cancel();
+        void mountTexture(Texture *pTexture);
+        void useTexture(Texture *texture, GLenum attachement, GLenum textureTarget,float mipMaplevel = 0 ) const;
     private:
+        Shader* shader;
         unsigned int RBO;
 };
 

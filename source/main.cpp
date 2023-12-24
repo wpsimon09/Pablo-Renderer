@@ -5,16 +5,12 @@
 #include "stb_image.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include "camera.h"
-#include "Cube.h"
-#include "Model.h"
 #include "HelperFunctions.h"
-#include "Light.h"
 #include "DrawingFunctions.h"
 #include "VaoCreation.h"
-#include "Model.h"
 #include "PBRTextureLoader.h"
+#include "PBRPipeline/PBRPipeline.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -195,6 +191,8 @@ int main() {
     //-----------------------
     // CONVERTING TO CUBE MAP
     //-----------------------
+    PBRPipeline pbrPipeline(hdrTexture);
+    pbrPipeline.generateHdrCubeMap(hdrToCubeMapShader, cubeVAO);
 
     //Frame buffer and render buffer
     unsigned int captureFBO, captureRBO;
@@ -275,7 +273,7 @@ int main() {
 
     envToIrrandianceShader.use();
     envToIrrandianceShader.setInt("envMap", 0);
-    glActiveTexture(0);
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envCubeMap);
 
     glViewport(0, 0, 32, 32);
@@ -480,17 +478,17 @@ int main() {
 
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         gold.useTextures();
-        DrawCube(PBRShader, model, view, projection, cubeVAO);
+        DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
 
         model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         rustedIron.useTextures();
-        DrawCube(PBRShader, model, view, projection, cubeVAO);
+        DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
 
         model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         wall.useTextures();
-        DrawCube(PBRShader, model, view, projection, cubeVAO);
+        DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
 
         //set light properties
         for (unsigned int i = 0; i < 5; ++i)
@@ -561,7 +559,7 @@ int main() {
         //------------
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, envCubeMap);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getHdrCubeMap());
         DrawCube(skyBoxShader, model, view, projection, cubeVAO);
 
         //----------------------

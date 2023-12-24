@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CLIONTEST_HELPERFUNCTIONS_H
+#define CLIONTEST_HELPERFUNCTIONS_H
 #include <iostream>
 #include <glm/glm.hpp>
 #include <Shader.h>
@@ -254,3 +255,4 @@ float HDRframeBufferVertecies[] = {
 	 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 };
 
+#endif

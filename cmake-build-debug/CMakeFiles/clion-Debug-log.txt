@@ -10,7 +10,7 @@ CMake Warning (dev) at /usr/lib64/cmake/assimp-5.0/assimpTargets.cmake:54 (if):
   set the policy and suppress this warning.
 Call Stack (most recent call first):
   /usr/lib64/cmake/assimp-5.0/assimp-config.cmake:1 (include)
-  CMakeLists.txt:42 (find_package)
+  CMakeLists.txt:40 (find_package)
 This warning is for project developers.  Use -Wno-dev to suppress it.
 
 -- Configuring done (0.0s)

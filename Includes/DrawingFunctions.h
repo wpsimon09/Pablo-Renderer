@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DRAWINGFUNCTION_H
+#define DRAWINGFUNCTION_H
+
 #include <iostream>
 #include "Shader.h"
 #include "HelperFunctions.h"
@@ -114,3 +116,5 @@ void DrawSphere(Shader shader, glm::mat4 model, glm::mat4 view, glm::mat4 projec
 	glDrawElements(GL_TRIANGLE_STRIP, indexNum, GL_UNSIGNED_INT, 0);
 	glDisable(GL_CULL_FACE);
 }
+
+#endif

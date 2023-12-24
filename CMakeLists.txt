@@ -11,11 +11,9 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Texture/Texture.h
         Includes/FrameBuffer/FrameBuffer.cpp
         Includes/Texture/Texture.cpp
-        Includes/PBRPipline/FrameBufferStrategy/FrameBufferStrategy.h
-        Includes/PBRPipline/PBRPipeline.cpp
-        Includes/PBRPipline/PBRPipeline.h
-        Includes/PBRPipline/PBRPipelineStrategies/HDRToCubeMapStrategy.cpp
-        Includes/PBRPipline/PBRPipelineStrategies/HDRToCubeMapStrategy.h
+        Includes/PBRPipeline/PBRPipeline.cpp
+        Includes/PBRPipeline/PBRPipeline.h
+        Includes/PBRPipeline/PBRPipeline.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
