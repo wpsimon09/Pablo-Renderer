@@ -163,7 +163,7 @@ int main() {
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
-    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunrise.hdr");
+    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/christmass_square.hdr");
 
     //------------------------------------------------
     // Converting from equirectangular to CUBE map FBO
@@ -274,7 +274,7 @@ int main() {
     envToIrrandianceShader.use();
     envToIrrandianceShader.setInt("envMap", 0);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, envCubeMap);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getHdrCubeMap());
 
     glViewport(0, 0, 32, 32);
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
