@@ -26,6 +26,8 @@ void FrameBuffer::mountTexture(Texture *pTexture) {
     std::cout << pTexture->getDimentions().x << "\n";
     std::cout << pTexture->getDimentions().y << "\n";
     this->texture = pTexture;
+    glBindTexture(this->texture->type, this->texture->ID);
+
     std::cout<<"Texture mounted with shader name:"<<this->texture->shaderName<<std::endl;
 }
 

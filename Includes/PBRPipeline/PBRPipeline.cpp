@@ -49,7 +49,6 @@ void PBRPipeline::generateHdrCubeMap(Shader shader, unsigned int VAO) {
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
     }
-    glBindTexture(GL_TEXTURE_CUBE_MAP, this->hdrCubeMap->ID);
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     std::cout<<"Created hdr texture: "<<this->hdrCubeMap->ID<<std::endl;
     this->frameBuffer->cancel();
