@@ -8,7 +8,7 @@
 FrameBuffer::FrameBuffer() {
     glGenFramebuffers(1, &this->ID);
     glGenRenderbuffers(1, &this->RBO);
-    this->name = "render frame buffer";
+    this->name = "Main Frame Buffer";
 }
 
 void FrameBuffer::use() {

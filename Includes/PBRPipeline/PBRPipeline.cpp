@@ -37,10 +37,9 @@ void PBRPipeline::generateHdrCubeMap(Shader shader, unsigned int VAO) {
     this->frameBuffer->mountTexture(hdrCubeMap);
     glViewport(0,0, this->frameBuffer->texture->getDimentions().x, this->frameBuffer->texture->getDimentions().y);
     this->frameBuffer->use();
-
     for (int i = 0; i < 6; ++i)
     {
-        std::cout<<"Drawing to the frame buffer"
+        std::cout<<"Drawing to the frame buffer with name: "<<frameBuffer->name<<"and ID: "<<frameBuffer->ID<<std::endl;
         frameBuffer->useTexture(this->hdrCubeMap, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X+i);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.use();
@@ -50,7 +49,9 @@ void PBRPipeline::generateHdrCubeMap(Shader shader, unsigned int VAO) {
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
     }
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->hdrCubeMap->ID);
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    std::cout<<"Created hdr texture: "<<this->hdrCubeMap->ID<<std::endl;
     this->frameBuffer->cancel();
 }
 
