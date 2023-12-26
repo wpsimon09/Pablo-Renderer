@@ -103,7 +103,7 @@ void PBRPipeline::generatePrefilterMap(Shader shader,unsigned int envMap, unsign
         shader.setFloat("roughness", roughness);
 
         for (int i = 0; i < 6; ++i) {
-            this->frameBuffer->useTexture(this->prefilterMap, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X+1);
+            this->frameBuffer->useTexture(this->prefilterMap, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, mip);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             std::cout<<"Drawing mip map at level"<<mip<<" for roughness level"<<roughness<<std::endl;
             shader.use();
