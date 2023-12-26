@@ -396,7 +396,7 @@ int main() {
         glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getIrradiancaMap());
 
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getPrefilterMap());
 
         glActiveTexture(GL_TEXTURE2);
         glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);

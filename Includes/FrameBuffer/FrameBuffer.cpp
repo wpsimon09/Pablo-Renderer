@@ -42,6 +42,7 @@ void FrameBuffer::useTexture(Texture *texture, GLenum attachement, GLenum textur
 }
 
 void FrameBuffer::updateRenderBufferStorage(glm::vec2 dimetions, GLenum format) {
+    std::cout<<"Changing RBO storage to X: "<<dimetions.x<< "Y: "<<dimetions.y <<std::endl;
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
     glBindRenderbuffer(GL_RENDERBUFFER, this->RBO);
 
