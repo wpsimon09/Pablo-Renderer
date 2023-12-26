@@ -200,12 +200,11 @@ int main() {
                     glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
                     glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
             };
-    //-----------------------
-    // CONVERTING TO CUBE MAP
-    //-----------------------
+
     PBRPipeline pbrPipeline(hdrTexture);
     pbrPipeline.generateHdrCubeMap(hdrToCubeMapShader, cubeVAO);
     pbrPipeline.generateIrradianceMap(envToIrrandianceShader, pbrPipeline.getHdrCubeMap(),cubeVAO);
+    pbrPipeline.generatePrefilterMap(envToPrefilter, pbrPipeline.getHdrCubeMap(), cubeVAO);
     //Frame buffer and render buffer
     unsigned int captureFBO, captureRBO;
     glGenFramebuffers(1, &captureFBO);

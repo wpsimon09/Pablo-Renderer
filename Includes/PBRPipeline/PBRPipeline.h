@@ -35,7 +35,7 @@ public:
 
     void generateHdrCubeMap(Shader shader, unsigned int VA0);
     void generateIrradianceMap(Shader shader, unsigned int envMap,unsigned int VAO);
-    void generatePrefilterMap(Shader shader, unsigned int VAO);
+    void generatePrefilterMap(Shader shader,unsigned int envMap, unsigned int VAO);
     void generateBrdfLutTexture(Shader shader, unsigned int VAO);
 };
 

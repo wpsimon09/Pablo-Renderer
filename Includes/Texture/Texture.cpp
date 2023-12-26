@@ -50,3 +50,9 @@ void Texture::changeFilteringMethod(GLenum mag, GLenum min) {
     glTexParameteri(type, GL_TEXTURE_MIN_FILTER, min);
     glTexParameteri(type, GL_TEXTURE_MAG_FILTER, mag);
 }
+
+void Texture::generateMipmap() {
+    glBindTexture(this->type, this->ID);
+    glGenerateMipmap(this->type);
+    std::cout<<" Generated mip map for the texture with ID: "<<this->ID<<std::endl;
+}

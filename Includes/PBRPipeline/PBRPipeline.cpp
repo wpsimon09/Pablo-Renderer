@@ -22,7 +22,7 @@ PBRPipeline::PBRPipeline(unsigned int hdrTexture) {
 
     this->hdrCubeMap = new Texture(GL_TEXTURE_CUBE_MAP,  "equirectangularMap", glm::vec2(1980, 1980),GL_RGBA);
     this->irradiancaMap = new Texture(GL_TEXTURE_CUBE_MAP,  "irradianceMap", glm::vec2(32,32),GL_RGBA);
-    this->prefilterMap = new Texture(GL_TEXTURE_CUBE_MAP,  "prefilterMap", glm::vec2(520, 520),GL_RGB);
+    this->prefilterMap = new Texture(GL_TEXTURE_CUBE_MAP,  "prefilterMap", glm::vec2(128, 128),GL_RGB);
     this->brdfLutTexture = new Texture(GL_TEXTURE_2D, "brdfLutTexture", glm::vec2(520, 520),GL_RG);
 
     this->frameBuffer = new FrameBuffer();
@@ -60,8 +60,8 @@ void PBRPipeline::generateIrradianceMap(Shader shader,unsigned int envMap, unsig
     shader.setInt("envMap", 1);
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envMap);
-    this->irradiancaMap->changeFilteringMethod(GL_LINEAR, GL_LINEAR);
     this->frameBuffer->mountTexture(irradiancaMap);
+    this->frameBuffer->texture->changeFilteringMethod(GL_LINEAR, GL_LINEAR);
     glViewport(0,0, this->irradiancaMap->getDimentions().x, this->irradiancaMap->getDimentions().y);
     this->frameBuffer->use();
     for (int i = 0; i < 6; ++i)
@@ -76,14 +76,46 @@ void PBRPipeline::generateIrradianceMap(Shader shader,unsigned int envMap, unsig
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
     }
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
     std::cout<<"Created irradiance texture: "<<this->irradiancaMap->ID<<std::endl;
     this->frameBuffer->cancel();
 }
 
-void PBRPipeline::generatePrefilterMap(Shader shader, unsigned int VAO) {
+void PBRPipeline::generatePrefilterMap(Shader shader,unsigned int envMap, unsigned int VAO) {
+    shader.use();
+    shader.setInt("envMap", 2);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, envMap);
+    this->frameBuffer->mountTexture(this->prefilterMap);
+    this->frameBuffer->texture->generateMipmap();
+    const unsigned int maxMipMapLevels = 5;
+    this->frameBuffer->use();
+    std::cout<<"Drawing prefilter texture to the frame buffer with name: "<<frameBuffer->name<<"and ID: "<<frameBuffer->ID<<std::endl;
 
+    //loop for each rougness
+    for (unsigned int mip = 0; mip <maxMipMapLevels; ++mip) {
+        const auto mipMapWidth = static_cast<unsigned int>(128 * std::pow(0.5, mip));
+        const auto mipMapHeihgt = static_cast<unsigned int>(128 * std::pow(0.5, mip));
+        this->frameBuffer->updateRenderBufferStorage(glm::vec2(mipMapWidth, mipMapHeihgt));
+        glViewport(0,0, mipMapWidth, mipMapHeihgt);
+        this->frameBuffer->use();
+        float roughness = (float)mip / (float)(maxMipMapLevels - 1);
+        shader.setFloat("roughness", roughness);
+
+        for (int i = 0; i < 6; ++i) {
+            this->frameBuffer->useTexture(this->prefilterMap, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X+1);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            std::cout<<"Drawing mip map at level"<<mip<<" for roughness level"<<roughness<<std::endl;
+            shader.use();
+            glBindVertexArray(VAO);
+            shader.setMat4("view", captureViews[i]);
+            shader.setMat4("projection", captureProjection);
+            glDrawArrays(GL_TRIANGLES, 0, 36);
+            glBindVertexArray(0);
+        }
+    }
+    std::cout<<"Created prefiltered texture: "<<this->prefilterMap->ID<<std::endl;
+    this->frameBuffer->cancel();
 }
 
 
@@ -96,7 +128,7 @@ unsigned int PBRPipeline::getHdrCubeMap() const {
 }
 
 unsigned int PBRPipeline::getPrefilterMap() const {
-    return prefilterMap->ID;
+    return this->prefilterMap->ID;
 }
 
 unsigned int PBRPipeline::getIrradiancaMap() const {

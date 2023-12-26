@@ -21,6 +21,7 @@ class Texture
         Texture(GLenum type, const char*shaderName, glm::vec2 dimensions, GLenum colorChannels);
         void updateDimentions(glm::vec2 dimentions);
         void changeFilteringMethod(GLenum mag, GLenum min);
+        void generateMipmap();
         glm::vec2 getDimentions();
         void setShader(Shader shader)
         {

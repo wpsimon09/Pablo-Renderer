@@ -41,3 +41,11 @@ void FrameBuffer::useTexture(Texture *texture, GLenum attachement, GLenum textur
     glFramebufferTexture2D(GL_FRAMEBUFFER, attachement, textureTarget,texture->ID, mipMaplevel);
 }
 
+void FrameBuffer::updateRenderBufferStorage(glm::vec2 dimetions, GLenum format) {
+    glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
+    glBindRenderbuffer(GL_RENDERBUFFER, this->RBO);
+
+    glRenderbufferStorage(GL_RENDERBUFFER, format, dimetions.x, dimetions.y);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER, this->RBO);
+}
+
