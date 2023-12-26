@@ -33,10 +33,11 @@ void FrameBuffer::mountTexture(Texture *pTexture) {
 
 void FrameBuffer::cancel() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }
 
 void FrameBuffer::useTexture(Texture *texture, GLenum attachement, GLenum textureTarget, float mipMaplevel) const {
-    glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
+    //glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
     glFramebufferTexture2D(GL_FRAMEBUFFER, attachement, textureTarget,texture->ID, mipMaplevel);
 }
 

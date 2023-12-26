@@ -51,17 +51,18 @@ void PBRPipeline::generateHdrCubeMap(Shader shader, unsigned int VAO) {
     }
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     std::cout<<"Created hdr texture: "<<this->hdrCubeMap->ID<<std::endl;
+    std::cout<<std::endl;
     this->frameBuffer->cancel();
 }
 
 void PBRPipeline::generateIrradianceMap(Shader shader,unsigned int envMap, unsigned int VAO) {
     shader.use();
-    shader.setInt("envMap", 0);
-    glActiveTexture(GL_TEXTURE0);
+    shader.setInt("envMap", 1);
+    glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_CUBE_MAP, envMap);
     this->irradiancaMap->changeFilteringMethod(GL_LINEAR, GL_LINEAR);
     this->frameBuffer->mountTexture(irradiancaMap);
-    glViewport(0,0, 32, 32);
+    glViewport(0,0, this->irradiancaMap->getDimentions().x, this->irradiancaMap->getDimentions().y);
     this->frameBuffer->use();
     for (int i = 0; i < 6; ++i)
     {
@@ -70,7 +71,7 @@ void PBRPipeline::generateIrradianceMap(Shader shader,unsigned int envMap, unsig
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.use();
         glBindVertexArray(VAO);
-        shader.setMat4("iew", captureViews[i]);
+        shader.setMat4("view", captureViews[i]);
         shader.setMat4("projection", captureProjection);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
@@ -99,7 +100,7 @@ unsigned int PBRPipeline::getPrefilterMap() const {
 }
 
 unsigned int PBRPipeline::getIrradiancaMap() const {
-    return irradiancaMap->ID;
+    return this->irradiancaMap->ID;
 }
 
 unsigned int PBRPipeline::getBrdfLutTexture() const {
