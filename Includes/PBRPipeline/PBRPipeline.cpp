@@ -70,7 +70,7 @@ void PBRPipeline::generateIrradianceMap(Shader shader,unsigned int envMap, unsig
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shader.use();
         glBindVertexArray(VAO);
-        shader.setMat4("view", captureViews[i]);
+        shader.setMat4("iew", captureViews[i]);
         shader.setMat4("projection", captureProjection);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
