@@ -44,3 +44,9 @@ glm::vec2 Texture::getDimentions() {
 void Texture::updateDimentions(glm::vec2 dimentions) {
     this->dimensions=dimentions;
 }
+
+void Texture::changeFilteringMethod(GLenum mag, GLenum min) {
+    glBindTexture(this->type, this->ID);
+    glTexParameteri(type, GL_TEXTURE_MIN_FILTER, min);
+    glTexParameteri(type, GL_TEXTURE_MAG_FILTER, mag);
+}

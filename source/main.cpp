@@ -188,36 +188,6 @@ int main() {
     int nrColumns = 7;
     float spacing = 2.5;
 
-    //-----------------------
-    // CONVERTING TO CUBE MAP
-    //-----------------------
-    PBRPipeline pbrPipeline(hdrTexture);
-    pbrPipeline.generateHdrCubeMap(hdrToCubeMapShader, cubeVAO);
-
-    //Frame buffer and render buffer
-    unsigned int captureFBO, captureRBO;
-    glGenFramebuffers(1, &captureFBO);
-    glGenRenderbuffers(1, &captureRBO);
-
-    glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-    glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, TEXTURE_WIDTH, TEXTURE_HEIGHT);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER, captureRBO);
-
-    //prealocate memmory for cube map faces
-    unsigned int envCubeMap;
-    glGenTextures(1, &envCubeMap);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, envCubeMap);
-    for (int i = 0; i < 6; ++i)
-    {
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB32F, TEXTURE_WIDTH, TEXTURE_HEIGHT, 0, GL_RGBA, GL_FLOAT, nullptr);
-    }
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
 
     //render to the frame buffer
     glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
@@ -230,25 +200,21 @@ int main() {
                     glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
                     glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
             };
+    //-----------------------
+    // CONVERTING TO CUBE MAP
+    //-----------------------
+    PBRPipeline pbrPipeline(hdrTexture);
+    pbrPipeline.generateHdrCubeMap(hdrToCubeMapShader, cubeVAO);
+    pbrPipeline.generateIrradianceMap(envToIrrandianceShader, pbrPipeline.getHdrCubeMap(),cubeVAO);
+    //Frame buffer and render buffer
+    unsigned int captureFBO, captureRBO;
+    glGenFramebuffers(1, &captureFBO);
+    glGenRenderbuffers(1, &captureRBO);
 
-    hdrToCubeMapShader.use();
-    hdrToCubeMapShader.setInt("equirectangularMap", 0);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, hdrTexture);
-
-    glViewport(0, 0, TEXTURE_WIDTH, TEXTURE_HEIGHT);
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-
-    //render
-    for (int i = 0; i < 6; ++i)
-    {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubeMap, 0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        DrawCube(hdrToCubeMapShader, glm::mat4(1.0f), captureViews[i], captureProjection, cubeVAO);
-    }
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-    glBindFramebuffer(0, GL_FRAMEBUFFER);
-
+    glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER, captureRBO);
 
     //----------------------
     // ENV TO IRRADIANCE MAP
@@ -258,7 +224,7 @@ int main() {
     glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
     for (unsigned int i = 0; i < 6; ++i)
     {
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+ i, 0, GL_RGB16F, 32, 32, 0, GL_RGB, GL_FLOAT, nullptr);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+ i, 0, GL_RGB32F, 32, 32, 0, GL_RGB, GL_FLOAT, nullptr);
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -269,7 +235,7 @@ int main() {
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
     glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 32, 32);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH24_STENCIL8, GL_RENDERBUFFER, captureRBO);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER, captureRBO);
 
     envToIrrandianceShader.use();
     envToIrrandianceShader.setInt("envMap", 0);
@@ -307,7 +273,7 @@ int main() {
     envToPrefilter.setMat4("projection", captureProjection);
     envToPrefilter.setInt("envMap", 0);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, envCubeMap);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getHdrCubeMap());
     unsigned int maxMipmapLevels = 5;
     glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 
@@ -559,7 +525,7 @@ int main() {
         //------------
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getHdrCubeMap());
+        glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getIrradiancaMap()); //pbrPipeline.getHdrCubeMap());
         DrawCube(skyBoxShader, model, view, projection, cubeVAO);
 
         //----------------------

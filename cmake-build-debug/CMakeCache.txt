@@ -230,6 +230,15 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Value Computed by CMake
+PabloRenderer_BINARY_DIR:STATIC=/home/wpsimon09/Desktop/OpenGL/CLionTest/cmake-build-debug
+
+//Value Computed by CMake
+PabloRenderer_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+PabloRenderer_SOURCE_DIR:STATIC=/home/wpsimon09/Desktop/OpenGL/CLionTest
+
 //The directory containing a CMake configuration file for glfw3.
 glfw3_DIR:PATH=/usr/lib64/cmake/glfw3
 

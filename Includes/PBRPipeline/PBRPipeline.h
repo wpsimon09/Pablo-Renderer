@@ -14,8 +14,6 @@ class PBRPipeline {
 private:
     FrameBuffer* frameBuffer;
 
-    Texture *hdrCubeMap;
-    Texture *prefilterMap;
 public:
     unsigned int getHdrCubeMap() const;
 
@@ -28,14 +26,16 @@ public:
 private:
     Texture *irradiancaMap;
     Texture *brdfLutTexture;
+    Texture *hdrCubeMap;
+    Texture *prefilterMap;
 
     unsigned int HDRTexture;
 public:
     PBRPipeline(unsigned int hdrTexture);
 
     void generateHdrCubeMap(Shader shader, unsigned int VA0);
+    void generateIrradianceMap(Shader shader, unsigned int envMap,unsigned int VAO);
     void generatePrefilterMap(Shader shader, unsigned int VAO);
-    void generateIrradianceMap(Shader shader, unsigned int VAO);
     void generateBrdfLutTexture(Shader shader, unsigned int VAO);
 };
 

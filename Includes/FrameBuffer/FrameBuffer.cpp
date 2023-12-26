@@ -22,7 +22,7 @@ void FrameBuffer::mountTexture(Texture *pTexture) {
 
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, pTexture->getDimentions().x, pTexture->getDimentions().y);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER,this->RBO);
-    std::cout<<"Mounting pTexture with coordinates\n";
+    std::cout<<"Mounting Texture with coordinates\n";
     std::cout << pTexture->getDimentions().x << "\n";
     std::cout << pTexture->getDimentions().y << "\n";
     this->texture = pTexture;
@@ -36,6 +36,7 @@ void FrameBuffer::cancel() {
 }
 
 void FrameBuffer::useTexture(Texture *texture, GLenum attachement, GLenum textureTarget, float mipMaplevel) const {
-    glFramebufferTexture2D(GL_FRAMEBUFFER, attachement, textureTarget, this->texture->ID, mipMaplevel);
+    glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, attachement, textureTarget,texture->ID, mipMaplevel);
 }
 
