@@ -311,7 +311,7 @@ int main() {
         //-------------
         // DRAW SPHERES
         //-------------
-
+        /*
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         gold.useTextures();
         DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
@@ -325,7 +325,14 @@ int main() {
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         wall.useTextures();
         DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
-
+        */
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        PBRShader.use();
+        PBRShader.setMat4("model", model);
+        PBRShader.setMat4("view", view);
+        PBRShader.setMat4("projection", projection);
+        PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
+        witcherMedailon.Draw(PBRShader);
         //set light properties
         for (unsigned int i = 0; i < 5; ++i)
         {

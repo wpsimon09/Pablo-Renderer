@@ -186,23 +186,23 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	}
 	
 	//process material
-	if (mesh->mMaterialIndex >0)
+	if (scene->mNumMaterials > 0)
 	{
 		// load diffuse textures
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 		
-		std::vector<_Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<_Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "_albedoMap");
 		//insert on the end of texture vector
 		//from diffuse maps begin to diffuse map end
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
 		// load specular textures
-		std::vector<_Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<_Texture> rougnessMap = loadMaterialTextures(material, aiTextureType_UNKNOWN, "_roughnessMap");
 
-		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+		textures.insert(textures.end(), rougnessMap.begin(), rougnessMap.end());
 
 		// load normal	
-		std::vector<_Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+		std::vector<_Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS, "_normalMap");
 
 		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 	}
@@ -252,7 +252,8 @@ std::vector<_Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma)
 {
 	std::string filename = std::string(path);
-	filename = directory + "/textures" + filename;
+	filename = directory + "/" + filename;
+    std::cout<<"Loading texture at path: "<<filename<<std::endl;
 
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
@@ -282,7 +283,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << path << std::endl;
+		std::cout << "Texture failed to load at path: " << filename << std::endl;
 		stbi_image_free(data);
 	}
 

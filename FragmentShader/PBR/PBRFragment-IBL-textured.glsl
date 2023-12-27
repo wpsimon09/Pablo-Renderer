@@ -115,8 +115,8 @@ void main()
 {
     //sampler the texture maps
     albedo = texture(_albedoMap, fs_in.TexCoords).rgb;
-    metallic = texture(_metallnesMap, fs_in.TexCoords).r;
-    roughness = texture(_roughnessMap, fs_in.TexCoords).r;
+    metallic = texture(_rougnessMap, fs_in.TexCoords).b;
+    roughness = texture(_rougnessMap, fs_in.TexCoords).g;
     ao = texture(_aoMap, fs_in.TexCoords).r;
 
     //normal
@@ -203,6 +203,6 @@ void main()
     // gamma corection
     //color = pow(color,vec3(1.0/2.2));
     
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(0.0,1.0,0.0, 1.0);
 
 }

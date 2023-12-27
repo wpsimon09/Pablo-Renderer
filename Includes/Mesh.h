@@ -127,23 +127,12 @@ void Mesh::setupTextures(Shader &shader)
 		glActiveTexture(GL_TEXTURE0 + i);
 		std::string number;
 		std::string name = textures[i].type;
-		if (name == "texture_diffuse")
-		{
-			number = std::to_string(diffuseNr++);
-		}
-		else if (name == "texture_specular")
-		{
-			number = std::to_string(specularNr++);
-		}
-		else if (name == "texture_normal")
-		{
-			number = std::to_string(normalNr++);
-		}
 
-		shader.setInt((name + number).c_str(), i);
-		//std::cout << "TEXTURE::LOADED::ASS:\n";
-		//std::cout << (name + number).c_str();
-		//std::cout << "\n";
+		shader.setInt((name).c_str(), i);
+		std::cout << "TEXTURE::LOADED::ASS:\n";
+		std::cout << (name ).c_str();
+		std::cout << "\n";
+        glActiveTexture(GL_TEXTURE0+i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
 }
