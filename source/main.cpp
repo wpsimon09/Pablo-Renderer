@@ -121,7 +121,6 @@ int main() {
     //-------------------
     // SHADOW MAP TEXTURE
     //-------------------
-
     //resolution of the depth map
     const unsigned int SHADOW_HEIGHT = 1980, SHADOW_WIDTH = 1980;
     unsigned int depthMap;
@@ -165,12 +164,6 @@ int main() {
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
     unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunset.hdr");
 
-    //------------------------------------------------
-    // Converting from equirectangular to CUBE map FBO
-    //------------------------------------------------
-    const int TEXTURE_WIDTH = 1980;
-    const int TEXTURE_HEIGHT = 1980;
-
 
     glm::vec3 lightPositions[] = {
             glm::vec3(-10.0f,  10.0f, 10.0f),
@@ -188,58 +181,14 @@ int main() {
     int nrColumns = 7;
     float spacing = 2.5;
 
-
-    //render to the frame buffer
-    glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
-    glm::mat4 captureViews[] =
-            {
-                    glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-                    glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-                    glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
-                    glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
-                    glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-                    glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
-            };
-
+    //-------------
+    // PBR PIPELINE
+    //-------------
     PBRPipeline pbrPipeline(hdrTexture);
     pbrPipeline.generateHdrCubeMap(hdrToCubeMapShader, cubeVAO);
     pbrPipeline.generateIrradianceMap(envToIrrandianceShader, pbrPipeline.getHdrCubeMap(),cubeVAO);
     pbrPipeline.generatePrefilterMap(envToPrefilter, pbrPipeline.getHdrCubeMap(), cubeVAO);
     pbrPipeline.generateBrdfLutTexture(brdfLutTextureShader, planeVAO);
-    //Frame buffer and render buffer
-    unsigned int captureFBO, captureRBO;
-    glGenFramebuffers(1, &captureFBO);
-    glGenRenderbuffers(1, &captureRBO);
-
-    glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-    glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, TEXTURE_WIDTH, TEXTURE_HEIGHT);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER, captureRBO);
-
-
-    //-----------------
-    // BRDF LUT texture
-    //-----------------
-    unsigned int brdfLUTTexture;
-    glGenTextures(1, &brdfLUTTexture);
-    glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG32F, 512, 512, 0, GL_RG, GL_FLOAT, 0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-    glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 512,512);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, brdfLUTTexture, 0);
-
-    glViewport(0, 0, 512, 512);
-    brdfLutTextureShader.use();
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    DrawPlane(brdfLutTextureShader, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     //------------------
     // LOAD PBR TEXTURES
@@ -353,7 +302,7 @@ int main() {
         glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getPrefilterMap());
 
         glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
+        glBindTexture(GL_TEXTURE_2D, pbrPipeline.getBrdfLutTexture());
 
         //-------------
         // DRAW SPHERES
@@ -448,9 +397,10 @@ int main() {
         //----------------------
         // DRAW BRDF LUT TEXTURE
         //----------------------
-        lutDebug.use();
+        /*lutDebug.use();
         useTexture(0, pbrPipeline.getBrdfLutTexture());
         DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
+        */
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
