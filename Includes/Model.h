@@ -36,12 +36,12 @@ class Model {
 		unsigned int drawCalls;
 		//model data
 		std::string directory;
-		std::vector<Texture> textures_loaded;
+		std::vector<_Texture> textures_loaded;
 
 		void loadModel(std::string path);
 		void processNode(aiNode* node, const aiScene* scene);
 		Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-		std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+		std::vector<_Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 };
 
 /*
@@ -115,7 +115,7 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	std::vector<Vertex> vertecies;
 	std::vector<unsigned int> indecies;
-	std::vector<Texture> textures;
+	std::vector<_Texture> textures;
 
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
@@ -191,18 +191,18 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		// load diffuse textures
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 		
-		std::vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<_Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		//insert on the end of texture vector
 		//from diffuse maps begin to diffuse map end
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
 		// load specular textures
-		std::vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<_Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
 		// load normal	
-		std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+		std::vector<_Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
 
 		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 	}
@@ -218,8 +218,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	return Mesh(vertecies, indecies, textures);
 }
 
-std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
-	std::vector<Texture> textures;
+std::vector<_Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
+	std::vector<_Texture> textures;
 
 	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
 	{
@@ -237,7 +237,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 		}
 		if (!skip)
 		{ // if texture hasn�t been loaded already, load it
-			Texture texture;
+			_Texture texture;
 			texture.id = TextureFromFile(str.C_Str(), this->directory);
 			texture.type = typeName;
 			texture.path = str.C_Str();
@@ -252,7 +252,7 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma)
 {
 	std::string filename = std::string(path);
-	filename = directory + '/' + filename;
+	filename = directory + "/textures" + filename;
 
 	unsigned int textureID;
 	glGenTextures(1, &textureID);

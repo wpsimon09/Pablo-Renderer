@@ -16,7 +16,7 @@ struct Vertex
 	glm::vec3 Bitangents;
 };
 
-struct Texture
+struct _Texture
 {
 	unsigned int id;
 	std::string path;
@@ -27,9 +27,9 @@ class Mesh {
 public:
 	std::vector <Vertex> vertecies;
 	std::vector <unsigned int> indecies;
-	std::vector <Texture> textures;
+	std::vector <_Texture> textures;
 
-	Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, std::vector<Texture> texutres);
+	Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, std::vector<_Texture> texutres);
 	void Draw(Shader& shader);
 	void DrawInstanced(Shader& shader);
 	unsigned int VAO;
@@ -46,7 +46,7 @@ private:
 	void setupTextures(Shader &shader);
 };
 
-Mesh::Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, std::vector<Texture> texutres)
+Mesh::Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, std::vector<_Texture> texutres)
 {
 	this->vertecies = vertecies;
 	this->indecies = indecies;

@@ -11,6 +11,7 @@
 #include "VaoCreation.h"
 #include "PBRTextureLoader.h"
 #include "PBRPipeline/PBRPipeline.h"
+#include "Model.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -103,6 +104,9 @@ int main() {
     Shader lutDebug("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG");
 
     stbi_set_flip_vertically_on_load(true);
+
+    //witcher medailon
+    Model witcherMedailon("Assets/Model/witcher_medalion/scene.gltf");
 
     // plane VAO
     unsigned int planeVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);
