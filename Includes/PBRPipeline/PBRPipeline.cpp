@@ -23,7 +23,7 @@ PBRPipeline::PBRPipeline(unsigned int hdrTexture) {
     this->hdrCubeMap = new Texture(GL_TEXTURE_CUBE_MAP,  "equirectangularMap", glm::vec2(1980, 1980),GL_RGBA);
     this->irradiancaMap = new Texture(GL_TEXTURE_CUBE_MAP,  "irradianceMap", glm::vec2(32,32),GL_RGBA);
     this->prefilterMap = new Texture(GL_TEXTURE_CUBE_MAP,  "prefilterMap", glm::vec2(128, 128),GL_RGB);
-    this->brdfLutTexture = new Texture(GL_TEXTURE_2D, "brdfLutTexture", glm::vec2(520, 520),GL_RG);
+    this->brdfLutTexture = new Texture(GL_TEXTURE_2D, "brdfLutTexture", glm::vec2(512, 512),GL_RG);
 
     this->frameBuffer = new FrameBuffer();
 }
@@ -123,7 +123,18 @@ void PBRPipeline::generatePrefilterMap(Shader shader,unsigned int envMap, unsign
 
 
 void PBRPipeline::generateBrdfLutTexture(Shader shader, unsigned int VAO) {
-
+    this->frameBuffer->mountTexture(brdfLutTexture);
+    this->frameBuffer->updateRenderBufferStorage(this->frameBuffer->texture->getDimentions());
+    this->frameBuffer->useTexture(this->brdfLutTexture, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D);
+    this->frameBuffer->use();
+    glViewport(0,0, this->frameBuffer->texture->getDimentions().x, this->frameBuffer->texture->getDimentions().y);
+    shader.use();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glBindVertexArray(VAO);
+    shader.setMat4("projection", captureProjection);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glBindVertexArray(0);
+    this->frameBuffer->cancel();
 }
 
 unsigned int PBRPipeline::getHdrCubeMap() const {

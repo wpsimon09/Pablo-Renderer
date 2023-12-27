@@ -205,6 +205,7 @@ int main() {
     pbrPipeline.generateHdrCubeMap(hdrToCubeMapShader, cubeVAO);
     pbrPipeline.generateIrradianceMap(envToIrrandianceShader, pbrPipeline.getHdrCubeMap(),cubeVAO);
     pbrPipeline.generatePrefilterMap(envToPrefilter, pbrPipeline.getHdrCubeMap(), cubeVAO);
+    pbrPipeline.generateBrdfLutTexture(brdfLutTextureShader, planeVAO);
     //Frame buffer and render buffer
     unsigned int captureFBO, captureRBO;
     glGenFramebuffers(1, &captureFBO);
@@ -223,7 +224,7 @@ int main() {
     glGenTextures(1, &brdfLUTTexture);
     glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, 512, 512, 0, GL_RG, GL_FLOAT, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RG32F, 512, 512, 0, GL_RG, GL_FLOAT, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -448,9 +449,9 @@ int main() {
         //----------------------
         // DRAW BRDF LUT TEXTURE
         //----------------------
-        /*lutDebug.use();
-        useTexture(0, brdfLUTTexture);
-        DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);*/
+        lutDebug.use();
+        useTexture(0, pbrPipeline.getBrdfLutTexture());
+        DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
