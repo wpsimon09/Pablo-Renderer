@@ -488,7 +488,7 @@ int main() {
         //------------
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getIrradiancaMap()); //pbrPipeline.getHdrCubeMap());
+        glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
         DrawCube(skyBoxShader, model, view, projection, cubeVAO);
 
         //----------------------

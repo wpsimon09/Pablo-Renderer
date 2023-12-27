@@ -21,7 +21,7 @@ class FrameBuffer {
         void use();
         void cancel();
         void mountTexture(Texture *pTexture);
-        void useTexture(Texture *texture, GLenum attachement, GLenum textureTarget,float mipMaplevel = 0 ) const;
+        void useTexture(Texture *texture, GLenum attachement, GLenum textureTarget,unsigned int mipMaplevel = 0 ) const;
         void updateRenderBufferStorage(glm::vec2 dimetions, GLenum format = GL_DEPTH_COMPONENT24);
 
     private:

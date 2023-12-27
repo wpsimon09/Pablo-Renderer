@@ -49,7 +49,7 @@ void PBRPipeline::generateHdrCubeMap(Shader shader, unsigned int VAO) {
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
     }
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    this->frameBuffer->texture->generateMipmap();
     std::cout<<"Created hdr texture: "<<this->hdrCubeMap->ID<<std::endl;
     std::cout<<std::endl;
     this->frameBuffer->cancel();
@@ -84,8 +84,7 @@ void PBRPipeline::generateIrradianceMap(Shader shader,unsigned int envMap, unsig
 void PBRPipeline::generatePrefilterMap(Shader shader,unsigned int envMap, unsigned int VAO) {
     shader.use();
     shader.setInt("envMap", 2);
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, envMap);
+
     this->frameBuffer->mountTexture(this->prefilterMap);
     this->frameBuffer->texture->generateMipmap();
     const unsigned int maxMipMapLevels = 5;
@@ -107,6 +106,8 @@ void PBRPipeline::generatePrefilterMap(Shader shader,unsigned int envMap, unsign
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             std::cout<<"Drawing mip map at level"<<mip<<" for roughness level"<<roughness<<std::endl;
             shader.use();
+            glActiveTexture(GL_TEXTURE2);
+            glBindTexture(GL_TEXTURE_CUBE_MAP, envMap);
             glBindVertexArray(VAO);
             shader.setMat4("view", captureViews[i]);
             shader.setMat4("projection", captureProjection);
