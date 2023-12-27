@@ -84,11 +84,15 @@ void PBRPipeline::generateIrradianceMap(Shader shader,unsigned int envMap, unsig
 void PBRPipeline::generatePrefilterMap(Shader shader,unsigned int envMap, unsigned int VAO) {
     shader.use();
     shader.setInt("envMap", 2);
-
     this->frameBuffer->mountTexture(this->prefilterMap);
     this->frameBuffer->texture->generateMipmap();
+
+    //bind the texture after all of the operations
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, envMap);
     const unsigned int maxMipMapLevels = 5;
     this->frameBuffer->use();
+
     std::cout<<"Drawing prefilter texture to the frame buffer with name: "<<frameBuffer->name<<"and ID: "<<frameBuffer->ID<<std::endl;
 
     //loop for each rougness
@@ -106,8 +110,6 @@ void PBRPipeline::generatePrefilterMap(Shader shader,unsigned int envMap, unsign
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             std::cout<<"Drawing mip map at level"<<mip<<" for roughness level"<<roughness<<std::endl;
             shader.use();
-            glActiveTexture(GL_TEXTURE2);
-            glBindTexture(GL_TEXTURE_CUBE_MAP, envMap);
             glBindVertexArray(VAO);
             shader.setMat4("view", captureViews[i]);
             shader.setMat4("projection", captureProjection);

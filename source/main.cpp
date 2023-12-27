@@ -163,7 +163,7 @@ int main() {
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
-    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/christmass_square.hdr");
+    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunset.hdr");
 
     //------------------------------------------------
     // Converting from equirectangular to CUBE map FBO
@@ -215,52 +215,6 @@ int main() {
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT32, TEXTURE_WIDTH, TEXTURE_HEIGHT);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER, captureRBO);
 
-    //---------------------------------
-    // ENV TO PREFILTER MAP (roughness)
-    //---------------------------------
-    unsigned int prefilterMap;
-    glGenTextures(1, &prefilterMap);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
-    for (int i = 0; i < 6; ++i)
-    {
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL_RGB32F, 128, 128, 0, GL_RGB, GL_FLOAT, nullptr);
-    }
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-
-    envToPrefilter.use();
-    envToPrefilter.setMat4("projection", captureProjection);
-    envToPrefilter.setInt("envMap", 0);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getHdrCubeMap());
-    unsigned int maxMipmapLevels = 5;
-    glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-
-    //loop for each rougness
-    for (unsigned int mip = 0; mip < maxMipmapLevels; ++mip)
-    {
-        unsigned int mipMapWidth = static_cast<unsigned int>(128 * std::pow(0.5, mip));
-        unsigned int mipMapHeihgt = static_cast<unsigned int>(128 * std::pow(0.5, mip));
-        glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, mipMapWidth, mipMapHeihgt);
-        glViewport(0, 0, mipMapWidth, mipMapHeihgt);
-
-        float roughness = (float)mip / (float)(maxMipmapLevels - 1);
-        envToPrefilter.setFloat("roughness", roughness);
-
-        //loop for each face of the cube
-        for (int i = 0; i < 6; ++i)
-        {
-            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, prefilterMap, mip);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            DrawCube(envToPrefilter, glm::mat4(1.0), captureViews[i], captureProjection, cubeVAO);
-        }
-    }
-    glBindFramebuffer(0, GL_FRAMEBUFFER);
 
     //-----------------
     // BRDF LUT texture
