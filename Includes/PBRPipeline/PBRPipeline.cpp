@@ -127,11 +127,11 @@ void PBRPipeline::generateBrdfLutTexture(Shader shader, unsigned int VAO) {
     this->frameBuffer->updateRenderBufferStorage(this->frameBuffer->texture->getDimentions());
     this->frameBuffer->useTexture(this->brdfLutTexture, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D);
     this->frameBuffer->use();
+    std::cout<<"Drawing to the BRDFLutTexture with ID:"<<this->frameBuffer->texture->ID << std::endl;
     glViewport(0,0, this->frameBuffer->texture->getDimentions().x, this->frameBuffer->texture->getDimentions().y);
     shader.use();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glBindVertexArray(VAO);
-    shader.setMat4("projection", captureProjection);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glBindVertexArray(0);
     this->frameBuffer->cancel();
