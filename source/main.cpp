@@ -239,7 +239,6 @@ int main() {
     brdfLutTextureShader.use();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     DrawPlane(brdfLutTextureShader, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
-
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     //------------------

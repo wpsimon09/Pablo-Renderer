@@ -18,7 +18,7 @@ class Texture
         const char* path;
         const char* shaderName;
 
-        Texture(GLenum type, const char*shaderName, glm::vec2 dimensions, GLenum colorChannels);
+        Texture(GLenum type, const char*shaderName, glm::vec2 dimensions, GLenum colorChannels, GLenum internalFomrat = GL_RGBA32F);
         void updateDimentions(glm::vec2 dimentions);
         void changeFilteringMethod(GLenum mag, GLenum min);
         void generateMipmap();

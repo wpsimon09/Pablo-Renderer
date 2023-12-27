@@ -3,7 +3,7 @@
 //
 #include "Texture.h"
 
-Texture::Texture(GLenum type,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels) {
+Texture::Texture(GLenum type,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels,GLenum internalFomrat) {
     glGenTextures(1, &this->ID);
     glBindTexture(type, this->ID);
     this->dimensions = dimensions;
@@ -12,7 +12,7 @@ Texture::Texture(GLenum type,const char*shaderName, glm::vec2 dimensions, GLenum
     {
         for (int i = 0; i < 6; ++i)
         {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, GL_RGB32F, this->dimensions.x, this->dimensions.y, 0, colorChannels, GL_FLOAT, nullptr);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, internalFomrat, this->dimensions.x, this->dimensions.y, 0, colorChannels, GL_FLOAT, nullptr);
         }
         glTexParameteri(type, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(type, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -22,7 +22,7 @@ Texture::Texture(GLenum type,const char*shaderName, glm::vec2 dimensions, GLenum
     }
     else if (type == GL_TEXTURE_2D)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, this->dimensions.x, this->dimensions.y, 0, colorChannels, GL_FLOAT,nullptr);
+        glTexImage2D(GL_TEXTURE_2D, 0, internalFomrat, this->dimensions.x, this->dimensions.y, 0, colorChannels, GL_FLOAT,nullptr);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
