@@ -23,7 +23,7 @@ class FrameBuffer {
         void mountTexture(Texture *pTexture);
         void useTexture(Texture *texture, GLenum attachement, GLenum textureTarget,unsigned int mipMaplevel = 0 ) const;
         void updateRenderBufferStorage(glm::vec2 dimetions, GLenum format = GL_DEPTH_COMPONENT24);
-
+        void drawToTexture(Shader shader, unsigned int VAO, glm::mat4 model = glm::mat4(1.0f), glm::mat4 view = glm::mat4(1.0f), glm::mat4 projection = glm::mat4(1.0f));
     private:
         Shader* shader;
         unsigned int RBO;

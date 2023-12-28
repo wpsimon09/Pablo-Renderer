@@ -50,3 +50,13 @@ void FrameBuffer::updateRenderBufferStorage(glm::vec2 dimetions, GLenum format) 
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH32F_STENCIL8, GL_RENDERBUFFER, this->RBO);
 }
 
+void FrameBuffer::drawToTexture(Shader shader, unsigned int VAO, glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
+    glBindFramebuffer(GL_FRAMEBUFFER,this->ID);
+    shader.use();
+    glBindVertexArray(VAO);
+    this->useTexture(this->texture, GL_COLOR_ATTACHMENT0, this->texture->type);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0.0, 4);
+    glBindVertexArray(0);
+    this->cancel();
+}
+

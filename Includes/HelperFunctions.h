@@ -208,18 +208,19 @@ float cubeVertices[] = {
 };
 
 float planeVertices[] = {
-	// positions            // normals         // texcoords
-	 200.0f, -0.5f,  200.0f,  0.0f, 1.0f, 0.0f,  200.0f,  0.0f,
-	-200.0f, -0.5f,  200.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-	-200.0f, -0.5f, -200.0f,  0.0f, 1.0f, 0.0f,   0.0f, 200.0f,
+	// positions                            // normals                               // texcoords
+        // positions            // normals         // texcoords
+        1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
+        -1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+        -1.0f, -0.5f, -1.0f,  0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
 
-	 200.0f, -0.5f,  200.0f,  0.0f, 1.0f, 0.0f,  200.0f,  0.0f,
-	-200.0f, -0.5f, -200.0f,  0.0f, 1.0f, 0.0f,   0.0f, 200.0f,
-	 200.0f, -0.5f, -200.0f,  0.0f, 1.0f, 0.0f,  200.0f, 200.0f
+        1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
+        -1.0f, -0.5f, -1.0f,  0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
+        1.0f, -0.5f, -1.0f,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f
 };
 
 float screeneSpaceQuadVertecies[] = {
-	// positions       // texture Coords
+	// positions               // texture Coords
    -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
 	1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
@@ -238,15 +239,14 @@ float lightVertices[] = {
 };
 
 float wallVertecies[] = {
-	0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f,	0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,	0.0f, 0.0f, 1.0f, 	1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,	0.0f, 0.0f, 1.0f, 	0.0f, 1.0f,
+        0.0f, 0.0f, 0.0f,	     0.0f, 0.0f, 1.0f,	0.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,	    0.0f, 0.0f, 1.0f, 	1.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,	0.0f, 0.0f, 1.0f, 	0.0f, 1.0f,
 
-	1.0f, 0.0f, 0.0f,	0.0f, 0.0f, !.0f,	1.0f, 0.0f,
-	1.0f, 1.0f, 0.0f,	0.0f, 0.0f, !.0f,	1.0f, 1.0f,
-	0.0f, 1.0f, 0.0f,	0.0f, 0.0f, !.0f,	0.0f, 1.0f
+        1.0f, 0.0f, 0.0f,	0.0f, 0.0f, !.0f,	1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,	0.0f, 0.0f, !.0f,	1.0f, 1.0f,
+        0.0f, 1.0f, 0.0f,	0.0f, 0.0f, !.0f,	0.0f, 1.0f
 };
-
 float HDRframeBufferVertecies[] = {
 	// positions        // texture Coords
 	-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,

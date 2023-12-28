@@ -87,7 +87,7 @@ int main() {
 
     Shader shadowMapShader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
 
-    Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
+    Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "floor");
 
     Shader finalShaderStage("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader");
 
@@ -103,6 +103,8 @@ int main() {
 
     Shader lutDebug("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG");
 
+    Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
+
     //witcher medailon
     Model witcherMedailon("Assets/Model/witcher_medalion/scene.gltf");
 
@@ -110,6 +112,9 @@ int main() {
 
     // plane VAO
     unsigned int planeVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);
+
+    //floor VAO
+    unsigned int floorVAO = createVAO(planeVertices, sizeof(planeVertices)/sizeof(float), true, true);
 
     //VBO, EBO and VAO for the square that represents light position
     unsigned int lightVAO = createVAO(lightVertices, sizeof(lightVertices) / sizeof(float), false);
@@ -193,6 +198,15 @@ int main() {
     pbrPipeline.generateIrradianceMap(envToIrrandianceShader, pbrPipeline.getHdrCubeMap(),cubeVAO);
     pbrPipeline.generatePrefilterMap(envToPrefilter, pbrPipeline.getHdrCubeMap(), cubeVAO);
     pbrPipeline.generateBrdfLutTexture(brdfLutTextureShader, planeVAO);
+
+    //-------------------------
+    // FLOOR PROCEDURAL TEXTURE
+    //-------------------------
+    FrameBuffer proceduralTextureFrameBuffer;
+    Texture *girdProceduralTexture = new Texture(GL_TEXTURE_2D, "gridTexture", glm::vec2(512, 512), GL_RGBA, GL_RGBA);
+    proceduralTextureFrameBuffer.mountTexture(girdProceduralTexture);
+    proceduralTextureFrameBuffer.updateRenderBufferStorage(girdProceduralTexture->getDimentions());
+    proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, planeVAO);
 
     //------------------
     // LOAD PBR TEXTURES
@@ -284,7 +298,7 @@ int main() {
         //-------------
         // DRAW MODEL
         //-------------
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::translate(model, glm::vec3(0.0f, 3.0f, 0.0f));
         model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0.0,0.0));
         PBRShader.use();
         PBRShader.setMat4("model", model);
@@ -345,6 +359,13 @@ int main() {
         useTexture(0, dirLightTexture);
         DrawPlane(lightSourceShader, model, view, projection, lightVAO);
 
+        //------------
+        // DRAW SKYBOX
+        //------------
+        skyBoxShader.use();
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
+
         //----------------------
         // DRAW PLANE AS A FLOOR
         //----------------------
@@ -352,28 +373,19 @@ int main() {
         useTexture(0, floorTexture);
         useTexture(1, depthMap);
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, -10.0f, 0.0f));
         floorShader.setMat4("lightMatrix", lightSpaceMatrix);
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
-        DrawPlane(floorShader, model, view, projection, planeVAO, GL_TRIANGLE_STRIP, 4);
-
-        //------------
-        // DRAW SKYBOX
-        //------------
-        skyBoxShader.use();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
+        DrawPlane(floorShader, model, view, projection, floorVAO, GL_TRIANGLES, 6);
 
         //----------------------
         // DRAW BRDF LUT TEXTURE
         //----------------------
-        /*lutDebug.use();
-        useTexture(0, pbrPipeline.getBrdfLutTexture());
+        lutDebug.use();
+        useTexture(0, girdProceduralTexture->ID);
         DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
-        */
+
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
