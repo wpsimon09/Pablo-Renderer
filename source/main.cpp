@@ -49,6 +49,7 @@ int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGL", NULL, NULL);
@@ -64,6 +65,7 @@ int main() {
     gladLoadGL();
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
+    glEnable(GL_MULTISAMPLE);
     //enables gama correction that is build in opengl
     glEnable(GL_FRAMEBUFFER_SRGB);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
@@ -207,7 +209,7 @@ int main() {
     proceduralTextureFrameBuffer.mountTexture(girdProceduralTexture);
     proceduralTextureFrameBuffer.updateRenderBufferStorage(girdProceduralTexture->getDimentions());
     proceduralFloorTextureShader.use();
-    proceduralFloorTextureShader.setFloat("numOfDivisions", 10);
+    proceduralFloorTextureShader.setFloat("numOfDivisions", 50);
     proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, planeVAO);
 
     //------------------
@@ -367,6 +369,7 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
+        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
 
         //----------------------
         // DRAW PLANE AS A FLOOR
@@ -380,7 +383,7 @@ int main() {
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
-        DrawPlane(floorShader, model, view, projection, floorVAO, GL_TRIANGLES, 6);
+        //DrawPlane(floorShader, model, view, projection, floorVAO, GL_TRIANGLES, 6);
 
         //----------------------
         // DRAW BRDF LUT TEXTURE

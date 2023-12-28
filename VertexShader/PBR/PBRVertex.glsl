@@ -9,7 +9,6 @@ uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
 
-uniform mat3 normalMatrix;
 uniform mat4 lightMatrix;
 
 uniform float hasNormalMap;
@@ -26,6 +25,8 @@ out VS_OUT {
 
 void main()
 {
+    mat3 normalMatrix = transpose(inverse(mat3(model)));
+
     // transform the vectors to the world space 
     vec3 T = normalize(normalMatrix * aTangetn);
     vec3 N = normalize(normalMatrix * aNormal);
