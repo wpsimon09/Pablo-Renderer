@@ -304,8 +304,7 @@ int main() {
         PBRShader.setMat4("projection", projection);
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
-        glActiveTexture(GL_TEXTURE4);
-        glBindTexture(GL_TEXTURE_2D, )
+        pbrPipeline.bindTextures(4);
 
         witcherMedailon.Draw(PBRShader);
         //set light properties

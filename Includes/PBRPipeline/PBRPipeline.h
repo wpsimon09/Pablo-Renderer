@@ -37,6 +37,7 @@ public:
     void generateIrradianceMap(Shader shader, unsigned int envMap,unsigned int VAO);
     void generatePrefilterMap(Shader shader,unsigned int envMap, unsigned int VAO);
     void generateBrdfLutTexture(Shader shader, unsigned int VAO);
+    void bindTextures(unsigned int offset);
 };
 
 

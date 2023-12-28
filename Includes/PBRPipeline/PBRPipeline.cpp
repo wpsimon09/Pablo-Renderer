@@ -154,3 +154,14 @@ unsigned int PBRPipeline::getIrradiancaMap() const {
 unsigned int PBRPipeline::getBrdfLutTexture() const {
     return brdfLutTexture->ID;
 }
+
+void PBRPipeline::bindTextures(unsigned int offset) {
+    glActiveTexture(GL_TEXTURE0+offset+0);
+    glBindTexture(this->irradiancaMap->type,this->irradiancaMap->ID);
+
+    glActiveTexture(GL_TEXTURE0+offset+1);
+    glBindTexture(this->prefilterMap->type,this->prefilterMap->ID);
+
+    glActiveTexture(GL_TEXTURE0+offset+2);
+    glBindTexture(this->brdfLutTexture->type,this->brdfLutTexture->ID);
+}
