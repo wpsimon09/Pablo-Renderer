@@ -166,7 +166,7 @@ int main() {
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
-    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunset.hdr");
+    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunrise.hdr");
 
 
     glm::vec3 lightPositions[] = {
@@ -198,9 +198,9 @@ int main() {
     // LOAD PBR TEXTURES
     //------------------
     PBRShader.use();
-    PBRShader.setInt("irradianceMap", 4);
-    PBRShader.setInt("prefilterMap", 5);
-    PBRShader.setInt("BRDFtexture", 6);
+    PBRShader.setInt("irradianceMap", 5);
+    PBRShader.setInt("prefilterMap", 6);
+    PBRShader.setInt("BRDFtexture", 7);
 
     lutDebug.use();
     lutDebug.setInt("LUTTexture", 0);
@@ -256,22 +256,10 @@ int main() {
         //draw the scene to the depth map
         glCullFace(GL_FRONT);
         shadowMapShader.use();
+        lightModel = glm::rotate(lightModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        shadowMapShader.setMat4("model", lightModel);
+        witcherMedailon.Draw(PBRShader);
 
-
-        for (int row = 0; row < nrRows; ++row)
-        {
-            for (int col = 0; col < nrColumns; ++col)
-            {
-                lightModel = glm::mat4(1.0f);
-
-                lightModel = glm::translate(lightModel, glm::vec3(
-                        (col - (nrColumns / 2)) * spacing,
-                        (row - (nrRows / 2)) * spacing,
-                        0.0f
-                ));
-                DrawSphere(PBRShader, lightModel, lightView, lightProjection, sphereVAO, indexNum);
-            }
-        }
         glCullFace(GL_BACK);
 
         //--------------------------------------//
@@ -304,7 +292,7 @@ int main() {
         PBRShader.setMat4("projection", projection);
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
-        pbrPipeline.bindTextures(4);
+        pbrPipeline.bindTextures(5);
 
         witcherMedailon.Draw(PBRShader);
         //set light properties
@@ -360,7 +348,7 @@ int main() {
         //----------------------
         // DRAW PLANE AS A FLOOR
         //----------------------
-        /*floorShader.use();
+        floorShader.use();
         useTexture(0, floorTexture);
         useTexture(1, depthMap);
         model = glm::mat4(1.0f);
@@ -369,7 +357,7 @@ int main() {
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
-        DrawPlane(floorShader, model, view, projection, planeVAO);*/
+        DrawPlane(floorShader, model, view, projection, planeVAO, GL_TRIANGLE_STRIP, 4);
 
         //------------
         // DRAW SKYBOX

@@ -203,8 +203,12 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 
 		// load normal	
 		std::vector<_Texture> normalMaps = loadMaterialTextures(material, aiTextureType_NORMALS, "_normalMap");
-
 		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+
+        // load emmision
+		std::vector<_Texture> emisionMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "_emmisionMap");
+		textures.insert(textures.end(), emisionMaps.begin(), emisionMaps.end());
+
 	}
 	else 
 		std::cout << "ERROR::ASSIMP::PROCCESSING::MATERIALS - There are no materials to be proccessed\n";

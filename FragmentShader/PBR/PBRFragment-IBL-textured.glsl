@@ -23,13 +23,14 @@ vec3  albedo;
 float metallic;
 float roughness;
 float ao;
+vec3 emmisive;
 
 uniform sampler2D _albedoMap;
 uniform sampler2D _metallnesMap;
 uniform sampler2D _normalMap;
 uniform sampler2D _rougnessMap;
 uniform sampler2D _aoMap;
-
+uniform sampler2D _emmisionMap;
 
 const float PI = 3.14159265359;
 
@@ -118,6 +119,7 @@ void main()
     metallic = texture(_rougnessMap, fs_in.TexCoords).b;
     roughness = texture(_rougnessMap, fs_in.TexCoords).g;
     ao = texture(_aoMap, fs_in.TexCoords).r;
+    emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
 
     //normal
     //vec3 N = normalize(fs_in.Normal);
@@ -136,7 +138,7 @@ void main()
     //result
     vec3 Lo = vec3(0.0);
 
-    for(int i = 0; i<5 ; i++)
+    for(int i = 4; i<5 ; i++)
     {
         //light direction
         vec3 L = normalize(lightPositions[i] - fs_in.FragPos);
@@ -194,6 +196,7 @@ void main()
     vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
     
     vec3 ambient = (kD * diffuse + specular ) * ao ;
+    ambient += ( 4.0 * emmisive);
     vec3 color = ambient + Lo;
 
     //HDR
