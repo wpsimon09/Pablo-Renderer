@@ -208,7 +208,7 @@ float cubeVertices[] = {
 };
 
 float planeVertices[] = {
-	// positions                            // normals                               // texcoords
+        // positions                            // normals                               // texcoords
         // positions            // normals         // texcoords
         1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
         -1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
@@ -220,11 +220,11 @@ float planeVertices[] = {
 };
 
 float screeneSpaceQuadVertecies[] = {
-	// positions               // texture Coords
-   -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
-   -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-	1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-	1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+        // positions        // texture Coords
+        -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+        1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 };
 
 float lightVertices[] = {

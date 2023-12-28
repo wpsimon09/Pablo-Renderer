@@ -87,7 +87,7 @@ int main() {
 
     Shader shadowMapShader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
 
-    Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "floor");
+    Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
 
     Shader finalShaderStage("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader");
 
@@ -206,6 +206,8 @@ int main() {
     Texture *girdProceduralTexture = new Texture(GL_TEXTURE_2D, "gridTexture", glm::vec2(512, 512), GL_RGBA, GL_RGBA);
     proceduralTextureFrameBuffer.mountTexture(girdProceduralTexture);
     proceduralTextureFrameBuffer.updateRenderBufferStorage(girdProceduralTexture->getDimentions());
+    proceduralFloorTextureShader.use();
+    proceduralFloorTextureShader.setFloat("numOfDivisions", 10);
     proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, planeVAO);
 
     //------------------
@@ -370,9 +372,10 @@ int main() {
         // DRAW PLANE AS A FLOOR
         //----------------------
         floorShader.use();
-        useTexture(0, floorTexture);
+        useTexture(0, girdProceduralTexture->ID);
         useTexture(1, depthMap);
         model = glm::mat4(1.0f);
+        model = glm::scale(model,glm::vec3(50.0f, 0.0, 50.0F));
         floorShader.setMat4("lightMatrix", lightSpaceMatrix);
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
@@ -382,10 +385,11 @@ int main() {
         //----------------------
         // DRAW BRDF LUT TEXTURE
         //----------------------
+        /*
         lutDebug.use();
         useTexture(0, girdProceduralTexture->ID);
         DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
-
+        */
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
