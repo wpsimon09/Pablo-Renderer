@@ -197,7 +197,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 
 		// load specular textures
-		std::vector<_Texture> rougnessMap = loadMaterialTextures(material, aiTextureType_UNKNOWN, "_roughnessMap");
+		std::vector<_Texture> rougnessMap = loadMaterialTextures(material, aiTextureType_UNKNOWN, "_rougnessMap");
 
 		textures.insert(textures.end(), rougnessMap.begin(), rougnessMap.end());
 

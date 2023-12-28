@@ -127,11 +127,8 @@ void Mesh::setupTextures(Shader &shader)
 		glActiveTexture(GL_TEXTURE0 + i);
 		std::string number;
 		std::string name = textures[i].type;
-
+        std::cout<<"GL_ACTIVE_TEXTURE"<<0+i<<std::endl;
 		shader.setInt((name).c_str(), i);
-		std::cout << "TEXTURE::LOADED::ASS:\n";
-		std::cout << (name ).c_str();
-		std::cout << "\n";
         glActiveTexture(GL_TEXTURE0+i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}

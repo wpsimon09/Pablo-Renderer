@@ -103,10 +103,10 @@ int main() {
 
     Shader lutDebug("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG");
 
-    stbi_set_flip_vertically_on_load(true);
-
     //witcher medailon
     Model witcherMedailon("Assets/Model/witcher_medalion/scene.gltf");
+
+    stbi_set_flip_vertically_on_load(true);
 
     // plane VAO
     unsigned int planeVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);
@@ -198,15 +198,9 @@ int main() {
     // LOAD PBR TEXTURES
     //------------------
     PBRShader.use();
-    PBRShader.setInt("irradianceMap", 0);
-    PBRShader.setInt("prefilterMap", 1);
-    PBRShader.setInt("BRDFtexture", 2);
-
-
-    PBRTextures gold("Assets/Textures/PBR/Gold", PBRShader);
-    PBRTextures rustedIron("Assets/Textures/PBR/RustedIron", PBRShader);
-    PBRTextures wall("Assets/Textures/PBR/Wall", PBRShader);
-
+    PBRShader.setInt("irradianceMap", 4);
+    PBRShader.setInt("prefilterMap", 5);
+    PBRShader.setInt("BRDFtexture", 6);
 
     lutDebug.use();
     lutDebug.setInt("LUTTexture", 0);
@@ -299,39 +293,20 @@ int main() {
         PBRShader.use();
         PBRShader.setVec3("camPos", camera.Position);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getIrradiancaMap());
-
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, pbrPipeline.getPrefilterMap());
-
-        glActiveTexture(GL_TEXTURE2);
-        glBindTexture(GL_TEXTURE_2D, pbrPipeline.getBrdfLutTexture());
-
         //-------------
-        // DRAW SPHERES
+        // DRAW MODEL
         //-------------
-        /*
-        PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
-        gold.useTextures();
-        DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
-
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-        PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
-        rustedIron.useTextures();
-        DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
-
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-        PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
-        wall.useTextures();
-        DrawSphere(PBRShader, model, view, projection, sphereVAO, indexNum);
-        */
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+        model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0.0,0.0));
         PBRShader.use();
         PBRShader.setMat4("model", model);
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
+        PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
+        glActiveTexture(GL_TEXTURE4);
+        glBindTexture(GL_TEXTURE_2D, )
+
         witcherMedailon.Draw(PBRShader);
         //set light properties
         for (unsigned int i = 0; i < 5; ++i)

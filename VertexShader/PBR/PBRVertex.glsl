@@ -10,7 +10,6 @@ uniform mat4 view;
 uniform mat4 model;
 
 uniform mat3 normalMatrix;
-
 uniform mat4 lightMatrix;
 
 uniform float hasNormalMap;

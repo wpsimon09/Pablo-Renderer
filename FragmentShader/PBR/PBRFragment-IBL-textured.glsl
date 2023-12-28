@@ -27,7 +27,7 @@ float ao;
 uniform sampler2D _albedoMap;
 uniform sampler2D _metallnesMap;
 uniform sampler2D _normalMap;
-uniform sampler2D _roughnessMap;
+uniform sampler2D _rougnessMap;
 uniform sampler2D _aoMap;
 
 
@@ -121,9 +121,8 @@ void main()
 
     //normal
     //vec3 N = normalize(fs_in.Normal);
-    vec3 N = getNormalFromMap();
-    //vec3 N = texture(_normalMap, fs_in.TexCoords).xyz;
-
+    vec3 N = texture(_normalMap, fs_in.TexCoords).xyz;
+    N *= fs_in.TBN;
     //view direction;
     vec3 V = normalize(camPos - fs_in.FragPos);
 
@@ -203,6 +202,6 @@ void main()
     // gamma corection
     //color = pow(color,vec3(1.0/2.2));
     
-    FragColor = vec4(0.0,1.0,0.0, 1.0);
+    FragColor = vec4(color, 1.0);
 
 }
