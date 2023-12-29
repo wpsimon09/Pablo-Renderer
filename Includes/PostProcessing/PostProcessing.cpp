@@ -22,7 +22,6 @@ PostProcessing::PostProcessing() {
     this->drawnScene = new Texture(GL_TEXTURE_2D, "finalFrameBuffer", glm::vec2(800,600), GL_RGBA );
     this->frameBuffer->mountTexture(this->drawnScene);
     this->frameBuffer->updateRenderBufferStorage(this->frameBuffer->texture->getDimentions());
-
 }
 
 PostProcessing::PostProcessing(Texture *texture, FrameBuffer *FBO) {
