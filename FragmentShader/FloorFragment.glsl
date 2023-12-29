@@ -63,6 +63,10 @@ void main()
     //----------
     // AMBIENT
     //----------
+    vec4 floorTexture = texture(texture_diffuse0, fs_in.TexCoords);
+    if(floorTexture.a < 0.1){
+        discard;
+    }
     vec3 ambient = vec3(texture(texture_diffuse0, fs_in.TexCoords)* 0.4);
     
     //--------

@@ -56,3 +56,13 @@ void Texture::generateMipmap() {
     glGenerateMipmap(this->type);
     std::cout<<" Generated mip map for the texture with ID: "<<this->ID<<std::endl;
 }
+
+void Texture::changeWrappingMethod(GLenum s, GLenum t, GLenum r) {
+    glBindTexture(this->type, this->ID);
+    glTexParameteri(this->type, GL_TEXTURE_WRAP_S, s);
+    glTexParameteri(this->type, GL_TEXTURE_WRAP_T, t);
+    if (this->type == GL_TEXTURE_CUBE_MAP){
+        glTexParameteri(this->type, GL_TEXTURE_WRAP_T, r);
+    }
+
+}

@@ -12,6 +12,7 @@
 #include "PBRTextureLoader.h"
 #include "PBRPipeline/PBRPipeline.h"
 #include "Model.h"
+#include "Debug/DisplayingFrameBuffer/FrameBufferDebug.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -69,6 +70,7 @@ int main() {
     //enables gama correction that is build in opengl
     glEnable(GL_FRAMEBUFFER_SRGB);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+    glEnable(GL_BLEND);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetScrollCallback(window, scroll_callback);
@@ -107,6 +109,7 @@ int main() {
 
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
+    Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
     //witcher medailon
     Model witcherMedailon("Assets/Model/witcher_medalion/scene.gltf");
 
@@ -127,6 +130,8 @@ int main() {
     //cube VAO
     unsigned int cubeVAO = createVAO(cubeVertices, sizeof(cubeVertices) / sizeof(float));
 
+    //debug quad VAO
+    unsigned int debugQuadVao = createVAO(debugQuadVertices, sizeof(debugQuadVertices)/sizeof(float));
     //sphereVAO
     unsigned int indexNum;
     unsigned int instanceCount;
@@ -210,11 +215,16 @@ int main() {
     FrameBuffer proceduralTextureFrameBuffer;
     Texture *girdProceduralTexture = new Texture(GL_TEXTURE_2D, "gridTexture", glm::vec2(512, 512), GL_RGBA, GL_RGBA);
     proceduralTextureFrameBuffer.mountTexture(girdProceduralTexture);
+    girdProceduralTexture->changeWrappingMethod(GL_REPEAT, GL_REPEAT);
     proceduralTextureFrameBuffer.updateRenderBufferStorage(girdProceduralTexture->getDimentions());
     proceduralFloorTextureShader.use();
-    proceduralFloorTextureShader.setFloat("numOfDivisions", 50);
+    proceduralFloorTextureShader.setFloat("numOfDivisions", 2);
     proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, planeVAO);
 
+    //--------------------------
+    // DEBUG VIEW FOR THE CAMERA
+    //--------------------------
+    FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(512, 512), GL_RGBA, GL_RGBA32F);
     //------------------
     // LOAD PBR TEXTURES
     //------------------
@@ -389,7 +399,6 @@ int main() {
         useTexture(0, girdProceduralTexture->ID);
         useTexture(1, depthMap);
         model = glm::mat4(1.0f);
-        model = glm::scale(model,glm::vec3(50.0f, 0.0, 50.0F));
         floorShader.setMat4("lightMatrix", lightSpaceMatrix);
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
@@ -405,6 +414,10 @@ int main() {
         DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
         */
 
+        //-----------------
+        //DRAW DEBUG WINDOW
+        //-----------------
+        frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao, girdProceduralTexture);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);

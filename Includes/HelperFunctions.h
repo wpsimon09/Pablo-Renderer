@@ -210,13 +210,13 @@ float cubeVertices[] = {
 float planeVertices[] = {
         // positions                            // normals                               // texcoords
         // positions            // normals         // texcoords
-        1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
-        -1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-        -1.0f, -0.5f, -1.0f,  0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
+        100.0f, -0.5f,  100.0f,  0.0f, 100.0f, 0.0f,  100.0f,  0.0f,
+        -100.0f, -0.5f,  100.0f,  0.0f, 100.0f, 0.0f,   0.0f,  0.0f,
+        -100.0f, -0.5f, -100.0f,  0.0f, 100.0f, 0.0f,   0.0f, 100.0f,
 
-        1.0f, -0.5f,  1.0f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
-        -1.0f, -0.5f, -1.0f,  0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
-        1.0f, -0.5f, -1.0f,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f
+        100.0f, -0.5f,  100.0f,  0.0f, 100.0f, 0.0f,  100.0f,  0.0f,
+        -100.0f, -0.5f, -100.0f,  0.0f, 100.0f, 0.0f,   0.0f, 100.0f,
+        100.0f, -0.5f, -100.0f,  0.0f, 100.0f, 0.0f,  100.0f, 100.0f
 };
 
 float screeneSpaceQuadVertecies[] = {
@@ -249,10 +249,21 @@ float wallVertecies[] = {
 };
 float HDRframeBufferVertecies[] = {
 	// positions        // texture Coords
-	-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+	-1.0f,  0.2f, 0.0f, 0.0f, 1.0f,
 	-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
 	 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
 	 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+};
+
+float debugQuadVertices[] = {
+        // positions                            // texture Coords
+        1.0f,   1.6f, 0.0f, 0.0f, 1.0f,
+        0.6f,  1.0f, 0.0f, 0.0f, 0.0f,
+        1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+
+        1.0f,  0.6f, 0.0f, 0.0f, 0.0f,
+        1.0f,  0.6f, 0.0f, 1.0f, 1.0f,
+        1.0f,  1.0f, 0.0f, 1.0f, 0.0f,
 };
 
 #endif
