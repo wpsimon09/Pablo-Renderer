@@ -218,7 +218,7 @@ int main() {
     girdProceduralTexture->changeWrappingMethod(GL_REPEAT, GL_REPEAT);
     proceduralTextureFrameBuffer.updateRenderBufferStorage(girdProceduralTexture->getDimentions());
     proceduralFloorTextureShader.use();
-    proceduralFloorTextureShader.setFloat("numOfDivisions", 2);
+    proceduralFloorTextureShader.setFloat("numOfDivisions", 1);
     proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, planeVAO);
 
     //--------------------------
