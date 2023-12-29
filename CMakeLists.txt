@@ -16,6 +16,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/PBRPipeline/PBRPipeline.h
         Includes/Debug/DisplayingFrameBuffer/FrameBufferDebug.cpp
         Includes/Debug/DisplayingFrameBuffer/FrameBufferDebug.h
+        Includes/PostProcessing/PostProcessing.cpp
+        Includes/PostProcessing/PostProcessing.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

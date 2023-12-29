@@ -417,7 +417,7 @@ int main() {
         //-----------------
         //DRAW DEBUG WINDOW
         //-----------------
-        frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao, girdProceduralTexture);
+        frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao, cubeTexture);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);

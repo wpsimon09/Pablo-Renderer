@@ -257,13 +257,13 @@ float HDRframeBufferVertecies[] = {
 
 float debugQuadVertices[] = {
         // positions                            // texture Coords
-        0.6f,  0.6f, 0.0f, 1.0f, 1.0f, // top right
-        0.6f, 1.0f, 0.0f, 1.0f, 0.0f, // bottom right
-        1.0f,  1.0f, 0.0f, 0.0f, 1.0f, // top left
-        0.6f,  0.6f, 0.0f, 1.0f, 1.0f, // top right
-        1.0f, 0.6f, 0.0f, 1.0f, 0.0f, // bottom right
-        1.0f,  1.0f, 0.0f, 0.0f, 1.0f, // top left
-
+        0.30f,  0.40f, 0.0f, 0.0f, 0.0f, // bottom left
+        0.30f, 1.0f, 0.0f, 0.0f, 1.0f, // top left
+        1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
+        
+        0.30f,  0.40f, 0.0f, 0.0f, 0.0f, // bottom left
+        1.0f, 0.40f, 0.0f, 1.0f, 0.0f, // bottom right
+        1.0f,  1.0f, 0.0f, 1.0f, 1.0f, // top right
 };
 
 #endif
