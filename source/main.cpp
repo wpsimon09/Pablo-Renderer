@@ -369,7 +369,7 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
+//        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
 
         //----------------------
         // DRAW PLANE AS A FLOOR
@@ -383,7 +383,7 @@ int main() {
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
-        //DrawPlane(floorShader, model, view, projection, floorVAO, GL_TRIANGLES, 6);
+        DrawPlane(floorShader, model, view, projection, floorVAO, GL_TRIANGLES, 6);
 
         //----------------------
         // DRAW BRDF LUT TEXTURE
