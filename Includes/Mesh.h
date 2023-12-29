@@ -130,8 +130,9 @@ void Mesh::setupTextures(Shader &shader)
         //std::cout<<"GL_ACTIVE_TEXTURE"<<0+i<<" with type: "<<textures[i].type <<std::endl;
 		shader.setInt((name).c_str(), i);
         glActiveTexture(GL_TEXTURE0+i);
-		glBindTexture(GL_TEXTURE_2D, textures[i].id);
+        glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
+
 }
 
 #endif // !1

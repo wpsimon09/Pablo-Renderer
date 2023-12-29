@@ -390,7 +390,7 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-//        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
+        //DrawCube(skyBoxShader, model, view, projection, cubeVAO);
 
         //----------------------
         // DRAW PLANE AS A FLOOR

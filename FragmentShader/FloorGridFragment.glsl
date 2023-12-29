@@ -43,7 +43,7 @@ float grid(vec2 pos, float divisions){
     float part1 = differenceSDF(stripes(pos.x, divisions), stripes(pos.y, divisions));
     vec2 posTrans = pos + 1.0 / divisions;
     float part2 = differenceSDF(stripes(posTrans.x, divisions), stripes(posTrans.y, divisions));
-    return stroke((unionSDF(part1, part2)),0.002);
+    return stroke((unionSDF(part1, part2)),0.01);
 }
 
 vec4 procedularTexture(vec2 pos)
