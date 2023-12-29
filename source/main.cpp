@@ -131,7 +131,7 @@ int main() {
     unsigned int cubeVAO = createVAO(cubeVertices, sizeof(cubeVertices) / sizeof(float));
 
     //debug quad VAO
-    unsigned int debugQuadVao = createVAO(debugQuadVertices, sizeof(debugQuadVertices)/sizeof(float));
+    unsigned int debugQuadVao = createVAO(debugQuadVertices, sizeof(debugQuadVertices)/sizeof(float), false, true);
     //sphereVAO
     unsigned int indexNum;
     unsigned int instanceCount;
@@ -224,7 +224,7 @@ int main() {
     //--------------------------
     // DEBUG VIEW FOR THE CAMERA
     //--------------------------
-    FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(512, 512), GL_RGBA, GL_RGBA32F);
+    FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(124, 124), GL_RGBA, GL_RGBA32F);
     //------------------
     // LOAD PBR TEXTURES
     //------------------
