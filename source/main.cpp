@@ -110,6 +110,9 @@ int main() {
     //witcher medailon
     Model witcherMedailon("Assets/Model/witcher_medalion/scene.gltf");
 
+    //witcher medailon
+    Model mortier("Assets/Model/medieval_mortier/scene.gltf");
+
     stbi_set_flip_vertically_on_load(true);
 
     // plane VAO
@@ -313,6 +316,14 @@ int main() {
         pbrPipeline.bindTextures(5);
 
         witcherMedailon.Draw(PBRShader);
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -5.0f));
+        model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0.0,0.0));
+        model = glm::scale(model, glm::vec3(4.0f));
+        PBRShader.setMat4("model", model);
+        mortier.Draw(PBRShader);
+
         //set light properties
         for (unsigned int i = 0; i < 5; ++i)
         {

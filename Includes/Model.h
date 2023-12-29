@@ -206,8 +206,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
 
         // load emmision
-		std::vector<_Texture> emisionMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "_emmisionMap");
-		textures.insert(textures.end(), emisionMaps.begin(), emisionMaps.end());
+        std::vector<_Texture> emisionMaps = loadMaterialTextures(material, aiTextureType_EMISSIVE, "_emmisionMap");
+        textures.insert(textures.end(), emisionMaps.begin(), emisionMaps.end());
 
 	}
 	else 
@@ -240,7 +240,7 @@ std::vector<_Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType
 			}
 		}
 		if (!skip)
-		{ // if texture hasn�t been loaded already, load it
+		{ // if texture hasnt been loaded already, load it
 			_Texture texture;
 			texture.id = TextureFromFile(str.C_Str(), this->directory);
 			texture.type = typeName;
