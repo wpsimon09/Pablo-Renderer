@@ -34,6 +34,7 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/cubeVerticies.h
         Includes/Renderer/Utils/VAO/VAO.cpp
         Includes/Renderer/Utils/VAO/VAO.h
+        Includes/Debug/DebugLogger.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

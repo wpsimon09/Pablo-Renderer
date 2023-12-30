@@ -56,7 +56,9 @@ Mesh::Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, st
 	this->indecies = indecies;
 	this->textures = texutres;
 
-	setupMesh();
+    this->testVAO = new VAO(this->vertecies, this->indecies);
+
+    setupMesh();
 }
 
 void Mesh::setupMesh() 
@@ -64,7 +66,6 @@ void Mesh::setupMesh()
     size_t vec3Size = sizeof(glm::vec3);
     size_t vec2Size = sizeof(glm::vec2);
 
-    this->testVAO = new VAO(vertecies, indecies);
     this->testVAO->getStatus();
 }
 
@@ -106,7 +107,7 @@ void Mesh::setupTextures(Shader &shader)
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
 
 	}
-        glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0);
 
 }
 

@@ -3,22 +3,31 @@
 //
 
 #include "VAO.h"
+#include "Debug/DebugLogger.h"
 
 //loading with verticies must have everything
 VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
     glGenVertexArrays(1, &this->ID);
+    glCheckError();
+
     glGenBuffers(1, &this->VBO);
     glGenBuffers(1, &this->EBO);
+    glCheckError();
 
     this->bind();
 
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
+    glCheckError();
+
 
     glBufferData(GL_ARRAY_BUFFER, vertecies.size() * sizeof(Vertex), &vertecies[0], GL_STATIC_DRAW);
-
+    glCheckError();
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->EBO);
+    glCheckError();
+
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indecies.size() * sizeof(unsigned int), &indecies[0], GL_STATIC_DRAW);
+    glCheckError();
 
     this->hasPositions = true;
     this->hasTexCoords = true;
@@ -30,24 +39,31 @@ VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
     //vertex positions
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, position));
+    glCheckError();
 
     //noramls
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, normals));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normals));
+    glCheckError();
 
     //textures
     glEnableVertexAttribArray(2);
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+    glCheckError();
 
     //tangents
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+    glCheckError();
 
     //bytangents
     glEnableVertexAttribArray(4);
     glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+    glCheckError();
 
     this->unbind();
+    glCheckError();
+
 }
 
 //loading via normal array
@@ -126,11 +142,13 @@ VAO::VAO(float *vertecies, float numberOfComponents, bool hasNormals, bool hasTe
 }
 
 void VAO::unbind() {
-    glBindVertexArray(this->ID);
+    glBindVertexArray(0);
+    glCheckError();
 }
 
 void VAO::bind() {
-    glBindVertexArray(0);
+    glBindVertexArray(this->ID);
+    glCheckError();
 }
 
 void VAO::getStatus() {
