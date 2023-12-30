@@ -53,7 +53,7 @@ int main() {
     glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "OpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Pablo-renderer", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -181,7 +181,7 @@ int main() {
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
-    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunrise.hdr");
+    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunset.hdr");
 
 
     glm::vec3 lightPositions[] = {
@@ -218,13 +218,14 @@ int main() {
     girdProceduralTexture->changeWrappingMethod(GL_REPEAT, GL_REPEAT);
     proceduralTextureFrameBuffer.updateRenderBufferStorage(girdProceduralTexture->getDimentions());
     proceduralFloorTextureShader.use();
-    proceduralFloorTextureShader.setFloat("numOfDivisions", 1);
+    proceduralFloorTextureShader.setFloat("numOfDivisions", 1.2);
     proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, planeVAO);
 
     //--------------------------
     // DEBUG VIEW FOR THE CAMERA
     //--------------------------
     FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(124, 124), GL_RGBA, GL_RGBA32F);
+
     //------------------
     // LOAD PBR TEXTURES
     //------------------
@@ -332,7 +333,7 @@ int main() {
         model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0.0,0.0));
         model = glm::scale(model, glm::vec3(4.0f));
         PBRShader.setMat4("model", model);
-        //mortier.Draw(PBRShader);
+        mortier.Draw(PBRShader);
 
         //set light properties
         for (unsigned int i = 0; i < 5; ++i)
@@ -390,7 +391,7 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
+//        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
 
         //----------------------
         // DRAW PLANE AS A FLOOR
@@ -417,7 +418,7 @@ int main() {
         //-----------------
         //DRAW DEBUG WINDOW
         //-----------------
-        //frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao, cubeTexture);
+        frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao, cubeTexture);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);

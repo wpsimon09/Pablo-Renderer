@@ -5,7 +5,9 @@
 #include <vector>
 #include <string>
 #include "Shader.h"
-
+#include "Renderer/Utils/Vertex/Vertex.h"
+#include "Renderer/Utils/VAO/VAO.h"
+/*
 struct Vertex
 {
 	glm::vec3 Postion;
@@ -15,6 +17,7 @@ struct Vertex
 	glm::vec3 Tangents;
 	glm::vec3 Bitangents;
 };
+*/
 
 struct _Texture
 {
@@ -32,13 +35,14 @@ public:
 	Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, std::vector<_Texture> texutres);
 	void Draw(Shader& shader);
 	void DrawInstanced(Shader& shader);
-	unsigned int VAO;
+	//unsigned int VAO;
+    VAO* testVAO;
 
 	void setAmountOfDrawCals(unsigned int drawCalls) {
 		this->drawCalls = drawCalls;
 	}
 private:
-	unsigned int  VBO, EBO, drawCalls;
+	unsigned int drawCalls;
 
 	//initialize the buffers
 	//--------------
@@ -57,39 +61,11 @@ Mesh::Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, st
 
 void Mesh::setupMesh() 
 {
-	glGenVertexArrays(1, &this->VAO);
-	glGenBuffers(1, &this->VBO);
-	glGenBuffers(1, &this->EBO);
+    size_t vec3Size = sizeof(glm::vec3);
+    size_t vec2Size = sizeof(glm::vec2);
 
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	glBufferData(GL_ARRAY_BUFFER, vertecies.size() * sizeof(Vertex), &vertecies[0], GL_STATIC_DRAW);
-
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indecies.size() * sizeof(unsigned int), &indecies[0], GL_STATIC_DRAW);
-
-
-	//vertex positions
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-
-	//noramls
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, Normal));
-
-	//textures
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
-
-	//tangents
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangents));
-
-	//bytangents
-	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangents));
+    this->testVAO = new VAO(vertecies, indecies);
+    this->testVAO->getStatus();
 }
 
 void Mesh::Draw(Shader& shader) {
@@ -97,7 +73,7 @@ void Mesh::Draw(Shader& shader) {
 	this->setupTextures(shader);
 
 	//draw mesh
-	glBindVertexArray(VAO);
+	this->testVAO->bind();
 	glDrawElements(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
@@ -109,7 +85,7 @@ void Mesh::DrawInstanced(Shader& shader)
 	this->setupTextures(shader);
 
 	//draw mesh
-	glBindVertexArray(VAO);
+	this->testVAO->bind();
 	glDrawElementsInstanced(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0, this->drawCalls);
 	glBindVertexArray(0);
 
@@ -118,9 +94,6 @@ void Mesh::DrawInstanced(Shader& shader)
 
 void Mesh::setupTextures(Shader &shader)
 {
-	unsigned int diffuseNr = 0;
-	unsigned int specularNr = 0;
-	unsigned int normalNr = 0;
 	
 	shader.use();
 	for (unsigned int i = 0; i < textures.size(); i++) {
@@ -131,7 +104,9 @@ void Mesh::setupTextures(Shader &shader)
 		shader.setInt((name).c_str(), i);
         glActiveTexture(GL_TEXTURE0+i);
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
+
 	}
+        glActiveTexture(GL_TEXTURE0);
 
 }
 

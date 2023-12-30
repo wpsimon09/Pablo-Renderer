@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.27)
-project(CLionTest)
+project(Pablo-Renderer)
 
 set(CMAKE_CXX_STANDARD 23)
+
 
 # Add the source files
 add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
@@ -18,6 +19,21 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Debug/DisplayingFrameBuffer/FrameBufferDebug.h
         Includes/PostProcessing/PostProcessing.cpp
         Includes/PostProcessing/PostProcessing.h
+        Includes/Renderer/Utils/Vertex/Vertex.cpp
+        Includes/Renderer/Utils/Vertex/Vertex.h
+        Includes/Renderer/Renderable/Renderable.cpp
+        Includes/Renderer/Renderable/Renderable.h
+        Includes/Renderer/Utils/Transformations/Transformations.cpp
+        Includes/Renderer/Utils/Transformations/Transformations.h
+        Includes/Renderer/Geometry/Geometry.cpp
+        Includes/Renderer/Geometry/Geometry.h
+        Includes/Renderer/Material/Material.cpp
+        Includes/Renderer/Material/Material.h
+        Includes/Renderer/Geometry/Shapes/CubeGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/CubeGeometry.h
+        Includes/Renderer/Geometry/Shapes/cubeVerticies.h
+        Includes/Renderer/Utils/VAO/VAO.cpp
+        Includes/Renderer/Utils/VAO/VAO.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
@@ -27,7 +43,8 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
 # Add the include directories
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/Includes
-        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes)
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/Renderer)
 
 add_library(glad STATIC 3rdPartyLybraries/Includes/glad/glad.c)
 target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)

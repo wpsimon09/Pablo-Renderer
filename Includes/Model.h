@@ -8,7 +8,7 @@
 #include<assimp/postprocess.h>
 #include<assimp/ai_assert.h>
 #include<assimp/scene.h>
-
+#include "Renderer/Utils/Vertex/Vertex.h"
 #include "Mesh.h"
 #include "Shader.h"
 
@@ -125,7 +125,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 		tempVertex.x = mesh->mVertices[i].x;
 		tempVertex.y = mesh->mVertices[i].y;
 		tempVertex.z = mesh->mVertices[i].z;
-		vertex.Postion = tempVertex;
+		vertex.position = tempVertex;
 
 		if (mesh->HasNormals())
 		{
@@ -134,8 +134,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 			tempVertex.y = mesh->mNormals[i].y;
 			tempVertex.z = mesh->mNormals[i].z;
 			
-			vertex.Normal = tempVertex;
-			
+			vertex.normals = tempVertex;
+
 		}
 		else 
 			std::cout << "ERROR::ASSIMP::PROCCESSING::NORMALS - There are no normal vectors in the model\n";
@@ -150,7 +150,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 			//but we are only interted in the first one 
 			tempTexCoords.x = mesh->mTextureCoords[0][i].x;
 			tempTexCoords.y = mesh->mTextureCoords[0][i].y;
-			vertex.TexCoords = tempTexCoords;
+			vertex.uv = tempTexCoords;
 
 			glm::vec3 tempTangent, tempBitanget;
 
@@ -158,17 +158,17 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 			tempTangent.y = mesh->mTangents[i].y;
 			tempTangent.z = mesh->mTangents[i].z;
 
-			vertex.Tangents = tempTangent;
+			vertex.tangent = tempTangent;
 
 			tempBitanget.x = mesh->mBitangents[i].x;
 			tempBitanget.y = mesh->mBitangents[i].y;
 			tempBitanget.z = mesh->mBitangents[i].z;
 
-			vertex.Bitangents = tempBitanget;
+			vertex.bitangent = tempBitanget;
 		}
 		else {
 			std::cout << "ERROR::ASSIMP::PROCCESSING::TEXTURE::COORDINATES - There are no texture coordinates to process\n";
-			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+			vertex.uv = glm::vec2(0.0f, 0.0f);
 		}
 		vertecies.push_back(vertex);
 	}
