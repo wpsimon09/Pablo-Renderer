@@ -7,9 +7,9 @@
 #include <glm/glm.hpp>
 
 /// <summary>
-/// Draws the cube on the screen
+/// Draws the cubeData on the screen
 /// </summary>
-/// <param name="shader">Shader program that will be use when drawing the cube</param>
+/// <param name="shader">Shader program that will be use when drawing the cubeData</param>
 /// <param name="model">Model matrix that will be used NOTE: name of uniform must be "model"</param>
 /// <param name="view">View matrix that will be used NOTE: name of uniform must be "view"</param>
 /// <param name="projection">Projection matrix that will be used NOTE: name of uniform must be "projection"</param>
@@ -32,7 +32,7 @@ void DrawCube(Shader shader, glm::mat4 model, glm::mat4 view, glm::mat4 projecti
 /// <summary>
 /// Renders the object to be used as a shadow map
 /// </summary>
-/// <param name="shader">Shader to use when drawing cube map</param>
+/// <param name="shader">Shader to use when drawing cubeData map</param>
 /// <param name="model">Where is object in the world space located</param>
 /// <param name="lightSpaceMatrix">Matrix that transforms coordinates to the perspective of light (projections * view)</param>
 /// <param name="VAO">Vertex array object to be used</param>
@@ -51,7 +51,7 @@ void DrawShadowMapCube(Shader shader, glm::mat4 model, unsigned int VAO)
 /// <summary>
 /// Draws plane on the scene
 /// </summary>
-/// <param name="shader">Shader program that will be use when drawing the cube</param>
+/// <param name="shader">Shader program that will be use when drawing the cubeData</param>
 /// <param name="model">Model matrix that will be used NOTE: name of uniform must be "model"</param>
 /// <param name="view">View matrix that will be used NOTE: name of uniform must be "view"</param>
 /// <param name="projection">Projection matrix that will be used NOTE: name of uniform must be "projection"</param>

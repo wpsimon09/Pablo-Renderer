@@ -31,10 +31,10 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Material/Material.h
         Includes/Renderer/Geometry/Shapes/CubeGeometry.cpp
         Includes/Renderer/Geometry/Shapes/CubeGeometry.h
-        Includes/Renderer/Geometry/Shapes/cubeVerticies.h
         Includes/Renderer/Utils/VAO/VAO.cpp
         Includes/Renderer/Utils/VAO/VAO.h
         Includes/Debug/DebugLogger.h
+        Includes/Renderer/Geometry/Shapes/cubeVertexData.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

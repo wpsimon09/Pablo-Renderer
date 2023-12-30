@@ -7,6 +7,9 @@
 
 #include "vector"
 #include "Renderer/Utils/Vertex/Vertex.h"
+#include "Renderer/Utils/VAO/VAO.h"
+
+
 class Geometry {
 public:
     GLuint getVertexArrays();
@@ -14,10 +17,7 @@ public:
     virtual ~Geometry(){};
 protected:
     std::string name;
-    GLuint VAO;
-    GLuint VBO;
-    virtual void generateVAO() {};
-    virtual void fillTheVerticies() {};
+    VAO *vao;
 };
 
 

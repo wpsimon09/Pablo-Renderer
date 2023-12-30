@@ -13,6 +13,8 @@
 #include "PBRPipeline/PBRPipeline.h"
 #include "Model.h"
 #include "Debug/DisplayingFrameBuffer/FrameBufferDebug.h"
+#include "Renderer/Geometry/Geometry.h"
+#include "Renderer/Geometry/Shapes/CubeGeometry.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -101,7 +103,7 @@ int main() {
 
     Shader skyBoxShader("VertexShader/PBR/SkyBoxVertex.glsl", "FragmentShader/PBR/SkyBoxFragment.glsl", "Sky box shader");
 
-    Shader envToPrefilter("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cube map");
+    Shader envToPrefilter("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cubeData map");
 
     Shader brdfLutTextureShader("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
 
@@ -116,6 +118,9 @@ int main() {
     //witcher medailon
     Model mortier("Assets/Model/medieval_mortier/scene.gltf");
 
+    Geometry* geometry;
+    geometry = new CubeGeometry("cubeData");
+
     stbi_set_flip_vertically_on_load(true);
 
     // plane VAO
@@ -128,7 +133,7 @@ int main() {
 
     VAO floorVAO(planeVertices, sizeof(planeVertices) / sizeof(float), true, true);
 
-    //cube VAO
+    //cubeData VAO
     unsigned int cubeVAO = createVAO(cubeVertices, sizeof(cubeVertices) / sizeof(float));
 
     //debug quad VAO
@@ -178,7 +183,7 @@ int main() {
     unsigned int floorTexture = loadTexture("Assets/Textures/AdvancedLightning/grid_w.jpg", true);
     unsigned int pointLightTexture = loadTexture("Assets/Textures/AdvancedLightning/light.png", false);
     unsigned int dirLightTexture = loadTexture("Assets/Textures/AdvancedLightning/sun.png", false);
-    unsigned int cubeTexture = loadTexture("Assets/Textures/AdvancedLightning/cube-wood.jpg", false);
+    unsigned int cubeTexture = loadTexture("Assets/Textures/AdvancedLightning/cubeData-wood.jpg", false);
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
@@ -392,7 +397,7 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-//        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
+        DrawCube(skyBoxShader, model, view, projection, geometry->getVertexArrays());
 
         //----------------------
         // DRAW PLANE AS A FLOOR
