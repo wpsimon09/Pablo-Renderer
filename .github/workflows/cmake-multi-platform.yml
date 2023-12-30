@@ -1,0 +1,34 @@
+name: C++ Build with OpenGL
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: fedora-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up CMake
+      run: sudo dnf install -y cmake
+
+    - name: Set up OpenGL dependencies
+      run: |
+        sudo dnf install -y mesa-libGL-devel mesa-libGLU-devel libXi-devel libXrandr-devel libXxf86vm-devel libXcursor-devel
+
+    - name: Set up additional dependencies (gltf, assimp, glad)
+      run: |
+        sudo dnf install -y libgltf-devel assimp-devel glad-devel
+
+    - name: Configure CMake
+      run: cmake -S . -B build
+
+    - name: Build
+      run: cmake --build build
