@@ -14,8 +14,8 @@
 #include "Model.h"
 #include "Debug/DisplayingFrameBuffer/FrameBufferDebug.h"
 #include "Renderer/Geometry/Geometry.h"
-#include "Renderer/Geometry/Shapes/CubeGeometry.h"
-
+#include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
+#include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
 void processInput(GLFWwindow* window);
@@ -118,8 +118,11 @@ int main() {
     //witcher medailon
     Model mortier("Assets/Model/medieval_mortier/scene.gltf");
 
-    Geometry* geometry;
-    geometry = new CubeGeometry("cubeData");
+    Geometry* cubeGeometry;
+    cubeGeometry = new CubeGeometry("cube");
+
+    Geometry* planeGeometry;
+    planeGeometry = new PlaneGeometry("plane");
 
     stbi_set_flip_vertically_on_load(true);
 
@@ -397,7 +400,7 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-        DrawCube(skyBoxShader, model, view, projection, geometry->getVertexArrays());
+        DrawCube(skyBoxShader, model, view, projection, cubeGeometry->getVertexArrays());
 
         //----------------------
         // DRAW PLANE AS A FLOOR
@@ -410,7 +413,7 @@ int main() {
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
-        DrawPlane(floorShader, model, view, projection, floorVAO.ID, GL_TRIANGLES, 6);
+        DrawPlane(floorShader, model, view, projection, planeGeometry->getVertexArrays(), GL_TRIANGLES, 6);
 
         //----------------------
         // DRAW BRDF LUT TEXTURE
