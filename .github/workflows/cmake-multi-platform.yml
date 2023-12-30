@@ -16,6 +16,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Update package lists
+        run: sudo apt-get update
+
       - name: Set up CMake
         run: sudo apt-get install -y cmake
 
@@ -23,7 +26,7 @@ jobs:
         run: |
           sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev libxi-dev libxrandr-dev libxxf86vm-dev libxcursor-dev
 
-      - name: Set up additional dependencies (gltf, assimp, glad)
+      - name: Set up additional dependencies (GLFW, Assimp, Glad)
         run: |
           sudo apt-get install -y libglfw3-dev assimp-dev libglad-dev
 
@@ -32,3 +35,11 @@ jobs:
 
       - name: Build
         run: cmake --build build
+
+      - name: Run tests (if applicable)
+        run: |
+          # Add commands to run tests if you have any
+
+      - name: Run the application (if applicable)
+        run: |
+          # Add commands to run your OpenGL application if needed
