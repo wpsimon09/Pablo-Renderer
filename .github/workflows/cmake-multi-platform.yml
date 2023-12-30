@@ -25,7 +25,7 @@ jobs:
 
       - name: Set up additional dependencies (gltf, assimp, glad)
         run: |
-          sudo apt-get install -y libgltf-dev assimp-dev libglad-dev
+          sudo apt-get install -y libglfw3-dev assimp-dev libglad-dev
 
       - name: Configure CMake
         run: cmake -S . -B build
