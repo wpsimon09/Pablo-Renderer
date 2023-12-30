@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Pablo-Renderer" pattern="file[CLionTest]:*||file[CLionTest]:Assets//*||file[CLionTest]:3rdPartyLybraries//*||file[CLionTest]:FragmentShader//*||file[CLionTest]:Includes//*||file[CLionTest]:.idea//*||file[CLionTest]:VertexShader//*||file[CLionTest]:source//*" />
+</component>

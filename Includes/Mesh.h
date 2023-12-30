@@ -5,7 +5,8 @@
 #include <vector>
 #include <string>
 #include "Shader.h"
-
+#include "Renderer/Utils/Vertex/Vertex.h"
+/*
 struct Vertex
 {
 	glm::vec3 Postion;
@@ -15,6 +16,7 @@ struct Vertex
 	glm::vec3 Tangents;
 	glm::vec3 Bitangents;
 };
+*/
 
 struct _Texture
 {
@@ -57,6 +59,9 @@ Mesh::Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, st
 
 void Mesh::setupMesh() 
 {
+    size_t vec3Size = sizeof(glm::vec3);
+    size_t vec2Size = sizeof(glm::vec2);
+
 	glGenVertexArrays(1, &this->VAO);
 	glGenBuffers(1, &this->VBO);
 	glGenBuffers(1, &this->EBO);
@@ -73,23 +78,23 @@ void Mesh::setupMesh()
 
 	//vertex positions
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, position));
 	//noramls
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, Normal));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, normals));
+    std::cout<<"Offset to normal"<<offsetof(Vertex, normals)<<std::endl;
 
 	//textures
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
-
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
+    std::cout<<"Offset to textures"<<offsetof(Vertex, uv)<<std::endl;
 	//tangents
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Tangents));
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
 
 	//bytangents
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Bitangents));
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
 }
 
 void Mesh::Draw(Shader& shader) {
@@ -131,7 +136,9 @@ void Mesh::setupTextures(Shader &shader)
 		shader.setInt((name).c_str(), i);
         glActiveTexture(GL_TEXTURE0+i);
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
+
 	}
+        glActiveTexture(GL_TEXTURE0);
 
 }
 

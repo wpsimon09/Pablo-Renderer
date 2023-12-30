@@ -18,6 +18,12 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Debug/DisplayingFrameBuffer/FrameBufferDebug.h
         Includes/PostProcessing/PostProcessing.cpp
         Includes/PostProcessing/PostProcessing.h
+        Includes/Renderer/Utils/Vertex/Vertex.cpp
+        Includes/Renderer/Utils/Vertex/Vertex.h
+        Includes/Renderer/Renderable/Renderable.cpp
+        Includes/Renderer/Renderable/Renderable.h
+        Includes/Renderer/Utils/Transformations/Transformations.cpp
+        Includes/Renderer/Utils/Transformations/Transformations.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
