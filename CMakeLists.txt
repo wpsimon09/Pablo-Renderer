@@ -46,18 +46,21 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes
         ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/Renderer)
 
-add_library(glad STATIC 3rdPartyLybraries/Includes/glad/glad.c)
-target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
 
 # Include and link Glad
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glad)
 
+add_library(glad STATIC 3rdPartyLybraries/Includes/glad/glad.c)
+target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
+
 # Find ASSIMP package and link against it
-find_package(ASSIMP REQUIRED)
+set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
+find_package(assimp REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
 
 # Find GLFW3 package and link against it
+set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/glfw3")
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glfw)
 
