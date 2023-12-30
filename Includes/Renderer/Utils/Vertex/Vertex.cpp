@@ -4,7 +4,7 @@
 
 #include "Vertex.h"
 
-Vertex::Vertex(glm::vec3 pos, glm::vec3 norm, glm::vec2 uvs, glm::vec3 tang, glm::vec3 bitang) {
+Vertex::Vertex(glm::vec3 pos, glm::vec2 uvs, glm::vec3 norm, glm::vec3 tang, glm::vec3 bitang) {
     this->position = pos;
     this->normals = norm;
     this->uv = uvs;

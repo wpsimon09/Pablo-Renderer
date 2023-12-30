@@ -16,13 +16,16 @@ public:
     bool hasTangents;
     bool hasBitangents;
     bool hasEBO;
-    VAO();
-    VAO(std::vector<Vertex> vertecies);
+    VAO(std::vector<Vertex> vertecies, std::vector<unsigned  int> indecies);
+    VAO(float vertecies[], float numberOfComponents, bool hasNormals = true, bool hasTexCoords = true);
 
+    void bind();
+    void unbind();
+
+    void getStatus();
 private:
     GLuint VBO;
     GLuint EBO;
-
 
 
 };

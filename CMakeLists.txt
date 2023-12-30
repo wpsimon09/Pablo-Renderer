@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.27)
-project(CLionTest)
+project(Pablo-Renderer)
 
 set(CMAKE_CXX_STANDARD 23)
+
 
 # Add the source files
 add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
@@ -42,7 +43,8 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
 # Add the include directories
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/Includes
-        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes)
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/Renderer)
 
 add_library(glad STATIC 3rdPartyLybraries/Includes/glad/glad.c)
 target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)

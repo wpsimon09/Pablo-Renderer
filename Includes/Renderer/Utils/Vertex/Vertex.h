@@ -19,7 +19,7 @@ public:
     glm::vec3 bitangent;
 
     Vertex() = default;
-    Vertex(glm::vec3 pos, glm::vec3 norm, glm::vec2 uvs, glm::vec3 tang = glm::vec3(0.0f), glm::vec3 bitang = glm::vec3(0.0f));
+    Vertex(glm::vec3 pos, glm::vec2 uvs,glm::vec3 norm = glm::vec3(0.0f),  glm::vec3 tang = glm::vec3(0.0f), glm::vec3 bitang = glm::vec3(0.0f));
     virtual ~Vertex();
 };
 
