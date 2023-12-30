@@ -53,10 +53,11 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Inc
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glad)
 
+# Find ASSIMP package and link against it
+find_package(ASSIMP REQUIRED)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
+
 # Find GLFW3 package and link against it
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glfw)
 
-# Find ASSIMP package and link against it
-find_package(ASSIMP REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
