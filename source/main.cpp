@@ -122,10 +122,11 @@ int main() {
     unsigned int planeVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);
 
     //floor VAO
-    unsigned int floorVAO = createVAO(planeVertices, sizeof(planeVertices)/sizeof(float), true, true);
 
     //VBO, EBO and VAO for the square that represents light position
     unsigned int lightVAO = createVAO(lightVertices, sizeof(lightVertices) / sizeof(float), false);
+
+    VAO floorVAO(planeVertices, sizeof(planeVertices) / sizeof(float), true, true);
 
     //cube VAO
     unsigned int cubeVAO = createVAO(cubeVertices, sizeof(cubeVertices) / sizeof(float));
@@ -404,7 +405,7 @@ int main() {
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
-        DrawPlane(floorShader, model, view, projection, floorVAO, GL_TRIANGLES, 6);
+        DrawPlane(floorShader, model, view, projection, floorVAO.ID, GL_TRIANGLES, 6);
 
         //----------------------
         // DRAW BRDF LUT TEXTURE
