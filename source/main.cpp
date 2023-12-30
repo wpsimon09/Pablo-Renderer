@@ -225,6 +225,7 @@ int main() {
     // DEBUG VIEW FOR THE CAMERA
     //--------------------------
     FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(124, 124), GL_RGBA, GL_RGBA32F);
+
     //------------------
     // LOAD PBR TEXTURES
     //------------------

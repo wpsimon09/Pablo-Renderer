@@ -10,12 +10,16 @@
 #include "Shader.h"
 #include "glm/glm.hpp"
 #include "Renderer/Utils/Transformations/Transformations.h"
-
+#include "Texture/Texture.h"
+#include "Renderer/Geometry/Geometry.h"
+#include "Renderer/Material/Material.h"
 class Renderable {
 private:
-    std::vector<Vertex> vertices;
-    Shader* shader;
+    Geometry objectGeometry;
+    Material objectMaterial;
     Transformations transformations;
+public:
+    Renderable();
 };
 
 

@@ -24,6 +24,15 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Renderable/Renderable.h
         Includes/Renderer/Utils/Transformations/Transformations.cpp
         Includes/Renderer/Utils/Transformations/Transformations.h
+        Includes/Renderer/Geometry/Geometry.cpp
+        Includes/Renderer/Geometry/Geometry.h
+        Includes/Renderer/Material/Material.cpp
+        Includes/Renderer/Material/Material.h
+        Includes/Renderer/Geometry/Shapes/CubeGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/CubeGeometry.h
+        Includes/Renderer/Geometry/Shapes/cubeVerticies.h
+        Includes/Renderer/Utils/VAO/VAO.cpp
+        Includes/Renderer/Utils/VAO/VAO.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
