@@ -36,10 +36,3 @@ jobs:
       - name: Build
         run: cmake --build build
 
-      - name: Run tests (if applicable)
-        run: |
-          # Add commands to run tests if you have any
-
-      - name: Run the application (if applicable)
-        run: |
-          # Add commands to run your OpenGL application if needed

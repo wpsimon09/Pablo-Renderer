@@ -54,7 +54,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rd
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glad)
 
 # Find GLFW3 package and link against it
-find_package(glfw3 REQUIRED)
+find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glfw)
 
 # Find ASSIMP package and link against it
