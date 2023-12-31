@@ -43,6 +43,12 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/screenSpaceQuadVertexData.h
         Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.cpp
         Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.h
+        Includes/Renderer/Material/PBRColor/PBRColor.cpp
+        Includes/Renderer/Material/PBRColor/PBRColor.h
+        Includes/Renderer/Material/PBRTexture/PBRTextured.cpp
+        Includes/Renderer/Material/PBRTexture/PBRTextured.h
+        Includes/Renderer/Utils/Texture/Texture2D.cpp
+        Includes/Renderer/Utils/Texture/Texture2D.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

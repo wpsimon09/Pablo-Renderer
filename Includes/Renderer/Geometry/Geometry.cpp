@@ -4,19 +4,19 @@
 
 #include "Geometry.h"
 
-GLuint Geometry::getVertexArrays() {
+GLuint Geometry::getVertexArrays() const {
     return this->vao->ID;
 }
 
-std::string Geometry::getName() {
+std::string Geometry::getName() const {
     return this->name;
 }
 
-void Geometry::bindVertexArrays() {
+void Geometry::bindVertexArrays()const {
     this->vao->bind();
 }
 
-void Geometry::unbindVertexArrays() {
+void Geometry::unbindVertexArrays()const  {
     this->vao->unbind();
 }
 

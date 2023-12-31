@@ -9,7 +9,6 @@
 #include "HelperFunctions.h"
 #include "DrawingFunctions.h"
 #include "VaoCreation.h"
-#include "PBRTextureLoader.h"
 #include "PBRPipeline/PBRPipeline.h"
 #include "Model.h"
 #include "Debug/DisplayingFrameBuffer/FrameBufferDebug.h"
@@ -52,7 +51,7 @@ glm::vec3 lightPosition(0.0f, 2.0f, -1.0f);
 
 int main() {
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
