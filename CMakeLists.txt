@@ -41,6 +41,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.cpp
         Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h
         Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/screenSpaceQuadVertexData.h
+        Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

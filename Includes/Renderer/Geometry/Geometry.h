@@ -13,6 +13,8 @@
 class Geometry {
 public:
     GLuint getVertexArrays();
+    void bindVertexArrays();
+    void unbindVertexArrays();
     std::string getName();
     virtual ~Geometry(){};
 protected:

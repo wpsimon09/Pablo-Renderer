@@ -12,3 +12,11 @@ std::string Geometry::getName() {
     return this->name;
 }
 
+void Geometry::bindVertexArrays() {
+    this->vao->bind();
+}
+
+void Geometry::unbindVertexArrays() {
+    this->vao->unbind();
+}
+
