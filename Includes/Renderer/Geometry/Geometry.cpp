@@ -5,9 +5,18 @@
 #include "Geometry.h"
 
 GLuint Geometry::getVertexArrays() {
-    return this->VAO;
+    return this->vao->ID;
 }
 
 std::string Geometry::getName() {
     return this->name;
 }
+
+void Geometry::bindVertexArrays() {
+    this->vao->bind();
+}
+
+void Geometry::unbindVertexArrays() {
+    this->vao->unbind();
+}
+

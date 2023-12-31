@@ -29,11 +29,20 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Geometry.h
         Includes/Renderer/Material/Material.cpp
         Includes/Renderer/Material/Material.h
-        Includes/Renderer/Geometry/Shapes/CubeGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/CubeGeometry.h
-        Includes/Renderer/Geometry/Shapes/cubeVerticies.h
+        Includes/Renderer/Geometry/Shapes/Cube/CubeGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/Cube/CubeGeometry.h
         Includes/Renderer/Utils/VAO/VAO.cpp
         Includes/Renderer/Utils/VAO/VAO.h
+        Includes/Debug/DebugLogger.h
+        Includes/Renderer/Geometry/Shapes/Cube/cubeVertexData.h
+        Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.h
+        Includes/Renderer/Geometry/Shapes/Plane/planeVertexData.h
+        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h
+        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/screenSpaceQuadVertexData.h
+        Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

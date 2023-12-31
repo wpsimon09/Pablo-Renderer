@@ -6,16 +6,10 @@
 #define CLIONTEST_CUBEGEOMETRY_H
 
 #include "Renderer/Geometry/Geometry.h"
-#include "cubeVerticies.h"
 
 class CubeGeometry: public Geometry {
 public:
     explicit CubeGeometry(std::string name = "CUBE");
-
-protected:
-    void generateVAO() override;
-
-    void fillTheVerticies() override;
 private:
 
 };

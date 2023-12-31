@@ -7,6 +7,8 @@
 #include "Shader.h"
 #include "Renderer/Utils/Vertex/Vertex.h"
 #include "Renderer/Utils/VAO/VAO.h"
+#include "Renderer/Geometry/Geometry.h"
+#include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 /*
 struct Vertex
 {
@@ -35,8 +37,8 @@ public:
 	Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, std::vector<_Texture> texutres);
 	void Draw(Shader& shader);
 	void DrawInstanced(Shader& shader);
-	//unsigned int VAO;
-    VAO* testVAO;
+	Geometry* modelGeometry;
+
 
 	void setAmountOfDrawCals(unsigned int drawCalls) {
 		this->drawCalls = drawCalls;
@@ -56,7 +58,7 @@ Mesh::Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, st
 	this->indecies = indecies;
 	this->textures = texutres;
 
-	setupMesh();
+    setupMesh();
 }
 
 void Mesh::setupMesh() 
@@ -64,8 +66,7 @@ void Mesh::setupMesh()
     size_t vec3Size = sizeof(glm::vec3);
     size_t vec2Size = sizeof(glm::vec2);
 
-    this->testVAO = new VAO(vertecies, indecies);
-    this->testVAO->getStatus();
+    modelGeometry = new ModelGeometry("Model", this->vertecies, this->indecies);
 }
 
 void Mesh::Draw(Shader& shader) {
@@ -73,19 +74,18 @@ void Mesh::Draw(Shader& shader) {
 	this->setupTextures(shader);
 
 	//draw mesh
-	this->testVAO->bind();
+    this->modelGeometry->bindVertexArrays();
 	glDrawElements(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-
 	glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::DrawInstanced(Shader& shader)
 {
-	this->setupTextures(shader);
+
+    this->modelGeometry->bindVertexArrays();
 
 	//draw mesh
-	this->testVAO->bind();
 	glDrawElementsInstanced(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0, this->drawCalls);
 	glBindVertexArray(0);
 
@@ -106,7 +106,7 @@ void Mesh::setupTextures(Shader &shader)
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
 
 	}
-        glActiveTexture(GL_TEXTURE0);
+    glActiveTexture(GL_TEXTURE0);
 
 }
 

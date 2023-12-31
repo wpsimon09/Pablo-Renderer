@@ -13,6 +13,10 @@
 #include "PBRPipeline/PBRPipeline.h"
 #include "Model.h"
 #include "Debug/DisplayingFrameBuffer/FrameBufferDebug.h"
+#include "Renderer/Geometry/Geometry.h"
+#include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
+#include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
+#include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -101,7 +105,7 @@ int main() {
 
     Shader skyBoxShader("VertexShader/PBR/SkyBoxVertex.glsl", "FragmentShader/PBR/SkyBoxFragment.glsl", "Sky box shader");
 
-    Shader envToPrefilter("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cube map");
+    Shader envToPrefilter("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cubeData map");
 
     Shader brdfLutTextureShader("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
 
@@ -116,22 +120,28 @@ int main() {
     //witcher medailon
     Model mortier("Assets/Model/medieval_mortier/scene.gltf");
 
+    Geometry* cubeGeometry;
+    cubeGeometry = new CubeGeometry("cube");
+
+    Geometry* planeGeometry;
+    planeGeometry = new PlaneGeometry("plane");
+
+    Geometry* screenSpaceQuadGeometry;
+    screenSpaceQuadGeometry = new ScreenSpaceQuadGeometry("ss-quad");
     stbi_set_flip_vertically_on_load(true);
 
     // plane VAO
-    unsigned int planeVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);
-
-    //floor VAO
-    unsigned int floorVAO = createVAO(planeVertices, sizeof(planeVertices)/sizeof(float), true, true);
+    unsigned int screeneSpaceQuadVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);
 
     //VBO, EBO and VAO for the square that represents light position
     unsigned int lightVAO = createVAO(lightVertices, sizeof(lightVertices) / sizeof(float), false);
 
-    //cube VAO
+    //cubeData VAO
     unsigned int cubeVAO = createVAO(cubeVertices, sizeof(cubeVertices) / sizeof(float));
 
     //debug quad VAO
     unsigned int debugQuadVao = createVAO(debugQuadVertices, sizeof(debugQuadVertices)/sizeof(float), false, true);
+
     //sphereVAO
     unsigned int indexNum;
     unsigned int instanceCount;
@@ -177,7 +187,7 @@ int main() {
     unsigned int floorTexture = loadTexture("Assets/Textures/AdvancedLightning/grid_w.jpg", true);
     unsigned int pointLightTexture = loadTexture("Assets/Textures/AdvancedLightning/light.png", false);
     unsigned int dirLightTexture = loadTexture("Assets/Textures/AdvancedLightning/sun.png", false);
-    unsigned int cubeTexture = loadTexture("Assets/Textures/AdvancedLightning/cube-wood.jpg", false);
+    unsigned int cubeTexture = loadTexture("Assets/Textures/AdvancedLightning/cubeData-wood.jpg", false);
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
@@ -207,7 +217,7 @@ int main() {
     pbrPipeline.generateHdrCubeMap(hdrToCubeMapShader, cubeVAO);
     pbrPipeline.generateIrradianceMap(envToIrrandianceShader, pbrPipeline.getHdrCubeMap(),cubeVAO);
     pbrPipeline.generatePrefilterMap(envToPrefilter, pbrPipeline.getHdrCubeMap(), cubeVAO);
-    pbrPipeline.generateBrdfLutTexture(brdfLutTextureShader, planeVAO);
+    pbrPipeline.generateBrdfLutTexture(brdfLutTextureShader, screenSpaceQuadGeometry->getVertexArrays());
 
     //-------------------------
     // FLOOR PROCEDURAL TEXTURE
@@ -219,7 +229,7 @@ int main() {
     proceduralTextureFrameBuffer.updateRenderBufferStorage(girdProceduralTexture->getDimentions());
     proceduralFloorTextureShader.use();
     proceduralFloorTextureShader.setFloat("numOfDivisions", 1.2);
-    proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, planeVAO);
+    proceduralTextureFrameBuffer.drawToTexture(proceduralFloorTextureShader, screeneSpaceQuadVAO);
 
     //--------------------------
     // DEBUG VIEW FOR THE CAMERA
@@ -391,7 +401,7 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-//        DrawCube(skyBoxShader, model, view, projection, cubeVAO);
+        DrawCube(skyBoxShader, model, view, projection, cubeGeometry->getVertexArrays());
 
         //----------------------
         // DRAW PLANE AS A FLOOR
@@ -404,16 +414,17 @@ int main() {
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
-        DrawPlane(floorShader, model, view, projection, floorVAO, GL_TRIANGLES, 6);
+        DrawPlane(floorShader, model, view, projection, planeGeometry->getVertexArrays(), GL_TRIANGLES, 6);
 
         //----------------------
         // DRAW BRDF LUT TEXTURE
         //----------------------
         /*
         lutDebug.use();
-        useTexture(0, girdProceduralTexture->ID);
-        DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), planeVAO, GL_TRIANGLE_STRIP, 4);
-        */
+        useTexture(0, pbrPipeline.getBrdfLutTexture());
+        DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), screenSpaceQuadGeometry->getVertexArrays(), GL_TRIANGLE_STRIP, 4);
+         */
+
 
         //-----------------
         //DRAW DEBUG WINDOW
