@@ -10,7 +10,7 @@
 
 class PlaneGeometry: public Geometry {
 public:
-    explicit PlaneGeometry(std::string nsme = "plane");
+    explicit PlaneGeometry(std::string name = "plane");
 
 };
 

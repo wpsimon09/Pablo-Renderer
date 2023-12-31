@@ -38,6 +38,9 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.cpp
         Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.h
         Includes/Renderer/Geometry/Shapes/Plane/planeVertexData.h
+        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h
+        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/screenSpaceQuadVertexData.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
