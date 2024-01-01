@@ -4,18 +4,18 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(glm::vec3 albedo, float metallic, float rougness, float ao): Material() {
-    this->albedo = new PBRMaterial(albedo, "albedo");
-    this->rougness = new PBRMaterial(rougness, "rougness");
-    this->metalness = new PBRMaterial(metallic, "metalness");
-    this->ao = new PBRMaterial(ao, "ao");
+PBRColor::PBRColor(glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
+    this->albedo = new PBRMaterial(albedo, shaderNamingConvention+"Albedo");
+    this->rougness = new PBRMaterial(rougness, shaderNamingConvention+"Rougness");
+    this->metalness = new PBRMaterial(metallic, shaderNamingConvention+"Metalness");
+    this->ao = new PBRMaterial(ao, shaderNamingConvention+"Ao");
 }
 
-PBRColor::PBRColor(): Material() {
-    this->albedo = new PBRMaterial(glm::vec3(0.2f,0.45f,0.2f), "albedo");
-    this->rougness = new PBRMaterial(0.2f, "rougness");
-    this->metalness = new PBRMaterial(0.8f, "metalness");
-    this->ao = new PBRMaterial(0.5f, "ao");
+PBRColor::PBRColor(std::string shaderNamingConvention): Material() {
+    this->albedo = new PBRMaterial(glm::vec3(0.2f,0.45f,0.2f), shaderNamingConvention+"Albedo");
+    this->rougness = new PBRMaterial(0.2f, shaderNamingConvention+"Rougness");
+    this->metalness = new PBRMaterial(0.8f, shaderNamingConvention+"Metalness");
+    this->ao = new PBRMaterial(0.5f, shaderNamingConvention+"Ao");
 }
 
 PBRMaterial<glm::vec3> *PBRColor::getAlbedo() const {
