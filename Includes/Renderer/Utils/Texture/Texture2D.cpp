@@ -30,10 +30,13 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+        this->wasFound = true;
+
         stbi_image_free(data);
     }
     else
     {
+        this->wasFound = false;
         std::cout << "Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
     }

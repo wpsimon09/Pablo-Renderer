@@ -17,7 +17,7 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory, std::string shaderNamin
     Texture2D normal((pathToTheDirectory+"/normal"+ fileFormat).c_str(), true);
     this->normalMap = new PBRMaterial<Texture2D>(normal, shaderNamingConvention+"Normal");
 
-    Texture2D _ao((pathToTheDirectory + "/_ao" + fileFormat).c_str(), true);
+    Texture2D _ao((pathToTheDirectory + "/ao" + fileFormat).c_str(), true);
     this->ao = new PBRMaterial<Texture2D>(_ao, shaderNamingConvention + "Ao");
 
 }
@@ -27,18 +27,34 @@ std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
     os<< "BASE COLOR:" << std::endl;
     os<< "FULL PATH: "<< mat.baseColor->type.getFullPath() << std::endl;
     os<<"SHADER NAME: "<<mat.baseColor->shaderName<<std::endl;
+    os<< "STATUS:" << std::endl;
+    mat.baseColor->type.wasFound ? std::cout<<"\xE2\x9C\x93"<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl;
+
+    os<<"==================================================="<<std::endl;
 
     os<< "ROUGNESS:" << std::endl;
     os<< "FULL PATH: "<< mat.roughness->type.getFullPath() << std::endl;
     os<<"SHADER NAME: "<<mat.roughness->shaderName<<std::endl;
+    os<< "STATUS:" << std::endl;
+    mat.roughness->type.wasFound ? std::cout<<"\xE2\x9C\x93"<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl;
+
+    os<<"==================================================="<<std::endl;
 
     os<< "METALNESS:" << std::endl;
     os<<"STRENGTH: "<<mat.metalness->type.getFullPath()<<std::endl;
     os<<"SHADER NAME: "<<mat.metalness->shaderName<<std::endl;
+    os<< "STATUS:" << std::endl;
+    mat.metalness->type.wasFound ? std::cout<<"\xE2\x9C\x93"<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl;
+
+    os<<"==================================================="<<std::endl;
 
     os<< "AO VALUES:" << std::endl;
     os<<"STRENGTH: "<<mat.ao->type.getFullPath()<<std::endl;
-    os<<"SHADER NAME: "<<mat.ao->shaderName<<std::endl<<std::endl;
+    os<<"SHADER NAME: "<<mat.ao->shaderName<<std::endl;
+    os<< "STATUS:" << std::endl;
+    mat.ao->type.wasFound ? std::cout<<" \xE2\x9C\x93 "<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl<<std::endl;
+
+    return os;
 }
 
 PBRMaterial<Texture2D> *PBRTextured::getBaseColor() const {
@@ -59,4 +75,8 @@ PBRMaterial<Texture2D> *PBRTextured::getMetalness() const {
 
 PBRMaterial<Texture2D> *PBRTextured::getAo() const {
     return ao;
+}
+
+void PBRTextured::printLog() const {
+    std::cout<<*this;
 }

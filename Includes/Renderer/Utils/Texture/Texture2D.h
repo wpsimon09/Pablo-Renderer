@@ -13,6 +13,7 @@ class Texture2D {
 public:
     GLuint ID;
     bool isPBRMaterial;
+    bool wasFound;
     Texture2D();
     explicit Texture2D(const char* path, bool isPBRMaterial = false);
 

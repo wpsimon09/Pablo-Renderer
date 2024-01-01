@@ -29,6 +29,9 @@ public:
     PBRMaterial<Texture2D> *getAo() const;
 
     friend std::ostream& operator<<(std::ostream& os, const PBRTextured& mat);
+
+    void printLog() const override;
+
 private:
     PBRMaterial<Texture2D>* baseColor;
     PBRMaterial<Texture2D>* normalMap;

@@ -17,6 +17,9 @@
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
 #include "Renderer/Utils/Texture/Texture2D.h"
+#include "Renderer/Material/Material.h"
+#include "Renderer/Material/PBRColor/PBRColor.h"
+#include "Renderer/Material/PBRTexture/PBRTextured.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -181,6 +184,10 @@ int main() {
     glBindBuffer(GL_FRAMEBUFFER, 0);
 
 
+    Material* pbrNormal = new PBRColor();
+    pbrNormal->printLog();
+    Material *pbrTextures = new PBRTextured ("Assets/Textures/PBR/Gold");
+    pbrTextures->printLog();
     //-----------------
     // TEXTURES LOADING
     //-----------------
@@ -192,7 +199,6 @@ int main() {
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
     unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunset.hdr");
-
 
     glm::vec3 lightPositions[] = {
             glm::vec3(-10.0f,  10.0f, 10.0f),
