@@ -4,8 +4,9 @@
 
 #include "Texture2D.h"
 
-Texture2D::Texture2D(const char *path) {
-
+Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
+    this->isPBRMaterial = isPBRMaterial;
+    this->fullPath = path;
     glGenTextures(1, &this->ID);
 
     int width, height, nrComponents;
@@ -38,4 +39,11 @@ Texture2D::Texture2D(const char *path) {
     }
 
 
+}
+
+Texture2D::Texture2D() {
+}
+
+const std::string &Texture2D::getFullPath() const {
+    return fullPath;
 }

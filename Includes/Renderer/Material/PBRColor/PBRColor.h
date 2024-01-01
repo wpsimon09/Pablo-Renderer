@@ -24,6 +24,9 @@ public:
     PBRMaterial<float> *getRougness() const;
 
     PBRMaterial<float> *getAo() const;
+
+    friend std::ostream& operator<<(std::ostream& os, const PBRColor& mat);
+
 };
 
 

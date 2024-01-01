@@ -34,3 +34,24 @@ PBRMaterial<float> *PBRColor::getAo() const {
     return ao;
 }
 
+std::ostream &operator<<(std::ostream &os, const PBRColor &mat) {
+    os<<"PBR material using COLORS has following properties"<<std::endl;
+    os<< "ALBEDO VALUES:" << std::endl;
+    os<<"RED: "<<mat.albedo->type.r<<std::endl;
+    os<<"GREEN: "<<mat.albedo->type.g<<std::endl;
+    os<<"BLUE: "<<mat.albedo->type.b<<std::endl;
+    os<<"SHADER NAME: "<<mat.albedo->shaderName<<std::endl;
+
+    os<< "METALNESS VALUES:" << std::endl;
+    os<<"STRENGTH: "<<mat.metalness->type<<std::endl;
+    os<<"SHADER NAME: "<<mat.metalness->shaderName<<std::endl;
+
+    os<< "ROUGNESS VALUES:" << std::endl;
+    os<<"STRENGTH: "<<mat.rougness->type<<std::endl;
+    os<<"SHADER NAME: "<<mat.rougness->shaderName<<std::endl;
+
+    os<< "AO VALUES:" << std::endl;
+    os<<"STRENGTH: "<<mat.ao->type<<std::endl;
+    os<<"SHADER NAME: "<<mat.ao->shaderName<<std::endl<<std::endl;
+}
+

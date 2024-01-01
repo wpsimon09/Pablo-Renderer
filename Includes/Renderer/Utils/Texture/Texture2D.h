@@ -12,8 +12,14 @@
 class Texture2D {
 public:
     GLuint ID;
-    explicit Texture2D(const char* path);
+    bool isPBRMaterial;
+    Texture2D();
+    explicit Texture2D(const char* path, bool isPBRMaterial = false);
+
 private:
+    std::string fullPath;
+public:
+    const std::string &getFullPath() const;
 
 };
 
