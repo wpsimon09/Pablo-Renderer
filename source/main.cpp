@@ -16,6 +16,10 @@
 #include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
+#include "Renderer/Utils/Texture/Texture2D.h"
+#include "Renderer/Material/Material.h"
+#include "Renderer/Material/PBRColor/PBRColor.h"
+#include "Renderer/Material/PBRTexture/PBRTextured.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -180,18 +184,21 @@ int main() {
     glBindBuffer(GL_FRAMEBUFFER, 0);
 
 
+    Material* pbrNormal = new PBRColor();
+    pbrNormal->printLog();
+    Material *pbrTextures = new PBRTextured ("Assets/Textures/PBR/Gold");
+    pbrTextures->printLog();
     //-----------------
     // TEXTURES LOADING
     //-----------------
     unsigned int floorTexture = loadTexture("Assets/Textures/AdvancedLightning/grid_w.jpg", true);
     unsigned int pointLightTexture = loadTexture("Assets/Textures/AdvancedLightning/light.png", false);
     unsigned int dirLightTexture = loadTexture("Assets/Textures/AdvancedLightning/sun.png", false);
-    unsigned int cubeTexture = loadTexture("Assets/Textures/AdvancedLightning/cubeData-wood.jpg", false);
+    Texture2D cubeTexture("Assets/Textures/container.jpg");
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
     unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunset.hdr");
-
 
     glm::vec3 lightPositions[] = {
             glm::vec3(-10.0f,  10.0f, 10.0f),
@@ -428,7 +435,7 @@ int main() {
         //-----------------
         //DRAW DEBUG WINDOW
         //-----------------
-        frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao, cubeTexture);
+        frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao,cubeTexture.ID);
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);

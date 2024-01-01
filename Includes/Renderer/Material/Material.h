@@ -20,7 +20,8 @@ struct PBRMaterial{
 class Material {
 public:
     Shader* shader;
-    ~Material(){};
+    ~Material() = default;
+    virtual void printLog() const{};
 };
 
 

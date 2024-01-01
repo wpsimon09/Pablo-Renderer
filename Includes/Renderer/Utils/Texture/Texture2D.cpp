@@ -4,8 +4,9 @@
 
 #include "Texture2D.h"
 
-Texture2D::Texture2D(const char *path) {
-
+Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
+    this->isPBRMaterial = isPBRMaterial;
+    this->fullPath = path;
     glGenTextures(1, &this->ID);
 
     int width, height, nrComponents;
@@ -29,13 +30,23 @@ Texture2D::Texture2D(const char *path) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+        this->wasFound = true;
+
         stbi_image_free(data);
     }
     else
     {
+        this->wasFound = false;
         std::cout << "Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
     }
 
 
+}
+
+Texture2D::Texture2D() {
+}
+
+const std::string &Texture2D::getFullPath() const {
+    return fullPath;
 }
