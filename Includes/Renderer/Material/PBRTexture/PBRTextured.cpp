@@ -8,7 +8,7 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory, std::string shaderNamin
     Texture2D albedo((pathToTheDirectory+"/albedo"+ fileFormat).c_str(), true);
     this->baseColor = new PBRMaterial<Texture2D>(albedo, shaderNamingConvention+"Albedo");
 
-    Texture2D rougness((pathToTheDirectory+"/rougness"+ fileFormat).c_str(), true);
+    Texture2D rougness((pathToTheDirectory+"/roughness"+ fileFormat).c_str(), true);
     this->roughness = new PBRMaterial<Texture2D>(rougness, shaderNamingConvention+"Rougness");
 
     Texture2D metallic((pathToTheDirectory+"/metallic"+ fileFormat).c_str(), true);
