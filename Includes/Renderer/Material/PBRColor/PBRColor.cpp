@@ -4,14 +4,14 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
+PBRColor::PBRColor(Shader* shader, glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(shader) {
     this->albedo = new PBRMaterial(albedo, shaderNamingConvention+"Albedo");
     this->rougness = new PBRMaterial(rougness, shaderNamingConvention+"Rougness");
     this->metalness = new PBRMaterial(metallic, shaderNamingConvention+"Metalness");
     this->ao = new PBRMaterial(ao, shaderNamingConvention+"Ao");
 }
 
-PBRColor::PBRColor(std::string shaderNamingConvention): Material() {
+PBRColor::PBRColor(Shader* shader, std::string shaderNamingConvention): Material(shader) {
     this->albedo = new PBRMaterial(glm::vec3(0.2f,0.45f,0.2f), shaderNamingConvention+"Albedo");
     this->rougness = new PBRMaterial(0.2f, shaderNamingConvention+"Rougness");
     this->metalness = new PBRMaterial(0.8f, shaderNamingConvention+"Metalness");
@@ -36,6 +36,11 @@ PBRMaterial<float> *PBRColor::getAo() const {
 
 std::ostream &operator<<(std::ostream &os, const PBRColor &mat) {
     os<<"PBR material using COLORS has following properties"<<std::endl;
+
+    os<<"===================================================="<<std::endl;
+    os<<"SHADER: "<<mat.shader->name<<std::endl;
+    os<<"===================================================="<<std::endl;
+
     os<< "ALBEDO VALUES:" << std::endl;
     os<<"RED: "<<mat.albedo->type.r<<std::endl;
     os<<"GREEN: "<<mat.albedo->type.g<<std::endl;
@@ -60,6 +65,7 @@ std::ostream &operator<<(std::ostream &os, const PBRColor &mat) {
     os<<"STRENGTH: "<<mat.ao->type<<std::endl;
     os<<"SHADER NAME: "<<mat.ao->shaderName<<std::endl<<std::endl;
 
+    os<<"==================================================="<<std::endl;
     return os;
 }
 

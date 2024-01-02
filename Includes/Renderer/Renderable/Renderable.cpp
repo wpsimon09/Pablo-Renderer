@@ -3,3 +3,8 @@
 //
 
 #include "Renderable.h"
+
+std::ostream &operator<<(std::ostream &os, Renderable &obj) {
+    os<<"test"<<std::endl;
+    return os;
+}

@@ -4,7 +4,7 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material() {
+PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(shader) {
     Texture2D albedo((pathToTheDirectory+"/albedo"+ fileFormat).c_str(), true);
     this->baseColor = new PBRMaterial<Texture2D>(albedo, shaderNamingConvention+"Albedo");
 
@@ -24,6 +24,13 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory, std::string shaderNamin
 
 std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
     os<<"PBR material using TEXTURES has following properties"<<std::endl;
+
+    os<<"===================================================="<<std::endl;
+    os<<"SHADER: "<<mat.shader->name<<std::endl;
+    os<<"===================================================="<<std::endl;
+
+    os<<"==================================================="<<std::endl;
+
     os<< "BASE COLOR:" << std::endl;
     os<< "FULL PATH: "<< mat.baseColor->type.getFullPath() << std::endl;
     os<<"SHADER NAME: "<<mat.baseColor->shaderName<<std::endl;
@@ -41,7 +48,7 @@ std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
     os<<"==================================================="<<std::endl;
 
     os<< "METALNESS:" << std::endl;
-    os<<"STRENGTH: "<<mat.metalness->type.getFullPath()<<std::endl;
+    os<<"FULL PATH: "<<mat.metalness->type.getFullPath()<<std::endl;
     os<<"SHADER NAME: "<<mat.metalness->shaderName<<std::endl;
     os<< "STATUS:" << std::endl;
     mat.metalness->type.wasFound ? std::cout<<"\xE2\x9C\x93"<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl;
@@ -49,10 +56,12 @@ std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
     os<<"==================================================="<<std::endl;
 
     os<< "AO VALUES:" << std::endl;
-    os<<"STRENGTH: "<<mat.ao->type.getFullPath()<<std::endl;
+    os<<"FULL PATH: "<<mat.ao->type.getFullPath()<<std::endl;
     os<<"SHADER NAME: "<<mat.ao->shaderName<<std::endl;
-    os<< "STATUS:" << std::endl;
+    os<< "STATUS: " << std::endl;
     mat.ao->type.wasFound ? std::cout<<" \xE2\x9C\x93 "<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl<<std::endl;
+
+    os<<"==================================================="<<std::endl;
 
     return os;
 }

@@ -13,13 +13,16 @@
 #include "Texture/Texture.h"
 #include "Renderer/Geometry/Geometry.h"
 #include "Renderer/Material/Material.h"
+
 class Renderable {
 private:
-    Geometry objectGeometry;
-    Material objectMaterial;
-    Transformations transformations;
+    Geometry *objectGeometry;
+    Material *objectMaterial;
+    Transformations *transformations;
 public:
+    Renderable(Geometry* geometry, Material * material, Transformations* transform);
     Renderable();
+    friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 };
 
 
