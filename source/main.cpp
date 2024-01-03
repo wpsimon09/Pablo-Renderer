@@ -20,6 +20,7 @@
 #include "Renderer/Material/Material.h"
 #include "Renderer/Material/PBRColor/PBRColor.h"
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
+#include "Renderer/Renderable/Renderable.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 

@@ -49,6 +49,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Material/PBRTexture/PBRTextured.h
         Includes/Renderer/Utils/Texture/Texture2D.cpp
         Includes/Renderer/Utils/Texture/Texture2D.h
+        Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextures.cpp
+        Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextures.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
