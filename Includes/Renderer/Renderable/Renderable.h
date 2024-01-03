@@ -12,14 +12,18 @@
 #include "Renderer/Utils/Transformations/Transformations.h"
 #include "Texture/Texture.h"
 #include "Renderer/Geometry/Geometry.h"
+#include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
 #include "Renderer/Material/Material.h"
+#include "Renderer/Material/PBRColor/PBRColor.h"
 class Renderable {
 private:
-    Geometry objectGeometry;
-    Material objectMaterial;
-    Transformations transformations;
+    Geometry *objectGeometry;
+    Material *objectMaterial;
+    Transformations *transformations;
 public:
-    Renderable();
+    Renderable(Geometry* geometry, Material * material, Transformations* transform);
+    Renderable(Shader *shader);
+    friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 };
 
 

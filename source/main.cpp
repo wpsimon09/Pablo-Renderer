@@ -20,6 +20,7 @@
 #include "Renderer/Material/Material.h"
 #include "Renderer/Material/PBRColor/PBRColor.h"
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
+#include "Renderer/Renderable/Renderable.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -153,15 +154,18 @@ int main() {
     //-------------------
     // SHADOW MAP TEXTURE
     //-------------------
+
     //resolution of the depth map
     const unsigned int SHADOW_HEIGHT = 1980, SHADOW_WIDTH = 1980;
     unsigned int depthMap;
     glGenTextures(1, &depthMap);
     glBindTexture(GL_TEXTURE_2D, depthMap);
+
     //NOTE how we set a texture type to be GL_DEPTH_COMPONENT instead GL_RGB or GL_RGBA
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
     //set the textures prameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -183,18 +187,19 @@ int main() {
     glReadBuffer(GL_NONE);
     glBindBuffer(GL_FRAMEBUFFER, 0);
 
-
-    Material* pbrNormal = new PBRColor();
+    Material* pbrNormal = new PBRColor(&PBRShader);
     pbrNormal->printLog();
-    Material *pbrTextures = new PBRTextured ("Assets/Textures/PBR/Gold");
+
+    Material *pbrTextures = new PBRTextured(&PBRShader,"Assets/Textures/PBR/Gold");
     pbrTextures->printLog();
+
     //-----------------
     // TEXTURES LOADING
     //-----------------
+    Texture2D cubeTexture("Assets/Textures/container.jpg");
     unsigned int floorTexture = loadTexture("Assets/Textures/AdvancedLightning/grid_w.jpg", true);
     unsigned int pointLightTexture = loadTexture("Assets/Textures/AdvancedLightning/light.png", false);
     unsigned int dirLightTexture = loadTexture("Assets/Textures/AdvancedLightning/sun.png", false);
-    Texture2D cubeTexture("Assets/Textures/container.jpg");
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);

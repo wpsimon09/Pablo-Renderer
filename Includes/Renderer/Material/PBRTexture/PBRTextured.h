@@ -16,7 +16,7 @@ public:
     // the path parameter should be passed as
     // Assets/Textures/directory
     // albedo.png/jpg, metallic.png/jpg, rougness.png/jpg
-    explicit PBRTextured(std::string pathToTheDirectory,  std::string shaderNamingConvention = "_map", std::string fileFormat = ".png");
+    explicit PBRTextured(Shader* shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_map", std::string fileFormat = ".png");
 
     PBRMaterial<Texture2D> *getBaseColor() const;
 
