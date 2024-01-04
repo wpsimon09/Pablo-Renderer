@@ -203,7 +203,7 @@ int main() {
     unsigned int brickWall = loadTexture("Assets/Textures/AdvancedLightning/brickwall.jpg", false);
     unsigned int normalMap = loadTexture("Assets/Textures/AdvancedLightning/brickwall_normal.jpg", false);
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
-    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/sunset.hdr");
+    unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/forest.hdr");
 
     glm::vec3 lightPositions[] = {
             glm::vec3(-10.0f,  10.0f, 10.0f),
