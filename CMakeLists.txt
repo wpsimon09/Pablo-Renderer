@@ -51,6 +51,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/Texture/Texture2D.h
         Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.cpp
         Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h
+        Includes/Renderer/SceneGraph/SceneNode/SceneNode.cpp
+        Includes/Renderer/SceneGraph/SceneNode/SceneNode.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
