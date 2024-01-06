@@ -21,6 +21,7 @@
 #include "Renderer/Material/PBRColor/PBRColor.h"
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/Renderable/Renderable.h"
+#include "Renderer/SceneGraph/Scene.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -95,6 +96,8 @@ int main() {
 
     Shader PBRShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR shader");
 
+    Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader");
+
     Shader lightSourceShader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece");
 
     Shader shadowMapShader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
@@ -124,8 +127,7 @@ int main() {
     //witcher medailon
     Model mortier("Assets/Model/medieval_mortier/scene.gltf");
 
-    Geometry* cubeGeometry;
-    cubeGeometry = new CubeGeometry("cube");
+    new CubeGeometry("cube");
 
     Geometry* planeGeometry;
     planeGeometry = new PlaneGeometry("plane");
@@ -187,12 +189,6 @@ int main() {
     glReadBuffer(GL_NONE);
     glBindBuffer(GL_FRAMEBUFFER, 0);
 
-    Material* pbrNormal = new PBRColor(&PBRShader);
-    pbrNormal->printLog();
-
-    Material *pbrTextures = new PBRTextured(&PBRShader,"Assets/Textures/PBR/Gold");
-    pbrTextures->printLog();
-
     //-----------------
     // TEXTURES LOADING
     //-----------------
@@ -220,6 +216,21 @@ int main() {
     int nrRows = 7;
     int nrColumns = 7;
     float spacing = 2.5;
+
+    //----------------
+    //Scene
+    //----------------
+
+    Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
+    Geometry *cubeGeometry = new CubeGeometry();
+    Renderable basicCube(cubeGeometry,cubeBasicMaterial);
+
+    SceneNode cube(&basicCube);
+
+
+    Scene scene;
+    scene.add(&cube);
+
 
     //-------------
     // PBR PIPELINE
