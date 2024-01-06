@@ -19,14 +19,13 @@ std::ostream &operator<<(std::ostream &os, Renderable &obj) {
     return os;
 }
 
-Renderable::Renderable(Geometry *geometry, Material *material, Transformations *transform) {
+Renderable::Renderable(Geometry *geometry, Material *material) {
     this->objectGeometry = geometry;
     this->objectMaterial = material;
-    this->transformations = transform;
 }
 
 Renderable::Renderable(Shader *shader) {
+    //default values
     this->objectMaterial = new PBRColor(shader);
     this->objectGeometry = new CubeGeometry();
-    this->transformations = new Transformations();
 }

@@ -58,6 +58,7 @@ std::vector<SceneNode *>::const_iterator SceneNode::getChildIteratorEnd() {
 
 void SceneNode::addChild(SceneNode *sceneNode) {
     children.push_back(sceneNode);
+
     //sets parent of the child to be this
     sceneNode->parent = this;
 }

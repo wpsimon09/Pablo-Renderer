@@ -19,9 +19,9 @@ class Renderable {
 private:
     Geometry *objectGeometry;
     Material *objectMaterial;
-    Transformations *transformations;
 public:
-    Renderable(Geometry* geometry, Material * material, Transformations* transform);
+    std::string name;
+    Renderable(Geometry* geometry, Material * material);
     Renderable(Shader *shader);
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 };

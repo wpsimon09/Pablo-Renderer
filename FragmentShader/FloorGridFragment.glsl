@@ -19,8 +19,7 @@ float intersectionSDF(float sdf0, float sdf1) {
 
 
 vec4 Float2Gray(float f){
-
-    return vec4(vec3(f), 1.0);
+    return vec4(vec3(f)*0.7, 1.0);
 }
 
 float fill(float sdf){
