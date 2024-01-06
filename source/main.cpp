@@ -221,13 +221,17 @@ int main() {
     //Scene
     //----------------
 
+    //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Geometry *cubeGeometry = new CubeGeometry();
+
+    //create renderable object
     Renderable basicCube(cubeGeometry,cubeBasicMaterial);
 
+    //optional create scene node
     SceneNode cube(&basicCube);
 
-
+    //create scene object
     Scene scene;
     scene.add(&cube);
 
