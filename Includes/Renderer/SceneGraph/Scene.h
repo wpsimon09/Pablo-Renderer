@@ -5,10 +5,10 @@
 #ifndef PABLO_RENDERER_SCENE_H
 #define PABLO_RENDERER_SCENE_H
 
-#include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 #include "camera.h"
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Light/Light.h"
+#include "SceneNode/SceneNode.h"
 
 class Scene {
 public:
@@ -20,11 +20,9 @@ public:
     Light* light;
 
     Camera *getCamera() const;
-
     void setCamera(Camera *camera);
 
     Light *getLight() const;
-
     void setLight(Light *light);
 };
 
