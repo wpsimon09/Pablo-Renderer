@@ -19,6 +19,7 @@ std::ostream &operator<<(std::ostream &os, Renderable &obj) {
     return os;
 }
 
+
 Renderable::Renderable(Geometry *geometry, Material *material) {
     this->objectGeometry = geometry;
     this->objectMaterial = material;

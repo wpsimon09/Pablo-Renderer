@@ -7,6 +7,7 @@
 
 #include "Renderer/Renderable/Renderable.h"
 
+
 class SceneNode {
 public:
     SceneNode(Renderable* renderable = NULL);
@@ -26,6 +27,8 @@ public:
     void setScale(const glm::vec3 &scale);
 
     void addChild(SceneNode* sceneNode);
+
+    void update();
 
     std::vector<SceneNode*>::const_iterator getChildIteratorStart();
     std::vector<SceneNode*>::const_iterator getChildIteratorEnd();

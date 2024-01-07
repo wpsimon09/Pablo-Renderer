@@ -55,8 +55,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/SceneGraph/SceneNode/SceneNode.h
         Includes/Renderer/SceneGraph/Scene.cpp
         Includes/Renderer/SceneGraph/Scene.h
-        Includes/Light/Light.cpp
-        Includes/Light/Light.h
+        Includes/Renderer/Light/Light.cpp
+        Includes/Renderer/Light/Light.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
