@@ -8,6 +8,7 @@
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 #include "camera.h"
 #include "Renderer/Renderable/Renderable.h"
+#include "Renderer/Light/Light.h"
 
 class Scene {
 public:
@@ -16,6 +17,15 @@ public:
     void add(SceneNode* child, SceneNode*parent = root);
     void add(Renderable* renderable, SceneNode *parent= root);
     Camera* camera;
+    Light* light;
+
+    Camera *getCamera() const;
+
+    void setCamera(Camera *camera);
+
+    Light *getLight() const;
+
+    void setLight(Light *light);
 };
 
 

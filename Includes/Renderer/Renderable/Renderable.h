@@ -15,6 +15,8 @@
 #include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
 #include "Renderer/Material/Material.h"
 #include "Renderer/Material/PBRColor/PBRColor.h"
+#include "Renderer/SceneGraph/Scene.h"
+
 class Renderable {
 private:
     Geometry *objectGeometry;

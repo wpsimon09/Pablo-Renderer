@@ -22,8 +22,16 @@ class Light {
 public:
     Light(glm::vec3 position, glm::vec3 color);
 protected:
+public:
+    LightProperty<glm::vec3> *getPosition() const {return position;}
+    void setPosition(LightProperty<glm::vec3> *position) {Light::position = position;}
+
+    LightProperty<glm::vec3> *getColor() const {return color;}
+    void setColor(LightProperty<glm::vec3> *color) {Light::color = color;}
+
+protected:
     LightProperty<glm::vec3>* position;
-    LightProperty<glm::vec3 >* color;
+    LightProperty<glm::vec3>* color;
 
 };
 
