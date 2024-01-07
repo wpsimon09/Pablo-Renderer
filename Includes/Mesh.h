@@ -100,7 +100,7 @@ void Mesh::setupTextures(Shader &shader)
 		glActiveTexture(GL_TEXTURE0 + i);
 		std::string number;
 		std::string name = textures[i].type;
-        //std::cout<<"GL_ACTIVE_TEXTURE"<<0+i<<" with type: "<<textures[i].type <<std::endl;
+        //std::cout<<"GL_ACTIVE_TEXTURE"<0+i<<" with type: "<<textures[i].type <<std::endl;
 		shader.setInt((name).c_str(), i);
         glActiveTexture(GL_TEXTURE0+i);
         glBindTexture(GL_TEXTURE_2D, textures[i].id);

@@ -10,7 +10,6 @@
 #include "Renderer/Utils/Vertex/Vertex.h"
 #include "Renderer/Utils/VAO/VAO.h"
 
-
 class Geometry {
 public:
     GLuint getVertexArrays() const ;
@@ -18,6 +17,7 @@ public:
     void unbindVertexArrays() const;
     std::string getName() const;
     virtual ~Geometry(){};
+    void render() const;
 protected:
     unsigned int verticies;
     unsigned int indecies;

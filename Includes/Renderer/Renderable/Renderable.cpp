@@ -30,3 +30,7 @@ Renderable::Renderable(Shader *shader) {
     this->objectMaterial = new PBRColor(shader);
     this->objectGeometry = new CubeGeometry();
 }
+
+void Renderable::render() {
+    this->objectGeometry->render();
+}

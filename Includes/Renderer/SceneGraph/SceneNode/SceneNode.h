@@ -30,6 +30,8 @@ public:
 
     void update();
 
+    void render();
+
     std::vector<SceneNode*>::const_iterator getChildIteratorStart();
     std::vector<SceneNode*>::const_iterator getChildIteratorEnd();
 

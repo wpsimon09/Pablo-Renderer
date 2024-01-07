@@ -78,3 +78,7 @@ void SceneNode::update() {
     }
 }
 
+void SceneNode::render() {
+    if (renderable){renderable->render(); }
+}
+
