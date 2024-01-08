@@ -38,7 +38,11 @@ public:
 protected:
     Renderable* renderable;
     SceneNode* parent;
+
+    //local transformations
     glm::mat4 transform;
+
+    //model matrix
     glm::mat4 worldTransform;
     glm::vec3 scale;
     std::vector<SceneNode*> children;

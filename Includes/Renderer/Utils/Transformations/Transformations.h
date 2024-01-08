@@ -13,11 +13,11 @@ private:
     glm::vec3 rotations;
     glm::vec3 scale;
 public:
-    Transformations()=default;
+    Transformations();
     Transformations(glm::vec3 position, glm::vec3 scale, glm::vec3 rotations);
-    virtual ~Transformations()=default;
-
     glm::mat4 generateModelMatrix();
+
+    virtual ~Transformations()=default;
 
     const glm::vec3 &getPosition() const;
     void setPosition(const glm::vec3 &position);

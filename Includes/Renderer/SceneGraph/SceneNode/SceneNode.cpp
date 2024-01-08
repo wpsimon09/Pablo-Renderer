@@ -9,7 +9,9 @@ SceneNode::SceneNode(Renderable *renderable) {
     this->parent = nullptr;
     this->scale = glm::vec3(1.0,1.0,1.0);
     this->worldTransform = glm::mat4(1.0f);
-    this->transform = glm::mat4(1.0f);
+    if (renderable){
+        this->transform = renderable->transformations->generateModelMatrix();
+    }
 }
 
 SceneNode::~SceneNode(void) {
@@ -67,7 +69,6 @@ void SceneNode::addChild(SceneNode *sceneNode) {
 
 void SceneNode::update() {
     if(parent){
-
         this->worldTransform = parent->worldTransform * transform;
     }
     else{
@@ -79,6 +80,8 @@ void SceneNode::update() {
 }
 
 void SceneNode::render() {
-    if (renderable){renderable->render(); }
+    if (renderable){
+        renderable->render();
+    }
 }
 

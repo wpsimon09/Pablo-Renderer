@@ -53,3 +53,9 @@ glm::mat4 Transformations::generateModelMatrix() {
            roationMatrix *
            glm::scale(glm::mat4(1.0f), this->scale);
 }
+
+Transformations::Transformations() {
+    this->position = glm::vec3(0.0f, 0.0f, 0.0F);
+    this->rotations = glm::vec3(0.0f, 0.0f, 0.0f);
+    this->scale = glm::vec3(1.0f, 1.0f, 1.0f);
+}

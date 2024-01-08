@@ -15,6 +15,7 @@
 #include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
 #include "Renderer/Material/Material.h"
 #include "Renderer/Material/PBRColor/PBRColor.h"
+#include "Renderer/Utils/Transformations/Transformations.h"
 
 
 class Renderable {
@@ -23,9 +24,13 @@ private:
     Material *objectMaterial;
 public:
     std::string name;
-    Renderable(Geometry* geometry, Material * material);
-    void render();
+    Transformations* transformations;
+
+    Renderable(Geometry* geometry, Material * material, std::string name = "renderable");
+    Renderable(Geometry* geometry, Material * material, Transformations *transform);
     Renderable(Shader *shader);
+
+    void render();
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 };
 
