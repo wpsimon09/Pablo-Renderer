@@ -11,22 +11,24 @@
 class SceneNode {
 public:
     SceneNode(Renderable* renderable = NULL);
-
     ~SceneNode(void);
 public:
 
     Renderable *getRenderable() const;
     void setRenderable(Renderable *renderable);
 
-    const glm::mat4 &getTransform() const;
-    void setTransform(const glm::mat4 &transform);
+    //facade
+    void setPositions(glm::vec3 position)   {this->transformation->setPosition(position);}
+    const glm::vec3 getPosition() const {return this->transformation->getPosition();}
 
-    const glm::mat4 &getWorldTransform() const;
-    void setWorldTransform(const glm::mat4 &worldTransform);
+    void setRotations(glm::vec3 rotationsEurel) {this->transformation->setRotations(rotationsEurel);}
+    const glm::vec3 getRotations() const {return this->transformation->getRotations(); }
 
-    const glm::vec3 &getScale() const;
+    void setScale(glm::vec3 scale) {this->transformation->setScale(scale);}
+    const glm::vec3 getScale() const {return this->transformation->getScale();}
 
-    void setScale(const glm::vec3 &scale);
+    const glm::mat4 getModelMatrix() const {return this->transformation->getModelMatrix();}
+
     void addChild(SceneNode* sceneNode);
     void update();
     void render();
@@ -38,12 +40,7 @@ protected:
     Renderable* renderable;
     SceneNode* parent;
 
-    //local transformations
-    glm::mat4 transform;
-
-    //model matrix
-    glm::mat4 worldTransform;
-    glm::vec3 scale;
+    Transformations *transformation;
     std::vector<SceneNode*> children;
 };
 

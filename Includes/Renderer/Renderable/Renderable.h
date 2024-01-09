@@ -24,10 +24,8 @@ private:
     Material *objectMaterial;
 public:
     std::string name;
-    Transformations* transformations;
 
     Renderable(Geometry* geometry, Material * material, std::string name = "renderable");
-    Renderable(Geometry* geometry, Material * material, Transformations *transform);
     Renderable(Shader *shader);
 
     void render();

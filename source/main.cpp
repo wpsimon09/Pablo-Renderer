@@ -231,6 +231,7 @@ int main() {
     //optional create scene node
     SceneNode cube(&basicCube);
     cube.setScale(glm::vec3(1.0f, 4.0f, 1.0f));
+    cube.setPositions(glm::vec3(10.0f, 0.0f, -30.0f));
     cube.update();
     //create scene object
     Scene scene;
@@ -356,7 +357,7 @@ int main() {
         PBRShader.use();
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
-        PBRShader.setMat4("model", cube.getTransform());
+        PBRShader.setMat4("model", cube.getModelMatrix());
         scene.render();
 
         //-------------

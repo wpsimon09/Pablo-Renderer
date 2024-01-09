@@ -24,7 +24,6 @@ Renderable::Renderable(Geometry *geometry, Material *material, std::string name)
     this->name = name;
     this->objectGeometry = geometry;
     this->objectMaterial = material;
-    this->transformations = new Transformations();
 }
 
 Renderable::Renderable(Shader *shader) {
@@ -33,9 +32,6 @@ Renderable::Renderable(Shader *shader) {
     this->objectGeometry = new CubeGeometry();
 }
 
-Renderable::Renderable(Geometry *geometry, Material *material, Transformations *transform) {
-
-}
 
 
 void Renderable::render() {

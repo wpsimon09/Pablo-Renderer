@@ -7,11 +7,7 @@
 SceneNode::SceneNode(Renderable *renderable) {
     this->renderable = renderable;
     this->parent = nullptr;
-    this->scale = glm::vec3(1.0,1.0,1.0);
-    this->worldTransform = glm::mat4(1.0f);
-    if (renderable){
-        this->transform = renderable->transformations->generateModelMatrix();
-    }
+    this->transformation = new Transformations();
 }
 
 SceneNode::~SceneNode(void) {
@@ -26,30 +22,6 @@ Renderable *SceneNode::getRenderable() const {
 
 void SceneNode::setRenderable(Renderable *renderable) {
     SceneNode::renderable = renderable;
-}
-
-const glm::mat4 &SceneNode::getTransform() const {
-    return transform;
-}
-
-void SceneNode::setTransform(const glm::mat4 &transform) {
-    SceneNode::transform = transform;
-}
-
-const glm::mat4 &SceneNode::getWorldTransform() const {
-    return worldTransform;
-}
-
-void SceneNode::setWorldTransform(const glm::mat4 &worldTransform) {
-    SceneNode::worldTransform = worldTransform;
-}
-
-const glm::vec3 &SceneNode::getScale() const {
-    return scale;
-}
-
-void SceneNode::setScale(const glm::vec3 &scale) {
-    SceneNode::scale = scale;
 }
 
 std::vector<SceneNode *>::const_iterator SceneNode::getChildIteratorStart() {
@@ -69,11 +41,12 @@ void SceneNode::addChild(SceneNode *sceneNode) {
 
 void SceneNode::update() {
     if(parent){
-        this->worldTransform = parent->worldTransform * transform;
+        this->transformation->computeModelMatrix(parent->transformation->getModelMatrix());
     }
-    else{
-        worldTransform = transform;
+    else {
+        this->transformation->computeModelMatrix();
     }
+
     for (auto & i : children) {
         i->update();
     }
@@ -84,4 +57,5 @@ void SceneNode::render() {
         renderable->render();
     }
 }
+
 
