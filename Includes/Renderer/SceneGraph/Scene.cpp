@@ -33,3 +33,13 @@ Light *Scene::getLight() const {
 void Scene::setLight(Light *light) {
     Scene::light = light;
 }
+
+void Scene::render(SceneNode *node) {
+    if (node->getRenderable()){
+        node->render();
+    }
+    for (std::vector<SceneNode*>::const_iterator i = node->getChildIteratorStart(); i<node->getChildIteratorEnd(); ++i) {
+        render(*i);
+    }
+}
+

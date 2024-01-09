@@ -6,11 +6,12 @@
 #define PABLO_RENDERER_SCENENODE_H
 
 #include "Renderer/Renderable/Renderable.h"
-
+#include "Renderer/Utils/Transformations/Transformations.h"
 
 class SceneNode {
 public:
     SceneNode(Renderable* renderable = NULL);
+
     ~SceneNode(void);
 public:
 
@@ -24,12 +25,10 @@ public:
     void setWorldTransform(const glm::mat4 &worldTransform);
 
     const glm::vec3 &getScale() const;
+
     void setScale(const glm::vec3 &scale);
-
     void addChild(SceneNode* sceneNode);
-
     void update();
-
     void render();
 
     std::vector<SceneNode*>::const_iterator getChildIteratorStart();

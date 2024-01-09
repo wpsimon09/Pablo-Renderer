@@ -74,8 +74,8 @@ void SceneNode::update() {
     else{
         worldTransform = transform;
     }
-    for (auto i = children.begin(); i != children.end(); ++i) {
-        (*i)->update();
+    for (auto & i : children) {
+        i->update();
     }
 }
 

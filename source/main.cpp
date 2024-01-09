@@ -356,8 +356,8 @@ int main() {
         PBRShader.use();
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
-        PBRShader.setMat4("model", cube.getWorldTransform());
-        cube.render();
+        PBRShader.setMat4("model", cube.getTransform());
+        scene.render();
 
         //-------------
         // DRAW MODEL
