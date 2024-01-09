@@ -16,6 +16,7 @@ public:
     inline static SceneNode* root;
     void add(SceneNode* child, SceneNode*parent = root);
     void add(Renderable* renderable, SceneNode *parent= root);
+    void update();
     void render(SceneNode*node = root);
     Camera *getCamera() const;
     void setCamera(Camera *camera);

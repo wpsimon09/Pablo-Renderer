@@ -43,3 +43,7 @@ void Scene::render(SceneNode *node) {
     }
 }
 
+void Scene::update() {
+    this->root->update();
+}
+
