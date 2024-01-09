@@ -230,7 +230,9 @@ int main() {
 
     //optional create scene node
     SceneNode cube(&basicCube);
-
+    cube.setScale(glm::vec3(1.0f, 4.0f, 1.0f));
+    cube.setPositions(glm::vec3(10.0f, 0.0f, -30.0f));
+    cube.update();
     //create scene object
     Scene scene;
     scene.add(&cube);
@@ -342,12 +344,21 @@ int main() {
         glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 model = glm::mat4(1.0f);
 
-        //----------------
+        //-----------------
         // DRAW THE SPHERES
         //-----------------
         glDisable(GL_CULL_FACE);
         PBRShader.use();
         PBRShader.setVec3("camPos", camera.Position);
+
+        //------------------------------
+        //DRAW CUBE FROM THE SCENE GRAPH
+        //------------------------------
+        PBRShader.use();
+        PBRShader.setMat4("view", view);
+        PBRShader.setMat4("projection", projection);
+        PBRShader.setMat4("model", cube.getModelMatrix());
+        scene.render();
 
         //-------------
         // DRAW MODEL
@@ -356,8 +367,6 @@ int main() {
         model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0.0,0.0));
         PBRShader.use();
         PBRShader.setMat4("model", model);
-        PBRShader.setMat4("view", view);
-        PBRShader.setMat4("projection", projection);
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
         pbrPipeline.bindTextures(5);
@@ -370,6 +379,8 @@ int main() {
         model = glm::scale(model, glm::vec3(4.0f));
         PBRShader.setMat4("model", model);
         mortier.Draw(PBRShader);
+
+
 
         //set light properties
         for (unsigned int i = 0; i < 5; ++i)
@@ -427,7 +438,8 @@ int main() {
         skyBoxShader.use();
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-        DrawCube(skyBoxShader, model, view, projection, cubeGeometry->getVertexArrays());
+        //DrawCube(skyBoxShader, model, view, projection, cubeGeometry->getVertexArrays());
+
 
         //----------------------
         // DRAW PLANE AS A FLOOR

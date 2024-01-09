@@ -6,7 +6,7 @@
 #define PABLO_RENDERER_SCENENODE_H
 
 #include "Renderer/Renderable/Renderable.h"
-
+#include "Renderer/Utils/Transformations/Transformations.h"
 
 class SceneNode {
 public:
@@ -17,18 +17,21 @@ public:
     Renderable *getRenderable() const;
     void setRenderable(Renderable *renderable);
 
-    const glm::mat4 &getTransform() const;
-    void setTransform(const glm::mat4 &transform);
+    //facade
+    void setPositions(glm::vec3 position)   {this->transformation->setPosition(position);}
+    const glm::vec3 getPosition() const {return this->transformation->getPosition();}
 
-    const glm::mat4 &getWorldTransform() const;
-    void setWorldTransform(const glm::mat4 &worldTransform);
+    void setRotations(glm::vec3 rotationsEurel) {this->transformation->setRotations(rotationsEurel);}
+    const glm::vec3 getRotations() const {return this->transformation->getRotations(); }
 
-    const glm::vec3 &getScale() const;
-    void setScale(const glm::vec3 &scale);
+    void setScale(glm::vec3 scale) {this->transformation->setScale(scale);}
+    const glm::vec3 getScale() const {return this->transformation->getScale();}
+
+    const glm::mat4 getModelMatrix() const {return this->transformation->getModelMatrix();}
 
     void addChild(SceneNode* sceneNode);
-
     void update();
+    void render();
 
     std::vector<SceneNode*>::const_iterator getChildIteratorStart();
     std::vector<SceneNode*>::const_iterator getChildIteratorEnd();
@@ -36,9 +39,8 @@ public:
 protected:
     Renderable* renderable;
     SceneNode* parent;
-    glm::mat4 transform;
-    glm::mat4 worldTransform;
-    glm::vec3 scale;
+
+    Transformations *transformation;
     std::vector<SceneNode*> children;
 };
 

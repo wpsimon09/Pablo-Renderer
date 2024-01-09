@@ -20,3 +20,9 @@ void Geometry::unbindVertexArrays()const  {
     this->vao->unbind();
 }
 
+void Geometry::render() const {
+    this->bindVertexArrays();
+    glDrawArrays(this->shapes, 0,this->verticies);
+    glGetError();
+}
+

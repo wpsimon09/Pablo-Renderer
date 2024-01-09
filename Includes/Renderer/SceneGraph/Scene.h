@@ -16,14 +16,16 @@ public:
     inline static SceneNode* root;
     void add(SceneNode* child, SceneNode*parent = root);
     void add(Renderable* renderable, SceneNode *parent= root);
-    Camera* camera;
-    Light* light;
-
+    void render(SceneNode*node = root);
     Camera *getCamera() const;
     void setCamera(Camera *camera);
 
     Light *getLight() const;
     void setLight(Light *light);
+
+private:
+    Camera* camera;
+    Light* light;
 };
 
 
