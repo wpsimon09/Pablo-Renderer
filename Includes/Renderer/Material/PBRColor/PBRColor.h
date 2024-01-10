@@ -28,6 +28,8 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const PBRColor& mat);
 
     void printLog() const override;
+
+    void configureShader() override;
 };
 
 

@@ -73,3 +73,11 @@ void PBRColor::printLog() const {
     std::cout<<*this;
 }
 
+void PBRColor::configureShader() {
+    this->shader->use();
+    this->shader->setVec3(this->albedo->shaderName, this->albedo->type);
+    this->shader->setFloat(this->metalness->shaderName, this->metalness->type);
+    //this->shader->setVec3(this->albedo->shaderName, this->albed o->type);
+    //this->shader->setVec3(this->albedo->shaderName, this->albedo->type);
+}
+
