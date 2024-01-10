@@ -24,7 +24,7 @@ public:
     Material(Shader *shader) {
         this->shader = shader;
     }
-
+    virtual void configureShader(){};
     ~Material() = default;
     virtual void printLog() const{};
 };

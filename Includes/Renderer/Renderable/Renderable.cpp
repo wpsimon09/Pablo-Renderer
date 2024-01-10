@@ -24,16 +24,18 @@ Renderable::Renderable(Geometry *geometry, Material *material, std::string name)
     this->name = name;
     this->objectGeometry = geometry;
     this->objectMaterial = material;
+    this->modelMatrix = glm::mat4(1.0f);
 }
 
 Renderable::Renderable(Shader *shader) {
     //default values
     this->objectMaterial = new PBRColor(shader);
     this->objectGeometry = new CubeGeometry();
+    this->modelMatrix = glm::mat4(1.0f);
 }
-
-
 
 void Renderable::render() {
+    this->objectMaterial->configureShader();
     this->objectGeometry->render();
 }
+

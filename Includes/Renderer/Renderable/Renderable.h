@@ -15,13 +15,12 @@
 #include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
 #include "Renderer/Material/Material.h"
 #include "Renderer/Material/PBRColor/PBRColor.h"
-#include "Renderer/Utils/Transformations/Transformations.h"
-
 
 class Renderable {
 private:
     Geometry *objectGeometry;
     Material *objectMaterial;
+    glm::mat4 modelMatrix;
 public:
     std::string name;
 
@@ -30,6 +29,8 @@ public:
 
     void render();
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
+
+    void setModelMatrix(glm::mat4 modelMatrix){this->modelMatrix = modelMatrix;}
 };
 
 

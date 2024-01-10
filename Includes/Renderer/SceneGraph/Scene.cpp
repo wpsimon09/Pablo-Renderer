@@ -44,6 +44,7 @@ void Scene::render(SceneNode *node) {
 }
 
 void Scene::update() {
+    std::cout<<root->getNumberOfChildren();
     this->root->update();
 }
 

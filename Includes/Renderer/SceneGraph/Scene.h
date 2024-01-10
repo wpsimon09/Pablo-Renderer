@@ -14,7 +14,7 @@ class Scene {
 public:
     Scene();
     inline static SceneNode* root;
-    void add(SceneNode* child, SceneNode*parent = root);
+    void add(SceneNode* child, SceneNode *parent = root);
     void add(Renderable* renderable, SceneNode *parent= root);
     void update();
     void render(SceneNode*node = root);

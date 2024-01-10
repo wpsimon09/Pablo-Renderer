@@ -5,8 +5,8 @@
 #ifndef PABLO_RENDERER_SCENENODE_H
 #define PABLO_RENDERER_SCENENODE_H
 
-#include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Utils/Transformations/Transformations.h"
+#include "Renderer/Renderable/Renderable.h"
 
 class SceneNode {
 public:
@@ -16,6 +16,13 @@ public:
 
     Renderable *getRenderable() const;
     void setRenderable(Renderable *renderable);
+
+    void addChild(SceneNode* sceneNode);
+    void update();
+    void render();
+
+    std::vector<SceneNode*>::const_iterator getChildIteratorStart();
+    std::vector<SceneNode*>::const_iterator getChildIteratorEnd();
 
     //facade
     void setPositions(glm::vec3 position)   {this->transformation->setPosition(position);}
@@ -29,12 +36,7 @@ public:
 
     const glm::mat4 getModelMatrix() const {return this->transformation->getModelMatrix();}
 
-    void addChild(SceneNode* sceneNode);
-    void update();
-    void render();
-
-    std::vector<SceneNode*>::const_iterator getChildIteratorStart();
-    std::vector<SceneNode*>::const_iterator getChildIteratorEnd();
+    const unsigned long getNumberOfChildren() const{return this->children.size();}
 
 protected:
     Renderable* renderable;

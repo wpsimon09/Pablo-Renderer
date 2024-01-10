@@ -223,19 +223,25 @@ int main() {
 
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
-    Geometry *cubeGeometry = new CubeGeometry();
+    Geometry *cubeGeometry = new ScreenSpaceQuadGeometry();
 
     //create renderable object
     Renderable basicCube(cubeGeometry,cubeBasicMaterial);
 
     //optional create scene node
     SceneNode cube(&basicCube);
-    cube.setScale(glm::vec3(1.0f, 4.0f, 1.0f));
+    cube.setScale(glm::vec3(1.0f, 1.0f, 1.0f));
     cube.setPositions(glm::vec3(10.0f, 0.0f, -30.0f));
     //create scene object
+
+    SceneNode cube2(&basicCube);
+    cube.setPositions(glm::vec3(0.0f, 0.0f, 0.0f));
+    //cube2.setScale(glm::vec3(10.0f, 1.0f, 1.2f));
+    cube2.setRotations(glm::vec3(0.0F, 80.0f, 0.0f));
+
     Scene scene;
     scene.add(&cube);
-
+    scene.add(&cube2);
 
     //-------------
     // PBR PIPELINE
@@ -356,7 +362,7 @@ int main() {
         PBRShader.use();
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
-        PBRShader.setMat4("model", cube.getModelMatrix());
+        PBRShader.setMat4("model", cube2.getModelMatrix());
         scene.update();
         scene.render();
 
