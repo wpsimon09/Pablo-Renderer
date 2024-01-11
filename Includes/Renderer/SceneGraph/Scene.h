@@ -25,6 +25,7 @@ public:
     void setLight(Light *light);
 
 private:
+    void processInput();
     Camera* camera;
     Light* light;
 };
