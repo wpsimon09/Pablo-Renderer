@@ -21,8 +21,14 @@ private:
     Geometry *objectGeometry;
     Material *objectMaterial;
     glm::mat4 modelMatrix;
+    glm::mat4 projectionMatrix;
+    glm::mat4 viewMatrix;
 public:
     std::string name;
+
+    void setProjectionMatrix(const glm::mat4 &projectionMatrix);
+
+    void setViewMatrix(const glm::mat4 &viewMatrix);
 
     Renderable(Geometry* geometry, Material * material, std::string name = "renderable");
     Renderable(Shader *shader);

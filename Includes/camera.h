@@ -48,6 +48,7 @@ public:
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
+        this->projection = glm::perspective(glm::radians(this->Zoom), (float)800 / (float)600, 0.1f, 200.0f);
         updateCameraVectors();
     }
     // constructor with scalar values
@@ -57,6 +58,7 @@ public:
         WorldUp = glm::vec3(upX, upY, upZ);
         Yaw = yaw;
         Pitch = pitch;
+        this->projection = glm::perspective(glm::radians(this->Zoom), (float)800 / (float)600, 0.1f, 200.0f);
         updateCameraVectors();
     }
 
@@ -113,6 +115,8 @@ public:
             Zoom = 45.0f;
     }
 
+    glm::mat4 getProjection(){return this->projection;}
+
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors()
@@ -127,5 +131,7 @@ private:
         Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
         Up    = glm::normalize(glm::cross(Right, Front));
     }
+
+    glm::mat4 projection = glm::mat4(1.0f);
 };
 #endif

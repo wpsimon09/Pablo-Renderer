@@ -22,6 +22,7 @@
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/SceneGraph/Scene.h"
+#include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -243,6 +244,8 @@ int main() {
     scene.add(&cube);
     scene.add(&cube2);
 
+    OGLRenderer renderer;
+
     //-------------
     // PBR PIPELINE
     //-------------
@@ -268,6 +271,7 @@ int main() {
     // DEBUG VIEW FOR THE CAMERA
     //--------------------------
     FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(124, 124), GL_RGBA, GL_RGBA32F);
+
 
     //------------------
     // LOAD PBR TEXTURES
@@ -362,9 +366,8 @@ int main() {
         PBRShader.use();
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
-        PBRShader.setMat4("model", cube2.getModelMatrix());
-        scene.update();
-        scene.render();
+
+        renderer.render(&scene, window);
 
         //-------------
         // DRAW MODEL
