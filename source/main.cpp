@@ -244,7 +244,7 @@ int main() {
     scene.add(&cube);
     scene.add(&cube2);
 
-    OGLRenderer renderer;
+    OGLRenderer renderer(&scene);
 
     //-------------
     // PBR PIPELINE
@@ -367,7 +367,7 @@ int main() {
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
 
-        renderer.render(&scene, window);
+        renderer.render(window);
 
         //-------------
         // DRAW MODEL

@@ -12,21 +12,32 @@ deltaTime = currentFrame - lastFrame;
 lastFrame = currentFrame;
 scene->update();
  */
-void OGLRenderer::render(Scene *scene, GLFWwindow *window) {
-    scene->setup();
 
-    renderSceneNode(scene->root, scene->getCamera()->getProjection(), scene->getCamera()->GetViewMatrix());
-
-    scene->update();
+OGLRenderer::OGLRenderer(Scene *scene) {
+    this->scene = scene;
+    this->camera = scene->getCamera();
 }
 
-void OGLRenderer::renderSceneNode(SceneNode *sceneNode,glm::mat4 projection, glm::mat4 view) {
+void OGLRenderer::render(GLFWwindow *window, GLuint frameBuffer) {
+    this->scene->setup();
+
+    this->scene->update();
+
+    renderSceneNode(scene->root);
+
+}
+
+void OGLRenderer::renderSceneNode(SceneNode *sceneNode) {
     if (sceneNode->getRenderable()){
-        sceneNode->getRenderable()->setProjectionMatrix(projection);
-        sceneNode->getRenderable()->setViewMatrix(view);
+        Renderable *renderable = sceneNode->getRenderable();
+        Shader *shader = renderable->getShader();
+        shader->use();
+        shader->setMat4("projection", this->camera->getProjection());
+        shader->setMat4("view", this->camera->GetViewMatrix());
         sceneNode->render();
+
     }
     for (std::vector<SceneNode*>::const_iterator i = sceneNode->getChildIteratorStart(); i<sceneNode->getChildIteratorEnd(); ++i) {
-        this->renderSceneNode(*i, projection, view);
+        this->renderSceneNode(*i);
     }
 }

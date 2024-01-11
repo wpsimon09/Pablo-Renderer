@@ -35,18 +35,12 @@ Renderable::Renderable(Shader *shader) {
 }
 
 void Renderable::render() {
-    this->objectMaterial->shader->use();
-    this->objectMaterial->shader->setMat4("projection", this->projectionMatrix);
-    this->objectMaterial->shader->setMat4("view", this->viewMatrix);
     this->objectMaterial->configureShader();
     this->objectGeometry->render();
 }
 
-void Renderable::setProjectionMatrix(const glm::mat4 &projectionMatrix) {
-    Renderable::projectionMatrix = projectionMatrix;
+Shader *Renderable::getShader() {
+    return this->objectMaterial->shader;
 }
 
-void Renderable::setViewMatrix(const glm::mat4 &viewMatrix) {
-    Renderable::viewMatrix = viewMatrix;
-}
 

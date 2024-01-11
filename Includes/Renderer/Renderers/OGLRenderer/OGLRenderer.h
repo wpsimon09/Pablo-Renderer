@@ -9,10 +9,14 @@
 
 class OGLRenderer {
 public:
-    void render(Scene* scene, GLFWwindow* window);
+    OGLRenderer(Scene* scene);
+    void render(GLFWwindow* window, GLuint frameBuffer = 0);
 private:
+    Camera* camera;
+    Scene* scene;
     SceneNode* nodeInProcess;
-    void renderSceneNode(SceneNode* sceneNode, glm::mat4 projection, glm::mat4 view);
+    void renderSceneNode(SceneNode* sceneNode);
+
 };
 
 
