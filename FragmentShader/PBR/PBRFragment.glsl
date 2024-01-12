@@ -93,7 +93,7 @@ void main()
     //result
     vec3 Lo = vec3(0.0);
 
-    for(int i = 0; i<5 ; i++)
+    for(int i = 0; i<1 ; i++)
     {
         //light direction
         vec3 L = normalize(lightPositions[i] - fs_in.FragPos);

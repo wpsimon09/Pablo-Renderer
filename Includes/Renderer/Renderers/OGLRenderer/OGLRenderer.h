@@ -31,5 +31,4 @@ private:
     void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 };
 
-
 #endif //PABLO_RENDERER_OGLRENDERER_H
