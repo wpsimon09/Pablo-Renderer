@@ -43,15 +43,11 @@ void Scene::render(SceneNode *node) {
     }
 }
 
-void Scene::update() {
+void Scene::update(Shader *shader) {
     std::cout<<root->getNumberOfChildren();
     Scene::root->update();
-    this->processInput();
 }
 
-void Scene::processInput() {
-
-}
 
 void Scene::setup() {
 

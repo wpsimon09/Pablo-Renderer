@@ -10,13 +10,25 @@
 class OGLRenderer {
 public:
     OGLRenderer(Scene* scene);
+    void init();
     void render(GLFWwindow* window, GLuint frameBuffer = 0);
 private:
     Camera* camera;
     Scene* scene;
-    SceneNode* nodeInProcess;
-    void renderSceneNode(SceneNode* sceneNode);
+    float deltaTime;
+    float lastFrame;
 
+    float lastX = 0;
+    float lastY = 0;
+
+    bool firstMouse = true;
+
+    void renderSceneNode(SceneNode* sceneNode);
+    void processInput(GLFWwindow* window);
+
+    void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+    void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 };
 
 

@@ -18,7 +18,7 @@ public:
     void add(SceneNode* child, SceneNode *parent = root);
     void add(Renderable* renderable, SceneNode *parent= root);
 
-    void update();
+    void update(Shader *shader = NULL);
 
     void render(SceneNode*node = root);
 
@@ -31,7 +31,6 @@ public:
     void setLight(Light *light);
 
 private:
-    void processInput();
     Camera* camera;
     Light* light;
 };

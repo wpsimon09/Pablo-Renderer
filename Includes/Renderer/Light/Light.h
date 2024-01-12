@@ -7,7 +7,7 @@
 
 #include "iostream"
 #include "glm/glm.hpp"
-
+#include "Shader.h"
 template<typename T>
 struct LightProperty{
     T property;
@@ -21,13 +21,14 @@ struct LightProperty{
 class Light {
 public:
     Light(glm::vec3 position, glm::vec3 color);
-protected:
-public:
+
     LightProperty<glm::vec3> *getPosition() const {return position;}
     void setPosition(LightProperty<glm::vec3> *position) {Light::position = position;}
 
     LightProperty<glm::vec3> *getColor() const {return color;}
     void setColor(LightProperty<glm::vec3> *color) {Light::color = color;}
+
+    virtual void update(Shader* shader);
 
 protected:
     LightProperty<glm::vec3>* position;
