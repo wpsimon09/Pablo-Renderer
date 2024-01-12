@@ -31,17 +31,16 @@ void OGLRenderer::render(GLFWwindow *window, GLuint frameBuffer) {
     this->scene->update();
 
     renderSceneNode(scene->root);
-
 }
 
 void OGLRenderer::renderSceneNode(SceneNode *sceneNode) {
     if (sceneNode->getRenderable()){
         Renderable *renderable = sceneNode->getRenderable();
         Shader *shader = renderable->getShader();
-        shader->use();
-        shader->setMat4("projection", this->camera->getProjection());
-        shader->setMat4("view", this->camera->GetViewMatrix());
+
+        ShaderHelper::setTransfomrationMatrices(shader, sceneNode->getModelMatrix(), camera->GetViewMatrix(), camera->getProjection());
         this->scene->getLight()->update(shader);
+
         sceneNode->render();
     }
     for (std::vector<SceneNode*>::const_iterator i = sceneNode->getChildIteratorStart(); i<sceneNode->getChildIteratorEnd(); ++i) {

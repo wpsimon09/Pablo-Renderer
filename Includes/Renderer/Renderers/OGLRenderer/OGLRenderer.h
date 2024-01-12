@@ -6,6 +6,7 @@
 #define PABLO_RENDERER_OGLRENDERER_H
 
 #include "Renderer/SceneGraph/Scene.h"
+#include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 
 class OGLRenderer {
 public:
@@ -15,15 +16,15 @@ public:
 private:
     Camera* camera;
     Scene* scene;
+
     float deltaTime;
     float lastFrame;
-
     float lastX = 0;
     float lastY = 0;
-
     bool firstMouse = true;
 
     void renderSceneNode(SceneNode* sceneNode);
+
     void processInput(GLFWwindow* window);
 
     void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
