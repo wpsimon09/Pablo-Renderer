@@ -39,11 +39,17 @@ void Scene::render(SceneNode *node) {
         node->render();
     }
     for (std::vector<SceneNode*>::const_iterator i = node->getChildIteratorStart(); i<node->getChildIteratorEnd(); ++i) {
-        render(*i);
+        this->render(*i);
     }
 }
 
-void Scene::update() {
-    this->root->update();
+void Scene::update(Shader *shader) {
+    std::cout<<root->getNumberOfChildren();
+    Scene::root->update();
+}
+
+
+void Scene::setup() {
+
 }
 

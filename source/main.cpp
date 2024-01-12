@@ -22,6 +22,7 @@
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/SceneGraph/Scene.h"
+#include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -223,19 +224,28 @@ int main() {
 
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
-    Geometry *cubeGeometry = new CubeGeometry();
+    Geometry *cubeGeometry = new ScreenSpaceQuadGeometry();
 
     //create renderable object
     Renderable basicCube(cubeGeometry,cubeBasicMaterial);
 
     //optional create scene node
     SceneNode cube(&basicCube);
-    cube.setScale(glm::vec3(1.0f, 4.0f, 1.0f));
+    cube.setScale(glm::vec3(0.0f, 1.0f, 1.0f));
     cube.setPositions(glm::vec3(10.0f, 0.0f, -30.0f));
+
     //create scene object
+    SceneNode cube2(&basicCube);
+    cube.setPositions(glm::vec3(0.0f, 0.0f, 0.0f));
+
+    //cube2.setScale(glm::vec3(10.0f, 1.0f, 1.2f));
+    cube2.setRotations(glm::vec3(0.0F, 80.0f, 0.0f));
+
     Scene scene;
     scene.add(&cube);
+    scene.add(&cube2);
 
+    OGLRenderer renderer(&scene);
 
     //-------------
     // PBR PIPELINE
@@ -262,6 +272,7 @@ int main() {
     // DEBUG VIEW FOR THE CAMERA
     //--------------------------
     FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(124, 124), GL_RGBA, GL_RGBA32F);
+
 
     //------------------
     // LOAD PBR TEXTURES
@@ -356,9 +367,8 @@ int main() {
         PBRShader.use();
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
-        PBRShader.setMat4("model", cube.getModelMatrix());
-        scene.update();
-        scene.render();
+
+        renderer.render(window);
 
         //-------------
         // DRAW MODEL
@@ -489,8 +499,6 @@ void processInput(GLFWwindow* window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-
-
     const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);

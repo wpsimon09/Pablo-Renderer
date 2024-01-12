@@ -93,7 +93,7 @@ void main()
     //result
     vec3 Lo = vec3(0.0);
 
-    for(int i = 0; i<5 ; i++)
+    for(int i = 0; i<1 ; i++)
     {
         //light direction
         vec3 L = normalize(lightPositions[i] - fs_in.FragPos);
@@ -141,5 +141,5 @@ void main()
     // gamma corection
     color = pow(color,vec3(1.0/2.2));
 
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(1.0, 1.0, 0.0, 1.0);
 }

@@ -42,11 +42,16 @@ void SceneNode::addChild(SceneNode *sceneNode) {
 void SceneNode::update() {
     if(parent){
         this->transformation->computeModelMatrix(parent->transformation->getModelMatrix());
+
     }
     else {
         this->transformation->computeModelMatrix();
     }
+    if (this->renderable){
+        this->renderable->setModelMatrix(this->transformation->getModelMatrix());
+    }
 
+    //start recursion
     for (auto & i : children) {
         i->update();
     }

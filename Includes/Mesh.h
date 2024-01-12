@@ -99,7 +99,8 @@ void Mesh::setupTextures(Shader &shader)
 	for (unsigned int i = 0; i < textures.size(); i++) {
 		glActiveTexture(GL_TEXTURE0 + i);
 		std::string number;
-		std::string name = textures[i].type;
+		std::string name = textures[i].type
+                ;
         //std::cout<<"GL_ACTIVE_TEXTURE"<0+i<<" with type: "<<textures[i].type <<std::endl;
 		shader.setInt((name).c_str(), i);
         glActiveTexture(GL_TEXTURE0+i);
