@@ -10,28 +10,39 @@ OGLRenderer::OGLRenderer(Scene *scene,  GLFWwindow* window) {
     this->lightSpeed = 2.5f * deltaTime;
     glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
     this->window = window;
+
+    glfwSetCursorPosCallback(window, OGLRenderer::mouse_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetScrollCallback(window, scroll_callback);
+
 }
 
 void OGLRenderer::render(GLuint frameBuffer) {
-/*
-    glViewport(0, 0, this->windowWidth, this->windowHeight);
-    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
-*/
+    while (!glfwWindowShouldClose(window)) {
 
-    float currentFrame = static_cast<float>(glfwGetTime());
-    this->deltaTime = currentFrame - this->lastFrame;
-    this->lastFrame = currentFrame;
+        glViewport(0, 0, this->windowWidth, this->windowHeight);
+        glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
-    this->scene->setup();
 
-    this->scene->update();
+        float currentFrame = static_cast<float>(glfwGetTime());
+        this->deltaTime = currentFrame - this->lastFrame;
+        this->lastFrame = currentFrame;
 
-    renderSceneGraph(scene->root);
+        this->processInput(this->window);
 
-    //glfwSwapBuffers(this->window);
-    //glfwPollEvents();
+        this->scene->setup();
+
+        this->scene->update();
+
+        renderSceneGraph(scene->root);
+
+        glfwSwapBuffers(this->window);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
