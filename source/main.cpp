@@ -244,7 +244,7 @@ int main() {
     scene.add(&cube);
     scene.add(&cube2);
 
-    OGLRenderer renderer(&scene);
+    OGLRenderer renderer(&scene, window);
 
     //-------------
     // PBR PIPELINE
@@ -309,39 +309,6 @@ int main() {
         processInput(window);
 
         //--------------------------------------//
-        //------------- DEPTH MAP -------------//
-        //------------------------------------//
-
-        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);
-        // configure projection matrix
-        float nearPlane, farPlane;
-        nearPlane = 1.0f;
-        farPlane = 75.0f;
-        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, nearPlane, farPlane);
-
-        //configure view matrix
-        glm::mat4 lightView = glm::lookAt(lightPosition, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
-
-        //combine them together to get the matrix that transfoms coordinates from view space to light space
-        // in the notes as T
-        glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
-        glm::mat4 lightModel = glm::mat4(1.0f);
-        lightModel = glm::scale(lightModel, glm::vec3(6.0f));
-        //draw the scene to the depth map
-        glCullFace(GL_FRONT);
-        shadowMapShader.use();
-        lightModel = glm::rotate(lightModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        shadowMapShader.setMat4("model", lightModel);
-        witcherMedailon.Draw(PBRShader);
-
-        glCullFace(GL_BACK);
-
-        //--------------------------------------//
         //---------- NORMAL SCENE -------------//
         //------------------------------------//
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
@@ -366,8 +333,6 @@ int main() {
         PBRShader.use();
         PBRShader.setMat4("view", view);
         PBRShader.setMat4("projection", projection);
-
-        renderer.render(window);
 
         //-------------
         // DRAW MODEL
@@ -457,7 +422,6 @@ int main() {
         useTexture(0, girdProceduralTexture->ID);
         useTexture(1, depthMap);
         model = glm::mat4(1.0f);
-        floorShader.setMat4("lightMatrix", lightSpaceMatrix);
         floorShader.setVec3("lightPos", lightPosition);
         floorShader.setVec3("lightColor", lightColor);
         floorShader.setVec3("viewPos", camera.Position);
@@ -477,6 +441,7 @@ int main() {
         //DRAW DEBUG WINDOW
         //-----------------
         frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao,cubeTexture.ID);
+        renderer.render();
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);

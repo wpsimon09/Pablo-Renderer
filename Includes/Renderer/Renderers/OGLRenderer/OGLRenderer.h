@@ -10,17 +10,23 @@
 
 class OGLRenderer {
 public:
-    OGLRenderer(Scene* scene);
+    OGLRenderer(Scene* scene, GLFWwindow* window);
     void init();
-    void render(GLFWwindow* window, GLuint frameBuffer = 0);
+    void render(GLuint frameBuffer = 0);
 private:
     Scene* scene;
+
+    GLFWwindow* window;
 
     float deltaTime;
     float lastFrame;
     float lastX = 0;
     float lastY = 0;
     bool firstMouse = true;
+    float lightSpeed ;
+
+    int windowHeight;
+    int windowWidth;
 
     void renderSceneGraph(SceneNode* sceneNode);
 

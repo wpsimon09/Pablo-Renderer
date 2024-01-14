@@ -5,11 +5,20 @@
 #include "OGLRenderer.h"
 
 
-OGLRenderer::OGLRenderer(Scene *scene) {
+OGLRenderer::OGLRenderer(Scene *scene,  GLFWwindow* window) {
     this->scene = scene;
+    this->lightSpeed = 2.5f * deltaTime;
+    glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
+    this->window = window;
 }
 
-void OGLRenderer::render(GLFWwindow *window, GLuint frameBuffer) {
+void OGLRenderer::render(GLuint frameBuffer) {
+/*
+    glViewport(0, 0, this->windowWidth, this->windowHeight);
+    glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
+*/
 
     float currentFrame = static_cast<float>(glfwGetTime());
     this->deltaTime = currentFrame - this->lastFrame;
@@ -20,6 +29,9 @@ void OGLRenderer::render(GLFWwindow *window, GLuint frameBuffer) {
     this->scene->update();
 
     renderSceneGraph(scene->root);
+
+    //glfwSwapBuffers(this->window);
+    //glfwPollEvents();
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
