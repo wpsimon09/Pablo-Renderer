@@ -22,7 +22,7 @@ private:
     float lastY = 0;
     bool firstMouse = true;
 
-    void renderSceneNode(SceneNode* sceneNode);
+    void renderSceneGraph(SceneNode* sceneNode);
 
     void processInput(GLFWwindow* window);
 

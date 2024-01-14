@@ -14,3 +14,15 @@ void Light::update(Shader *shader) {
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->color->property);
 }
+
+void Light::setX(float pos) {
+    this->position->property.x = pos;
+}
+
+void Light::setY(float pos) {
+    this->position->property.y = pos;
+}
+
+void Light::setZ(float pos) {
+    this->position->property.z= pos;
+}

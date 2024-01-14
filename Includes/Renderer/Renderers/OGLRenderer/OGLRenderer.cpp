@@ -19,10 +19,10 @@ void OGLRenderer::render(GLFWwindow *window, GLuint frameBuffer) {
 
     this->scene->update();
 
-    renderSceneNode(scene->root);
+    renderSceneGraph(scene->root);
 }
 
-void OGLRenderer::renderSceneNode(SceneNode *sceneNode) {
+void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
     if (sceneNode->getRenderable()){
         Renderable *renderable = sceneNode->getRenderable();
         Shader *shader = renderable->getShader();
@@ -33,7 +33,7 @@ void OGLRenderer::renderSceneNode(SceneNode *sceneNode) {
         sceneNode->render();
     }
     for (std::vector<SceneNode*>::const_iterator i = sceneNode->getChildIteratorStart(); i<sceneNode->getChildIteratorEnd(); ++i) {
-        this->renderSceneNode(*i);
+        this->renderSceneGraph(*i);
     }
 }
 
