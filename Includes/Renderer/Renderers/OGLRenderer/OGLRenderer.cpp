@@ -5,19 +5,8 @@
 #include "OGLRenderer.h"
 
 
-
-/*while(!glfwWindowShouldClose(window)){
-float currentFrame = static_cast<float>(glfwGetTime());
-deltaTime = currentFrame - lastFrame;
-lastFrame = currentFrame;
-scene->update();
- */
-
 OGLRenderer::OGLRenderer(Scene *scene) {
     this->scene = scene;
-    this->camera = scene->getCamera();
-
-
 }
 
 void OGLRenderer::render(GLFWwindow *window, GLuint frameBuffer) {
@@ -38,8 +27,8 @@ void OGLRenderer::renderSceneNode(SceneNode *sceneNode) {
         Renderable *renderable = sceneNode->getRenderable();
         Shader *shader = renderable->getShader();
 
-        ShaderHelper::setTransfomrationMatrices(shader, sceneNode->getModelMatrix(), camera->GetViewMatrix(), camera->getProjection());
-        this->scene->getLight()->update(shader);
+        this->scene->light->update(shader);
+        ShaderHelper::setTransfomrationMatrices(shader, sceneNode->getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
 
         sceneNode->render();
     }
@@ -53,13 +42,13 @@ void OGLRenderer::processInput(GLFWwindow *window) {
         glfwSetWindowShouldClose(window, true);
     const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera->ProcessKeyboard(FORWARD, deltaTime);
+        this->scene->camera->ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera->ProcessKeyboard(BACKWARD, deltaTime);
+        this->scene->camera->ProcessKeyboard(BACKWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera->ProcessKeyboard(LEFT, deltaTime);
+        this->scene->camera->ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera->ProcessKeyboard(RIGHT, deltaTime);
+        this->scene->camera->ProcessKeyboard(RIGHT, deltaTime);
 
 /*    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
         lightPosition.z += lightSpeed;
@@ -82,7 +71,7 @@ void OGLRenderer::processInput(GLFWwindow *window) {
 }
 
 void OGLRenderer::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    this->camera->ProcessMouseScroll(static_cast<float>(yoffset));
+    this->scene->camera->ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
 void OGLRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
@@ -99,7 +88,7 @@ void OGLRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
     lastX = xpos;
     lastY = ypos; //update last mouse position
 
-    this->camera->ProcessMouseMovement(xOffset, yOffset);
+    this->scene->camera->ProcessMouseMovement(xOffset, yOffset);
 }
 
 

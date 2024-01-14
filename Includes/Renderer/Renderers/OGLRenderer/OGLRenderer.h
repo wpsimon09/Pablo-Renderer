@@ -14,7 +14,6 @@ public:
     void init();
     void render(GLFWwindow* window, GLuint frameBuffer = 0);
 private:
-    Camera* camera;
     Scene* scene;
 
     float deltaTime;

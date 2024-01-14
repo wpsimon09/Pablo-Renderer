@@ -231,14 +231,13 @@ int main() {
 
     //optional create scene node
     SceneNode cube(&basicCube);
-    cube.setScale(glm::vec3(0.0f, 1.0f, 1.0f));
-    cube.setPositions(glm::vec3(10.0f, 0.0f, -30.0f));
+    //cube.setScale(glm::vec3(1.0f, 0.0f, 1.0f));
+    cube.setPositions(glm::vec3(2.0f, 0.0f, 0.0f));
 
     //create scene object
     SceneNode cube2(&basicCube);
-    cube.setPositions(glm::vec3(0.0f, 0.0f, 0.0f));
-
-    //cube2.setScale(glm::vec3(10.0f, 1.0f, 1.2f));
+    cube2.setPositions(glm::vec3(0.0f, 0.0f, 0.0f));
+    cube2.setScale(glm::vec3(10.0f, 1.0f, 1.2f));
     cube2.setRotations(glm::vec3(0.0F, 80.0f, 0.0f));
 
     Scene scene;
