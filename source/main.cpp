@@ -81,9 +81,6 @@ int main() {
     glEnable(GL_FRAMEBUFFER_SRGB);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glEnable(GL_BLEND);
-    glfwSetCursorPosCallback(window, mouse_callback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetScrollCallback(window, scroll_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -224,28 +221,19 @@ int main() {
 
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
-    Geometry *cubeGeometry = new ScreenSpaceQuadGeometry();
+    Geometry *cubeGeometry = new CubeGeometry();
 
     //create renderable object
     Renderable basicCube(cubeGeometry,cubeBasicMaterial);
 
     //optional create scene node
     SceneNode cube(&basicCube);
-    cube.setScale(glm::vec3(0.0f, 1.0f, 1.0f));
-    cube.setPositions(glm::vec3(10.0f, 0.0f, -30.0f));
-
-    //create scene object
-    SceneNode cube2(&basicCube);
-    cube.setPositions(glm::vec3(0.0f, 0.0f, 0.0f));
-
-    //cube2.setScale(glm::vec3(10.0f, 1.0f, 1.2f));
-    cube2.setRotations(glm::vec3(0.0F, 80.0f, 0.0f));
+    cube.setPositions(glm::vec3(2.0f, 0.0f, 0.0f));
 
     Scene scene;
     scene.add(&cube);
-    scene.add(&cube2);
 
-    OGLRenderer renderer(&scene);
+    OGLRenderer renderer(&scene, window);
 
     //-------------
     // PBR PIPELINE
@@ -294,197 +282,8 @@ int main() {
 
     skyBoxShader.use();
     skyBoxShader.setInt("enviromentMap", 0);
-    //=====================================================================================//
-    //==================================== RENDER LOOOP ===================================//
-    //=====================================================================================//
-    while (!glfwWindowShouldClose(window))
-    {
-        // per-frame time logic
-        // --------------------
-        float currentFrame = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
 
-        // input
-        // -----
-        processInput(window);
-
-        //--------------------------------------//
-        //------------- DEPTH MAP -------------//
-        //------------------------------------//
-
-        glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-        glEnable(GL_CULL_FACE);
-        glCullFace(GL_FRONT);
-        // configure projection matrix
-        float nearPlane, farPlane;
-        nearPlane = 1.0f;
-        farPlane = 75.0f;
-        glm::mat4 lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, nearPlane, farPlane);
-
-        //configure view matrix
-        glm::mat4 lightView = glm::lookAt(lightPosition, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
-
-        //combine them together to get the matrix that transfoms coordinates from view space to light space
-        // in the notes as T
-        glm::mat4 lightSpaceMatrix = lightProjection * lightView;
-
-        glm::mat4 lightModel = glm::mat4(1.0f);
-        lightModel = glm::scale(lightModel, glm::vec3(6.0f));
-        //draw the scene to the depth map
-        glCullFace(GL_FRONT);
-        shadowMapShader.use();
-        lightModel = glm::rotate(lightModel, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        shadowMapShader.setMat4("model", lightModel);
-        witcherMedailon.Draw(PBRShader);
-
-        glCullFace(GL_BACK);
-
-        //--------------------------------------//
-        //---------- NORMAL SCENE -------------//
-        //------------------------------------//
-        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
-
-        glm::mat4 view = camera.GetViewMatrix();
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 model = glm::mat4(1.0f);
-
-        //-----------------
-        // DRAW THE SPHERES
-        //-----------------
-        glDisable(GL_CULL_FACE);
-        PBRShader.use();
-        PBRShader.setVec3("camPos", camera.Position);
-
-        //------------------------------
-        //DRAW CUBE FROM THE SCENE GRAPH
-        //------------------------------
-        PBRShader.use();
-        PBRShader.setMat4("view", view);
-        PBRShader.setMat4("projection", projection);
-
-        renderer.render(window);
-
-        //-------------
-        // DRAW MODEL
-        //-------------
-        model = glm::translate(model, glm::vec3(0.0f, 3.0f, 0.0f));
-        model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0.0,0.0));
-        PBRShader.use();
-        PBRShader.setMat4("model", model);
-        PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
-        PBRShader.setMat3("normalMatrix", glm::transpose(glm::inverse(model)));
-        pbrPipeline.bindTextures(5);
-
-        witcherMedailon.Draw(PBRShader);
-
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, -5.0f));
-        model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0.0,0.0));
-        model = glm::scale(model, glm::vec3(4.0f));
-        PBRShader.setMat4("model", model);
-        mortier.Draw(PBRShader);
-
-
-
-        //set light properties
-        for (unsigned int i = 0; i < 5; ++i)
-        {
-            PBRShader.use();
-            if (i <= 4)
-            {
-                PBRShader.setVec3("lightPositions[" + std::to_string(i) + "]", lightPositions[i]);
-                PBRShader.setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
-            }
-            else
-            {
-                PBRShader.setVec3("lightPositions[" + std::to_string(i) + "]", lightPosition);
-                PBRShader.setVec3("lightColors[" + std::to_string(i) + "]", lightColor);
-            }
-
-        }
-
-        //-----------------------
-        // DRAW THE LIGHT SOURCES
-        //-----------------------
-        lightSourceShader.use();
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, lightPosition);
-
-        for (unsigned int i = 0; i < 4; ++i)
-        {
-            glm::vec3 newPos = lightPositions[i];
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, newPos);
-            model = glm::scale(model, glm::vec3(0.5f));
-            lightSourceShader.use();
-            lightSourceShader.setMat4("model", model);
-            lightSourceShader.setVec3("lightColor", lightColors[i]);
-            useTexture(0, pointLightTexture);
-            DrawPlane(lightSourceShader, model, view, projection, lightVAO, GL_TRIANGLES, 6);
-        }
-
-        PBRShader.use();
-        PBRShader.setVec3("lightPositions[4]", lightPosition);
-        PBRShader.setVec3("lightColors[4]", lightColors[1]);
-
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, lightPosition);
-        model = glm::scale(model, glm::vec3(0.5f));
-        lightSourceShader.use();
-        lightSourceShader.setMat4("model", model);
-        lightSourceShader.setVec3("lightColor", lightColor);
-        useTexture(0, dirLightTexture);
-        DrawPlane(lightSourceShader, model, view, projection, lightVAO);
-
-        //------------
-        // DRAW SKYBOX
-        //------------
-        skyBoxShader.use();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP,pbrPipeline.getHdrCubeMap()); //pbrPipeline.getHdrCubeMap());
-        //DrawCube(skyBoxShader, model, view, projection, cubeGeometry->getVertexArrays());
-
-
-        //----------------------
-        // DRAW PLANE AS A FLOOR
-        //----------------------
-        floorShader.use();
-        useTexture(0, girdProceduralTexture->ID);
-        useTexture(1, depthMap);
-        model = glm::mat4(1.0f);
-        floorShader.setMat4("lightMatrix", lightSpaceMatrix);
-        floorShader.setVec3("lightPos", lightPosition);
-        floorShader.setVec3("lightColor", lightColor);
-        floorShader.setVec3("viewPos", camera.Position);
-        DrawPlane(floorShader, model, view, projection, planeGeometry->getVertexArrays(), GL_TRIANGLES, 6);
-
-        //----------------------
-        // DRAW BRDF LUT TEXTURE
-        //----------------------
-        /*
-        lutDebug.use();
-        useTexture(0, pbrPipeline.getBrdfLutTexture());
-        DrawPlane(lutDebug, glm::mat4(1.0), glm::mat4(1.0), glm::mat4(1.0), screenSpaceQuadGeometry->getVertexArrays(), GL_TRIANGLE_STRIP, 4);
-         */
-
-
-        //-----------------
-        //DRAW DEBUG WINDOW
-        //-----------------
-        frameBufferDebugWindow.draw(frameBufferDebugShader, debugQuadVao,cubeTexture.ID);
-        // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
+    renderer.render(0);
 
     return 0;
 }

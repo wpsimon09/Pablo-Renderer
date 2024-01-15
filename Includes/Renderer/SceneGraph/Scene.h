@@ -20,19 +20,11 @@ public:
 
     void update(Shader *shader = NULL);
 
-    void render(SceneNode*node = root);
-
     void setup();
 
-    Camera *getCamera() const;
-    void setCamera(Camera *camera);
-
-    Light *getLight() const;
-    void setLight(Light *light);
-
-private:
     Camera* camera;
     Light* light;
+
 };
 
 

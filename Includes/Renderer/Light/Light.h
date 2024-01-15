@@ -28,6 +28,10 @@ public:
     LightProperty<glm::vec3> *getColor() const {return color;}
     void setColor(LightProperty<glm::vec3> *color) {Light::color = color;}
 
+    void setX(float pos);
+    void setY(float pos);
+    void setZ(float pos);
+
     virtual void update(Shader* shader);
 
 protected:
