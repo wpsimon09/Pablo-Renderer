@@ -5,7 +5,7 @@
 #include "Light.h"
 
 Light::Light(glm::vec3 position, glm::vec3 color) {
-    this->position = new LightProperty(position, "lightPosition[0]");
+    this->position = new LightProperty(position, "lightPositions[0]");
     this->color = new LightProperty(color, "lightColors[0]");
 }
 

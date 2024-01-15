@@ -37,7 +37,7 @@ void OGLRenderer::render(GLuint frameBuffer) {
 
         this->scene->update();
 
-        renderSceneGraph(scene->root);
+        renderSceneGraph(Scene::root);
 
         glfwSwapBuffers(this->window);
         glfwPollEvents();
@@ -52,6 +52,8 @@ void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
         Shader *shader = renderable->getShader();
 
         this->scene->light->update(shader);
+        this->scene->camera->update(shader);
+
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode->getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
 
         sceneNode->render();
