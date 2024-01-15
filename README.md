@@ -27,12 +27,9 @@ This renderer is build using
 - Transparent grid
 - SkyBox
 - Debug view for textures or frame buffer textures
-
-# TODO
-- Post-processing
-- Emission bloom
 - Flexible class structure
-- Deferred shading 
+- SceneGraph design pattern
+
 ----
 
 # Images

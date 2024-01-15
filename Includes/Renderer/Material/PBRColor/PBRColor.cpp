@@ -12,7 +12,7 @@ PBRColor::PBRColor(Shader* shader, glm::vec3 albedo, float metallic, float rougn
 }
 
 PBRColor::PBRColor(Shader* shader, std::string shaderNamingConvention): Material(shader) {
-    this->albedo = new PBRMaterial(glm::vec3(1.0f,0.45f,0.2f), shaderNamingConvention+"Albedo");
+    this->albedo = new PBRMaterial(glm::vec3(0.2f,0.2f,0.2f), shaderNamingConvention+"Albedo");
     this->rougness = new PBRMaterial(0.2f, shaderNamingConvention+"Rougness");
     this->metalness = new PBRMaterial(0.8f, shaderNamingConvention+"Metalness");
     this->ao = new PBRMaterial(0.5f, shaderNamingConvention+"Ao");
