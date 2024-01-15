@@ -7,13 +7,14 @@
 
 OGLRenderer::OGLRenderer(Scene *scene,  GLFWwindow* window) {
     this->scene = scene;
+    OGLRenderer::instace = this;
     this->lightSpeed = 2.5f * deltaTime;
-    glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
     this->window = window;
+    glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
 
     glfwSetCursorPosCallback(window, OGLRenderer::mouse_callback);
+    glfwSetScrollCallback(window, OGLRenderer::scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetScrollCallback(window, scroll_callback);
 
 }
 
@@ -94,24 +95,24 @@ void OGLRenderer::processInput(GLFWwindow *window) {
 }
 
 void OGLRenderer::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    this->scene->camera->ProcessMouseScroll(static_cast<float>(yoffset));
+    instace->scene->camera->ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
 void OGLRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if (firstMouse) // initially set to true
+    if (instace->firstMouse) // initially set to true
     {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
+        instace->lastX = xpos;
+        instace->lastY = ypos;
+        instace->firstMouse = false;
     }
 
-    float xOffset = xpos - lastX;
-    float yOffset = ypos - lastY; //calculate how much does mouse move
+    float xOffset = xpos - instace->lastX;
+    float yOffset = ypos - instace->lastY; //calculate how much does mouse move
 
-    lastX = xpos;
-    lastY = ypos; //update last mouse position
+    instace->lastX = xpos;
+    instace->lastY = ypos; //update last mouse position
 
-    this->scene->camera->ProcessMouseMovement(xOffset, yOffset);
+    instace->scene->camera->ProcessMouseMovement(xOffset, yOffset);
 }
 
 

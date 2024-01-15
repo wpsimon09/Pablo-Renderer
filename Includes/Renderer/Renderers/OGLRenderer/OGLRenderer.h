@@ -14,6 +14,8 @@ public:
     void init();
     void render(GLuint frameBuffer = 0);
 private:
+    inline static OGLRenderer *instace ;
+
     Scene* scene;
 
     GLFWwindow* window;
@@ -32,9 +34,9 @@ private:
 
     void processInput(GLFWwindow* window);
 
-    void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+   static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-    void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+   static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 };
 
 #endif //PABLO_RENDERER_OGLRENDERER_H
