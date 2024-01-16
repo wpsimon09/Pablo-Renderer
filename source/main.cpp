@@ -222,17 +222,24 @@ int main() {
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Geometry *cubeGeometry = new CubeGeometry();
+    Geometry *unitPlane = new PlaneGeometry();
+    Geometry *withcerMedailon =
 
     //create renderable object
     Renderable basicCube(cubeGeometry,cubeBasicMaterial);
+    Renderable plane(unitPlane, cubeBasicMaterial);
 
     //optional create scene node
     SceneNode cube(&basicCube);
     cube.setPositions(glm::vec3(2.0f, 0.0f, 0.0f));
 
+    SceneNode cube2(&basicCube);
+    cube2.setPositions(glm::vec3(3.0f, 0.0f, 3.0f));
+
+    cube.addChild(&cube2);
+
     Scene scene;
     scene.add(&cube);
-
     OGLRenderer renderer(&scene, window);
 
     //-------------

@@ -10,10 +10,13 @@ SceneNode::SceneNode(Renderable *renderable) {
     this->transformation = new Transformations();
 }
 
-SceneNode::~SceneNode(void) {
-    for (unsigned int i = 0;  i<children.size() ; i++) {
-        delete this->children[i];
+SceneNode::~SceneNode() {
+    if (parent){
+        for (int i = children.size() - 1; i >= 0; --i) {
+            //delete children[i];
+        }
     }
+    else delete this;
 }
 
 Renderable *SceneNode::getRenderable() const {

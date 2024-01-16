@@ -7,7 +7,7 @@
 Scene::Scene() {
     Scene::root = new SceneNode();
     this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
-    this->light = new Light(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(10.0f, 10.0f, 10.0f));
+    this->light = new Light(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(40.0f, 40.0f, 10.0f));
 }
 
 void Scene::add(SceneNode *child, SceneNode *parent) {

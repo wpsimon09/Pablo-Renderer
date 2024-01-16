@@ -11,7 +11,7 @@
 class SceneNode {
 public:
     SceneNode(Renderable* renderable = NULL);
-    ~SceneNode(void);
+    ~SceneNode();
 public:
 
     Renderable *getRenderable() const;
