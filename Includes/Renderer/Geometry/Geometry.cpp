@@ -22,7 +22,8 @@ void Geometry::unbindVertexArrays()const  {
 
 void Geometry::render() const {
     this->bindVertexArrays();
-    glDrawArrays(this->shapes, 0,this->verticies);
+    glGetError();
+    glDrawArrays(this->shapes, 0,this->numVerticies);
     glGetError();
 }
 

@@ -66,7 +66,6 @@ void Mesh::setupMesh()
     size_t vec3Size = sizeof(glm::vec3);
     size_t vec2Size = sizeof(glm::vec2);
 
-    modelGeometry = new ModelGeometry("Model", this->vertecies, this->indecies);
 }
 
 void Mesh::Draw(Shader& shader) {

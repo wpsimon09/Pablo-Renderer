@@ -5,7 +5,7 @@
 #include "VAO.h"
 #include "Debug/DebugLogger.h"
 
-//loading with verticies must have everything
+//loading with numVerticies must have everything
 VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
     glGenVertexArrays(1, &this->ID);
     glCheckError();
@@ -18,7 +18,6 @@ VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
 
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
     glCheckError();
-
 
     glBufferData(GL_ARRAY_BUFFER, vertecies.size() * sizeof(Vertex), &vertecies[0], GL_STATIC_DRAW);
     glCheckError();

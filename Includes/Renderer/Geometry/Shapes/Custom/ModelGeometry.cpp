@@ -4,9 +4,23 @@
 
 #include "ModelGeometry.h"
 
-#include <utility>
-
 ModelGeometry::ModelGeometry(std::string name, std::vector<Vertex> verticies,std::vector<unsigned int> indecies): Geometry() {
     this->name = std::move(name);
-    this->vao = new VAO(std::move(verticies), std::move(indecies));
+    this->shapes = GL_TRIANGLES;
+    this->vao = new VAO(verticies, indecies);
 }
+
+ModelGeometry::ModelGeometry(const char *pathToTheModel): Geometry() {
+    Model model(pathToTheModel);
+    this->shapes = GL_TRIANGLES;
+    this->vao = model.parseToRenderable();
+}
+
+void ModelGeometry::render() const {
+    this->vao->bind();
+    glGetError();
+
+
+}
+
+

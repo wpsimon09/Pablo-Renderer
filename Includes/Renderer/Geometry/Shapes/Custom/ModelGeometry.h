@@ -7,10 +7,17 @@
 
 #include "Renderer/Geometry/Geometry.h"
 #include "vector"
+#include "Model.h"
+
 
 class ModelGeometry: public Geometry{
 public:
     explicit ModelGeometry(std::string name, std::vector<Vertex> verticies, std::vector<unsigned int>indecies = {0});
+    explicit ModelGeometry(const char* pathToTheModel);
+
+    void render() const override;
+
+private:
 };
 
 

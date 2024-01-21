@@ -223,7 +223,6 @@ int main() {
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry *unitPlane = new PlaneGeometry();
-    Geometry *withcerMedailon =
 
     //create renderable object
     Renderable basicCube(cubeGeometry,cubeBasicMaterial);
@@ -293,76 +292,4 @@ int main() {
     renderer.render(0);
 
     return 0;
-}
-
-//function that will handle resizing of the window
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-    glViewport(0, 0, width, height);
-}
-
-void processInput(GLFWwindow* window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        lightPosition.z += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        lightPosition.z -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        lightPosition.x += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        lightPosition.x -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-        lightPosition.y -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-        lightPosition.y += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
-        hasNormalMap = 1.0f;
-    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
-        hasNormalMap = 0.0f;
-
-}
-
-float opacityOfTexture(GLFWwindow* window, Shader shader) {
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-        return 0.001f;
-    }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-        return -0.001f;
-    }
-    return 0;
-}
-
-void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
-
-    if (firstMouse) // initially set to true
-    {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
-
-    float xOffset = xpos - lastX;
-    float yOffset = ypos - lastY; //calculate how much does mouse move
-
-    lastX = xpos;
-    lastY = ypos; //update last mouse position
-
-    camera.ProcessMouseMovement(xOffset, yOffset);
-
-}
-
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }

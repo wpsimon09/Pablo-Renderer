@@ -18,7 +18,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
-
+#include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);
 
 
@@ -29,6 +29,9 @@ class Model {
 			loadModel(path);
 			this->drawCalls = drawCalls;
 		}
+
+        VAO* parseToRenderable();
+
 		void Draw(Shader& shader);
 		void DrawInstaced(Shader& shader);
 		std::vector<Mesh> meshes;
@@ -37,6 +40,8 @@ class Model {
 		//model data
 		std::string directory;
 		std::vector<_Texture> textures_loaded;
+        std::vector<Vertex> modelVerticies;
+        std::vector<unsigned int> modelIndecies;
 
 		void loadModel(std::string path);
 		void processNode(aiNode* node, const aiScene* scene);
@@ -54,6 +59,10 @@ void Model::Draw(Shader& shader) {
 		meshes[i].setAmountOfDrawCals(this->drawCalls);
 		meshes[i].Draw(shader);
 	}
+}
+
+VAO* Model::parseToRenderable() {
+    return new VAO(this->modelVerticies, this->modelIndecies);
 }
 
 void Model::DrawInstaced(Shader& shader)
@@ -170,18 +179,20 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 			std::cout << "ERROR::ASSIMP::PROCCESSING::TEXTURE::COORDINATES - There are no texture coordinates to process\n";
 			vertex.uv = glm::vec2(0.0f, 0.0f);
 		}
-		vertecies.push_back(vertex);
+        modelVerticies.push_back(vertex);
+		//vertecies.push_back(vertex);
 	}
 	
-	//process indecies
+	//process numIndecies
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
 		//each mesh contains n number of faces
-		//each face contains mnumber of indecies 
+		//each face contains n number of numIndecies
 		for (unsigned int j = 0; j < face.mNumIndices; j++)
 		{
 			indecies.push_back(face.mIndices[j]);
+            this->modelIndecies.push_back(face.mIndices[j]);
 		}
 	}
 	
@@ -219,7 +230,9 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 	std::cout << "-------------------  INDECIES PROCESSED -------------------------\n";
 	std::cout << "------------------- MATERIALS PROCESSED ------------------------\n";
 	std::cout << "--------------------------------------------------------------\n\n\n";
-	return Mesh(vertecies, indecies, textures);
+
+    Mesh _mesh(vertecies, indecies, textures);
+	return _mesh;
 }
 
 std::vector<_Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {

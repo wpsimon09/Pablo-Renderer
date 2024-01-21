@@ -10,5 +10,5 @@ PlaneGeometry::PlaneGeometry(std::string name): Geometry() {
     this->name = std::move(name);
     this->vao = new VAO(planeVertexData, sizeof(planeVertexData)/sizeof(float));
     this->shapes = GL_TRIANGLES;
-    this->verticies = 6;
+    this->numVerticies = 6;
 }

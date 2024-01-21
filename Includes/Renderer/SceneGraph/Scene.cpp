@@ -20,7 +20,6 @@ void Scene::add(Renderable *renderable, SceneNode *parent) {
 
 
 void Scene::update(Shader *shader) {
-    std::cout<<root->getNumberOfChildren();
     Scene::root->update();
 }
 
