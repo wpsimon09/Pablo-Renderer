@@ -24,6 +24,7 @@ public:
 
     void getStatus();
 private:
+
     GLuint VBO;
     GLuint EBO;
 

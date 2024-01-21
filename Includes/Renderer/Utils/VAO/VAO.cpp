@@ -11,6 +11,8 @@ VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
     glCheckError();
 
     glGenBuffers(1, &this->VBO);
+    glCheckError();
+
     glGenBuffers(1, &this->EBO);
     glCheckError();
 

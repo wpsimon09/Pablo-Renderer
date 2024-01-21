@@ -10,7 +10,6 @@
 #include "DrawingFunctions.h"
 #include "VaoCreation.h"
 #include "PBRPipeline/PBRPipeline.h"
-#include "Model.h"
 #include "Debug/DisplayingFrameBuffer/FrameBufferDebug.h"
 #include "Renderer/Geometry/Geometry.h"
 #include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
@@ -119,11 +118,6 @@ int main() {
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
     Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
-    //witcher medailon
-    Model witcherMedailon("Assets/Model/witcher_medalion/scene.gltf");
-
-    //witcher medailon
-    Model mortier("Assets/Model/medieval_mortier/scene.gltf");
 
     new CubeGeometry("cube");
 
