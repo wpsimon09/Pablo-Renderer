@@ -3,25 +3,21 @@
 #include <iostream>
 #include "Shader.h"
 #include "stb_image.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include "camera.h"
 #include "HelperFunctions.h"
-#include "DrawingFunctions.h"
 #include "VaoCreation.h"
 #include "PBRPipeline/PBRPipeline.h"
 #include "Debug/DisplayingFrameBuffer/FrameBufferDebug.h"
-#include "Renderer/Geometry/Geometry.h"
 #include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
 #include "Renderer/Utils/Texture/Texture2D.h"
 #include "Renderer/Material/Material.h"
 #include "Renderer/Material/PBRColor/PBRColor.h"
-#include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
+#include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -217,10 +213,12 @@ int main() {
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry *unitPlane = new PlaneGeometry();
+    Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
 
     //create renderable object
     Renderable basicCube(cubeGeometry,cubeBasicMaterial);
     Renderable plane(unitPlane, cubeBasicMaterial);
+    Renderable medalion(withcerModel, cubeBasicMaterial);
 
     //optional create scene node
     SceneNode cube(&basicCube);
@@ -229,10 +227,15 @@ int main() {
     SceneNode cube2(&basicCube);
     cube2.setPositions(glm::vec3(3.0f, 0.0f, 3.0f));
 
+
+    SceneNode withcerMedailonNode(&medalion);
+    withcerMedailonNode.setPositions(glm::vec3 (7.0f, 0.0f, 3.0f));
+
     cube.addChild(&cube2);
 
     Scene scene;
     scene.add(&cube);
+    scene.add(&withcerMedailonNode);
     OGLRenderer renderer(&scene, window);
 
     //-------------

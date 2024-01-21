@@ -3,6 +3,8 @@
 //
 
 #include "ModelGeometry.h"
+#include "Model.h"
+
 
 ModelGeometry::ModelGeometry(std::string name, std::vector<Vertex> verticies,std::vector<unsigned int> indecies): Geometry() {
     this->name = std::move(name);
@@ -18,9 +20,8 @@ ModelGeometry::ModelGeometry(const char *pathToTheModel): Geometry() {
 
 void ModelGeometry::render() const {
     this->vao->bind();
+    glDrawElements(this->shapes, this->vao->getNumberOfIndecies(), GL_UNSIGNED_INT, 0);
     glGetError();
-
-
 }
 
 

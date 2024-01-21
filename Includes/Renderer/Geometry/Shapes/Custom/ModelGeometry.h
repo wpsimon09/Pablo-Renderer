@@ -2,13 +2,11 @@
 // Created by wpsimon09 on 31/12/23.
 //
 
-#ifndef PABLO_RENDERER_MODELGEOMETRY_H
-#define PABLO_RENDERER_MODELGEOMETRY_H
+#ifndef MODELGEOMETRY_H
+#define MODELGEOMETRY_H
 
 #include "Renderer/Geometry/Geometry.h"
 #include "vector"
-#include "Model.h"
-
 
 class ModelGeometry: public Geometry{
 public:
@@ -19,6 +17,5 @@ public:
 
 private:
 };
-
 
 #endif //PABLO_RENDERER_MODELGEOMETRY_H

@@ -23,7 +23,11 @@ public:
     void unbind();
 
     void getStatus();
+    unsigned int getNumberOfIndecies();
+    unsigned int getNumberOfVerticies();
 private:
+    unsigned int numOfIndecies;
+    unsigned int numOfVerticies;
 
     GLuint VBO;
     GLuint EBO;

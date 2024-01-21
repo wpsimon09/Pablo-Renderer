@@ -1,3 +1,4 @@
+#pragma once
 #ifndef MODEL_H
 #define MODEL_H
 #include<glad/glad.h>
@@ -9,8 +10,8 @@
 #include<assimp/ai_assert.h>
 #include<assimp/scene.h>
 #include "Renderer/Utils/Vertex/Vertex.h"
-#include "Mesh.h"
 #include "Shader.h"
+#include "Mesh.h"
 
 #include <string>
 #include <fstream>
@@ -18,7 +19,6 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma = false);
 
 

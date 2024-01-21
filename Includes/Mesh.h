@@ -1,14 +1,8 @@
 #pragma once
 #ifndef MESH_H
 #define MESH_H
-#include <glm/glm.hpp>
-#include <vector>
-#include <string>
-#include "Shader.h"
-#include "Renderer/Utils/Vertex/Vertex.h"
-#include "Renderer/Utils/VAO/VAO.h"
-#include "Renderer/Geometry/Geometry.h"
-#include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
+
+
 /*
 struct Vertex
 {
@@ -37,8 +31,6 @@ public:
 	Mesh(std::vector<Vertex> vertecies, std::vector<unsigned int> indecies, std::vector<_Texture> texutres);
 	void Draw(Shader& shader);
 	void DrawInstanced(Shader& shader);
-	Geometry* modelGeometry;
-
 
 	void setAmountOfDrawCals(unsigned int drawCalls) {
 		this->drawCalls = drawCalls;
@@ -73,7 +65,6 @@ void Mesh::Draw(Shader& shader) {
 	this->setupTextures(shader);
 
 	//draw mesh
-    this->modelGeometry->bindVertexArrays();
 	glDrawElements(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 	glActiveTexture(GL_TEXTURE0);
@@ -82,7 +73,6 @@ void Mesh::Draw(Shader& shader) {
 void Mesh::DrawInstanced(Shader& shader)
 {
 
-    this->modelGeometry->bindVertexArrays();
 
 	//draw mesh
 	glDrawElementsInstanced(GL_TRIANGLES, indecies.size(), GL_UNSIGNED_INT, 0, this->drawCalls);

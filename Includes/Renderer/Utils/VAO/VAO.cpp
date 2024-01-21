@@ -7,6 +7,7 @@
 
 //loading with numVerticies must have everything
 VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
+
     glGenVertexArrays(1, &this->ID);
     glCheckError();
 
@@ -35,8 +36,9 @@ VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
     this->hasNormals = true;
     this->hasTangents = true;
     this->hasBitangents = true;
-    indecies.size() > 1 ? this->hasEBO = true : this->hasEBO = false;
-
+    indecies.size() > 1 ? this->hasEBO = true  : this->hasEBO = false;
+    this->numOfIndecies = indecies.size();
+    this->numOfVerticies = vertecies.size();
     //vertex positions
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, position));
@@ -160,6 +162,14 @@ void VAO::getStatus() {
     std::cout<<"Has tangents: "<<this->hasTangents<<std::endl;
     std::cout<<"Has bitangents: "<<this->hasBitangents<<std::endl;
     std::cout<<"Has Element buffer object: "<<this->hasEBO<<std::endl;
+}
+
+unsigned int VAO::getNumberOfIndecies() {
+    return this->numOfIndecies;
+}
+
+unsigned int VAO::getNumberOfVerticies() {
+    return this->numOfVerticies;
 }
 
 
