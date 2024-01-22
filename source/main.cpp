@@ -212,7 +212,7 @@ int main() {
 
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
-    Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
+    Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry *unitPlane = new PlaneGeometry();
     Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");

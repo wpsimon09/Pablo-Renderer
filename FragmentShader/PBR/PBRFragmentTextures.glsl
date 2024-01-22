@@ -28,7 +28,7 @@ const float PI = 3.14159265359;
 
 vec3 getNormalFromMap()
 {
-    vec3 tangentNormal = texture(_normalMap, fs_in.TexCoords).rgb * 2.0 - 1.0;
+    vec3 tangentNormal = texture(_normalMap, fs_in.TexCoords).xyz * 2.0 - 1.0;
 
     vec3 Q1  = dFdx(fs_in.FragPos);
     vec3 Q2  = dFdy(fs_in.FragPos);
@@ -109,7 +109,7 @@ void main()
     float ao = texture(_aoMap, fs_in.TexCoords).r;
 
     //normal
-    //vec3 N = fs_in.Normal;
+    //swdvec3 N = fs_in.Normal;
     vec3 N = getNormalFromMap();
     //view direction;
     vec3 V = normalize(camPos - fs_in.FragPos);
@@ -170,5 +170,5 @@ void main()
     color = pow(color,vec3(1.0/2.2));
 
     //todo go over every texture to see which one is off
-    FragColor = vec4(albedo , 1.0);
+    FragColor = vec4(color , 1.0);
 }

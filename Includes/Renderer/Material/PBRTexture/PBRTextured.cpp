@@ -5,7 +5,7 @@
 #include "PBRTextured.h"
 
 PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(shader) {
-    Texture2D albedo((pathToTheDirectory+"/albedo"+ fileFormat).c_str(), true);
+    Texture2D albedo((pathToTheDirectory+"/albedo"+fileFormat).c_str(), true);
     this->baseColor = new PBRMaterial<Texture2D>(albedo, shaderNamingConvention+"albedoMap");
     this->baseColor->type.setSamplerID(0);
 
