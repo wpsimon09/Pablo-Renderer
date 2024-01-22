@@ -22,9 +22,7 @@ uniform vec3 lightPositions[5];
 uniform vec3 lightColors[5];
 uniform vec3 camPos;
 
-
 const float PI = 3.14159265359;
-
 
 vec3 getNormalFromMap()
 {
@@ -109,8 +107,8 @@ void main()
     float ao = texture(_aoMap, fs_in.TexCoords).r;
 
     //normal
-    //swdvec3 N = fs_in.Normal;
-    vec3 N = getNormalFromMap();
+    vec3 N = fs_in.Normal;
+    //vec3 N = normal;
     //view direction;
     vec3 V = normalize(camPos - fs_in.FragPos);
     
@@ -161,7 +159,7 @@ void main()
     }
 
     vec3 ambient = vec3(0.03) * albedo * ao;
-    vec3 color = ambient + Lo;
+    vec3 color = Lo + ambient;
 
     //HDR
     color = color/ (color + vec3(1.0));

@@ -90,7 +90,7 @@ int main() {
 
     Shader PBRShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
 
-    Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader");
+    Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
 
     Shader lightSourceShader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece");
 
@@ -213,30 +213,31 @@ int main() {
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
+    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
     Geometry *cubeGeometry = new CubeGeometry();
-    Geometry *unitPlane = new PlaneGeometry();
     Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
 
     //create renderable object
-    Renderable basicCube(cubeGeometry,cubeGoldMaterial);
-    Renderable plane(unitPlane, cubeBasicMaterial);
+    Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
+    Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable medalion(withcerModel, cubeBasicMaterial);
 
     //optional create scene node
-    SceneNode cube(&basicCube);
+    SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 0.0f, 0.0f));
 
-    SceneNode cube2(&basicCube);
+    SceneNode cube2(&cubeWall);
     cube2.setPositions(glm::vec3(3.0f, 0.0f, 3.0f));
 
     SceneNode withcerMedailonNode(&medalion);
     withcerMedailonNode.setPositions(glm::vec3 (7.0f, 2.0f, 3.0f));
     withcerMedailonNode.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-    cube.addChild(&cube2);
 
     Scene scene;
     scene.add(&cube);
+    scene.add(&cube2);
     scene.add(&withcerMedailonNode);
+
     OGLRenderer renderer(&scene, window);
 
     //-------------
@@ -269,6 +270,10 @@ int main() {
     //------------------
     // LOAD PBR TEXTURES
     //------------------
+
+    renderer.render(0);
+/**
+ *
     PBRShader.use();
     PBRShader.setInt("irradianceMap", 5);
     PBRShader.setInt("prefilterMap", 6);
@@ -286,8 +291,7 @@ int main() {
 
     skyBoxShader.use();
     skyBoxShader.setInt("enviromentMap", 0);
-
-    renderer.render(0);
+*/
 
     return 0;
 }
