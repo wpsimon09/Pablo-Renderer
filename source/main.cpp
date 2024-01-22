@@ -18,6 +18,7 @@
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
+#include "Renderer/Material/PBRTexture/PBRTextured.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -87,7 +88,7 @@ int main() {
     unsigned int colums = 5;
     unsigned int totalAmount = rows * colums;
 
-    Shader PBRShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR shader");
+    Shader PBRShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
 
     Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader");
 
@@ -211,12 +212,13 @@ int main() {
 
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
+    Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry *unitPlane = new PlaneGeometry();
     Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
 
     //create renderable object
-    Renderable basicCube(cubeGeometry,cubeBasicMaterial);
+    Renderable basicCube(cubeGeometry,cubeGoldMaterial);
     Renderable plane(unitPlane, cubeBasicMaterial);
     Renderable medalion(withcerModel, cubeBasicMaterial);
 
@@ -227,10 +229,9 @@ int main() {
     SceneNode cube2(&basicCube);
     cube2.setPositions(glm::vec3(3.0f, 0.0f, 3.0f));
 
-
     SceneNode withcerMedailonNode(&medalion);
-    withcerMedailonNode.setPositions(glm::vec3 (7.0f, 0.0f, 3.0f));
-
+    withcerMedailonNode.setPositions(glm::vec3 (7.0f, 2.0f, 3.0f));
+    withcerMedailonNode.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
     cube.addChild(&cube2);
 
     Scene scene;

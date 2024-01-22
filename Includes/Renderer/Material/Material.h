@@ -15,6 +15,7 @@ struct PBRMaterial{
         this->type = type;
         this->shaderName = shaderName;
     }
+
 };
 
 class Material {

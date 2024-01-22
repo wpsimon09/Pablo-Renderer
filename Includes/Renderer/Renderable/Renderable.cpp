@@ -15,7 +15,6 @@ std::ostream &operator<<(std::ostream &os, Renderable &obj) {
     os<<"==========================="<<std::endl;
     obj.objectMaterial->printLog();
 
-
     return os;
 }
 

@@ -18,8 +18,11 @@ public:
     explicit Texture2D(const char* path, bool isPBRMaterial = false);
 
 private:
+    unsigned int samplerID;
     std::string fullPath;
 public:
+    unsigned int getSamplerID() {return this->samplerID;}
+    void setSamplerID(unsigned int ID){ this->samplerID = ID; }
     const std::string &getFullPath() const;
 
 };
