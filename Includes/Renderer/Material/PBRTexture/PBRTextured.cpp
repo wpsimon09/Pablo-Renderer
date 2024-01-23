@@ -19,7 +19,7 @@ PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::st
 
     Texture2D normal((pathToTheDirectory+"/normal"+ fileFormat).c_str(), true);
     this->normalMap = new PBRMaterial<Texture2D>(normal, shaderNamingConvention+"normalMap");
-    this->metalness->type.setSamplerID(3);
+    this->normalMap->type.setSamplerID(3);
 
     Texture2D _ao((pathToTheDirectory + "/ao" + fileFormat).c_str(), true);
     this->ao = new PBRMaterial<Texture2D>(_ao, shaderNamingConvention + "aoMap");

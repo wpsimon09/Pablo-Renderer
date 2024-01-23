@@ -212,8 +212,10 @@ int main() {
 
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
-    Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
-    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
+    Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
+    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
+    cubeWallMaterial->printLog();
+    cubeGoldMaterial->printLog();
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
 
@@ -270,7 +272,6 @@ int main() {
     //------------------
     // LOAD PBR TEXTURES
     //------------------
-
     renderer.render(0);
 /**
  *
