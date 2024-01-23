@@ -107,8 +107,8 @@ void main()
     float ao = texture(_aoMap, fs_in.TexCoords).r;
 
     //normal
-    vec3 N = fs_in.Normal;
-    //vec3 N = normal;
+    //vec3 N = fs_in.Normal;
+    vec3 N = normal;
     //view direction;
     vec3 V = normalize(camPos - fs_in.FragPos);
     
@@ -168,5 +168,5 @@ void main()
     color = pow(color,vec3(1.0/2.2));
 
     //todo go over every texture to see which one is off
-    FragColor = vec4(color , 1.0);
+    FragColor = vec4(normal , 1.0);
 }
