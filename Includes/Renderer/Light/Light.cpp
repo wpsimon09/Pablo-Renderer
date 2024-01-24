@@ -26,3 +26,18 @@ void Light::setY(float pos) {
 void Light::setZ(float pos) {
     this->position->property.z= pos;
 }
+
+void Light::processInput(GLFWwindow* window) {
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+        this->position->property.z += lightSpeed;
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+        this->position->property.z -= lightSpeed;
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+        this->position->property.x += lightSpeed;
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+        this->position->property.x -= lightSpeed;
+    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+        this->position->property.y -= lightSpeed;
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        this->position->property.y += lightSpeed;
+}

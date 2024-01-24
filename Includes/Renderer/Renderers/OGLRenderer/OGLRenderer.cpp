@@ -64,6 +64,7 @@ void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
 }
 
 void OGLRenderer::processInput(GLFWwindow *window) {
+    this->scene->light->processInput(window);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
@@ -75,26 +76,7 @@ void OGLRenderer::processInput(GLFWwindow *window) {
         this->scene->camera->ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         this->scene->camera->ProcessKeyboard(RIGHT, deltaTime);
-
-/*    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        lightPosition.z += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        lightPosition.z -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        lightPosition.x += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        lightPosition.x -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-        lightPosition.y -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-        lightPosition.y += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
-        hasNormalMap = 1.0f;
-    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
-        hasNormalMap = 0.0f;
-*/
-
-}
+   }
 
 void OGLRenderer::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
     instace->scene->camera->ProcessMouseScroll(static_cast<float>(yoffset));

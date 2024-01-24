@@ -32,9 +32,13 @@ public:
     void setY(float pos);
     void setZ(float pos);
 
+    void processInput(GLFWwindow* window);
+
     virtual void update(Shader* shader);
 
+
 protected:
+    const float lightSpeed = 0.5f;
     LightProperty<glm::vec3>* position;
     LightProperty<glm::vec3>* color;
 

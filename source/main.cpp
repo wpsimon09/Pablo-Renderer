@@ -213,23 +213,28 @@ int main() {
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
-    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
-    cubeWallMaterial->printLog();
-    cubeGoldMaterial->printLog();
+    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
+    Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
+
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
 
     //create renderable object
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
+    Renderable cubeIron(cubeGeometry, cubeRustedIron);
+
     Renderable medalion(withcerModel, cubeBasicMaterial);
 
     //optional create scene node
     SceneNode cube(&cubeGold);
-    cube.setPositions(glm::vec3(2.0f, 0.0f, 0.0f));
+    cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));
 
     SceneNode cube2(&cubeWall);
-    cube2.setPositions(glm::vec3(3.0f, 0.0f, 3.0f));
+    cube2.setPositions(glm::vec3(3.0f, 2.0f, 3.0f));
+
+    SceneNode cube3(&cubeIron);
+    cube3.setPositions(glm::vec3(-1.0f, 2.0f, 3.0f));
 
     SceneNode withcerMedailonNode(&medalion);
     withcerMedailonNode.setPositions(glm::vec3 (7.0f, 2.0f, 3.0f));
@@ -238,6 +243,7 @@ int main() {
     Scene scene;
     scene.add(&cube);
     scene.add(&cube2);
+    scene.add(&cube3);
     scene.add(&withcerMedailonNode);
 
     OGLRenderer renderer(&scene, window);
