@@ -13,6 +13,7 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
 
     Geometry *geometry = new ScreenSpaceQuadGeometry();
     Material *material = new BasicMaterialTextured(new Shader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png");
+    material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
     Renderable *lightTexutre = new Renderable(geometry, material);
     this->lightIcon = new SceneNode(lightTexutre);
