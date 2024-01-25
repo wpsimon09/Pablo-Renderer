@@ -3,11 +3,20 @@
 //
 
 #include "Light.h"
+#include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
+#include "Renderer/Material/Material.h"
 
 Light::Light(glm::vec3 position, glm::vec3 color) {
     this->position = new LightProperty(position, "lightPositions[0]");
     this->color = new LightProperty(color, "lightColors[0]");
+
+    Geometry *geometry = new ScreenSpaceQuadGeometry();
+    Material *material = new Material(new Shader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"));
+    Renderable *lightTexutre = new Renderable(geometry, material);
+
+    this->lightIcon = new SceneNode(lightTexutre);
 }
+
 
 void Light::update(Shader *shader) {
     shader->use();

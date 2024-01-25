@@ -92,8 +92,6 @@ int main() {
 
     Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
 
-    Shader lightSourceShader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece");
-
     Shader shadowMapShader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
 
     Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
@@ -115,8 +113,6 @@ int main() {
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
     Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
-
-    new CubeGeometry("cube");
 
     Geometry* planeGeometry;
     planeGeometry = new PlaneGeometry("plane");
@@ -213,8 +209,8 @@ int main() {
     //cerate material properties
     Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
-    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
-    Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
+    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
+    Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
 
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
@@ -223,8 +219,7 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-
-    Renderable medalion(withcerModel, cubeBasicMaterial);
+    Renderable medalion(withcerModel, cubeRustedIron);
 
     //optional create scene node
     SceneNode cube(&cubeGold);

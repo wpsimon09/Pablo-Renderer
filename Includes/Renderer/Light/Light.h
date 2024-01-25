@@ -8,6 +8,7 @@
 #include "iostream"
 #include "glm/glm.hpp"
 #include "Shader.h"
+#include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 template<typename T>
 struct LightProperty{
     T property;
@@ -36,12 +37,13 @@ public:
 
     virtual void update(Shader* shader);
 
+    SceneNode* lightIcon;
 
 protected:
-    const float lightSpeed = 0.5f;
+
+    const float lightSpeed = 0.05f;
     LightProperty<glm::vec3>* position;
     LightProperty<glm::vec3>* color;
-
 };
 
 
