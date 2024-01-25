@@ -5,23 +5,27 @@
 #include "Light.h"
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
 #include "Renderer/Material/Material.h"
+#include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
 
 Light::Light(glm::vec3 position, glm::vec3 color) {
     this->position = new LightProperty(position, "lightPositions[0]");
     this->color = new LightProperty(color, "lightColors[0]");
 
     Geometry *geometry = new ScreenSpaceQuadGeometry();
-    Material *material = new Material(new Shader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"));
+    Material *material = new BasicMaterialTextured(new Shader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png");
+    material->shader->setVec3("lightColor", this->color->property);
     Renderable *lightTexutre = new Renderable(geometry, material);
-
     this->lightIcon = new SceneNode(lightTexutre);
+    this->lightIcon->setPositions(this->position->property);
 }
-
 
 void Light::update(Shader *shader) {
     shader->use();
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->color->property);
+
+    this->lightIcon->setPositions(this->position->property);
+    this->lightIcon->setScale(glm::vec3(0.2));
 }
 
 void Light::setX(float pos) {
