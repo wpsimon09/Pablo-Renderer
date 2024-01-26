@@ -21,6 +21,7 @@ void ModelRenderable::loadModel(std::string path) {
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
     this->objectGeometry = new ModelGeometry("model", modelVertices,modelIndecies);
+
 }
 
 void ModelRenderable::processNode(aiNode *node, const aiScene *scene) {
@@ -84,8 +85,18 @@ void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
             vertex.bitangent = tempBitanget;
         } else
             vertex.uv = glm::vec2(0.0f, 0.0f);
-
         this->modelVertices.push_back(vertex);
+    }
+
+    for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+    {
+        aiFace face = mesh->mFaces[i];
+
+        for (unsigned int j = 0; j < face.mNumIndices; j++)
+        {
+            indecies.push_back(face.mIndices[j]);
+            this->modelIndecies.push_back(face.mIndices[j]);
+        }
     }
 }
 
