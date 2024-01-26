@@ -3,13 +3,15 @@
 //
 
 #include "ModelGeometry.h"
+
+#include <utility>
 #include "Model.h"
 
 
 ModelGeometry::ModelGeometry(std::string name, std::vector<Vertex> verticies,std::vector<unsigned int> indecies): Geometry() {
     this->name = std::move(name);
     this->shapes = GL_TRIANGLES;
-    this->vao = new VAO(verticies, indecies);
+    this->vao = new VAO(std::move(verticies), std::move(indecies));
 }
 
 ModelGeometry::ModelGeometry(const char *pathToTheModel): Geometry() {

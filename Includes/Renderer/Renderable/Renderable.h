@@ -15,9 +15,11 @@
 #include "Renderer/Geometry/Shapes/Cube/CubeGeometry.h"
 #include "Renderer/Material/Material.h"
 #include "Renderer/Material/PBRColor/PBRColor.h"
+#include "Renderer/Material/PBRTexture/PBRTextured.h"
+#include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 
 class Renderable {
-private:
+protected:
     Geometry *objectGeometry;
     Material *objectMaterial;
     glm::mat4 modelMatrix;
@@ -26,6 +28,7 @@ public:
 
     Renderable(Geometry* geometry, Material * material, std::string name = "renderable");
     Renderable(Shader *shader);
+    Renderable();
 
     void render();
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);

@@ -17,6 +17,13 @@ public:
     // Assets/Textures/directory
     // albedo.png/jpg, metallic.png/jpg, rougness.png/jpg
 
+    /**
+     * Loads material from texture folder
+     * @param fileFormat format of the texture file default value is .png
+     * @param pathToTheDirectory relative path to the directory with textures
+     * @param shader shader that will be assosiated with texture
+     * @param shaderNamingConvention naming conventions used in the shader for unifrom samplers
+     * */
     explicit PBRTextured(Shader* shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
 
     PBRMaterial<Texture2D> *getBaseColor() const;

@@ -61,6 +61,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Renderers/OGLRenderer/OGLRenderer.h
         Includes/Renderer/Utils/ShaderHelper/ShaderHelper.cpp
         Includes/Renderer/Utils/ShaderHelper/ShaderHelper.h
+        Includes/Renderer/Renderable/ModelRenderable/ModelRenderable.cpp
+        Includes/Renderer/Renderable/ModelRenderable/ModelRenderable.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

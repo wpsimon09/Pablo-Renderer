@@ -12,6 +12,7 @@
 #include "Renderer/Utils/Vertex/Vertex.h"
 #include "Shader.h"
 #include "Mesh.h"
+#include "Renderer/Utils/VAO/VAO.h"
 
 #include <string>
 #include <fstream>
