@@ -4,7 +4,7 @@
 
 #include "ModelRenderable.h"
 
-ModelRenderable::ModelRenderable(std::string path) : Renderable() {
+ModelRenderable::ModelRenderable(Shader *shader,std::string path) : Renderable(shader) {
 
     Assimp::Importer importer;
 
@@ -18,7 +18,7 @@ ModelRenderable::ModelRenderable(std::string path) : Renderable() {
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
     this->objectGeometry = new ModelGeometry("model", modelVertices,modelIndecies);
-
+    this->loadMaterialTextures(shader,scene);
 }
 
 void ModelRenderable::processNode(aiNode *node, const aiScene *scene) {
@@ -97,9 +97,69 @@ void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
     }
 }
 
-    void ModelRenderable::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName) {
+void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) {
+    PBRMaterial<Texture2D>* baseColor;
+    PBRMaterial<Texture2D>* rougness;
+    PBRMaterial<Texture2D>* metalness;
+    PBRMaterial<Texture2D>* normalMap;
+    PBRMaterial<Texture2D>* ao;
 
+
+    for (unsigned int i = 0; i < scene->mNumMaterials; ++i) {
+        aiMaterial* material = scene->mMaterials[i];
+
+        aiString texturePath;
+        if (material->GetTexture(aiTextureType_DIFFUSE, 0, &texturePath) == AI_SUCCESS) {
+            std::string path = directory + "/" + texturePath.C_Str();
+            Texture2D texture( path.c_str(), true);
+            texture.setSamplerID(0);
+            baseColor = new PBRMaterial<Texture2D>(texture, "_albedoMap");
+
+
+            std::cout<<path<<std::endl;
+        }
+        if (material->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &texturePath) == AI_SUCCESS) {
+            std::string path = directory + "/" + texturePath.C_Str();
+            Texture2D texture(path.c_str(), true);
+            texture.setSamplerID(1);
+            rougness = new PBRMaterial<Texture2D>(texture, "_rougnessMap");
+
+
+            std::cout<<path<<std::endl;
+        }
+        if (material->GetTexture(aiTextureType_METALNESS, 0, &texturePath) == AI_SUCCESS) {
+            std::string path = directory + "/" + texturePath.C_Str();
+            Texture2D texture( path.c_str(), true);
+            texture.setSamplerID(2);
+            metalness = new PBRMaterial<Texture2D>(texture, "_metalnessMap");
+
+
+
+            std::cout<<path<<std::endl;
+        }
+        if (material->GetTexture(aiTextureType_NORMALS, 0, &texturePath) == AI_SUCCESS) {
+            std::string path = directory + "/" + texturePath.C_Str();
+            Texture2D texture( path.c_str(), true);
+            texture.setSamplerID(3);
+            normalMap = new PBRMaterial<Texture2D>(texture, "_normalMap");
+
+
+
+            std::cout<<path<<std::endl;
+        }
+        if (material->GetTexture(aiTextureType_AMBIENT_OCCLUSION, 0, &texturePath) == AI_SUCCESS) {
+            std::string path = directory + "/" + texturePath.C_Str();
+            Texture2D texture( path.c_str(), true);
+            texture.setSamplerID(4);
+            ao = new PBRMaterial<Texture2D>(texture, "_aoMap");
+
+
+
+            std::cout<<path<<std::endl;
+        }
     }
+    this->objectMaterial = new PBRTextured(shader, baseColor, normalMap, rougness, metalness, ao);
+}
 
 void ModelRenderable::setMaterial(Material* material) {
     this->objectMaterial = material;

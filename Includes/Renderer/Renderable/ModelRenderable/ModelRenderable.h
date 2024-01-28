@@ -23,7 +23,7 @@
 
 class ModelRenderable: public Renderable{
     public:
-        explicit ModelRenderable(std::string path);
+        explicit ModelRenderable(Shader* shader , std::string path);
         void setMaterial(Material* material);
         std::string directory;
     private:
@@ -32,7 +32,7 @@ class ModelRenderable: public Renderable{
         std::vector<Texture2D> loadedTextures;
         void processNode(aiNode* node, const aiScene* scene);
         void processMesh(aiMesh* mesh, const aiScene* scene);
-        void loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+        void loadMaterialTextures(Shader *shader,const aiScene* scene);
 };
 
 

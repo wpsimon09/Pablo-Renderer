@@ -70,25 +70,6 @@ std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
     return os;
 }
 
-PBRMaterial<Texture2D> *PBRTextured::getBaseColor() const {
-    return baseColor;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getNormalMap() const {
-    return normalMap;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getRoughness() const {
-    return roughness;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getMetalness() const {
-    return metalness;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getAo() const {
-    return ao;
-}
 
 void PBRTextured::printLog() const {
     std::cout<<*this;
@@ -121,3 +102,15 @@ void PBRTextured::configureShader() {
     //configure pbr shader to accept naming convention
     //set rendering to set the current samplers
 }
+
+PBRTextured::PBRTextured(Shader *shader, PBRMaterial<Texture2D> *baseColor, PBRMaterial<Texture2D> *normalMap,
+                         PBRMaterial<Texture2D> *rougness, PBRMaterial<Texture2D> *metalness,
+                         PBRMaterial<Texture2D> *ao): Material(shader) {
+    this->baseColor = baseColor;
+    this->normalMap = normalMap;
+    this->roughness = rougness;
+    this->metalness = metalness;
+    this->ao = ao;
+}
+
+

@@ -219,8 +219,7 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    ModelRenderable medalion("Assets/Model/witcher_medalion/scene.gltf");
-    medalion.setMaterial(witcherMedailonMaterial);
+    ModelRenderable medalion(&PBRShader, "Assets/Model/witcher_medalion/scene.gltf");
 
     //optional create scene node
     SceneNode cube(&cubeGold);
