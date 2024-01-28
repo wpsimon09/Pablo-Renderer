@@ -19,6 +19,7 @@
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
+#include "Renderer/Renderable/ModelRenderable/ModelRenderable.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -213,14 +214,13 @@ int main() {
     Material* witcherMedailonMaterial = new PBRTextured(&PBRShader,"Assets/Model/witcher_medalion/textures");
 
     Geometry *cubeGeometry = new CubeGeometry();
-    Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
 
     //create renderable object
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    Renderable medalion(withcerModel, cubeRustedIron);
-
+    ModelRenderable medalion("Assets/Model/witcher_medalion/scene.gltf");
+    medalion.setMaterial(dynamic_cast<PBRTextured *>(witcherMedailonMaterial));
     //optional create scene node
     SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));

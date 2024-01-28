@@ -4,14 +4,11 @@
 
 #include "ModelRenderable.h"
 
-ModelRenderable::ModelRenderable(const char *path) : Renderable() {
-    loadModel(path);
-}
+ModelRenderable::ModelRenderable(std::string path) : Renderable() {
 
-void ModelRenderable::loadModel(std::string path) {
     Assimp::Importer importer;
 
-    const aiScene *scene = importer.ReadFile(path,
+    const aiScene *scene = importer.ReadFile(path.c_str(),
                                              aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
@@ -103,3 +100,7 @@ void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
     void ModelRenderable::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName) {
 
     }
+
+void ModelRenderable::setMaterial(PBRTextured* material) {
+    this->objectMaterial = material;
+}

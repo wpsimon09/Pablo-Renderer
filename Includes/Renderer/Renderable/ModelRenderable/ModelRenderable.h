@@ -21,15 +21,15 @@
 //  - alternativly create setters for different materials
 
 
-class ModelRenderable: Renderable{
+class ModelRenderable: public Renderable{
     public:
-        explicit ModelRenderable(const char* path);
+        explicit ModelRenderable(std::string path);
+        void setMaterial(PBRTextured* material);
         std::string directory;
     private:
         std::vector<Vertex> modelVertices;
         std::vector<unsigned int> modelIndecies;
         std::vector<Texture2D> loadedTextures;
-        void loadModel(std::string path);
         void processNode(aiNode* node, const aiScene* scene);
         void processMesh(aiMesh* mesh, const aiScene* scene);
         void loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
