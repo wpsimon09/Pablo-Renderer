@@ -82,21 +82,27 @@ void PBRTextured::configureShader() {
     glActiveTexture(GL_TEXTURE0 + this->baseColor->type.getSamplerID());
     glBindTexture(GL_TEXTURE_2D, this->baseColor->type.ID);
 
-    this->shader->setInt(this->ao->shaderName, this->ao->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->ao->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->ao->type.ID);
-
-    this->shader->setInt(this->metalness->shaderName, this->metalness->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->metalness->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->metalness->type.ID);
-
-    this->shader->setInt(this->roughness->shaderName, this->roughness->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->roughness->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->roughness->type.ID);
-
     this->shader->setInt(this->normalMap->shaderName, this->normalMap->type.getSamplerID());
     glActiveTexture(GL_TEXTURE0 + this->normalMap->type.getSamplerID());
     glBindTexture(GL_TEXTURE_2D, this->normalMap->type.ID);
+
+    if(this->ao != nullptr){
+        this->shader->setInt(this->ao->shaderName, this->ao->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->ao->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->ao->type.ID);
+    }
+
+    if(this->metalness != nullptr){
+        this->shader->setInt(this->metalness->shaderName, this->metalness->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->metalness->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->metalness->type.ID);
+    }
+
+    if(this->roughness != nullptr){
+        this->shader->setInt(this->roughness->shaderName, this->roughness->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->roughness->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->roughness->type.ID);
+    }
 
     //configure samplers
     //configure pbr shader to accept naming convention

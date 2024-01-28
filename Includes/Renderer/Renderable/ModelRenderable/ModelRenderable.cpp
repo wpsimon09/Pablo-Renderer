@@ -142,23 +142,15 @@ void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) 
             Texture2D texture( path.c_str(), true);
             texture.setSamplerID(3);
             normalMap = new PBRMaterial<Texture2D>(texture, "_normalMap");
-
-
-
-            std::cout<<path<<std::endl;
         }
         if (material->GetTexture(aiTextureType_AMBIENT_OCCLUSION, 0, &texturePath) == AI_SUCCESS) {
             std::string path = directory + "/" + texturePath.C_Str();
             Texture2D texture( path.c_str(), true);
             texture.setSamplerID(4);
             ao = new PBRMaterial<Texture2D>(texture, "_aoMap");
-
-
-
-            std::cout<<path<<std::endl;
         }
     }
-    this->objectMaterial = new PBRTextured(shader, baseColor, normalMap, rougness, metalness, ao);
+    this->objectMaterial = new PBRTextured(shader, baseColor, normalMap);
 }
 
 void ModelRenderable::setMaterial(Material* material) {

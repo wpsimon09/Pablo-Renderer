@@ -26,7 +26,7 @@ public:
      * */
     explicit PBRTextured(Shader* shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
 
-    explicit PBRTextured(Shader* shader, PBRMaterial<Texture2D>* baseColor, PBRMaterial<Texture2D>* normalMap, PBRMaterial<Texture2D>* rougness, PBRMaterial<Texture2D>* metalness, PBRMaterial<Texture2D>* ao);
+    explicit PBRTextured(Shader* shader, PBRMaterial<Texture2D>* baseColor, PBRMaterial<Texture2D>* normalMap, PBRMaterial<Texture2D>* rougness = nullptr, PBRMaterial<Texture2D>* metalness = nullptr, PBRMaterial<Texture2D>* ao = nullptr);
 
     PBRMaterial<Texture2D> *getBaseColor() const;
 
