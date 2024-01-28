@@ -24,7 +24,7 @@
 class ModelRenderable: public Renderable{
     public:
         explicit ModelRenderable(std::string path);
-        void setMaterial(PBRTextured* material);
+        void setMaterial(Material* material);
         std::string directory;
     private:
         std::vector<Vertex> modelVertices;

@@ -211,7 +211,7 @@ int main() {
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
     Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
     Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
-    Material* witcherMedailonMaterial = new PBRTextured(&PBRShader,"Assets/Model/witcher_medalion/textures");
+    Material* witcherMedailonMaterial = new PBRTextured(&PBRShader,"Assets/Textures/PBR/Wall");
 
     Geometry *cubeGeometry = new CubeGeometry();
 
@@ -220,7 +220,8 @@ int main() {
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
     ModelRenderable medalion("Assets/Model/witcher_medalion/scene.gltf");
-    medalion.setMaterial(dynamic_cast<PBRTextured *>(witcherMedailonMaterial));
+    medalion.setMaterial(witcherMedailonMaterial);
+
     //optional create scene node
     SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));

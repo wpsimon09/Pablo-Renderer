@@ -101,6 +101,6 @@ void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
 
     }
 
-void ModelRenderable::setMaterial(PBRTextured* material) {
+void ModelRenderable::setMaterial(Material* material) {
     this->objectMaterial = material;
 }
