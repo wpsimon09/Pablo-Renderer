@@ -205,7 +205,7 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    ModelSceneNode medalion(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
+    ModelSceneNode medalion(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
     ModelRenderable mortier(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
 
     //optional create scene node
