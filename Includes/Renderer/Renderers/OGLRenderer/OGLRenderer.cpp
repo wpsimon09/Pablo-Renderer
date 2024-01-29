@@ -24,7 +24,7 @@ void OGLRenderer::render(GLuint frameBuffer) {
         glViewport(0, 0, this->windowWidth, this->windowHeight);
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
+        glClearColor(0.21f, 0.21f, 0.21f, 1.0f);
 
 
         float currentFrame = static_cast<float>(glfwGetTime());

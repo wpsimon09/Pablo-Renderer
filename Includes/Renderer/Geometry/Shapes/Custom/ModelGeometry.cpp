@@ -23,6 +23,9 @@ ModelGeometry::ModelGeometry(const char *pathToTheModel): Geometry() {
 void ModelGeometry::render() const {
     this->vao->bind();
     glDrawElements(this->shapes, this->vao->getNumberOfIndecies(), GL_UNSIGNED_INT, 0);
+
+    this->vao->unbind();
+    glActiveTexture(GL_TEXTURE0);
     glGetError();
 }
 

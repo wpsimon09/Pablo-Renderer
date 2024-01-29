@@ -18,6 +18,8 @@ ModelRenderable::ModelRenderable(Shader *shader,std::string path) : Renderable(s
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
     this->objectGeometry = new ModelGeometry("model", modelVertices,modelIndecies);
+    this->objectGeometry->setDrawingType(GL_TRIANGLES);
+
     this->loadMaterialTextures(shader,scene);
 }
 
