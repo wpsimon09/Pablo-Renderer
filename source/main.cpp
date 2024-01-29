@@ -93,6 +93,8 @@ int main() {
 
     Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
 
+    Shader PBRTexturedModel("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
+
     Shader shadowMapShader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
 
     Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
@@ -115,7 +117,6 @@ int main() {
 
     Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
-    Shader PBRTexturedModel("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
 
     Geometry* planeGeometry;
     planeGeometry = new PlaneGeometry("plane");
@@ -212,7 +213,6 @@ int main() {
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
     Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
     Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
-    Material* witcherMedailonMaterial = new PBRTextured(&PBRShader,"Assets/Textures/PBR/Wall");
 
     Geometry *cubeGeometry = new CubeGeometry();
 
@@ -220,7 +220,7 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    ModelRenderable medalion(&PBRShader, "Assets/Model/witcher_medalion/scene.gltf");
+    ModelRenderable medalion(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
 
     //optional create scene node
     SceneNode cube(&cubeGold);

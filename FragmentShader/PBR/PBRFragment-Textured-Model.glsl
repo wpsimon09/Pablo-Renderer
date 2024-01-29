@@ -162,7 +162,7 @@ void main()
     }
 
     vec3 ambient = vec3(0.03) * albedo * ao;
-    vec3 color = Lo + ambient;
+    vec3 color = Lo + ambient + emmision;
 
     //HDR
     color = color/ (color + vec3(1.0));
@@ -170,7 +170,6 @@ void main()
     // gamma corection
     color = pow(color,vec3(1.0/2.2));
 
-    color += emmision;
     //todo go over every texture to see which one is off
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(color , 1.0);
 }
