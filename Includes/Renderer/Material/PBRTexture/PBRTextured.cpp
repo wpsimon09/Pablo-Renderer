@@ -70,25 +70,6 @@ std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
     return os;
 }
 
-PBRMaterial<Texture2D> *PBRTextured::getBaseColor() const {
-    return baseColor;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getNormalMap() const {
-    return normalMap;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getRoughness() const {
-    return roughness;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getMetalness() const {
-    return metalness;
-}
-
-PBRMaterial<Texture2D> *PBRTextured::getAo() const {
-    return ao;
-}
 
 void PBRTextured::printLog() const {
     std::cout<<*this;
@@ -101,23 +82,60 @@ void PBRTextured::configureShader() {
     glActiveTexture(GL_TEXTURE0 + this->baseColor->type.getSamplerID());
     glBindTexture(GL_TEXTURE_2D, this->baseColor->type.ID);
 
-    this->shader->setInt(this->ao->shaderName, this->ao->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->ao->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->ao->type.ID);
-
-    this->shader->setInt(this->metalness->shaderName, this->metalness->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->metalness->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->metalness->type.ID);
-
-    this->shader->setInt(this->roughness->shaderName, this->roughness->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->roughness->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->roughness->type.ID);
-
     this->shader->setInt(this->normalMap->shaderName, this->normalMap->type.getSamplerID());
     glActiveTexture(GL_TEXTURE0 + this->normalMap->type.getSamplerID());
     glBindTexture(GL_TEXTURE_2D, this->normalMap->type.ID);
 
+    if(this->ao != nullptr){
+        this->shader->setInt(this->ao->shaderName, this->ao->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->ao->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->ao->type.ID);
+    }
+
+    if(this->metalness != nullptr){
+        this->shader->setInt(this->metalness->shaderName, this->metalness->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->metalness->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->metalness->type.ID);
+    }
+
+    if(this->roughness != nullptr){
+        this->shader->setInt(this->roughness->shaderName, this->roughness->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->roughness->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->roughness->type.ID);
+    }
+
+    if (this->emmisionMap != nullptr){
+        this->shader->setInt(this->emmisionMap->shaderName, this->emmisionMap->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->emmisionMap->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->emmisionMap->type.ID);
+    }
+
+    if(this->metallnesRougnessMap != nullptr){
+        this->shader->setInt(this->metallnesRougnessMap->shaderName, this->metallnesRougnessMap->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->metallnesRougnessMap->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->metallnesRougnessMap->type.ID);
+    }
     //configure samplers
     //configure pbr shader to accept naming convention
     //set rendering to set the current samplers
 }
+
+PBRTextured::PBRTextured(Shader *shader, PBRMaterial<Texture2D> *baseColor, PBRMaterial<Texture2D> *normalMap,
+                         PBRMaterial<Texture2D> *emmisionMap, PBRMaterial<Texture2D> *metalnessRougnessMap,
+                         PBRMaterial<Texture2D> *rougness, PBRMaterial<Texture2D> *metalness,
+                         PBRMaterial<Texture2D> *ao): Material(shader) {
+
+    this->baseColor = baseColor;
+    this->normalMap = normalMap;
+    this->roughness = rougness;
+    this->metalness = metalness;
+    this->ao = ao;
+
+    this->metallnesRougnessMap = metalnessRougnessMap;
+    this->emmisionMap = emmisionMap;
+}
+
+
+
+
+

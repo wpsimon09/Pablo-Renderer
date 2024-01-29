@@ -42,4 +42,8 @@ Shader *Renderable::getShader() {
     return this->objectMaterial->shader;
 }
 
+Renderable::Renderable() {
+
+}
+
 

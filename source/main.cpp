@@ -19,6 +19,7 @@
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
+#include "Renderer/Renderable/ModelRenderable/ModelRenderable.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -92,6 +93,8 @@ int main() {
 
     Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
 
+    Shader PBRTexturedModel("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
+
     Shader shadowMapShader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
 
     Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
@@ -114,12 +117,12 @@ int main() {
 
     Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
+
     Geometry* planeGeometry;
     planeGeometry = new PlaneGeometry("plane");
 
     Geometry* screenSpaceQuadGeometry;
     screenSpaceQuadGeometry = new ScreenSpaceQuadGeometry("ss-quad");
-    stbi_set_flip_vertically_on_load(true);
 
     // plane VAO
     unsigned int screeneSpaceQuadVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);
@@ -186,40 +189,23 @@ int main() {
     unsigned int floorNormalMap = loadTexture("Assets/Textures/AdvancedLightning/floor_normal.jpg", false);
     unsigned int hdrTexture = loadIrradianceMap("Assets/Textures/HDR/forest.hdr");
 
-    glm::vec3 lightPositions[] = {
-            glm::vec3(-10.0f,  10.0f, 10.0f),
-            glm::vec3(10.0f,  10.0f, 10.0f),
-            glm::vec3(-10.0f, -10.0f, 10.0f),
-            glm::vec3(10.0f, -10.0f, 10.0f),
-    };
-    glm::vec3 lightColors[] = {
-            glm::vec3(300.0f, 300.0f, 300.0f),
-            glm::vec3(300.0f, 300.0f, 300.0f),
-            glm::vec3(300.0f, 300.0f, 300.0f),
-            glm::vec3(300.0f, 300.0f, 300.0f)
-    };
-    int nrRows = 7;
-    int nrColumns = 7;
-    float spacing = 2.5;
-
     //----------------
     //Scene
     //----------------
 
     //cerate material properties
-    Material *cubeBasicMaterial = new PBRColor(&PBRColorShader);
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
     Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
     Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
 
     Geometry *cubeGeometry = new CubeGeometry();
-    Geometry* withcerModel = new ModelGeometry("Assets/Model/witcher_medalion/scene.gltf");
 
     //create renderable object
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    Renderable medalion(withcerModel, cubeRustedIron);
+    ModelRenderable medalion(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
+    ModelRenderable mortier(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
 
     //optional create scene node
     SceneNode cube(&cubeGold);
@@ -235,12 +221,15 @@ int main() {
     withcerMedailonNode.setPositions(glm::vec3 (7.0f, 2.0f, 3.0f));
     withcerMedailonNode.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
 
+    SceneNode mortierNode(&mortier);
+    mortierNode.setPositions(glm::vec3(-3.0f, 2.0f, 0.0f));
+
     Scene scene;
     scene.add(&cube);
     scene.add(&cube2);
     scene.add(&cube3);
     scene.add(&withcerMedailonNode);
-
+    scene.add(&mortierNode);
     OGLRenderer renderer(&scene, window);
 
     //-------------
