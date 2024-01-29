@@ -115,12 +115,13 @@ int main() {
 
     Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
+    Shader PBRTexturedModel("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
+
     Geometry* planeGeometry;
     planeGeometry = new PlaneGeometry("plane");
 
     Geometry* screenSpaceQuadGeometry;
     screenSpaceQuadGeometry = new ScreenSpaceQuadGeometry("ss-quad");
-//    stbi_set_flip_vertically_on_load(true);
 
     // plane VAO
     unsigned int screeneSpaceQuadVAO = createVAO(screeneSpaceQuadVertecies, sizeof(screeneSpaceQuadVertecies) / sizeof(float), false, true);

@@ -104,19 +104,38 @@ void PBRTextured::configureShader() {
         glBindTexture(GL_TEXTURE_2D, this->roughness->type.ID);
     }
 
+    if (this->emmisionMap != nullptr){
+        this->shader->setInt(this->emmisionMap->shaderName, this->emmisionMap->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->emmisionMap->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->emmisionMap->type.ID);
+    }
+
+    if(this->metallnesRougnessMap != nullptr){
+        this->shader->setInt(this->metallnesRougnessMap->shaderName, this->metallnesRougnessMap->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->metallnesRougnessMap->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->metallnesRougnessMap->type.ID);
+    }
     //configure samplers
     //configure pbr shader to accept naming convention
     //set rendering to set the current samplers
 }
 
 PBRTextured::PBRTextured(Shader *shader, PBRMaterial<Texture2D> *baseColor, PBRMaterial<Texture2D> *normalMap,
+                         PBRMaterial<Texture2D> *emmisionMap, PBRMaterial<Texture2D> *metalnessRougnessMap,
                          PBRMaterial<Texture2D> *rougness, PBRMaterial<Texture2D> *metalness,
                          PBRMaterial<Texture2D> *ao): Material(shader) {
+
     this->baseColor = baseColor;
     this->normalMap = normalMap;
     this->roughness = rougness;
     this->metalness = metalness;
     this->ao = ao;
+
+    this->metallnesRougnessMap = metalnessRougnessMap;
+    this->emmisionMap = emmisionMap;
 }
+
+
+
 
 

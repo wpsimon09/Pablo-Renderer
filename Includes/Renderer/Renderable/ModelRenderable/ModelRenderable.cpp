@@ -98,11 +98,13 @@ void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
 }
 
 void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) {
-    PBRMaterial<Texture2D>* baseColor;
-    PBRMaterial<Texture2D>* rougness;
-    PBRMaterial<Texture2D>* metalness;
-    PBRMaterial<Texture2D>* normalMap;
-    PBRMaterial<Texture2D>* ao;
+    PBRMaterial<Texture2D>* baseColor = nullptr;
+    PBRMaterial<Texture2D>* rougness = nullptr;
+    PBRMaterial<Texture2D>* metalness = nullptr;
+    PBRMaterial<Texture2D>* normalMap = nullptr;
+    PBRMaterial<Texture2D>* ao = nullptr;
+    PBRMaterial<Texture2D>* emmisionMap = nullptr;
+    PBRMaterial<Texture2D>* rougnessMetalnessMap = nullptr;
 
 
     for (unsigned int i = 0; i < scene->mNumMaterials; ++i) {
@@ -115,7 +117,6 @@ void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) 
             texture.setSamplerID(0);
             baseColor = new PBRMaterial<Texture2D>(texture, "_albedoMap");
 
-
             std::cout<<path<<std::endl;
         }
         if (material->GetTexture(aiTextureType_DIFFUSE_ROUGHNESS, 0, &texturePath) == AI_SUCCESS) {
@@ -123,25 +124,20 @@ void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) 
             Texture2D texture(path.c_str(), true);
             texture.setSamplerID(1);
             rougness = new PBRMaterial<Texture2D>(texture, "_rougnessMap");
-
-
-            std::cout<<path<<std::endl;
         }
         if (material->GetTexture(aiTextureType_METALNESS, 0, &texturePath) == AI_SUCCESS) {
             std::string path = directory + "/" + texturePath.C_Str();
             Texture2D texture( path.c_str(), true);
             texture.setSamplerID(2);
             metalness = new PBRMaterial<Texture2D>(texture, "_metalnessMap");
-
-
-
-            std::cout<<path<<std::endl;
         }
         if (material->GetTexture(aiTextureType_NORMALS, 0, &texturePath) == AI_SUCCESS) {
             std::string path = directory + "/" + texturePath.C_Str();
             Texture2D texture( path.c_str(), true);
             texture.setSamplerID(3);
             normalMap = new PBRMaterial<Texture2D>(texture, "_normalMap");
+
+            std::cout<<path<<std::endl;
         }
         if (material->GetTexture(aiTextureType_AMBIENT_OCCLUSION, 0, &texturePath) == AI_SUCCESS) {
             std::string path = directory + "/" + texturePath.C_Str();
@@ -149,8 +145,25 @@ void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) 
             texture.setSamplerID(4);
             ao = new PBRMaterial<Texture2D>(texture, "_aoMap");
         }
+        if (material->GetTexture(aiTextureType_EMISSIVE, 0, &texturePath) == AI_SUCCESS) {
+            std::string path = directory + "/" + texturePath.C_Str();
+            Texture2D texture( path.c_str(), true);
+            texture.setSamplerID(5);
+            emmisionMap = new PBRMaterial<Texture2D>(texture, "_emmisionMap");
+
+            std::cout<<path<<std::endl;
+        }
+        if (material->GetTexture(aiTextureType_UNKNOWN, 0, &texturePath) == AI_SUCCESS) {
+            std::string path = directory + "/" + texturePath.C_Str();
+            Texture2D texture( path.c_str(), true);
+            texture.setSamplerID(6);
+            rougnessMetalnessMap = new PBRMaterial<Texture2D>(texture, "_rougnessMetalnessMap");
+
+            std::cout<<path<<std::endl;
+        }
     }
-    this->objectMaterial = new PBRTextured(shader, baseColor, normalMap);
+
+    this->objectMaterial = new PBRTextured(shader, baseColor, normalMap, emmisionMap, rougnessMetalnessMap, rougness, metalness, ao);
 }
 
 void ModelRenderable::setMaterial(Material* material) {
