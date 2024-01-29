@@ -20,6 +20,7 @@
 #include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/Renderable/ModelRenderable/ModelRenderable.h"
+#include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 
@@ -204,7 +205,7 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    ModelRenderable medalion(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
+    ModelSceneNode medalion(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
     ModelRenderable mortier(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
 
     //optional create scene node
@@ -217,18 +218,16 @@ int main() {
     SceneNode cube3(&cubeIron);
     cube3.setPositions(glm::vec3(-1.0f, 2.0f, 3.0f));
 
-    SceneNode withcerMedailonNode(&medalion);
-    withcerMedailonNode.setPositions(glm::vec3 (7.0f, 2.0f, 3.0f));
-    withcerMedailonNode.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-
     SceneNode mortierNode(&mortier);
     mortierNode.setPositions(glm::vec3(-3.0f, 2.0f, 0.0f));
+
+    medalion.rootNode->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
 
     Scene scene;
     scene.add(&cube);
     scene.add(&cube2);
     scene.add(&cube3);
-    scene.add(&withcerMedailonNode);
+    scene.add(medalion.rootNode);
     scene.add(&mortierNode);
     OGLRenderer renderer(&scene, window);
 
