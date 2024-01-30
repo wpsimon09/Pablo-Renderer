@@ -1,11 +1,11 @@
 //
-// Created by wpsimon09 on 26/01/24.
+// Created by wpsimon09 on 29/01/24.
 //
 
-#include "ModelRenderable.h"
+#include "ModelSceneNode.h"
 
-ModelRenderable::ModelRenderable(Shader *shader,std::string path) : Renderable(shader) {
-
+ModelSceneNode::ModelSceneNode(Shader *shader, std::string path): SceneNode() {
+    this->shader = shader;
     Assimp::Importer importer;
 
     const aiScene *scene = importer.ReadFile(path.c_str(),
@@ -17,25 +17,21 @@ ModelRenderable::ModelRenderable(Shader *shader,std::string path) : Renderable(s
     }
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
-    this->objectGeometry = new ModelGeometry("model", modelVertices,modelIndecies);
-    this->objectGeometry->setDrawingType(GL_TRIANGLES);
 
-    this->loadMaterialTextures(shader,scene);
 }
 
-void ModelRenderable::processNode(aiNode *node, const aiScene *scene) {
+void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
-        this->processMesh(mesh, scene);
+        this->processRenderable(mesh, scene);
     }
 
     for (unsigned int i = 0; i < node->mNumChildren; i++) {
         this->processNode(node->mChildren[i], scene);
     }
-
 }
 
-void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
+void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     std::vector<Vertex> vertecies;
     std::vector<unsigned int> indecies;
 
@@ -84,7 +80,7 @@ void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
             vertex.bitangent = tempBitanget;
         } else
             vertex.uv = glm::vec2(0.0f, 0.0f);
-        this->modelVertices.push_back(vertex);
+        vertecies.push_back(vertex);
     }
 
     for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -94,12 +90,16 @@ void ModelRenderable::processMesh(aiMesh *mesh, const aiScene *scene) {
         for (unsigned int j = 0; j < face.mNumIndices; j++)
         {
             indecies.push_back(face.mIndices[j]);
-            this->modelIndecies.push_back(face.mIndices[j]);
         }
     }
+    Geometry* renderableGeometry = new ModelGeometry(std::string(mesh->mName.C_Str()),vertecies, indecies);
+    Material* renderableMaterial = loadMaterialTextures(scene);
+    Renderable* processedRenderale = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
+
+    this->addChild(new SceneNode(processedRenderale));
 }
 
-void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) {
+Material *ModelSceneNode::loadMaterialTextures(const aiScene *scene) {
     PBRMaterial<Texture2D>* baseColor = nullptr;
     PBRMaterial<Texture2D>* rougness = nullptr;
     PBRMaterial<Texture2D>* metalness = nullptr;
@@ -165,9 +165,6 @@ void ModelRenderable::loadMaterialTextures(Shader*shader, const aiScene* scene) 
         }
     }
 
-    this->objectMaterial = new PBRTextured(shader, baseColor, normalMap, emmisionMap, rougnessMetalnessMap, rougness, metalness, ao);
-}
+    return new PBRTextured(shader, baseColor, normalMap, emmisionMap, rougnessMetalnessMap, rougness, metalness, ao);
 
-void ModelRenderable::setMaterial(Material* material) {
-    this->objectMaterial = material;
 }

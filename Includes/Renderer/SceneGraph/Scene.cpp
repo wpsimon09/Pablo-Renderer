@@ -24,7 +24,6 @@ void Scene::update(Shader *shader) {
     Scene::root->update();
 }
 
-
 void Scene::setup() {
 
 }
