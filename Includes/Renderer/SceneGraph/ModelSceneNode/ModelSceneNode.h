@@ -13,7 +13,7 @@
 #include <vector>
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 
-class ModelSceneNode  {
+class ModelSceneNode:public SceneNode  {
 public:
     explicit ModelSceneNode(Shader* shader, std::string path);
     std::string directory;

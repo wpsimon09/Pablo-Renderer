@@ -19,7 +19,6 @@
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
-#include "Renderer/Renderable/ModelRenderable/ModelRenderable.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -205,9 +204,14 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    ModelSceneNode medalion(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
-    ModelRenderable mortier(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
+    ModelSceneNode morier(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
+    morier.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
 
+    ModelSceneNode witcher(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
+    witcher.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
+    witcher.setPositions(glm::vec3(7.0f, 0.0f, 0.0f));
+
+    ModelSceneNode sword(&PBRTexturedModel, "Assets/Model/sword/scene.gltf");
     //optional create scene node
     SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));
@@ -218,17 +222,14 @@ int main() {
     SceneNode cube3(&cubeIron);
     cube3.setPositions(glm::vec3(-1.0f, 2.0f, 3.0f));
 
-    SceneNode mortierNode(&mortier);
-    mortierNode.setPositions(glm::vec3(-3.0f, 2.0f, 0.0f));
-
-    medalion.rootNode->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
 
     Scene scene;
     scene.add(&cube);
     scene.add(&cube2);
     scene.add(&cube3);
-    scene.add(medalion.rootNode);
-    scene.add(&mortierNode);
+    scene.add(&morier);
+    scene.add(&witcher);
+    scene.add(&sword);
     OGLRenderer renderer(&scene, window);
 
     //-------------
@@ -257,31 +258,11 @@ int main() {
     //--------------------------
     FrameBufferDebug frameBufferDebugWindow(GL_TEXTURE_2D, "debug", glm::vec2(124, 124), GL_RGBA, GL_RGBA32F);
 
-
     //------------------
     // LOAD PBR TEXTURES
     //------------------
     renderer.render(0);
-/**
- *
-    PBRShader.use();
-    PBRShader.setInt("irradianceMap", 5);
-    PBRShader.setInt("prefilterMap", 6);
-    PBRShader.setInt("BRDFtexture", 7);
 
-    lutDebug.use();
-    lutDebug.setInt("LUTTexture", 0);
-
-    floorShader.use();
-    floorShader.setInt("texture_diffuse0", 0);
-    floorShader.setInt("shadowMap", 1);
-
-    lightSourceShader.use();
-    lightSourceShader.setInt("lightTexture", 0);
-
-    skyBoxShader.use();
-    skyBoxShader.setInt("enviromentMap", 0);
-*/
 
     return 0;
 }

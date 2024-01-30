@@ -4,10 +4,8 @@
 
 #include "ModelSceneNode.h"
 
-ModelSceneNode::ModelSceneNode(Shader *shader, std::string path) {
+ModelSceneNode::ModelSceneNode(Shader *shader, std::string path): SceneNode() {
     this->shader = shader;
-    ModelSceneNode::rootNode = new SceneNode();
-
     Assimp::Importer importer;
 
     const aiScene *scene = importer.ReadFile(path.c_str(),
@@ -98,7 +96,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     Material* renderableMaterial = loadMaterialTextures(scene);
     Renderable* processedRenderale = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
 
-    ModelSceneNode::rootNode->addChild(new SceneNode(processedRenderale));
+    this->addChild(new SceneNode(processedRenderale));
 }
 
 Material *ModelSceneNode::loadMaterialTextures(const aiScene *scene) {
