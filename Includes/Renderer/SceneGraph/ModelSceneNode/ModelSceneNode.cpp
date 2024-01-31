@@ -16,6 +16,7 @@ ModelSceneNode::ModelSceneNode(Shader *shader, std::string path): SceneNode() {
         return;
     }
     this->directory = path.substr(0, path.find_last_of('/'));
+    this->modelMaterial = loadMaterialTextures(scene);
     processNode(scene->mRootNode, scene);
 
 }
@@ -92,8 +93,9 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
             indecies.push_back(face.mIndices[j]);
         }
     }
+
     Geometry* renderableGeometry = new ModelGeometry(std::string(mesh->mName.C_Str()),vertecies, indecies);
-    Material* renderableMaterial = loadMaterialTextures(scene);
+    Material* renderableMaterial = this->modelMaterial;
     Renderable* processedRenderale = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
 
     this->addChild(new SceneNode(processedRenderale));
@@ -166,5 +168,5 @@ Material *ModelSceneNode::loadMaterialTextures(const aiScene *scene) {
     }
 
     return new PBRTextured(shader, baseColor, normalMap, emmisionMap, rougnessMetalnessMap, rougness, metalness, ao);
-
 }
+

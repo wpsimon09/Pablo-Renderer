@@ -20,10 +20,11 @@ public:
     static inline SceneNode* rootNode;
 private:
     Shader *shader;
+    Material *modelMaterial;
     std::vector<Texture2D>loadedTextures;
     void processNode(aiNode* node, const aiScene* scene);
     void processRenderable(aiMesh* mesh, const aiScene* scene);
-    Material* loadMaterialTextures(const aiScene* scene);
+    Material* loadMaterialTextures(const aiScene* scenem);
 };
 
 

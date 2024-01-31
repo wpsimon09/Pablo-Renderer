@@ -204,14 +204,11 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    ModelSceneNode morier(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
-    morier.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
 
-    ModelSceneNode witcher(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
-    witcher.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-    witcher.setPositions(glm::vec3(7.0f, 0.0f, 0.0f));
+    ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
+    sunbro_helmet.setRotations(glm::vec3(-90.0f, 00.0f, 00.0f));
+    sunbro_helmet.setScale(glm::vec3(0.07f));
 
-    ModelSceneNode sword(&PBRTexturedModel, "Assets/Model/sword/scene.gltf");
     //optional create scene node
     SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));
@@ -222,14 +219,12 @@ int main() {
     SceneNode cube3(&cubeIron);
     cube3.setPositions(glm::vec3(-1.0f, 2.0f, 3.0f));
 
-
     Scene scene;
     scene.add(&cube);
     scene.add(&cube2);
     scene.add(&cube3);
-    scene.add(&morier);
-    scene.add(&witcher);
-    scene.add(&sword);
+
+    scene.add(&sunbro_helmet);
     OGLRenderer renderer(&scene, window);
 
     //-------------
