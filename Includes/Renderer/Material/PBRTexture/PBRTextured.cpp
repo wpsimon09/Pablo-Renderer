@@ -78,13 +78,16 @@ void PBRTextured::printLog() const {
 void PBRTextured::configureShader() {
     this->shader->use();
 
-    this->shader->setInt(this->baseColor->shaderName, this->baseColor->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->baseColor->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->baseColor->type.ID);
-
-    this->shader->setInt(this->normalMap->shaderName, this->normalMap->type.getSamplerID());
-    glActiveTexture(GL_TEXTURE0 + this->normalMap->type.getSamplerID());
-    glBindTexture(GL_TEXTURE_2D, this->normalMap->type.ID);
+    if(this->baseColor != nullptr){
+        this->shader->setInt(this->baseColor->shaderName, this->baseColor->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->baseColor->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->baseColor->type.ID);
+    }
+    if(this->normalMap != nullptr) {
+        this->shader->setInt(this->normalMap->shaderName, this->normalMap->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->normalMap->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->normalMap->type.ID);
+    }
 
     if(this->ao != nullptr){
         this->shader->setInt(this->ao->shaderName, this->ao->type.getSamplerID());

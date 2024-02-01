@@ -209,6 +209,9 @@ int main() {
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 00.0f, 00.0f));
     sunbro_helmet.setScale(glm::vec3(0.07f));
 
+    ModelSceneNode sword(&PBRTexturedModel, "Assets/Model/sword/scene.gltf");
+    sword.setScale(glm::vec3(0.09f));
+    sword.setPositions(glm::vec3(0.0f, 10.0f, 0.0f));
     //optional create scene node
     SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));
@@ -225,6 +228,7 @@ int main() {
     scene.add(&cube3);
 
     scene.add(&sunbro_helmet);
+    scene.add(&sword);
     OGLRenderer renderer(&scene, window);
 
     //-------------
