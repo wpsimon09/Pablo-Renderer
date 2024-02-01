@@ -1,0 +1,461 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1848,
+      "max": [
+        17.40528106689453,
+        19.795639038085938,
+        18.086833953857422
+      ],
+      "min": [
+        -17.401611328125,
+        -15.994857788085938,
+        -21.454471588134766
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 22176,
+      "componentType": 5126,
+      "count": 1848,
+      "max": [
+        0.9999954104423523,
+        1.0,
+        0.9999069571495056
+      ],
+      "min": [
+        -0.9999406933784485,
+        -0.9999766945838928,
+        -0.9999688863754272
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 1848,
+      "max": [
+        0.9999982714653015,
+        0.9999831914901733,
+        0.9983792304992676,
+        1.0
+      ],
+      "min": [
+        -0.9999964237213135,
+        -0.9996135830879211,
+        -0.9999933242797852,
+        1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1848,
+      "max": [
+        0.9852506518363953,
+        0.9996621012687683
+      ],
+      "min": [
+        0.0003379017289262265,
+        0.0003379017289262265
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 14784,
+      "componentType": 5126,
+      "count": 1848,
+      "max": [
+        0.0,
+        0.0
+      ],
+      "min": [
+        0.0,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 29568,
+      "componentType": 5126,
+      "count": 1848,
+      "max": [
+        0.9852506518363953,
+        0.9996621012687683
+      ],
+      "min": [
+        0.0003379017289262265,
+        0.0003379017289262265
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 44352,
+      "componentType": 5126,
+      "count": 1848,
+      "max": [
+        0.9852506518363953,
+        0.9996621012687683
+      ],
+      "min": [
+        0.0003379017289262265,
+        0.0003379017289262265
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 6786,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 44352,
+      "componentType": 5126,
+      "count": 21,
+      "max": [
+        0.5117915272712708,
+        0.21621622145175934,
+        0.0
+      ],
+      "min": [
+        -0.5,
+        -0.15151844918727875,
+        -0.023407336324453354
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 44604,
+      "componentType": 5126,
+      "count": 21,
+      "max": [
+        0.17341803014278412,
+        0.6157820820808411,
+        0.9999381303787231
+      ],
+      "min": [
+        -0.4193759560585022,
+        -0.4536685347557068,
+        0.7381908297538757
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 59136,
+      "componentType": 5126,
+      "count": 21,
+      "max": [
+        0.9764710664749146,
+        0.9901098608970642
+      ],
+      "min": [
+        0.14217209815979004,
+        -0.05358211323618889
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 27144,
+      "componentType": 5125,
+      "count": 75,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "B.M.A (https://sketchfab.com/B.M.A)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/solaires-helmet-16140b6c62fb491190dc17a5c0c5da36",
+      "title": "Solaire's Helmet"
+    },
+    "generator": "Sketchfab-14.25.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 27444,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 59304,
+      "byteOffset": 27444,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 44856,
+      "byteOffset": 86748,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 29568,
+      "byteOffset": 131604,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 161172,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/helmet_baseColor.png"
+    },
+    {
+      "uri": "textures/helmet_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/helmet_normal.png"
+    },
+    {
+      "uri": "textures/feather_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "helmet",
+      "normalTexture": {
+        "index": 2
+      },
+      "occlusionTexture": {
+        "index": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "alphaCutoff": 0.2971437627238483,
+      "alphaMode": "MASK",
+      "doubleSided": true,
+      "name": "feather",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.851812119808365
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Plano.006_helmet_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3,
+            "TEXCOORD_1": 4,
+            "TEXCOORD_2": 5,
+            "TEXCOORD_3": 6
+          },
+          "indices": 7,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "pluma_feather _0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "solaire helmet.fbx"
+    },
+    {
+      "children": [
+        3,
+        5
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "matrix": [
+        5.53160285949707,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -9.012124959950601e-07,
+        -5.5316028594969975,
+        0.0,
+        0.0,
+        5.5316028594969975,
+        -9.012124959950601e-07,
+        0.0,
+        0.0,
+        75.67462921142578,
+        0.0,
+        1.0
+      ],
+      "name": "Plano.006"
+    },
+    {
+      "mesh": 0,
+      "name": "Plano.006_helmet_0"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        -78.73141886730747,
+        66.25048732826157,
+        -180.05365013416986,
+        0.0,
+        53.57347358549848,
+        216.51788291441775,
+        56.2415683424425,
+        0.0,
+        151.58431020013586,
+        -18.51953231717193,
+        -73.09696777252496,
+        0.0,
+        -57.060359954833984,
+        198.41529846191406,
+        -61.26701354980469,
+        1.0
+      ],
+      "name": "pluma"
+    },
+    {
+      "mesh": 1,
+      "name": "pluma_feather _0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    },
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 33071,
+      "wrapT": 33071
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 1,
+      "source": 3
+    }
+  ]
+}

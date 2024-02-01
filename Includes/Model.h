@@ -244,11 +244,11 @@ std::vector<_Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType
 		aiString str;
 		mat->GetTexture(type, i, &str);
 		bool skip = false;
-		for (unsigned int j = 0; j < textures_loaded.size(); j++)
+		for (auto & j : textures_loaded)
 		{
-			if (std::strcmp(textures_loaded[j].path.data(),str.C_Str()) == 0)
+			if (std::strcmp(j.path.data(),str.C_Str()) == 0)
 			{
-				textures.push_back(textures_loaded[j]);
+				textures.push_back(j);
 				skip = true;
 				break;
 			}
