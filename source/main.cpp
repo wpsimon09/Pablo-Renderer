@@ -206,12 +206,13 @@ int main() {
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
-    sunbro_helmet.setRotations(glm::vec3(-90.0f, 00.0f, 00.0f));
+    sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
+    sunbro_helmet.setPositions(glm::vec3(8.0F, 2.0F, 0.0f));
     sunbro_helmet.setScale(glm::vec3(0.07f));
 
     ModelSceneNode sword(&PBRTexturedModel, "Assets/Model/sword/scene.gltf");
     sword.setScale(glm::vec3(0.09f));
-    sword.setPositions(glm::vec3(0.0f, 10.0f, 0.0f));
+    sword.setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
     //optional create scene node
     SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));

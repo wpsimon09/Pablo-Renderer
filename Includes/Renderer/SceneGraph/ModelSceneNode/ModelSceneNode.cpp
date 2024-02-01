@@ -141,18 +141,15 @@ ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type
         if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
             for(auto &loaded_texture : this->loadedTextures ){
                 if(std::strcmp(loaded_texture.getFullPath().c_str(), path.C_Str()) == 0){
-                    std::cout<<"texutre has allready been loaded"<<std::endl;
-                    std::cout<<loaded_texture.getFullPath()<<std::endl;
                     return new PBRMaterial<Texture2D>(loaded_texture, shaderName);
                 }
             }
 
             Texture2D loadedTexture((directory +"/"+path.C_Str()).c_str());
             this->loadedTextures.push_back(loadedTexture);
-            std::cout<<"texutre has not been allready been loaded"<<std::endl;
-            std::cout<<loadedTexture.getFullPath()<<std::endl;
             return new PBRMaterial<Texture2D>(loadedTexture, shaderName);
         }
+
         return nullptr;
 }
 

@@ -161,9 +161,9 @@ void main()
         Lo += (kD * albedo /PI + specular) * radiance * NdotL;
     }
 
-    vec3 ambient = vec3(0.03) * albedo;
-    vec3 color = Lo + ambient + emmision;
-
+    vec3 ambient = vec3(0.03) * albedo * ao;
+    vec3 color = Lo + ambient;
+    //color + emmision;
     //HDR
     color = color/ (color + vec3(1.0));
 
