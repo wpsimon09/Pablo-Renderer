@@ -7,31 +7,12 @@
 
 OGLRenderer::OGLRenderer(Scene *scene,  GLFWwindow* window) {
     this->scene = scene;
-    OGLRenderer::instace = this;
-    this->lightSpeed = 2.5f * deltaTime;
     this->window = window;
-    glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
-
-    glfwSetCursorPosCallback(window, OGLRenderer::mouse_callback);
-    glfwSetScrollCallback(window, OGLRenderer::scroll_callback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
 }
 
 void OGLRenderer::render(GLuint frameBuffer) {
-    while (!glfwWindowShouldClose(window)) {
 
-        glViewport(0, 0, this->windowWidth, this->windowHeight);
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.21f, 0.21f, 0.21f, 1.0f);
-
-
-        float currentFrame = static_cast<float>(glfwGetTime());
-        this->deltaTime = currentFrame - this->lastFrame;
-        this->lastFrame = currentFrame;
-
-        this->processInput(this->window);
 
         this->scene->setup();
 
@@ -39,11 +20,6 @@ void OGLRenderer::render(GLuint frameBuffer) {
 
         renderSceneGraph(Scene::root);
 
-        glfwSwapBuffers(this->window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
@@ -63,45 +39,5 @@ void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
     }
 }
 
-void OGLRenderer::processInput(GLFWwindow *window) {
-    this->scene->light->processInput(window);
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-    const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        this->scene->camera->ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        this->scene->camera->ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        this->scene->camera->ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        this->scene->camera->ProcessKeyboard(RIGHT, deltaTime);
-   }
-
-void OGLRenderer::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    instace->scene->camera->ProcessMouseScroll(static_cast<float>(yoffset));
-}
-
-void OGLRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if (instace->firstMouse) // initially set to true
-    {
-        instace->lastX = xpos;
-        instace->lastY = ypos;
-        instace->firstMouse = false;
-    }
-
-    float xOffset = xpos - instace->lastX;
-    float yOffset = ypos - instace->lastY; //calculate how much does mouse move
-
-    instace->lastX = xpos;
-    instace->lastY = ypos; //update last mouse position
-
-    instace->scene->camera->ProcessMouseMovement(xOffset, yOffset);
-}
-
-void OGLRenderer::setWindow(GLFWwindow* window) {
-    this->window = window;
-    glfwGetWindowSize(this->window, &this->windowWidth, &this->windowHeight);
-}
 
 

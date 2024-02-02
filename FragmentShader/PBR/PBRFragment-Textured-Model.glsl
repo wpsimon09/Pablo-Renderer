@@ -133,7 +133,7 @@ void main()
         //attentuation
         float distance = length(lightPositions[i] - fs_in.FragPos);
         float attentuation = 1.0/(distance * distance);
-        vec3 radiance = lightColors[i] * attentuation;
+        vec3 radiance = lightColors[i] ;
 
         //DFG eqation
         float NDF = DistributionFunctionGGX(N,H, roughness);
