@@ -99,4 +99,9 @@ void OGLRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
     instace->scene->camera->ProcessMouseMovement(xOffset, yOffset);
 }
 
+void OGLRenderer::setWindow(GLFWwindow* window) {
+    this->window = window;
+    glfwGetWindowSize(this->window, &this->windowWidth, &this->windowHeight);
+}
+
 

@@ -219,6 +219,8 @@ int main() {
     withcerMedailon.setPositions(glm::vec3(12.0f, 2.0f, 0.0f));
     withcerMedailon.setScale(glm::vec3(0.3));
 
+    ModelSceneNode camera_model(&PBRTexturedModel, "Assets/Model/camera_model/scene.gltf");
+
     ModelSceneNode moriter(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
     moriter.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
     moriter.setPositions(glm::vec3(14.0f, 2.0f, 0.0f));
@@ -241,6 +243,7 @@ int main() {
     scene.add(&sword);
     scene.add(&withcerMedailon);
     scene.add(&moriter);
+    scene.add(&camera_model);
     OGLRenderer renderer(&scene, window);
 
     //-------------

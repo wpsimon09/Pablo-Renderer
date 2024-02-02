@@ -13,6 +13,7 @@ public:
     OGLRenderer(Scene* scene, GLFWwindow* window);
     void init();
     void render(GLuint frameBuffer = 0);
+    void setWindow(GLFWwindow* window);
 private:
     inline static OGLRenderer *instace ;
 
