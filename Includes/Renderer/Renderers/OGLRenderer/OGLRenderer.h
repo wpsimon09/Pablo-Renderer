@@ -14,29 +14,10 @@ public:
     void init();
     void render(GLuint frameBuffer = 0);
 private:
-    inline static OGLRenderer *instace ;
-
     Scene* scene;
-
     GLFWwindow* window;
 
-    float deltaTime;
-    float lastFrame;
-    float lastX = 0;
-    float lastY = 0;
-    bool firstMouse = true;
-    float lightSpeed ;
-
-    int windowHeight;
-    int windowWidth;
-
     void renderSceneGraph(SceneNode* sceneNode);
-
-    void processInput(GLFWwindow* window);
-
-   static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
-   static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 };
 
 #endif //PABLO_RENDERER_OGLRENDERER_H

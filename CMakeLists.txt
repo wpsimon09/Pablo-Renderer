@@ -63,6 +63,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/ShaderHelper/ShaderHelper.h
         Includes/Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.cpp
         Includes/Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h
+        Includes/Renderer/PabloRenderer.cpp
+        Includes/Renderer/PabloRenderer.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
@@ -87,6 +89,8 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Inc
 set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
 find_package(assimp REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
+set(BUILD_ASSIMP_TOOLS OFF)
+
 
 # Find GLFW3 package and link against it
 set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/glfw3")
