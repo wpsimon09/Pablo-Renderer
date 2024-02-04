@@ -103,6 +103,7 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 void main()
 {
     vec3 albedo = pow(texture(_albedoMap, fs_in.TexCoords).rgb, vec3(2.2));
+    float transparente = texture(_albedoMap, fs_in.TexCoords).a;
     vec3 normal = texture(_normalMap, fs_in.TexCoords).xyz;
     float roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
     float metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
@@ -171,5 +172,5 @@ void main()
     color = pow(color,vec3(1.0/2.2));
 
     //todo go over every texture to see which one is off
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(color, transparente);
 }

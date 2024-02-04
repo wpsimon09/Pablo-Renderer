@@ -22,7 +22,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
             format = GL_RGBA;
 
         glBindTexture(GL_TEXTURE_2D, this->ID);
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

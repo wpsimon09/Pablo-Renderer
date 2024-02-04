@@ -66,16 +66,19 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
             vertex.uv = tempTexCoords;
 
             glm::vec3 tempTangent, tempBitanget;
-
-            tempTangent.x = mesh->mTangents[i].x;
-            tempTangent.y = mesh->mTangents[i].y;
-            tempTangent.z = mesh->mTangents[i].z;
+            if(mesh->mTangents){
+                tempTangent.x = mesh->mTangents[i].x;
+                tempTangent.y = mesh->mTangents[i].y;
+                tempTangent.z = mesh->mTangents[i].z;
+            }
 
             vertex.tangent = tempTangent;
 
-            tempBitanget.x = mesh->mBitangents[i].x;
-            tempBitanget.y = mesh->mBitangents[i].y;
-            tempBitanget.z = mesh->mBitangents[i].z;
+            if(mesh->mBitangents){
+                tempBitanget.x = mesh->mBitangents[i].x;
+                tempBitanget.y = mesh->mBitangents[i].y;
+                tempBitanget.z = mesh->mBitangents[i].z;
+            }
 
             vertex.bitangent = tempBitanget;
         } else
