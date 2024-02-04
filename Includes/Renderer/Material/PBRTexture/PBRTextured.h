@@ -34,6 +34,8 @@ public:
 
     void configureShader() override;
 
+    void setFilteringMethod(GLenum mag, GLenum min);
+
 private:
     PBRMaterial<Texture2D>* baseColor = nullptr;
     PBRMaterial<Texture2D>* normalMap = nullptr;
@@ -42,6 +44,7 @@ private:
     PBRMaterial<Texture2D>* ao = nullptr;
     PBRMaterial<Texture2D>* emmisionMap = nullptr;
     PBRMaterial<Texture2D>* metallnesRougnessMap = nullptr;
+    PBRMaterial<Texture2D>* displacement = nullptr;
 };
 
 

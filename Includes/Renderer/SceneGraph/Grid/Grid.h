@@ -9,10 +9,12 @@
 #include "Shader.h"
 #include "Renderer/Geometry/Geometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
-
+#include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
 class Grid : public SceneNode{
 public:
     Grid(Shader* shader);
+private:
+    Material* generateFloorTexture();
 };
 
 

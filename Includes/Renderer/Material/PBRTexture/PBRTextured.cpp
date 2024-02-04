@@ -24,6 +24,12 @@ PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::st
     Texture2D _ao((pathToTheDirectory + "/ao" + fileFormat).c_str(), true);
     this->ao = new PBRMaterial<Texture2D>(_ao, shaderNamingConvention + "aoMap");
     this->ao->type.setSamplerID(4);
+
+    Texture2D depthMap((pathToTheDirectory + "/displacement" + fileFormat).c_str(), true);
+    if(depthMap.wasFound){
+        this->displacement = new PBRMaterial<Texture2D>(depthMap, shaderNamingConvention+"displacementMap");
+        this->displacement->type.setSamplerID(5);
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
@@ -64,6 +70,16 @@ std::ostream &operator<<(std::ostream &os, const PBRTextured &mat) {
     os<<"SHADER NAME: "<<mat.ao->shaderName<<std::endl;
     os<< "STATUS: " << std::endl;
     mat.ao->type.wasFound ? std::cout<<" \xE2\x9C\x93 "<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl<<std::endl;
+
+    os<<"==================================================="<<std::endl;
+
+    os<<"==================================================="<<std::endl;
+
+    os<< "DISPLACEMENT VALUES:" << std::endl;
+    os<<"FULL PATH: "<<mat.displacement->type.getFullPath()<<std::endl;
+    os<<"SHADER NAME: "<<mat.displacement->shaderName<<std::endl;
+    os<< "STATUS: " << std::endl;
+    mat.displacement->type.wasFound ? std::cout<<" \xE2\x9C\x93 "<<std::endl : std::cout<<"!!! TEXTURE WAS NOT FOUND !!!"<<std::endl<<std::endl;
 
     os<<"==================================================="<<std::endl;
 
@@ -118,6 +134,12 @@ void PBRTextured::configureShader() {
         glActiveTexture(GL_TEXTURE0 + this->metallnesRougnessMap->type.getSamplerID());
         glBindTexture(GL_TEXTURE_2D, this->metallnesRougnessMap->type.ID);
     }
+
+    if(this->displacement != nullptr){
+        this->shader->setInt(this->displacement->shaderName, this->displacement->type.getSamplerID());
+        glActiveTexture(GL_TEXTURE0 + this->displacement->type.getSamplerID());
+        glBindTexture(GL_TEXTURE_2D, this->displacement->type.ID);
+    }
     //configure samplers
     //configure pbr shader to accept naming convention
     //set rendering to set the current samplers
@@ -137,6 +159,7 @@ PBRTextured::PBRTextured(Shader *shader, PBRMaterial<Texture2D> *baseColor, PBRM
     this->metallnesRougnessMap = metalnessRougnessMap;
     this->emmisionMap = emmisionMap;
 }
+
 
 
 

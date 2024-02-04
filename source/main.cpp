@@ -76,6 +76,8 @@ int main() {
 
     Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
+    Shader PBRFloorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBR-FloorFragment.glsl", "PBR floor");
+
     //cerate material properties
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
     Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
@@ -89,7 +91,8 @@ int main() {
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
 
-    Grid grid(&PBRColorShader);
+    Grid grid(&PBRFloorShader);
+    grid.setScale(glm::vec3(10.0f));
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
