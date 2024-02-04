@@ -40,6 +40,7 @@ int main() {
     glEnable(GL_FRAMEBUFFER_SRGB);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -103,7 +104,7 @@ int main() {
 
     ModelSceneNode camera_model(&PBRTexturedModel, "Assets/Model/camera_model/scene.gltf");
 
-    ModelSceneNode moriter(&PBRTexturedModel, "Assets/Model/medieval_mortier/scene.gltf");
+    ModelSceneNode moriter(&PBRTexturedModel, "Assets/Model/cabin/scene.gltf");
     moriter.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
     moriter.setPositions(glm::vec3(14.0f, 2.0f, 0.0f));
     //optional create scene node
