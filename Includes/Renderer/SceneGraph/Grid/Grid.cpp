@@ -4,10 +4,10 @@
 
 #include "Grid.h"
 
-Grid::Grid(): SceneNode() {
-    Shader shader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
-    Material* mat = new PBRColor(&shader);
+Grid::Grid(Shader *shader): SceneNode(){
+    Material* mat = new PBRColor(shader);
     Geometry* geometry = new PlaneGeometry();
     Renderable* gridRenderable = new Renderable(geometry, mat);
     this->addChild(new SceneNode(gridRenderable));
 }
+

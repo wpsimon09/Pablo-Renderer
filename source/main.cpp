@@ -39,8 +39,8 @@ int main() {
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_FRAMEBUFFER_SRGB);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -88,47 +88,28 @@ int main() {
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
-    Renderable plane(planeGeometry, new PBRColor(&PBRColorShader));
+
+    Grid grid(&PBRColorShader);
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
-    sunbro_helmet.setPositions(glm::vec3(8.0F, 2.0F, 0.0f));
+    sunbro_helmet.setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
     sunbro_helmet.setScale(glm::vec3(0.07f));
 
     ModelSceneNode sword(&PBRTexturedModel, "Assets/Model/sword/scene.gltf");
     sword.setScale(glm::vec3(0.09f));
-    sword.setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
+    sword.setPositions(glm::vec3(5.0f, 2.0f, 0.0f));
 
     ModelSceneNode withcerMedailon(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
     withcerMedailon.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-    withcerMedailon.setPositions(glm::vec3(12.0f, 2.0f, 0.0f));
+    withcerMedailon.setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
     withcerMedailon.setScale(glm::vec3(0.3));
 
-    ModelSceneNode moriter(&PBRTexturedModel, "Assets/Model/cabin/scene.gltf");
-    moriter.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-    moriter.setPositions(glm::vec3(14.0f, 2.0f, 0.0f));
-
-    //optional create scene node
-    SceneNode cube(&cubeGold);
-    cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));
-
-    SceneNode cube2(&cubeWall);
-    cube2.setPositions(glm::vec3(3.0f, 2.0f, 3.0f));
-
-    SceneNode cube3(&cubeIron);
-    cube3.setPositions(glm::vec3(-1.0f, 2.0f, 3.0f));
-
-
-
     Scene scene;
-    scene.add(&cube);
-    scene.add(&cube2);
-    scene.add(&cube3);
-    scene.add(&plane);
     scene.add(&sunbro_helmet);
     scene.add(&sword);
     scene.add(&withcerMedailon);
-    scene.add(&moriter);
+    scene.add(&grid);
     PabloRenderer pabloRenderer(&scene, window);
 
     //------------------

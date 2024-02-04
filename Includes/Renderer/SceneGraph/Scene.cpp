@@ -23,7 +23,4 @@ void Scene::update(Shader *shader) {
     Scene::root->update();
 }
 
-void Scene::setup() {
-    //this->add(new Grid());
-}
 

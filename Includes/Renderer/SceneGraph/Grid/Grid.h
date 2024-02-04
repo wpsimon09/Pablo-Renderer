@@ -10,9 +10,9 @@
 #include "Renderer/Geometry/Geometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 
-class Grid: public SceneNode {
+class Grid : public SceneNode{
 public:
-    Grid();
+    Grid(Shader* shader);
 };
 
 

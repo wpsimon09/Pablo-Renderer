@@ -14,8 +14,6 @@ void OGLRenderer::render(GLuint frameBuffer) {
 
         glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 
-        this->scene->setup();
-
         this->scene->update();
 
         renderSceneGraph(Scene::root);

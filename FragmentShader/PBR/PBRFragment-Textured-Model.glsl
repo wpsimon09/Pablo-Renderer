@@ -113,6 +113,7 @@ void main()
     //normal
     vec3 N = getNormalFromMap();
     //vec3 N = fs_in.TBN * normal;
+    //vec3 N = fs_in.Normal;
     //view direction;
     vec3 V = normalize(camPos - fs_in.FragPos);
 
