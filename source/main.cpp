@@ -82,11 +82,13 @@ int main() {
     Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
 
     Geometry *cubeGeometry = new CubeGeometry();
+    Geometry* planeGeometry = new PlaneGeometry();
 
     //create renderable object
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
+    Renderable plane(planeGeometry, new PBRColor(&PBRColorShader));
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
@@ -102,11 +104,10 @@ int main() {
     withcerMedailon.setPositions(glm::vec3(12.0f, 2.0f, 0.0f));
     withcerMedailon.setScale(glm::vec3(0.3));
 
-    ModelSceneNode camera_model(&PBRTexturedModel, "Assets/Model/camera_model/scene.gltf");
-
     ModelSceneNode moriter(&PBRTexturedModel, "Assets/Model/cabin/scene.gltf");
     moriter.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
     moriter.setPositions(glm::vec3(14.0f, 2.0f, 0.0f));
+
     //optional create scene node
     SceneNode cube(&cubeGold);
     cube.setPositions(glm::vec3(2.0f, 2.0f, 0.0f));
@@ -117,16 +118,17 @@ int main() {
     SceneNode cube3(&cubeIron);
     cube3.setPositions(glm::vec3(-1.0f, 2.0f, 3.0f));
 
+
+
     Scene scene;
     scene.add(&cube);
     scene.add(&cube2);
     scene.add(&cube3);
-
+    scene.add(&plane);
     scene.add(&sunbro_helmet);
     scene.add(&sword);
     scene.add(&withcerMedailon);
     scene.add(&moriter);
-    scene.add(&camera_model);
     PabloRenderer pabloRenderer(&scene, window);
 
     //------------------

@@ -65,6 +65,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h
         Includes/Renderer/PabloRenderer.cpp
         Includes/Renderer/PabloRenderer.h
+        Includes/Renderer/SceneGraph/Grid/Grid.h
+        Includes/Renderer/SceneGraph/Grid/Grid.cpp
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

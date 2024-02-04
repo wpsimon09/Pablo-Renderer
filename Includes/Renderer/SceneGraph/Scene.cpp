@@ -19,12 +19,11 @@ void Scene::add(Renderable *renderable, SceneNode *parent) {
     parent->addChild(new SceneNode(renderable));
 }
 
-
 void Scene::update(Shader *shader) {
     Scene::root->update();
 }
 
 void Scene::setup() {
-
+    //this->add(new Grid());
 }
 
