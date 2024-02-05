@@ -7,12 +7,12 @@
 
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
-
+#include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 class OGLRenderer {
 public:
     OGLRenderer(Scene* scene, GLFWwindow* window);
     void init();
-    void render(GLuint frameBuffer = 0);
+    void render(FrameBuffer* frameBuffer);
 private:
     Scene* scene;
     GLFWwindow* window;
