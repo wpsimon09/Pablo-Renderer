@@ -4,14 +4,12 @@
 
 #include "FrameBuffer.h"
 
-FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT) {
+FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable() {
     this->shader = new Shader("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
     //FRAME BUFFER CONFIG
     glGenFramebuffers(1, &this->ID);
-    glGetError();
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
-    glGetError();
 
     // RENDER BUFFER CONFIG
     this->renderBuffer = new RenderBuffer(SCR_WIDTH, SCR_HEIGHT);
@@ -19,16 +17,25 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT) {
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
 
     //COLOR ATTACHMENT
-    this->colorAttachment = new Texture2D(SCR_WIDTH, SCR_HEIGHT);
+    this->colorAttachment = new Texture2D("Assets/Textures/container2.png");
     this->colorAttachment->bind();
     this->colorAttachment->setSamplerID(0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
 
     //RENDERBUFFER SCREEN-SPACE QUAD CONFIG
     this->objectGeometry = new ScreenSpaceQuadGeometry();
-    this->objectMaterial = new BasicMaterialTextured(this->colorAttachment);
+    this->objectMaterial = new BasicMaterialTextured(this->shader,this->colorAttachment);
 
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
+        std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
+    }
+    else{
+        std::cerr<<"!!!!!!! FRAME BUFFER NOT COMPLETE !!!!!!!!"<<std::endl;
+    }
 
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindRenderbuffer(GL_RENDERBUFFER, 0);
 }
 
 void FrameBuffer::bind() {
@@ -43,4 +50,10 @@ void FrameBuffer::unbind() {
 
 Texture2D *FrameBuffer::getRenderedResult() {
     return this->colorAttachment;
+}
+
+void FrameBuffer::dispalyOnScreen() {
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    this->objectMaterial->configureShader();
+    this->objectGeometry->render();
 }

@@ -74,8 +74,6 @@ int main() {
 
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
-    Shader frameBufferDebugShader("VertexShader/FrameBufferDebugVertex.glsl","FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
-
     Shader PBRFloorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBR-FloorFragment.glsl", "PBR floor");
 
     //cerate material properties
@@ -114,6 +112,8 @@ int main() {
     scene.add(&withcerMedailon);
     scene.add(&grid);
     PabloRenderer pabloRenderer(&scene, window);
+
+    pabloRenderer.init();
 
     //------------------
     // LOAD PBR TEXTURES

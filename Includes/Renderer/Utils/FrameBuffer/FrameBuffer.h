@@ -15,12 +15,12 @@
 
 class FrameBuffer: public OGLObject, Renderable {
 public:
-    void bind() override;
-    void unbind() override;
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
-
     Texture2D* getRenderedResult();
 
+    void bind() override;
+    void unbind() override;
+    void dispalyOnScreen();
 private:
     Shader *shader ;
     RenderBuffer* renderBuffer;

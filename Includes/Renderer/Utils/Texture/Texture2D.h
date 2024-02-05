@@ -21,7 +21,7 @@ public:
     bool wasFound;
     Texture2D();
     explicit Texture2D(const char* path, bool isPBRMaterial = false);
-    explicit Texture2D(int SCR_WIDTH, int SCR_HEIGHT,  GLenum colorChannels = GL_RGBA, GLenum internalFomrat = GL_RGBA16F, GLenum dataType =GL_FLOAT);
+    explicit Texture2D(int SCR_WIDTH, int SCR_HEIGHT,  GLenum colorChannels = GL_RGB, GLenum internalFomrat = GL_RGB, GLenum dataType =GL_UNSIGNED_BYTE);
 private:
     unsigned int samplerID;
     std::string fullPath;

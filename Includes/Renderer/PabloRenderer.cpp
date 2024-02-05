@@ -16,17 +16,16 @@ PabloRenderer::PabloRenderer(Scene *scene, GLFWwindow *window) {
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+    this->frameBuffer = new FrameBuffer(this->windowWidth, this->windowHeight);
 }
 
 void PabloRenderer::init() {
-
 }
 
 void PabloRenderer::render() {
     while (!glfwWindowShouldClose(window)){
         glViewport(0, 0, this->windowWidth, this->windowHeight);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.11f, 0.11f, 0.11f, 1.0f);
         float currentFrame = static_cast<float>(glfwGetTime());
         this->deltaTime = currentFrame - this->lastFrame;
         this->lastFrame = currentFrame;
@@ -39,7 +38,12 @@ void PabloRenderer::render() {
         //-----------------
         // ACTUAL RENDERING
         //-----------------
-        this->renderer->render(0);
+        this->renderer->render(this->frameBuffer);
+
+        //----------------------------------
+        //DISPLAY THE RESULT TO FRAME BUFFER
+        //----------------------------------
+        this->frameBuffer->dispalyOnScreen();
 
         glfwSwapBuffers(this->window);
         glfwPollEvents();

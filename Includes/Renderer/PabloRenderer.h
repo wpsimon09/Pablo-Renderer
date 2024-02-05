@@ -6,6 +6,7 @@
 #define PABLO_RENDERER_PABLORENDERER_H
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
+#include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 class PabloRenderer {
 public:
     PabloRenderer(Scene* scene, GLFWwindow* window);
@@ -21,12 +22,14 @@ private:
 
     GLFWwindow* window;
 
+    FrameBuffer* frameBuffer;
+
     float deltaTime;
     float lastFrame;
     float lastX = 0;
     float lastY = 0;
     bool firstMouse = true;
-    float lightSpeed ;
+    float lightSpeed;
 
     int windowHeight;
     int windowWidth;

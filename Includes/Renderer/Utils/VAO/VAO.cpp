@@ -17,7 +17,7 @@ VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
     glGenBuffers(1, &this->EBO);
     glCheckError();
 
-    this->bind();
+    glBindVertexArray(this->ID);
 
     glBindBuffer(GL_ARRAY_BUFFER, this->VBO);
     glCheckError();
@@ -64,7 +64,7 @@ VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {
     glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
     glCheckError();
 
-    this->unbind();
+    glBindVertexArray(0);
     glCheckError();
 
 }
