@@ -17,7 +17,7 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable() {
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
 
     //COLOR ATTACHMENT
-    this->colorAttachment = new Texture2D("Assets/Textures/container2.png");
+    this->colorAttachment = new Texture2D(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F,GL_RGBA, GL_FLOAT);
     this->colorAttachment->bind();
     this->colorAttachment->setSamplerID(0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
