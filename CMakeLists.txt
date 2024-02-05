@@ -7,18 +7,6 @@ set(CMAKE_CXX_STANDARD 23)
 # Add the source files
 add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         source/stb_image.cpp
-        Includes/FrameBuffer/FrameBuffer.h
-        Includes/FrameBuffer/FrameBuffer.cpp
-        Includes/Texture/Texture.h
-        Includes/FrameBuffer/FrameBuffer.cpp
-        Includes/Texture/Texture.cpp
-        Includes/PBRPipeline/PBRPipeline.cpp
-        Includes/PBRPipeline/PBRPipeline.h
-        Includes/PBRPipeline/PBRPipeline.h
-        Includes/Debug/DisplayingFrameBuffer/FrameBufferDebug.cpp
-        Includes/Debug/DisplayingFrameBuffer/FrameBufferDebug.h
-        Includes/PostProcessing/PostProcessing.cpp
-        Includes/PostProcessing/PostProcessing.h
         Includes/Renderer/Utils/Vertex/Vertex.cpp
         Includes/Renderer/Utils/Vertex/Vertex.h
         Includes/Renderer/Renderable/Renderable.cpp
@@ -67,6 +55,10 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/PabloRenderer.h
         Includes/Renderer/SceneGraph/Grid/Grid.h
         Includes/Renderer/SceneGraph/Grid/Grid.cpp
+        Includes/Renderer/Utils/FrameBuffer/FrameBuffer.cpp
+        Includes/Renderer/Utils/FrameBuffer/FrameBuffer.h
+        Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.cpp
+        Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
