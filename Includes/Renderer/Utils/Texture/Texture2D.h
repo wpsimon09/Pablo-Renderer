@@ -8,15 +8,20 @@
 #include "glad.h"
 #include "stb_image.h"
 #include "iostream"
+#include "Renderer/Utils/OGLObject/OGLObject.h"
 
-class Texture2D {
+
+class Texture2D: public OGLObject {
 public:
-    GLuint ID;
+    void bind() override;
+
+    void unbind() override;
+
     bool isPBRMaterial;
     bool wasFound;
     Texture2D();
     explicit Texture2D(const char* path, bool isPBRMaterial = false);
-
+    explicit Texture2D(int SCR_WIDTH, int SCR_HEIGHT,  GLenum colorChannels = GL_RGBA, GLenum internalFomrat = GL_RGBA16F, GLenum dataType =GL_FLOAT);
 private:
     unsigned int samplerID;
     std::string fullPath;

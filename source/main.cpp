@@ -92,7 +92,7 @@ int main() {
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
 
     Grid grid(&PBRFloorShader);
-    grid.setScale(glm::vec3(10.0f, 1.0f, 10.0f));
+    grid.setScale(glm::vec3(20.0f, 1.0f, 20.0f));
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));

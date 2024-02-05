@@ -7,9 +7,10 @@
 #include "glad.h"
 #include "Renderer/Utils/Vertex/Vertex.h"
 #include "vector"
-class VAO {
+#include "Renderer/Utils/OGLObject/OGLObject.h"
+
+class VAO: public OGLObject{
 public:
-    GLuint ID;
     bool hasNormals;
     bool hasTexCoords;
     bool hasPositions;
@@ -19,8 +20,9 @@ public:
     VAO(std::vector<Vertex> vertecies, std::vector<unsigned  int> indecies);
     VAO(float vertecies[], float numberOfComponents, bool hasNormals = true, bool hasTexCoords = true);
 
-    void bind();
-    void unbind();
+    void bind() override;
+    void unbind() override;
+
 
     void getStatus();
     unsigned int getNumberOfIndecies();

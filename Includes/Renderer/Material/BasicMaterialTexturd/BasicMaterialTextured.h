@@ -21,6 +21,7 @@ class BasicMaterialTextured: public  Material{
 public:
     BasicMaterialTextured(Shader *shader, const char* path);
 
+    BasicMaterialTextured(Texture2D* texture2D);
     void configureShader() override;
 
     TextureUniform *texture;

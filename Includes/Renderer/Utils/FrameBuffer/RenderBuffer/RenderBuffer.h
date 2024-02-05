@@ -8,7 +8,8 @@
 
 class RenderBuffer {
 public:
-    RenderBuffer();
+    RenderBuffer(int SCR_WIDTH, int SCR_HEIGHT);
+    void bind();
     GLuint ID;
 };
 

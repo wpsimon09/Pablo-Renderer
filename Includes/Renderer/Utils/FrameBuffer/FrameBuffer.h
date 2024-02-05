@@ -6,11 +6,25 @@
 #define PABLO_RENDERER_FRAMEBUFFER_H
 
 #include "glad/glad.h"
+#include "RenderBuffer/RenderBuffer.h"
+#include "Renderer/Utils/Texture/Texture2D.h"
+#include "Shader.h"
+#include "Renderer/Renderable/Renderable.h"
+#include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
+#include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
 
-class FrameBuffer {
+class FrameBuffer: public OGLObject, Renderable {
 public:
-    GLuint ID;
-    FrameBuffer();
+    void bind() override;
+    void unbind() override;
+    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
+
+    Texture2D* getRenderedResult();
+
+private:
+    Shader *shader ;
+    RenderBuffer* renderBuffer;
+    Texture2D* colorAttachment;
 };
 
 

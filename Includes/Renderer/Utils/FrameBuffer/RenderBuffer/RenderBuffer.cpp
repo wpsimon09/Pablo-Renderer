@@ -4,9 +4,18 @@
 
 #include "RenderBuffer.h"
 
-RenderBuffer::RenderBuffer() {
+RenderBuffer::RenderBuffer(int SCR_WIDTH, int SCR_HEIGHT) {
     glGenRenderbuffers(1, &this->ID);
-    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glGetError();
+    glBindRenderbuffer(GL_RENDERBUFFER, this->ID);
+    glGetError();
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+    glGetError();
+    glBindRenderbuffer(GL_RENDERBUFFER,0);
+    glGetError();
+}
+
+void RenderBuffer::bind() {
+    glBindRenderbuffer(GL_RENDERBUFFER, this->ID);
+    glGetError();
 }

@@ -56,3 +56,30 @@ void Texture2D::changeFilteringMethod(GLenum mag, GLenum min) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag);
 }
+
+Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels, GLenum internalFomrat, GLenum dataType) {
+    this->isPBRMaterial = false;
+    this->wasFound = true;
+
+    glGenTextures(1, &this->ID);
+
+    glBindTexture(GL_TEXTURE_2D, this->ID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,SCR_WIDTH, SCR_HEIGHT, 0, internalFomrat, dataType, nullptr);
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBindTexture(GL_TEXTURE_2D,0);
+}
+
+void Texture2D::bind() {
+    glBindTexture(GL_TEXTURE_2D, this->ID);
+    glGetError();
+}
+
+void Texture2D::unbind() {
+    glBindTexture(GL_TEXTURE_2D, this->ID);
+    glGetError();
+}

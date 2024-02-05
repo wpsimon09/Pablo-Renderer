@@ -59,6 +59,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/FrameBuffer/FrameBuffer.h
         Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.cpp
         Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.h
+        Includes/Renderer/Utils/OGLObject/OGLObject.cpp
+        Includes/Renderer/Utils/OGLObject/OGLObject.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

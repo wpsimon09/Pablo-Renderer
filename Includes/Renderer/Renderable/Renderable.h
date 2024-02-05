@@ -30,7 +30,7 @@ public:
     Renderable(Shader *shader);
     Renderable();
 
-    void render();
+    virtual void render();
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 
     void setModelMatrix(glm::mat4 modelMatrix){this->modelMatrix = modelMatrix;}
