@@ -21,10 +21,13 @@ public:
     void bind() override;
     void unbind() override;
     void dispalyOnScreen();
-private:
+
+protected:
     Shader *shader ;
     RenderBuffer* renderBuffer;
     Texture2D* colorAttachment;
+
+    int width, height;
 };
 
 

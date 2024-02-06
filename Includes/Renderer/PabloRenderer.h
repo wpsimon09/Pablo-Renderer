@@ -7,6 +7,7 @@
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
+#include "Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.h"
 class PabloRenderer {
 public:
     PabloRenderer(Scene* scene, GLFWwindow* window);
@@ -22,7 +23,7 @@ private:
 
     GLFWwindow* window;
 
-    FrameBuffer* frameBuffer;
+    std::vector<FrameBuffer*> frameBuffers;
 
     float deltaTime;
     float lastFrame;

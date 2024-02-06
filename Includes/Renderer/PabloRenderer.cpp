@@ -17,7 +17,8 @@ PabloRenderer::PabloRenderer(Scene *scene, GLFWwindow *window) {
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    this->frameBuffer = new FrameBuffer(this->windowWidth, this->windowHeight);
+    this->frameBuffers.push_back(new FrameBuffer(this->windowWidth, this->windowHeight));
+    this->frameBuffers.push_back(new FrameBufferDebug(this->windowWidth, this->windowHeight));
 }
 
 void PabloRenderer::init() {
@@ -39,12 +40,15 @@ void PabloRenderer::render() {
         //-----------------
         // ACTUAL RENDERING
         //-----------------
-        this->renderer->render(this->frameBuffer);
+        this->renderer->render(this->frameBuffers[0]);
+        this->renderer->render(this->frameBuffers[1]);
 
         //----------------------------------
         //DISPLAY THE RESULT TO FRAME BUFFER
         //----------------------------------
-        this->frameBuffer->dispalyOnScreen();
+        for(auto &frameBuffer: this->frameBuffers){
+            frameBuffer->dispalyOnScreen();
+        }
 
         glfwSwapBuffers(this->window);
         glfwPollEvents();
