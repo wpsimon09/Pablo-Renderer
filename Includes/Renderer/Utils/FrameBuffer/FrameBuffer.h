@@ -13,7 +13,7 @@
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
 #include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
 
-class FrameBuffer: public OGLObject, Renderable {
+class FrameBuffer: public OGLObject, public Renderable {
 public:
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
     Texture2D* getRenderedResult();

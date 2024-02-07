@@ -6,6 +6,7 @@
 #define PABLO_RENDERER_FRAMEBUFFERDEBUG_H
 
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
+#include "Renderer/Geometry/Shapes/Debug/FrameBufferDebugGeometry.h"
 
 class FrameBufferDebug: public FrameBuffer {
 public:
