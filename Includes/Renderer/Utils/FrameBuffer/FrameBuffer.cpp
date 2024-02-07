@@ -25,7 +25,6 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable() {
     //RENDERBUFFER SCREEN-SPACE QUAD CONFIG
     this->objectGeometry = new ScreenSpaceQuadGeometry();
     this->objectMaterial = new BasicMaterialTextured(this->shader,this->colorAttachment);
-
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
         std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
     }
@@ -58,7 +57,6 @@ Texture2D *FrameBuffer::getRenderedResult() {
 void FrameBuffer::dispalyOnScreen() {
     glViewport(0, 0, width, height);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     this->objectMaterial->configureShader();
     this->objectGeometry->render();
 }

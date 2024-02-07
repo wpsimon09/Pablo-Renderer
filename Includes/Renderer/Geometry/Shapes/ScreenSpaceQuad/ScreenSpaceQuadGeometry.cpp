@@ -5,7 +5,7 @@
 #include "ScreenSpaceQuadGeometry.h"
 #include "screenSpaceQuadVertexData.h"
 ScreenSpaceQuadGeometry::ScreenSpaceQuadGeometry(std::string name) {
-    this->name;
+    this->name = "Screen quad";
     this->vao = new VAO(screenSpaceQuadVertexData, sizeof(screenSpaceQuadVertexData)/sizeof(float), false, true);
     this->numVerticies = 4;
     this->shapes = GL_TRIANGLE_STRIP;

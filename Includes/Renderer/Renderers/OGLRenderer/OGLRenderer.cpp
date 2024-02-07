@@ -15,9 +15,9 @@ void OGLRenderer::render(FrameBuffer* frameBuffer) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.11f, 0.11f, 0.11f, 1.0f);
 
-        this->scene->update();
+    this->scene->update();
 
-        renderSceneGraph(Scene::root);
+    renderSceneGraph(Scene::root);
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
