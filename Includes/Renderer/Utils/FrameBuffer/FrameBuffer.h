@@ -21,6 +21,7 @@ public:
     void bind() override;
     void unbind() override;
     void dispalyOnScreen();
+    void drawInsideSelf();
 
 protected:
     Shader *shader ;

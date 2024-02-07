@@ -60,3 +60,10 @@ void FrameBuffer::dispalyOnScreen() {
     this->objectMaterial->configureShader();
     this->objectGeometry->render();
 }
+
+void FrameBuffer::drawInsideSelf() {
+    glViewport(0, 0, width, height);
+    this->bind();
+    this->objectMaterial->configureShader();
+    this->objectGeometry->render();
+}

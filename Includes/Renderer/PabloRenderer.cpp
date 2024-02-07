@@ -45,7 +45,7 @@ void PabloRenderer::render() {
         this->renderer->render(this->frameBuffers[1]);
 
         //----------------------------------
-        //DISPLAY THE RESULT TO FRAME BUFFER
+        //DISPLAY THE RESULT OF FRAME BUFFER
         //----------------------------------
         for(auto &frameBuffer: this->frameBuffers){
             frameBuffer->dispalyOnScreen();
