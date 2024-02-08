@@ -18,7 +18,7 @@ void main()
     //----------
     vec4 floorTexture = texture(texture_diffuse0, fs_in.TexCoords);
     if(floorTexture.a < 0.1){
-        discard;
+       // discard;
     }
     //-------------
     // FINAL RESULT

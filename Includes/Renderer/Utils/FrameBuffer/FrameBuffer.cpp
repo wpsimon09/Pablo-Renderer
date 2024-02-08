@@ -72,3 +72,7 @@ void FrameBuffer::setShader(Shader *shader) {
     this->shader = shader;
     this->objectMaterial->shader = shader;
 }
+
+void FrameBuffer::setGeometry(Geometry *geometry) {
+    this->objectGeometry = geometry;
+}
