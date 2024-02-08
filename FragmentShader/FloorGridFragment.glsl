@@ -3,7 +3,7 @@ out vec4 FragColor;
 
 in vec2 TexCoords;
 
-uniform float numOfDivisions;
+const float numOfDivisions = 2;
 
 float unionSDF(float sdf0, float sdf1) {
     return min(sdf0, sdf1);
@@ -56,7 +56,6 @@ vec4 procedularTexture(vec2 pos)
 
 void main(){
     vec4 texColor = procedularTexture(TexCoords);
-
 
     FragColor = texColor;
 }

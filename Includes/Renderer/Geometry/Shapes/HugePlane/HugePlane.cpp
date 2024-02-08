@@ -7,7 +7,7 @@
 
 HugePlane::HugePlane(std::string name) {
     this->name = std::move(name);
-    this->vao = new VAO(planeVertexData, sizeof(planeVertexData)/sizeof(float));
+    this->vao = new VAO(hugePlaneVerticies, sizeof(hugePlaneVerticies)/sizeof(float));
     this->shapes = GL_TRIANGLES;
     this->numVerticies = 6;
 }

@@ -10,6 +10,7 @@
 #include "Renderer/Light/Light.h"
 #include "SceneNode/SceneNode.h"
 #include "Renderer/SceneGraph/Floor/Floor.h"
+#include "Renderer/Renderable/Grid/Grid.h"
 
 class Scene {
 public:

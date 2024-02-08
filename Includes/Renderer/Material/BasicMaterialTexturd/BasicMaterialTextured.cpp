@@ -18,9 +18,9 @@ void BasicMaterialTextured::configureShader() {
     glBindTexture(GL_TEXTURE_2D, this->texture->texture2D->ID);
 }
 
-BasicMaterialTextured::BasicMaterialTextured(Shader* shader,Texture2D *texture2D) {
+BasicMaterialTextured::BasicMaterialTextured(Shader* shader,Texture2D *texture2D, std::string shaderName) {
     this->shader = shader;
-    this->texture = new TextureUniform("FragmentColor", texture2D);
+    this->texture = new TextureUniform(shaderName, texture2D);
 }
 
 

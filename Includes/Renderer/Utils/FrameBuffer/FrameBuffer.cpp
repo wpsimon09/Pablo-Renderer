@@ -70,4 +70,5 @@ void FrameBuffer::drawInsideSelf() {
 
 void FrameBuffer::setShader(Shader *shader) {
     this->shader = shader;
+    this->objectMaterial->shader = shader;
 }
