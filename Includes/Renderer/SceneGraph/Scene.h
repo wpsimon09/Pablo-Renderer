@@ -9,7 +9,7 @@
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Light/Light.h"
 #include "SceneNode/SceneNode.h"
-#include "Renderer/SceneGraph/Grid/Floor.h"
+#include "Renderer/SceneGraph/Floor/Floor.h"
 
 class Scene {
 public:

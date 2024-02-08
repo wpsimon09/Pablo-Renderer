@@ -1,11 +1,11 @@
 //
-// Created by wpsimon09 on 30/12/23.
+// Created by wpsimon09 on 08/02/24.
 //
 
-#include "PlaneGeometry.h"
-#include "planeVertexData.h"
+#include "HugePlane.h"
+#include "hugePlaneVertexData.h"
 
-PlaneGeometry::PlaneGeometry(std::string name): Geometry() {
+HugePlane::HugePlane(std::string name) {
     this->name = std::move(name);
     this->vao = new VAO(planeVertexData, sizeof(planeVertexData)/sizeof(float));
     this->shapes = GL_TRIANGLES;

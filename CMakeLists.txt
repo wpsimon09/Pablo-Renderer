@@ -53,8 +53,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h
         Includes/Renderer/PabloRenderer.cpp
         Includes/Renderer/PabloRenderer.h
-        Includes/Renderer/SceneGraph/Grid/Floor.h
-        Includes/Renderer/SceneGraph/Grid/Floor.cpp
+        Includes/Renderer/SceneGraph/Floor/Floor.h
+        Includes/Renderer/SceneGraph/Floor/Floor.cpp
         Includes/Renderer/Utils/FrameBuffer/FrameBuffer.cpp
         Includes/Renderer/Utils/FrameBuffer/FrameBuffer.h
         Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.cpp
@@ -66,6 +66,12 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/Debug/FrameBufferDebugGeometry.cpp
         Includes/Renderer/Geometry/Shapes/Debug/FrameBufferDebugGeometry.h
         Includes/Renderer/Geometry/Shapes/Debug/debugFrameBufferPlaneData.h
+        Includes/Renderer/Renderable/Grid/Grid.cpp
+        Includes/Renderer/Renderable/Grid/Grid.h
+        Includes/Renderer/Renderable/Grid/Grid.h
+        Includes/Renderer/Geometry/Shapes/HugePlane/HugePlane.cpp
+        Includes/Renderer/Geometry/Shapes/HugePlane/HugePlane.h
+        Includes/Renderer/Geometry/Shapes/HugePlane/hugePlaneVertexData.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

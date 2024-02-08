@@ -20,7 +20,9 @@ public:
 
     void bind() override;
     void unbind() override;
+    void setShader(Shader* shader);
     void dispalyOnScreen();
+
     void drawInsideSelf();
 
 protected:
