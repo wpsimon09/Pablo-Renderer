@@ -23,4 +23,10 @@ void Scene::update(Shader *shader) {
     Scene::root->update();
 }
 
+void Scene::setup() {
+    auto floor = new Floor();
+    floor->setScale(glm::vec3(20.0f, 1.0f, 20.0f));
+    this->add(floor);
+}
+
 

@@ -2,20 +2,20 @@
 // Created by wpsimon09 on 04/02/24.
 //
 
-#ifndef PABLO_RENDERER_GRID_H
-#define PABLO_RENDERER_GRID_H
+#ifndef PABLO_RENDERER_FLOOR_H
+#define PABLO_RENDERER_FLOOR_H
 
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 #include "Shader.h"
 #include "Renderer/Geometry/Geometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 #include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
-class Grid : public SceneNode{
+class Floor : public SceneNode{
 public:
-    Grid(Shader* shader);
+    Floor();
 private:
-    Material* generateFloorTexture();
+    Shader* shader;
 };
 
 
-#endif //PABLO_RENDERER_GRID_H
+#endif //PABLO_RENDERER_FLOOR_H

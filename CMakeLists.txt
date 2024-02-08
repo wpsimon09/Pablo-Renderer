@@ -53,8 +53,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h
         Includes/Renderer/PabloRenderer.cpp
         Includes/Renderer/PabloRenderer.h
-        Includes/Renderer/SceneGraph/Grid/Grid.h
-        Includes/Renderer/SceneGraph/Grid/Grid.cpp
+        Includes/Renderer/SceneGraph/Grid/Floor.h
+        Includes/Renderer/SceneGraph/Grid/Floor.cpp
         Includes/Renderer/Utils/FrameBuffer/FrameBuffer.cpp
         Includes/Renderer/Utils/FrameBuffer/FrameBuffer.h
         Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.cpp

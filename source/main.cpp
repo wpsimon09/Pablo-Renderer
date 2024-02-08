@@ -74,7 +74,6 @@ int main() {
 
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
-    Shader PBRFloorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBR-FloorFragment.glsl", "PBR floor");
 
     //cerate material properties
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
@@ -89,8 +88,6 @@ int main() {
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
 
-    Grid grid(&PBRFloorShader);
-    grid.setScale(glm::vec3(20.0f, 1.0f, 20.0f));
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
@@ -110,7 +107,6 @@ int main() {
     scene.add(&sunbro_helmet);
     scene.add(&sword);
     scene.add(&withcerMedailon);
-    scene.add(&grid);
     PabloRenderer pabloRenderer(&scene, window);
 
     pabloRenderer.init();

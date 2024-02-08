@@ -22,6 +22,7 @@ PabloRenderer::PabloRenderer(Scene *scene, GLFWwindow *window) {
 }
 
 void PabloRenderer::init() {
+    this->scene->setup();
 }
 
 void PabloRenderer::render() {
