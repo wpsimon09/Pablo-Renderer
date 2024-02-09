@@ -27,7 +27,7 @@ private:
     std::string fullPath;
 public:
     unsigned int getSamplerID() {return this->samplerID;}
-    void setSamplerID(unsigned int ID){ this->samplerID = ID; }
+    void setSamplerID(unsigned int ID) { this->samplerID = ID; }
     const std::string &getFullPath() const;
     void changeFilteringMethod(GLenum mag, GLenum min);
 };

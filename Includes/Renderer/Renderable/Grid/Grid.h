@@ -14,6 +14,7 @@ class Grid: public Renderable {
 public:
     Grid();
 private:
+    void generateTexture();
     FrameBuffer* frameBuffer;
     Shader* procedularTextureShadaer;
     Shader* mainShader;

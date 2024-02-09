@@ -4,9 +4,11 @@
 
 #include "BasicMaterialTextured.h"
 
-BasicMaterialTextured::BasicMaterialTextured(Shader *shader, const char *path) {
+#include <utility>
+
+BasicMaterialTextured::BasicMaterialTextured(Shader *shader, const char *path, std::string shaderName) {
     this->shader = shader;
-    this->texture = new TextureUniform("FragmentColor", new Texture2D(path));
+    this->texture = new TextureUniform(std::move(shaderName), new Texture2D(path));
     this->texture->texture2D->setSamplerID(0);
 }
 

@@ -16,12 +16,10 @@ void main()
     //----------
     // AMBIENT
     //----------
-    vec4 floorTexture = texture(texture_diffuse0, fs_in.TexCoords);
-    if(floorTexture.a < 0.1){
-       // discard;
-    }
+    vec3 floorTexture = texture(texture_diffuse0, fs_in.TexCoords).rgb;
+
     //-------------
     // FINAL RESULT
     //-------------    
-    FragColor = vec4(floorTexture);
+    FragColor = vec4(floorTexture, 1.0);
 }

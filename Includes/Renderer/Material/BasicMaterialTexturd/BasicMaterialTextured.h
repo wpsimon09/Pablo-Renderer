@@ -19,7 +19,7 @@ struct TextureUniform{
 
 class BasicMaterialTextured: public  Material{
 public:
-    BasicMaterialTextured(Shader *shader, const char* path);
+    BasicMaterialTextured(Shader *shader, const char* path, std::string shaderName = "FragmentColor");
 
     BasicMaterialTextured(Shader* shader, Texture2D* texture2D, std::string shaderName = "FragmentColor");
     void configureShader() override;
