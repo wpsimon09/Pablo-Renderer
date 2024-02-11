@@ -6,9 +6,10 @@
 
 Grid::Grid():Renderable() {
     this->name = "Grid";
+    this->generatedGrid = new Texture2D(800, 600);
     this->procedularTextureShadaer = new Shader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Procedural grid texture shader");
     this->mainShader = new Shader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
-    this->frameBuffer = new FrameBuffer(800, 600);
+    this->frameBuffer = new FrameBuffer(800, 600, this->generatedGrid);
     this->generateTexture();
     this->objectGeometry = new HugePlane("Huge plane");
     this->objectMaterial = new BasicMaterialTextured(mainShader, frameBuffer->getRenderedResult(), "texture_diffuse0");
