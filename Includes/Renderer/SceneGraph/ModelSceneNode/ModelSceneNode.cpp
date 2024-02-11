@@ -103,6 +103,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     Renderable* processedRenderable = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
 
     this->addChild(new SceneNode(processedRenderable));
+
 }
 
 Material *ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
