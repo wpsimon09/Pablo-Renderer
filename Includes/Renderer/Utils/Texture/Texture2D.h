@@ -8,6 +8,7 @@
 #include "glad.h"
 #include "stb_image.h"
 #include "iostream"
+#include "memory"
 #include "Renderer/Utils/OGLObject/OGLObject.h"
 
 
@@ -35,7 +36,7 @@ private:
     void release();
 
 public:
-    unsigned int getSamplerID() { return this->samplerID; }
+    unsigned int getSamplerID() const { return this->samplerID; }
 
     void setSamplerID(unsigned int ID) { this->samplerID = ID; }
 
