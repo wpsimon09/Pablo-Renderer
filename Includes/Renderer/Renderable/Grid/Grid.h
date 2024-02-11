@@ -19,7 +19,7 @@ private:
     //aso make the framebuffe accept the new texture in to constructor
     //either pass texture widh and height as parameter or store it inside Tecture2D class
     //alternativly chceck how to return textures in common mistakes in open gl
-    s
+
     void generateTexture();
     FrameBuffer* frameBuffer;
     Shader* procedularTextureShadaer;
