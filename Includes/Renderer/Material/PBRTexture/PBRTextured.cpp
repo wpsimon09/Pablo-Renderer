@@ -5,6 +5,8 @@
 #include "PBRTextured.h"
 
 PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(shader) {
+        this->shader = shader;
+
         Texture2D albedo((pathToTheDirectory+"/albedo"+fileFormat).c_str(), true);
         this->textures.push_back(new PBRMaterial<Texture2D>(std::move(albedo), shaderNamingConvention+"albedoMap", 0));
 
@@ -25,9 +27,10 @@ PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::st
 }
 
 void PBRTextured::configureShader() {
-    this->shader->use();
+
     for (auto &texture : this->textures) {
-        if(texture->type.wasFound){
+        if(texture->type.wasFound && texture != nullptr && this->shader != nullptr){
+            this->shader->use();
             this->shader->setInt(texture->shaderName, texture->samplerID);
             glActiveTexture(GL_TEXTURE0 + texture->samplerID);
             glBindTexture(GL_TEXTURE_2D, texture->type.ID);
@@ -35,20 +38,15 @@ void PBRTextured::configureShader() {
     }
 }
 
-PBRTextured::PBRTextured(Shader *shader, PBRMaterial<Texture2D> *baseColor, PBRMaterial<Texture2D> *normalMap,
-                         PBRMaterial<Texture2D> *emmisionMap, PBRMaterial<Texture2D> *metalnessRougnessMap,
-                         PBRMaterial<Texture2D> *rougness, PBRMaterial<Texture2D> *metalness,
-                         PBRMaterial<Texture2D> *ao): Material(shader) {
-
-    this->baseColor = baseColor;
-    this->normalMap = normalMap;
-    this->roughness = rougness;
-    this->metalness = metalness;
-    this->ao = ao;
-
-    this->metallnesRougnessMap = metalnessRougnessMap;
-    this->emmisionMap = emmisionMap;
+void PBRTextured::addTexture(PBRMaterial<Texture2D> *texture) {
+    this->textures.push_back(texture);
 }
+
+
+PBRTextured::PBRTextured(Shader *shader) : Material(shader) {
+    this->shader = std::move(shader);
+}
+
 
 
 

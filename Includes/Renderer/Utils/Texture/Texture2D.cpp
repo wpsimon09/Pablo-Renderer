@@ -13,6 +13,8 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
     unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
     if (data)
     {
+        this->wasFound = true;
+
         GLenum format;
         if (nrComponents == 1)
             format = GL_RED;
@@ -30,7 +32,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        this->wasFound = true;
+
 
         stbi_image_free(data);
     }
@@ -90,7 +92,7 @@ void Texture2D::release() {
     //this->ID = 0;
 }
 
-Texture2D::Texture2D(Texture2D &&other)  noexcept : ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID) {
+Texture2D::Texture2D(Texture2D &&other)  noexcept : ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound) {
     other.ID = 0;
 
 }
