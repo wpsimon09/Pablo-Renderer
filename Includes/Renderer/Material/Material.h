@@ -12,7 +12,7 @@ struct PBRMaterial{
     T type;
     std::string shaderName;
     PBRMaterial(T type, std::string shaderName){
-        this->type = type;
+        this->type = std::move(type);
         this->shaderName = shaderName;
     }
 };

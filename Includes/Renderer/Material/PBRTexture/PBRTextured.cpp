@@ -5,29 +5,29 @@
 #include "PBRTextured.h"
 
 PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(shader) {
-    Texture2D albedo((pathToTheDirectory+"/albedo"+fileFormat).c_str(), true);
-    this->baseColor = new PBRMaterial<Texture2D>(albedo, shaderNamingConvention+"albedoMap");
-    this->baseColor->type.setSamplerID(0);
+        Texture2D albedo((pathToTheDirectory+"/albedo"+fileFormat).c_str(), true);
+        this->baseColor = new PBRMaterial<Texture2D>(std::move(albedo), shaderNamingConvention+"albedoMap");
+        this->baseColor->type.setSamplerID(0);
 
-    Texture2D rougness((pathToTheDirectory+"/roughness"+ fileFormat).c_str(), true);
-    this->roughness = new PBRMaterial<Texture2D>(rougness, shaderNamingConvention+"rougnessMap");
-    this->roughness->type.setSamplerID(1);
+        Texture2D rougness((pathToTheDirectory+"/roughness"+ fileFormat).c_str(), true);
+        this->roughness = new PBRMaterial<Texture2D>(std::move(rougness), shaderNamingConvention+"rougnessMap");
+        this->roughness->type.setSamplerID(1);
 
-    Texture2D metallic((pathToTheDirectory+"/metallic"+ fileFormat).c_str(), true);
-    this->metalness = new PBRMaterial<Texture2D>(metallic, shaderNamingConvention+"metallnesMap");
-    this->metalness->type.setSamplerID(2);
+        Texture2D metallic((pathToTheDirectory+"/metallic"+ fileFormat).c_str(), true);
+        this->metalness = new PBRMaterial<Texture2D>(std::move(metallic), shaderNamingConvention+"metallnesMap");
+        this->metalness->type.setSamplerID(2);
 
-    Texture2D normal((pathToTheDirectory+"/normal"+ fileFormat).c_str(), true);
-    this->normalMap = new PBRMaterial<Texture2D>(normal, shaderNamingConvention+"normalMap");
-    this->normalMap->type.setSamplerID(3);
+        Texture2D normal((pathToTheDirectory+"/normal"+ fileFormat).c_str(), true);
+        this->normalMap = new PBRMaterial<Texture2D>(std::move(normal), shaderNamingConvention+"normalMap");
+        this->normalMap->type.setSamplerID(3);
 
-    Texture2D _ao((pathToTheDirectory + "/ao" + fileFormat).c_str(), true);
-    this->ao = new PBRMaterial<Texture2D>(_ao, shaderNamingConvention + "aoMap");
-    this->ao->type.setSamplerID(4);
+        Texture2D _ao((pathToTheDirectory + "/ao" + fileFormat).c_str(), true);
+        this->ao = new PBRMaterial<Texture2D>(std::move(_ao), shaderNamingConvention + "aoMap");
+        this->ao->type.setSamplerID(4);
 
     Texture2D depthMap((pathToTheDirectory + "/displacement" + fileFormat).c_str(), true);
     if(depthMap.wasFound){
-        this->displacement = new PBRMaterial<Texture2D>(depthMap, shaderNamingConvention+"displacementMap");
+        this->displacement = new PBRMaterial<Texture2D>(std::move(depthMap), shaderNamingConvention+"displacementMap");
         this->displacement->type.setSamplerID(5);
     }
 }

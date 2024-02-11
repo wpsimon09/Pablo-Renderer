@@ -9,7 +9,6 @@
 
 class OGLObject {
 public:
-    GLuint ID;
     virtual void bind(){};
     virtual void unbind(){};
 };

@@ -11,6 +11,7 @@
 
 class VAO: public OGLObject{
 public:
+    GLuint ID;
     bool hasNormals;
     bool hasTexCoords;
     bool hasPositions;

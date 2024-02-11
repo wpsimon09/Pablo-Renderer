@@ -57,5 +57,5 @@ vec4 procedularTexture(vec2 pos)
 void main(){
     vec4 texColor = procedularTexture(TexCoords);
 
-    FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);
+    FragColor = vec4(texColor);
 }

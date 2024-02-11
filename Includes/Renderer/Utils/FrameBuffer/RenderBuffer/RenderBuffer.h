@@ -9,6 +9,8 @@
 
 class RenderBuffer: public OGLObject{
 public:
+    GLuint ID;
+
     RenderBuffer(int SCR_WIDTH, int SCR_HEIGHT);
 
     void bind() override;

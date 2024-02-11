@@ -84,3 +84,30 @@ void Texture2D::unbind() {
     glBindTexture(GL_TEXTURE_2D, 0);
     glGetError();
 }
+
+void Texture2D::release() {
+    //glDeleteTextures(1, &ID);
+    //this->ID = 0;
+}
+
+Texture2D::Texture2D(Texture2D &&other)  noexcept : ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID) {
+    other.ID = 0;
+
+}
+
+Texture2D &Texture2D::operator =(Texture2D &&other) noexcept {
+    if (this != &other) {
+        glDeleteTextures(1, &this->ID);
+
+        this->ID = other.ID;
+        this->isPBRMaterial = other.isPBRMaterial;
+        this->fullPath = std::move(other.fullPath);
+        this->wasFound = other.wasFound;
+        this->samplerID = other.samplerID;
+
+        // Reset other
+        other.ID = 0;
+    }
+    return *this;
+}
+
