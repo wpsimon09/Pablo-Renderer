@@ -8,6 +8,7 @@
 #include "Renderer/Material/Material.h"
 #include "Renderer/Utils/Texture/Texture2D.h"
 #include "iostream"
+#include "vector"
 #include "ostream"
 class PBRTextured : public Material{
 public:
@@ -45,6 +46,8 @@ private:
     PBRMaterial<Texture2D>* emmisionMap = nullptr;
     PBRMaterial<Texture2D>* metallnesRougnessMap = nullptr;
     PBRMaterial<Texture2D>* displacement = nullptr;
+
+    std::vector<PBRMaterial<Texture2D>> modelTextures;
 };
 
 
