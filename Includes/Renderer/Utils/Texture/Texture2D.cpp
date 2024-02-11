@@ -7,7 +7,7 @@
 Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
     this->isPBRMaterial = isPBRMaterial;
     this->fullPath = path;
-    glGenTextures(1, &this->ID);
+    glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
 
     int width, height, nrComponents;
     unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
