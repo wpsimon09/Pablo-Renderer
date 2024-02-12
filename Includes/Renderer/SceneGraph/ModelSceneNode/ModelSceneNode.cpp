@@ -17,7 +17,6 @@ ModelSceneNode::ModelSceneNode(Shader *shader, std::string path): SceneNode() {
     }
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
-
 }
 
 void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
@@ -103,54 +102,43 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     Renderable* processedRenderable = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
 
     this->addChild(new SceneNode(processedRenderable));
+
 }
 
 Material *ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    PBRMaterial<Texture2D>* baseColor = this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE ,"_albedoMap");
-    if(baseColor != nullptr)
-        baseColor->type.setSamplerID(0);
+    PBRTextured* material = new PBRTextured(shader);
 
-    PBRMaterial<Texture2D>* rougness = this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS,"_rougnessMap");
-    if(rougness != nullptr)
-        rougness->type.setSamplerID(1);
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 
-    PBRMaterial<Texture2D>* metalness = this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap");
-    if(metalness != nullptr)
-        metalness->type.setSamplerID(2);
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
 
-    PBRMaterial<Texture2D>* normalMap = this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap");
-    if(normalMap!= nullptr)
-        normalMap->type.setSamplerID(3);
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap",2));
 
-    PBRMaterial<Texture2D>* ao = this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap");
-    if(ao != nullptr)
-        ao->type.setSamplerID(4);
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap",3));
 
-    PBRMaterial<Texture2D>* emmisionMap = this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE,"_emmisionMap");
-    if(emmisionMap != nullptr)
-        emmisionMap->type.setSamplerID(5);
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap",4));
 
-    PBRMaterial<Texture2D>* rougnessMetalnessMap = this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN,"_rougnessMetalnessMap");
-    if(rougnessMetalnessMap != nullptr)
-        rougnessMetalnessMap->type.setSamplerID(6);
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE,"_emmisionMap",5));
 
-    return new PBRTextured(shader, baseColor, normalMap, emmisionMap, rougnessMetalnessMap, rougness, metalness, ao);
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN,"_rougnessMetalnessMap",6));
+
+    return material;
 }
 
 PBRMaterial<Texture2D> *
-ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string& shaderName) {
+ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string& shaderName,const int samplerID) {
         aiString path;
 
         if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
             for(auto &loaded_texture : this->loadedTextures ){
                 if(std::strcmp(loaded_texture.getFullPath().c_str(), path.C_Str()) == 0){
-                    return new PBRMaterial<Texture2D>(loaded_texture, shaderName);
+                    return new PBRMaterial<Texture2D>(std::move(loaded_texture), shaderName,samplerID);
                 }
             }
 
             Texture2D loadedTexture((directory +"/"+path.C_Str()).c_str());
-            this->loadedTextures.push_back(loadedTexture);
-            return new PBRMaterial<Texture2D>(loadedTexture, shaderName);
+            this->loadedTextures.push_back(std::move(loadedTexture));
+            return new PBRMaterial<Texture2D>(std::move(loadedTexture), shaderName, samplerID);
         }
 
         return nullptr;

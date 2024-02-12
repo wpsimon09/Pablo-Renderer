@@ -13,6 +13,8 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
     unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
     if (data)
     {
+        this->wasFound = true;
+
         GLenum format;
         if (nrComponents == 1)
             format = GL_RED;
@@ -30,7 +32,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        this->wasFound = true;
+
 
         stbi_image_free(data);
     }
@@ -84,3 +86,29 @@ void Texture2D::unbind() {
     glBindTexture(GL_TEXTURE_2D, 0);
     glGetError();
 }
+
+void Texture2D::release() {
+    //glDeleteTextures(1, &ID);
+    //this->ID = 0;
+}
+
+Texture2D::Texture2D(Texture2D &&other)  noexcept : ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound) {
+
+}
+
+Texture2D &Texture2D::operator =(Texture2D &&other) noexcept {
+    if (this != &other) {
+
+        glDeleteTextures(1, &this->ID);
+        std::swap(ID, other.ID);
+        std::swap(isPBRMaterial, other.isPBRMaterial);
+        std::swap(fullPath, other.fullPath);
+        std::swap(wasFound ,other.wasFound);
+        std::swap(samplerID, other.samplerID);
+
+        // Reset other
+        other.ID = 0;
+    }
+    return *this;
+}
+

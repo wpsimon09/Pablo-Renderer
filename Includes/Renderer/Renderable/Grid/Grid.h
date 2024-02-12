@@ -13,6 +13,7 @@
 class Grid: public Renderable {
 public:
     Grid();
+    FrameBuffer* frameBuffer;
 private:
     //create generated texture here and pass it to the frame buffer
     Texture2D* generatedGrid;
@@ -21,7 +22,6 @@ private:
     //alternativly chceck how to return textures in common mistakes in open gl
 
     void generateTexture();
-    FrameBuffer* frameBuffer;
     Shader* procedularTextureShadaer;
     Shader* mainShader;
 };

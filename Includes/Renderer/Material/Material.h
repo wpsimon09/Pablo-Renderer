@@ -11,9 +11,11 @@ template<typename T>
 struct PBRMaterial{
     T type;
     std::string shaderName;
-    PBRMaterial(T type, std::string shaderName){
-        this->type = type;
+    int samplerID;
+    PBRMaterial(T type, std::string shaderName,int samplerid = 0){
+        this->type = std::move(type);
         this->shaderName = shaderName;
+        this->samplerID = samplerid;
     }
 };
 
