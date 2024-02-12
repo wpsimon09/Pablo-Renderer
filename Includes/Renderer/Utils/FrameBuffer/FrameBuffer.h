@@ -17,8 +17,7 @@ class FrameBuffer: public OGLObject, public Renderable {
 public:
     GLuint ID;
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
-    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, Texture2D* texture2D = nullptr);
-    Texture2D* getRenderedResult();
+    Texture2D getRenderedResult();
 
     void bind() override;
     void unbind() override;
@@ -32,7 +31,7 @@ public:
 protected:
     Shader *shader ;
     RenderBuffer* renderBuffer;
-    Texture2D* colorAttachment;
+    Texture2D colorAttachment;
 
     int width, height;
 };

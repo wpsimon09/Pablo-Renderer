@@ -4,7 +4,7 @@
 
 #include "FrameBuffer.h"
 
-FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, Texture2D* texture2D):Renderable() {
+FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable(), colorAttachment(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F, GL_RGBA) {
     this->shader = new Shader("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
     //FRAME BUFFER CONFIG
@@ -17,19 +17,13 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, Texture2D* texture2D):Re
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
 
     //COLOR ATTACHMENT
-    if(!texture2D)
-    {
-        this->colorAttachment = new Texture2D(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F,GL_RGBA, GL_FLOAT);
-        this->colorAttachment->bind();
-    }
-    else
-        this->colorAttachment = texture2D;
-    this->colorAttachment->setSamplerID(0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
+    this->colorAttachment.bind();
+    this->colorAttachment.setSamplerID(0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment.ID, 0);
 
     //RENDERBUFFER SCREEN-SPACE QUAD CONFIG
     this->objectGeometry = new ScreenSpaceQuadGeometry();
-    this->objectMaterial = new BasicMaterialTextured(this->shader,this->colorAttachment);
+    this->objectMaterial = new BasicMaterialTextured(this->shader,std::move(this->colorAttachment));
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
         std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
     }
@@ -55,8 +49,8 @@ void FrameBuffer::unbind() {
     glGetError();
 }
 
-Texture2D *FrameBuffer::getRenderedResult() {
-    return this->colorAttachment;
+Texture2D FrameBuffer::getRenderedResult() {
+    return std::move(this->colorAttachment);
 }
 
 void FrameBuffer::dispalyOnScreen() {
