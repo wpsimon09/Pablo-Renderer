@@ -17,6 +17,7 @@ class FrameBuffer: public OGLObject, public Renderable {
 public:
     GLuint ID;
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
+    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, Texture2D* texture2D = nullptr);
     Texture2D* getRenderedResult();
 
     void bind() override;

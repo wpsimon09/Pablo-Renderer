@@ -8,11 +8,10 @@ Grid::Grid():Renderable() {
     this->name = "Grid";
     this->procedularTextureShadaer = new Shader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Procedural grid texture shader");
     this->mainShader = new Shader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
-    this->frameBuffer = new FrameBuffer(800, 600);
-    this->generateTexture();
     this->objectGeometry = new HugePlane("Huge plane");
-    this->objectMaterial = new BasicMaterialTextured(mainShader, frameBuffer->getRenderedResult(), "texture_diffuse0");
-    //this->objectMaterial = new BasicMaterialTextured(mainShader, "Assets/Textures/container2.png", "texture_diffuse0");
+    
+    //this->objectMaterial = new BasicMaterialTextured(mainShader, this->generatedGrid, "texture_diffuse0");
+    this->objectMaterial = new BasicMaterialTextured(mainShader, "Assets/Textures/AdvancedLightning/grid_ch.png", "texture_diffuse0");
 }
 
 void Grid::generateTexture() {
