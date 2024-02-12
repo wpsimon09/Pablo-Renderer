@@ -22,7 +22,6 @@ public:
     void bind() override;
     void unbind() override;
     void setShader(Shader* shader);
-    void setGeometry(Geometry* geometry);
 
     void dispalyOnScreen();
 
