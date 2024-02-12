@@ -26,7 +26,6 @@ void PabloRenderer::init() {
 }
 
 void PabloRenderer::render() {
-    Grid grid;
     while (!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
         this->deltaTime = currentFrame - this->lastFrame;
@@ -52,7 +51,6 @@ void PabloRenderer::render() {
         for(auto &frameBuffer: this->frameBuffers){
             frameBuffer->dispalyOnScreen();
         }
-        grid.frameBuffer->dispalyOnScreen();
         glfwSwapBuffers(this->window);
         glfwPollEvents();
     }
