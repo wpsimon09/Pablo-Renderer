@@ -72,3 +72,13 @@ void FrameBuffer::setShader(Shader *shader) {
     this->objectMaterial->shader = shader;
 }
 
+FrameBuffer::FrameBuffer(FrameBuffer &&other):ID(other.ID), colorAttachment(std::move(other.colorAttachment)), renderBuffer(other.renderBuffer), width(other.width), height(other.height), shader(other.shader) {
+
+}
+
+FrameBuffer &FrameBuffer::operator=(FrameBuffer &&other) {
+    if(this != other){
+
+    }
+}
+
