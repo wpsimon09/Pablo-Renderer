@@ -29,7 +29,7 @@ PBRTextured::PBRTextured(Shader* shader, std::string pathToTheDirectory, std::st
 void PBRTextured::configureShader() {
 
     for (auto &texture : this->textures) {
-        if(texture->type.wasFound && texture != nullptr && this->shader != nullptr){
+        if(texture != nullptr ){
             this->shader->use();
             this->shader->setInt(texture->shaderName, texture->samplerID);
             glActiveTexture(GL_TEXTURE0 + texture->samplerID);

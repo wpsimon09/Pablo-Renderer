@@ -17,7 +17,6 @@ ModelSceneNode::ModelSceneNode(Shader *shader, std::string path): SceneNode() {
     }
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
-
 }
 
 void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
@@ -99,29 +98,29 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
     Geometry* renderableGeometry = new ModelGeometry(std::string(mesh->mName.C_Str()),vertecies, indecies);
-    Material renderableMaterial = this->processRenderableMaterial(meshMaterial);
-    Renderable* processedRenderable = new Renderable(renderableGeometry, &renderableMaterial, mesh->mName.C_Str());
+    Material* renderableMaterial = this->processRenderableMaterial(meshMaterial);
+    Renderable* processedRenderable = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
 
     this->addChild(new SceneNode(processedRenderable));
 
 }
 
-Material ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    PBRTextured material(shader);
+Material *ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
+    PBRTextured* material = new PBRTextured(shader);
 
-    material.addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 
-    material.addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
 
-    material.addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap",2));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap",2));
 
-    material.addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap",3));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap",3));
 
-    material.addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap",4));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap",4));
 
-    material.addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE,"_emmisionMap",5));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE,"_emmisionMap",5));
 
-    material.addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN,"_rougnessMetalnessMap",6));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN,"_rougnessMetalnessMap",6));
 
     return material;
 }

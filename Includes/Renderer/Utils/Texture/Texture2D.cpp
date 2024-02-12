@@ -99,13 +99,13 @@ Texture2D::Texture2D(Texture2D &&other)  noexcept : ID(other.ID), isPBRMaterial(
 
 Texture2D &Texture2D::operator =(Texture2D &&other) noexcept {
     if (this != &other) {
-        glDeleteTextures(1, &this->ID);
 
-        this->ID = other.ID;
-        this->isPBRMaterial = other.isPBRMaterial;
-        this->fullPath = std::move(other.fullPath);
-        this->wasFound = other.wasFound;
-        this->samplerID = other.samplerID;
+        glDeleteTextures(1, &this->ID);
+        std::swap(ID, other.ID);
+        std::swap(isPBRMaterial, other.isPBRMaterial);
+        std::swap(fullPath, other.fullPath);
+        std::swap(wasFound ,other.wasFound);
+        std::swap(samplerID, other.samplerID);
 
         // Reset other
         other.ID = 0;

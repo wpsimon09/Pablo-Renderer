@@ -24,7 +24,7 @@ private:
     std::vector<Texture2D>loadedTextures;
     void processNode(aiNode* node, const aiScene* scene);
     void processRenderable(aiMesh* mesh, const aiScene* scene);
-    Material processRenderableMaterial(aiMaterial* meshMaterial);
+    Material *processRenderableMaterial(aiMaterial* meshMaterial);
     PBRMaterial<Texture2D>* processMaterialProperty(aiMaterial* material, aiTextureType type, const std::string& shaderName, const int samplerID);
 };
 
