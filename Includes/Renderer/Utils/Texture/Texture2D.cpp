@@ -93,7 +93,6 @@ void Texture2D::release() {
 }
 
 Texture2D::Texture2D(Texture2D &&other)  noexcept : ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound) {
-    other.ID = 0;
 
 }
 
