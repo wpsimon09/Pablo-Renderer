@@ -13,8 +13,8 @@
 class Grid: public Renderable {
 public:
     explicit Grid();
-
 private:
+    Texture2D *generatedTexture;
     FrameBuffer* frameBuffer;
     Shader* procedularTextureShadaer;
     Shader* mainShader;

@@ -88,3 +88,7 @@ FrameBuffer &FrameBuffer::operator=(FrameBuffer &&other) noexcept {
     return *this;
 }
 
+void FrameBuffer::changeFilteringMethod(GLenum mag, GLenum min) {
+    this->colorAttachment.changeFilteringMethod(mag, min);
+}
+

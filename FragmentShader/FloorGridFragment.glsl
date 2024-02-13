@@ -3,7 +3,7 @@ out vec4 FragColor;
 
 in vec2 TexCoords;
 
-const float numOfDivisions = 2;
+const float numOfDivisions = 4;
 
 float unionSDF(float sdf0, float sdf1) {
     return min(sdf0, sdf1);

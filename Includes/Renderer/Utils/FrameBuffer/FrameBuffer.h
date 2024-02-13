@@ -31,6 +31,7 @@ public:
 
     void drawInsideSelf();
 
+    void changeFilteringMethod(GLenum mag, GLenum min);
 protected:
     Shader *shader;
     RenderBuffer *renderBuffer;
