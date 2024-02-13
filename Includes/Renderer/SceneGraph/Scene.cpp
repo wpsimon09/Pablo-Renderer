@@ -27,8 +27,6 @@ void Scene::setup() {
     auto floor = new Floor();
     floor->setScale(glm::vec3(5.0f, 1.0f, 5.0f));
     this->add(floor);
-
-    this->add(&grid);
 }
 
 

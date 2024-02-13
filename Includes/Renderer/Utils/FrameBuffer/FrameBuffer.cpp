@@ -8,7 +8,7 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable(), colorAttac
     this->shader = new Shader("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
     //FRAME BUFFER CONFIG
-    glGenFramebuffers(1, &this->ID);
+    glCreateFramebuffers(1, &this->ID);
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
 
     // RENDER BUFFER CONFIG
@@ -63,6 +63,7 @@ void FrameBuffer::dispalyOnScreen() {
 void FrameBuffer::drawInsideSelf() {
     glViewport(0, 0, width, height);
     this->bind();
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     this->objectMaterial->configureShader();
     this->objectGeometry->render();
 }

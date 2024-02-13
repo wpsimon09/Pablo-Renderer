@@ -12,12 +12,14 @@
 
 class Grid: public Renderable {
 public:
-    Grid();
+    explicit Grid();
+
 private:
-    FrameBuffer frameBuffer;
+    FrameBuffer* frameBuffer;
     Shader* procedularTextureShadaer;
     Shader* mainShader;
 };
+
 
 
 #endif //PABLO_RENDERER_GRID_H

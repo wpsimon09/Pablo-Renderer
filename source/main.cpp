@@ -83,11 +83,13 @@ int main() {
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry* planeGeometry = new PlaneGeometry();
 
+
     //create renderable object
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
     Renderable cubeIron(cubeGeometry, cubeRustedIron);
 
+    Renderable *gridRenderable = new Grid();
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
@@ -103,10 +105,14 @@ int main() {
     withcerMedailon.setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
     withcerMedailon.setScale(glm::vec3(0.3));
 
+    SceneNode gridSceneNode(gridRenderable);
+    gridSceneNode.setPositions(glm::vec3(0.0f, -0.2f, 0.0f));
+
     Scene scene;
     scene.add(&sunbro_helmet);
     scene.add(&sword);
     scene.add(&withcerMedailon);
+    scene.add(&gridSceneNode);
     PabloRenderer pabloRenderer(&scene, window);
 
     pabloRenderer.init();
