@@ -20,6 +20,9 @@ public:
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
 
     Texture2D getRenderedResult();
+  
+    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, Texture2D* texture2D = nullptr);
+    Texture2D* getRenderedResult();
 
     void bind() override;
 
