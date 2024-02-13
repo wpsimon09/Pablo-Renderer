@@ -12,19 +12,14 @@
 
 class Grid: public Renderable {
 public:
-    Grid();
-    FrameBuffer* frameBuffer;
+    explicit Grid();
 private:
-    //create generated texture here and pass it to the frame buffer
-    Texture2D* generatedGrid;
-    //aso make the framebuffe accept the new texture in to constructor
-    //either pass texture widh and height as parameter or store it inside Tecture2D class
-    //alternativly chceck how to return textures in common mistakes in open gl
-
-    void generateTexture();
+    Texture2D *generatedTexture;
+    FrameBuffer* frameBuffer;
     Shader* procedularTextureShadaer;
     Shader* mainShader;
 };
+
 
 
 #endif //PABLO_RENDERER_GRID_H

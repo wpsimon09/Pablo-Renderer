@@ -13,27 +13,51 @@
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
 #include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
 
-class FrameBuffer: public OGLObject, public Renderable {
+class FrameBuffer : public OGLObject, public Renderable {
 public:
     GLuint ID;
+
+    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
+
+    Texture2D getRenderedResult();
+  
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, Texture2D* texture2D = nullptr);
     Texture2D* getRenderedResult();
 
     void bind() override;
+
     void unbind() override;
-    void setShader(Shader* shader);
-    void setGeometry(Geometry* geometry);
+
+    void setShader(Shader *shader);
 
     void dispalyOnScreen();
 
     void drawInsideSelf();
 
+    void changeFilteringMethod(GLenum mag, GLenum min);
 protected:
-    Shader *shader ;
-    RenderBuffer* renderBuffer;
-    Texture2D* colorAttachment;
-
+    Shader *shader;
+    RenderBuffer *renderBuffer;
+    Texture2D colorAttachment;
     int width, height;
+private:
+    void clear() {
+        //glDeleteFramebuffers(1, &this->ID);
+        //this->ID;
+    };
+
+public:
+    //-------------
+    // C++ RULE 3/5
+    //-------------
+    FrameBuffer(const FrameBuffer &) = delete;
+
+    FrameBuffer &operator=(const FrameBuffer &) = delete;
+
+    ~FrameBuffer() { this->clear(); }
+
+    FrameBuffer(FrameBuffer &&other);
+    FrameBuffer& operator =(FrameBuffer &&other) noexcept ;
 };
 
 
