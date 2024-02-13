@@ -28,9 +28,7 @@ void Scene::setup() {
     floor->setScale(glm::vec3(5.0f, 1.0f, 5.0f));
     this->add(floor);
 
-    SceneNode *grid = new SceneNode(new Grid());
-    grid->setPositions(glm::vec3(0.0f, -0.2f, 0.0f));
-    this->add(grid);
+    this->add(&grid);
 }
 
 

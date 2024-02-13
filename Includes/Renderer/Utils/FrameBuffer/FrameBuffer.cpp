@@ -76,9 +76,13 @@ FrameBuffer::FrameBuffer(FrameBuffer &&other):ID(other.ID), colorAttachment(std:
 
 }
 
-FrameBuffer &FrameBuffer::operator=(FrameBuffer &&other) {
-    if(this != other){
-
+FrameBuffer &FrameBuffer::operator=(FrameBuffer &&other) noexcept {
+    if(this != &other){
+        std::swap(ID, other.ID);
+        std::swap(colorAttachment, other.colorAttachment);
+        std::swap(shader, other.shader);
+        std::swap(renderBuffer, other.renderBuffer);
     }
+    return *this;
 }
 

@@ -38,8 +38,8 @@ protected:
     int width, height;
 private:
     void clear() {
-        glDeleteFramebuffers(1, &this->ID);
-        this->ID;
+        //glDeleteFramebuffers(1, &this->ID);
+        //this->ID;
     };
 
 public:
@@ -53,7 +53,7 @@ public:
     ~FrameBuffer() { this->clear(); }
 
     FrameBuffer(FrameBuffer &&other);
-    FrameBuffer& operator =(FrameBuffer &&other);
+    FrameBuffer& operator =(FrameBuffer &&other) noexcept ;
 };
 
 

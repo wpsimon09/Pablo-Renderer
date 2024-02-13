@@ -24,6 +24,8 @@ public:
 
     void setup();
 
+    Grid grid;
+
     Camera* camera;
     Light* light;
 
