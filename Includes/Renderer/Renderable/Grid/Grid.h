@@ -8,15 +8,12 @@
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Geometry/Shapes/GridPlane/GridGeometry.h"
-#include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
+#include "Renderer/Material/BasicMaterialColor/BasicMaterialColor.h"
 
 class Grid: public Renderable {
 public:
     explicit Grid();
 private:
-    Texture2D generatedTexture;
-    FrameBuffer* frameBuffer;
-    Shader* procedularTextureShadaer;
     Shader* mainShader;
 };
 

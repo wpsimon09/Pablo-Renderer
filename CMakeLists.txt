@@ -74,6 +74,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/HugePlane/hugePlaneVertexData.h
         Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.cpp
         Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.h
+        Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.cpp
+        Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

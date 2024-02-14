@@ -6,7 +6,7 @@
 
 #include <utility>
 
-BasicMaterialTextured::BasicMaterialTextured(Shader *shader, const char *path, std::string shaderName) {
+BasicMaterialTextured::BasicMaterialTextured(Shader *shader, const char *path, std::string shaderName):Material() {
     this->shader = shader;
     Texture2D texture(path);
     this->texture = new TextureUniform(std::move(shaderName),std::move(texture));
@@ -21,9 +21,9 @@ void BasicMaterialTextured::configureShader() {
     glBindTexture(GL_TEXTURE_2D, this->texture->texture2D.ID);
 }
 
-BasicMaterialTextured::BasicMaterialTextured(Shader* shader,Texture2D texture2D, std::string shaderName) {
+BasicMaterialTextured::BasicMaterialTextured(Shader* shader,Texture2D texture2D, std::string shaderName): Material() {
     this->shader = shader;
-    this->texture = new TextureUniform(shaderName, std::move(texture2D));
+    this->texture = new TextureUniform(std::move(shaderName), std::move(texture2D));
 }
 
 
