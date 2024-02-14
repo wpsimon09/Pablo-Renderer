@@ -30,10 +30,9 @@ void PabloRenderer::render() {
         float currentFrame = static_cast<float>(glfwGetTime());
         this->deltaTime = currentFrame - this->lastFrame;
         this->lastFrame = currentFrame;
-
         glViewport(0, 0, this->windowWidth, this->windowHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+        glCullFace(GL_BACK);
         //-----------------
         // INPUT PROCESSING
         //-----------------

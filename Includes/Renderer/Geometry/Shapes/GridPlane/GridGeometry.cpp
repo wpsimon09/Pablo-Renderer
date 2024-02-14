@@ -6,8 +6,8 @@
 
 GridGeometry::GridGeometry(): Geometry() {
     std::vector<float> vertices;
-    float gridSize = 50.0f;
-    int divisions = 10;
+    float gridSize = 400.0f;
+    int divisions = 80;
     float step = gridSize / divisions;
 
     for (int i = -divisions; i <= divisions; ++i){
