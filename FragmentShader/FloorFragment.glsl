@@ -21,5 +21,5 @@ void main()
     //-------------
     // FINAL RESULT
     //-------------    
-    FragColor = vec4(floorTexture);
+    FragColor = vec4(1.0,1.0,1.0, 1.0);
 }

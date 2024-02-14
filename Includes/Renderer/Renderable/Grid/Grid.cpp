@@ -12,14 +12,14 @@ Grid::Grid():Renderable(){
 
     this->frameBuffer->setShader(procedularTextureShadaer);
     this->frameBuffer->drawInsideSelf();
+    this->frameBuffer->getRenderedResult().changeFilteringMethod(GL_REPEAT, GL_REPEAT);
 
     this->generatedTexture = frameBuffer->getRenderedResult();
-    this->generatedTexture.setSamplerID(0);
-    this->generatedTexture.changeFilteringMethod(GL_REPEAT, GL_REPEAT);
-    this->generatedTexture.changeClampingMethod(GL_REPEAT, GL_REPEAT);
 
-    this->objectMaterial = new BasicMaterialTextured(mainShader, std::move(this->generatedTexture), "texture_diffuse0");
-    this->objectGeometry = new HugePlane("Huge plane");
+    this->generatedTexture.setSamplerID(0);
+
+    this->objectMaterial = new BasicMaterialTextured(mainShader, this->frameBuffer->getRenderedResult(), "texture_diffuse0");
+    this->objectGeometry = new GridGeometry();
     //this->objectMaterial = new BasicMaterialTextured(mainShader, "Assets/Textures/AdvancedLightning/grid_ch.png", "texture_diffuse0");
 }
 

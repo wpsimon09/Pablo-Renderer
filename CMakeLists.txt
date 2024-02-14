@@ -72,6 +72,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/HugePlane/HugePlane.cpp
         Includes/Renderer/Geometry/Shapes/HugePlane/HugePlane.h
         Includes/Renderer/Geometry/Shapes/HugePlane/hugePlaneVertexData.h
+        Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
