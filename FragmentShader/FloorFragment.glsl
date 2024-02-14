@@ -9,17 +9,9 @@ in VS_OUT {
 
 out vec4 FragColor;
 
-uniform sampler2D texture_diffuse0;
-
 void main()
 {
-    //----------
-    // AMBIENT
-    //----------
-    vec4 floorTexture = texture(texture_diffuse0, fs_in.TexCoords).rgba;
+    vec3 color = vec3(1.0);
 
-    //-------------
-    // FINAL RESULT
-    //-------------    
-    FragColor = vec4(floorTexture);
+    FragColor = vec4(color, 0.9);
 }
