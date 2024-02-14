@@ -57,6 +57,7 @@ void Texture2D::changeFilteringMethod(GLenum mag, GLenum min) {
     glBindTexture(GL_TEXTURE_2D, this->ID);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels, GLenum internalFomrat, GLenum dataType) {
@@ -110,5 +111,12 @@ Texture2D &Texture2D::operator =(Texture2D &&other) noexcept {
         other.ID = 0;
     }
     return *this;
+}
+
+void Texture2D::changeClampingMethod(GLenum wrapS, GLenum wrapT) {
+    this->bind();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, wrapT);
+    this->unbind();
 }
 

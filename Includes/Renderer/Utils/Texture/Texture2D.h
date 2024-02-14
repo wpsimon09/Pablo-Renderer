@@ -44,6 +44,8 @@ public:
 
     void changeFilteringMethod(GLenum mag, GLenum min);
 
+    void changeClampingMethod(GLenum wrapS, GLenum wrapT);
+
 public:
     //------------------------
     // C++ RULE 3/5 PRINCIPLES
