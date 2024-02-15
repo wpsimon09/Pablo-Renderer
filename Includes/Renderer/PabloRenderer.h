@@ -8,6 +8,7 @@
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.h"
+#include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
 class PabloRenderer {
 public:
     PabloRenderer(Scene* scene, GLFWwindow* window);

@@ -26,6 +26,8 @@ void PabloRenderer::init() {
 }
 
 void PabloRenderer::render() {
+
+
     while (!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
         this->deltaTime = currentFrame - this->lastFrame;

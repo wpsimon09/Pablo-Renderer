@@ -76,8 +76,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.h
         Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.cpp
         Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.h
-        Includes/Renderer/Utils/Texture/HDRi/TextureHDRi.cpp
-        Includes/Renderer/Utils/Texture/HDRi/TextureHDRi.h
+        Includes/Renderer/Utils/Texture/TextureHDR/TextureHDRi.cpp
+        Includes/Renderer/Utils/Texture/TextureHDR/TextureHDRi.h
         Includes/Renderer/Utils/Texture/Texture3D/Texture3D.cpp
         Includes/Renderer/Utils/Texture/Texture3D/Texture3D.h
         Includes/Renderer/Utils/Texture/TextureBase.cpp

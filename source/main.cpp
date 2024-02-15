@@ -76,8 +76,6 @@ int main() {
 
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
-    TextureBase* tex = new TextureHDRi("Assets/Textures/HDR/sunrise.hdr");
-
     //cerate material properties
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
     Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
