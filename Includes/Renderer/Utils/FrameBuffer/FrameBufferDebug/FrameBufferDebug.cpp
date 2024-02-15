@@ -11,7 +11,7 @@ FrameBufferDebug::FrameBufferDebug(int width, int height) : FrameBuffer(width, h
     this->objectMaterial = new BasicMaterialTextured(this->shader, std::move(this->colorAttachment));
 }
 
-void FrameBufferDebug::changeTexture(Texture2D texture) {
+void FrameBufferDebug::changeTexture(TextureBase texture) {
     delete this->objectMaterial;
     this->objectMaterial = new BasicMaterialTextured(this->shader, std::move(texture));
 }

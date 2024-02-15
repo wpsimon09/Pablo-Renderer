@@ -10,7 +10,6 @@
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 #include "Renderer/PabloRenderer.h"
-#include "Renderer/Utils/Texture/HDRi/TextureHDRi.h"
 
 //screen coordinates
 int SCR_WIDTH = 800;

@@ -82,6 +82,20 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/Texture/Texture3D/Texture3D.h
         Includes/Renderer/Utils/Texture/TextureBase.cpp
         Includes/Renderer/Utils/Texture/TextureBase.h
+        Includes/Renderer/Light/IBLPipeline/IBLPipeLine.cpp
+        Includes/Renderer/Light/IBLPipeline/IBLPipeLine.h
+        Includes/Renderer/Light/IBLPipeline/Stages/HDRToCubeMap/HDRToCubeMap.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/HDRToCubeMap/HDRToCubeMap.h
+        Includes/Renderer/Light/IBLPipeline/Stages/BRDF/BRDF.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/BRDF/BRDF.h
+        Includes/Renderer/Light/IBLPipeline/Stages/Irradiance/Irradiance.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/Irradiance/Irradiance.h
+        Includes/Renderer/Light/IBLPipeline/Stages/PrefilterMap/PrefilterMap.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/PrefilterMap/PrefilterMap.h
+        Includes/Renderer/Light/IBLPipeline/Stages/BaseStage.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/BaseStage.h
+        Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.cpp
+        Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

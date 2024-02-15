@@ -11,6 +11,7 @@ class Texture3D:public TextureBase {
 public:
     Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels = GL_RGB, GLenum internalFomrat = GL_RGB,
               GLenum dataType = GL_UNSIGNED_BYTE);
+;
 };
 
 #endif //PABLO_RENDERER_TEXTURE3D_H

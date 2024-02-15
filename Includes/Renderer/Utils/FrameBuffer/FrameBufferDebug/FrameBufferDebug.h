@@ -11,7 +11,7 @@
 class FrameBufferDebug: public FrameBuffer {
 public:
     FrameBufferDebug(int width, int height);
-    void changeTexture(Texture2D texture);
+    void changeTexture(TextureBase texture);
 };
 
 

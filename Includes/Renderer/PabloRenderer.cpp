@@ -26,7 +26,9 @@ void PabloRenderer::init() {
 }
 
 void PabloRenderer::render() {
-
+    TextureHDRi tex("Assets/Textures/HDR/sunrise.hdr");
+    FrameBufferDebug debug2(this->windowWidth, this->windowHeight);
+    debug2.changeTexture(std::move(tex));
 
     while (!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
@@ -52,6 +54,7 @@ void PabloRenderer::render() {
         for(auto &frameBuffer: this->frameBuffers){
             frameBuffer->dispalyOnScreen();
         }
+        debug2.dispalyOnScreen();
         glfwSwapBuffers(this->window);
         glfwPollEvents();
     }

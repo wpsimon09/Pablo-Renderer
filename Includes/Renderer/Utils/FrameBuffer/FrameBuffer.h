@@ -29,7 +29,7 @@ public:
 
     void dispalyOnScreen();
 
-    void drawInsideSelf();
+    virtual void drawInsideSelf();
 
     void changeFilteringMethod(GLenum mag, GLenum min);
 protected:

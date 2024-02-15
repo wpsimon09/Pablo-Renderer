@@ -9,9 +9,9 @@
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 struct TextureUniform{
     std::string shaderName;
-    Texture2D texture2D;
+    TextureBase texture2D;
 
-    TextureUniform(std::string shaderName, Texture2D texture){
+    TextureUniform(std::string shaderName, TextureBase texture){
         this->shaderName = shaderName;
         this->texture2D = std::move(texture);
     }
@@ -21,7 +21,7 @@ class BasicMaterialTextured: public  Material{
 public:
     BasicMaterialTextured(Shader *shader, const char* path, std::string shaderName = "FragmentColor");
 
-    BasicMaterialTextured(Shader *shader, Texture2D texture2D, std::string shaderName = "FragmentColor");
+    BasicMaterialTextured(Shader *shader, TextureBase texture2D, std::string shaderName = "FragmentColor");
 
     void configureShader() override;
 
