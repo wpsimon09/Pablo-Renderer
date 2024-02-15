@@ -80,6 +80,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/Texture/HDRi/TextureHDRi.h
         Includes/Renderer/Utils/Texture/Texture3D/Texture3D.cpp
         Includes/Renderer/Utils/Texture/Texture3D/Texture3D.h
+        Includes/Renderer/Utils/Texture/TextureBase.cpp
+        Includes/Renderer/Utils/Texture/TextureBase.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
