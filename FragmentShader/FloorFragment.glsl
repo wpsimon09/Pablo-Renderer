@@ -13,5 +13,5 @@ void main()
 {
     vec3 color = vec3(1.0);
 
-    FragColor = vec4(color, 0.9);
+    FragColor = vec4(color, 0.7 );
 }

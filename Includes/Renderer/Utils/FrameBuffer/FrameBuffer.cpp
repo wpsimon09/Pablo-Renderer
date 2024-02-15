@@ -56,10 +56,8 @@ Texture2D FrameBuffer::getRenderedResult() {
 void FrameBuffer::dispalyOnScreen() {
     glViewport(0, 0, width, height);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glDisable(GL_CULL_FACE);
     this->objectMaterial->configureShader();
     this->objectGeometry->render();
-    glEnable(GL_CULL_FACE);
 }
 
 void FrameBuffer::drawInsideSelf() {
