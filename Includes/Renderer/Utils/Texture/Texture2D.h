@@ -29,11 +29,12 @@ public:
 
     void unbind() override;
 
-private:
+protected:
     unsigned int samplerID;
     std::string fullPath;
 
     void release();
+    virtual void loadFromFile(const char *path);
 
 public:
     unsigned int getSamplerID() const { return this->samplerID; }
@@ -42,9 +43,9 @@ public:
 
     const std::string &getFullPath() const;
 
-    void changeFilteringMethod(GLenum mag, GLenum min);
+    virtual void changeFilteringMethod(GLenum mag, GLenum min);
 
-    void changeClampingMethod(GLenum wrapS, GLenum wrapT);
+    virtual void changeClampingMethod(GLenum wrapS, GLenum wrapT);
 
 public:
     //------------------------
