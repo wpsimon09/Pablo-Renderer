@@ -7,6 +7,8 @@
 
 #include "Renderer/Utils/OGLObject/OGLObject.h"
 #include "iostream"
+#include "stb_image.h"
+
 
 class TextureBase : public OGLObject {
 public:
@@ -32,15 +34,19 @@ public:
     void unbind() override;
 
     const std::string &getFullPath() const { return this->fullPath; };
+protected:
+    void loadPNG(const char*path);
+    void loadHRI(const char*path);
 
+    int texWidth, texHeight;
 private:
     void release() {};
 
 public:
+
     //------------------------
     // C++ RULE 3/5 PRINCIPLES
     //------------------------
-
     ~TextureBase() { release(); }
 
     TextureBase(const TextureBase &) = delete;

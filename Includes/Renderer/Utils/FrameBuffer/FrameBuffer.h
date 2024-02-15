@@ -7,7 +7,7 @@
 
 #include "glad/glad.h"
 #include "RenderBuffer/RenderBuffer.h"
-#include "Renderer/Utils/Texture/Texture2D.h"
+#include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include "Shader.h"
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"

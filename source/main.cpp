@@ -10,6 +10,7 @@
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 #include "Renderer/PabloRenderer.h"
+#include "Renderer/Utils/Texture/HDRi/TextureHDRi.h"
 
 //screen coordinates
 int SCR_WIDTH = 800;
@@ -75,6 +76,7 @@ int main() {
 
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
+    TextureBase* tex = new TextureHDRi("Assets/Textures/HDR/sunrise.hdr");
 
     //cerate material properties
     Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
@@ -83,6 +85,7 @@ int main() {
 
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry* planeGeometry = new PlaneGeometry();
+
 
 
     //create renderable object

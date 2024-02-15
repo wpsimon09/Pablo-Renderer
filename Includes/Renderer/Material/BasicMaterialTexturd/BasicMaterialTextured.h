@@ -6,7 +6,7 @@
 #define PABLO_RENDERER_BASICMATERIALTEXTURED_H
 
 #include "Renderer/Material/Material.h"
-#include "Renderer/Utils/Texture/Texture2D.h"
+#include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 struct TextureUniform{
     std::string shaderName;
     Texture2D texture2D;

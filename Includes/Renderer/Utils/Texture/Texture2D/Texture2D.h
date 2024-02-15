@@ -10,7 +10,7 @@
 #include "iostream"
 #include "memory"
 #include "Renderer/Utils/OGLObject/OGLObject.h"
-#include "TextureBase.h"
+#include "Renderer/Utils/Texture/TextureBase.h"
 
 
 class Texture2D : public TextureBase  {
@@ -21,8 +21,6 @@ public:
 
     explicit Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels = GL_RGB, GLenum internalFomrat = GL_RGB,
                        GLenum dataType = GL_UNSIGNED_BYTE);
-public:
-    void loadFromFile(const char *path) override;
 };
 
 

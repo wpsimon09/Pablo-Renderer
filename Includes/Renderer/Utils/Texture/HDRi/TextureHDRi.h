@@ -5,9 +5,11 @@
 #ifndef PABLO_RENDERER_TEXTUREHDRI_H
 #define PABLO_RENDERER_TEXTUREHDRI_H
 
+#include "Renderer/Utils/Texture/TextureBase.h"
 
-class TextureHDRi {
-
+class TextureHDRi:public TextureBase {
+public:
+    explicit TextureHDRi(const char*path);
 };
 
 

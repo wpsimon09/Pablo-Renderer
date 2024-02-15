@@ -35,8 +35,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Material/PBRColor/PBRColor.h
         Includes/Renderer/Material/PBRTexture/PBRTextured.cpp
         Includes/Renderer/Material/PBRTexture/PBRTextured.h
-        Includes/Renderer/Utils/Texture/Texture2D.cpp
-        Includes/Renderer/Utils/Texture/Texture2D.h
+        Includes/Renderer/Utils/Texture/Texture2D/Texture2D.cpp
+        Includes/Renderer/Utils/Texture/Texture2D/Texture2D.h
         Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.cpp
         Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h
         Includes/Renderer/SceneGraph/SceneNode/SceneNode.cpp
