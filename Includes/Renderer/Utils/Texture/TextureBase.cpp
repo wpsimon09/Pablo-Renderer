@@ -4,7 +4,7 @@
 
 #include "TextureBase.h"
 
-TextureBase::TextureBase(TextureBase &&other) noexcept {
+TextureBase::TextureBase(TextureBase &&other) noexcept:  ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound) {
 
 }
 
@@ -26,5 +26,17 @@ TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
 }
 
 void TextureBase::changeFilteringMethod(GLenum mag, GLenum min) {
+    glBindTexture(this->type, this->ID);
+    glTexParameteri(this->type,GL_TEXTURE_MAG_FILTER, mag);
+    glTexParameteri(this->type,GL_TEXTURE_MIN_FILTER, min);
+}
 
+void TextureBase::bind() {
+    glBindTexture(this->type, this->ID);
+    glGetError();
+}
+
+void TextureBase::unbind() {
+    glBindTexture(this->type,0);
+    glGetError();
 }

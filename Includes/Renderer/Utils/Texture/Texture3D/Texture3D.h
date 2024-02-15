@@ -11,12 +11,6 @@ class Texture3D:public Texture2D {
 public:
     Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels = GL_RGB, GLenum internalFomrat = GL_RGB,
               GLenum dataType = GL_UNSIGNED_BYTE);
-
-    void bind() override;
-
-    void changeFilteringMethod(GLenum mag, GLenum min) override;
-
-    void unbind() override;
 };
 
 

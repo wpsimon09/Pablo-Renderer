@@ -27,6 +27,10 @@ public:
 
     void setSamplerID(unsigned int ID) { this->samplerID = ID; }
 
+    void bind() override;
+
+    void unbind() override;
+
     const std::string &getFullPath() const { return this->fullPath; };
 
 private:

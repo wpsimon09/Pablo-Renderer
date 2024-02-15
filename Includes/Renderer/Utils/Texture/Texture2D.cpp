@@ -4,93 +4,16 @@
 
 #include "Texture2D.h"
 
-Texture2D::Texture2D(const char *path, bool isPBRMaterial) {
+Texture2D::Texture2D(const char *path, bool isPBRMaterial):TextureBase() {
     this->isPBRMaterial = isPBRMaterial;
     this->fullPath = path;
     glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
-    this->loadFromFile(path);
-}
 
-Texture2D::Texture2D() {
-}
-
-const std::string &Texture2D::getFullPath() const {
-    return fullPath;
-}
-
-void Texture2D::changeFilteringMethod(GLenum mag, GLenum min) {
-    glBindTexture(GL_TEXTURE_2D, this->ID);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, min);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mag);
-    glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels, GLenum internalFomrat, GLenum dataType) {
-    this->isPBRMaterial = false;
-    this->wasFound = true;
-
-    glGenTextures(1, &this->ID);
-
-    glBindTexture(GL_TEXTURE_2D, this->ID);
-    glTexImage2D(GL_TEXTURE_2D, 0, colorChannels, SCR_WIDTH, SCR_HEIGHT, 0, internalFomrat, dataType, NULL);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    //chceck the texture parameters here
-    glBindTexture(GL_TEXTURE_2D,0);
-}
-
-void Texture2D::bind() {
-    glBindTexture(GL_TEXTURE_2D, this->ID);
-    glGetError();
-}
-
-void Texture2D::unbind() {
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glGetError();
-}
-
-void Texture2D::release() {
-    //glDeleteTextures(1, &ID);
-    //this->ID = 0;
-}
-
-Texture2D::Texture2D(Texture2D &&other)  noexcept : ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound) {
-
-}
-
-Texture2D &Texture2D::operator =(Texture2D &&other) noexcept {
-    if (this != &other) {
-
-        glDeleteTextures(1, &this->ID);
-        std::swap(ID, other.ID);
-        std::swap(isPBRMaterial, other.isPBRMaterial);
-        std::swap(fullPath, other.fullPath);
-        std::swap(wasFound ,other.wasFound);
-        std::swap(samplerID, other.samplerID);
-
-        // Reset other
-        other.ID = 0;
-    }
-    return *this;
-}
-
-void Texture2D::changeClampingMethod(GLenum wrapS, GLenum wrapT) {
-    this->bind();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, wrapT);
-    this->unbind();
-}
-
-void Texture2D::loadFromFile(const char *path) {
     int width, height, nrComponents;
     unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
     if (data)
     {
-        this->wasFound = true;
+        this ->wasFound = true;
 
         GLenum format;
         if (nrComponents == 1)
@@ -120,5 +43,34 @@ void Texture2D::loadFromFile(const char *path) {
         stbi_image_free(data);
     }
 
+
 }
+
+Texture2D::Texture2D() {
+}
+
+
+Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels, GLenum internalFomrat, GLenum dataType) {
+    this->type = GL_TEXTURE_2D;
+    this->isPBRMaterial = false;
+    this->wasFound = true;
+
+    glGenTextures(1, &this->ID);
+
+    glBindTexture(GL_TEXTURE_2D, this->ID);
+    glTexImage2D(GL_TEXTURE_2D, 0, colorChannels, SCR_WIDTH, SCR_HEIGHT, 0, internalFomrat, dataType, NULL);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    //chceck the texture parameters here
+    glBindTexture(GL_TEXTURE_2D,0);
+}
+
+
+void Texture2D::loadFromFile(const char *path) {
+}
+
 
