@@ -11,11 +11,15 @@ class IBLPipeLine {
 public:
     explicit IBLPipeLine(const char* path);
     void generateIBLTextures();
+
+    //-------------------
+    // GENERATED TEXTURES
+    //-------------------
+    Texture3D envMap;
 private:
     TextureHDRi hdriTexture;
 
     HDRToCubeMap* hdrToCubeMap;
-    TextureBase envMap;
 
 
 };

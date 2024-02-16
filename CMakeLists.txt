@@ -96,6 +96,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Light/IBLPipeline/Stages/BaseStage.h
         Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.cpp
         Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.h
+        Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.cpp
+        Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

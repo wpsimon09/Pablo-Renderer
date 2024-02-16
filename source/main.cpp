@@ -10,6 +10,7 @@
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 #include "Renderer/PabloRenderer.h"
+#include "Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.h"
 #include "Renderer/Light/IBLPipeline/IBLPipeLine.h"
 
 //screen coordinates
@@ -85,11 +86,14 @@ int main() {
     Geometry* planeGeometry = new PlaneGeometry();
 
     IBLPipeLine iblPipeLine("Assets/Textures/HDR/sunrise.hdr");
+    iblPipeLine.generateIBLTextures();
+
+    Material *skyBox = new SkyBoxMaterial(&skyBoxShader, std::move(iblPipeLine.envMap), "enviromentMap");
 
     //create renderable object
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
     Renderable cubeWall(cubeGeometry, cubeWallMaterial);
-    Renderable cubeIron(cubeGeometry, cubeRustedIron);
+    Renderable skyboxCube(cubeGeometry, skyBox);
 
     Renderable *gridRenderable = new Grid();
 
@@ -115,6 +119,7 @@ int main() {
     scene.add(&sword);
     scene.add(&withcerMedailon);
     scene.add(&gridSceneNode);
+    scene.add(&skyboxCube);
     PabloRenderer pabloRenderer(&scene, window);
 
     pabloRenderer.init();

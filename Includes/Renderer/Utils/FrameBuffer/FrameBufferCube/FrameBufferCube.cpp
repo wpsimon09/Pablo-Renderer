@@ -41,14 +41,13 @@ FrameBufferCube::FrameBufferCube(int width, int height, Shader *shader, Texture3
     this->geometry = new CubeGeometry();
 
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
-        std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
+        std::cout<<"CUBE FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
     }
     else{
         std::cerr<<"!!!!!!! FRAME BUFFER NOT COMPLETE !!!!!!!!"<<std::endl;
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glBindTexture(GL_TEXTURE_3D, 0);
     glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
     this->width = width;
