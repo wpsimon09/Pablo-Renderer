@@ -9,6 +9,7 @@
 
 class TextureHDRi:public TextureBase {
 public:
+    TextureHDRi()=default;
     explicit TextureHDRi(const char*path);
 };
 

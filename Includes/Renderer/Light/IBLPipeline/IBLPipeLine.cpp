@@ -3,3 +3,12 @@
 //
 
 #include "IBLPipeLine.h"
+
+IBLPipeLine::IBLPipeLine(const char *path): hdriTexture(path) {
+    this->hdrToCubeMap = new HDRToCubeMap();
+}
+
+void IBLPipeLine::generateIBLTextures() {
+    this->hdrToCubeMap->execute(std::move(this->hdriTexture));
+    this->envMap = std::move(hdrToCubeMap->result);
+}

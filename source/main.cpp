@@ -10,6 +10,7 @@
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 #include "Renderer/PabloRenderer.h"
+#include "Renderer/Light/IBLPipeline/IBLPipeLine.h"
 
 //screen coordinates
 int SCR_WIDTH = 800;
@@ -83,7 +84,7 @@ int main() {
     Geometry *cubeGeometry = new CubeGeometry();
     Geometry* planeGeometry = new PlaneGeometry();
 
-
+    IBLPipeLine iblPipeLine("Assets/Textures/HDR/sunrise.hdr");
 
     //create renderable object
     Renderable cubeGold(cubeGeometry, cubeGoldMaterial);

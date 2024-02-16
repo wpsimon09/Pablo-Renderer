@@ -6,13 +6,15 @@
 #define PABLO_RENDERER_HDRTOCUBEMAP_H
 
 #include "Renderer/Light/IBLPipeline/Stages/BaseStage.h"
+#include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
 
 class HDRToCubeMap:public BaseStage {
 public:
     HDRToCubeMap();
-
+    void execute(TextureBase input) override;
+    Texture3D result;
 protected:
-    TextureBase execute(TextureBase input) override;
+    FrameBufferCube *frameBufferCube;
 };
 
 

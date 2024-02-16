@@ -4,7 +4,7 @@
 
 #include "TextureBase.h"
 
-TextureBase::TextureBase(TextureBase &&other) noexcept:  ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound) {
+TextureBase::TextureBase(TextureBase &&other) noexcept:  ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound), type(other.type) {
 
 }
 
@@ -17,6 +17,7 @@ TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
         std::swap(fullPath, other.fullPath);
         std::swap(wasFound ,other.wasFound);
         std::swap(samplerID, other.samplerID);
+        std::swap(type, other.type);
 
         // Reset other
         other.ID = 0;
