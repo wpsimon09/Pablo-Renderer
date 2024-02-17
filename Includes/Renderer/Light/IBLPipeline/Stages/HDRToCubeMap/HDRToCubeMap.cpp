@@ -12,5 +12,7 @@ HDRToCubeMap::HDRToCubeMap(): BaseStage(), result(1980, 1980, GL_RGBA16F, GL_RGB
 void HDRToCubeMap::execute(TextureBase input) {
     ShaderHelper::setTextureToShader(this->shader, std::move(input), "envMap");
     this->result = this->frameBufferCube->renderToSelf();
+    //texture has no sampler probably here
+    a
     delete this->frameBufferCube;
 }
