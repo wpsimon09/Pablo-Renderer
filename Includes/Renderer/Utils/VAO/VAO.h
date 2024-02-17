@@ -8,6 +8,8 @@
 #include "Renderer/Utils/Vertex/Vertex.h"
 #include "vector"
 #include "Renderer/Utils/OGLObject/OGLObject.h"
+#include "Debug/DebugLogger.h"
+
 
 class VAO: public OGLObject{
 public:

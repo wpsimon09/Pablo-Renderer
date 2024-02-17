@@ -3,7 +3,6 @@
 //
 
 #include "VAO.h"
-#include "Debug/DebugLogger.h"
 
 //loading with numVerticies must have everything
 VAO::VAO(std::vector<Vertex> vertecies, std::vector<unsigned int>indecies) {

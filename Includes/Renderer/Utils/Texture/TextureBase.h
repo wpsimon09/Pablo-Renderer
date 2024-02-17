@@ -16,6 +16,7 @@ public:
 
     GLuint ID;
     GLenum type;
+    std::string type_string;
     bool wasFound;
     bool isPBRMaterial;
     std::string fullPath;

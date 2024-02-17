@@ -9,6 +9,7 @@ IBLPipeLine::IBLPipeLine(const char *path): hdriTexture(path) {
 }
 
 void IBLPipeLine::generateIBLTextures() {
+    this->hdriTexture.setSamplerID(0);
     this->hdrToCubeMap->execute(std::move(this->hdriTexture));
     this->envMap = std::move(hdrToCubeMap->result);
 }

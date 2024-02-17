@@ -4,7 +4,11 @@
 
 #include "TextureBase.h"
 
-TextureBase::TextureBase(TextureBase &&other) noexcept:  ID(other.ID), isPBRMaterial(other.isPBRMaterial), fullPath(other.fullPath), samplerID(other.samplerID), wasFound(other.wasFound), type(other.type) {
+TextureBase::TextureBase(TextureBase &&other) noexcept: ID(other.ID), isPBRMaterial(other.isPBRMaterial),
+                                                        fullPath(other.fullPath), samplerID(other.samplerID),
+                                                        wasFound(other.wasFound), type(other.type),
+                                                        type_string(other.type_string), texWidth(other.texWidth),
+                                                        texHeight(other.texHeight){
 
 }
 
@@ -15,9 +19,12 @@ TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
         std::swap(ID, other.ID);
         std::swap(isPBRMaterial, other.isPBRMaterial);
         std::swap(fullPath, other.fullPath);
-        std::swap(wasFound ,other.wasFound);
+        std::swap(wasFound, other.wasFound);
         std::swap(samplerID, other.samplerID);
         std::swap(type, other.type);
+        std::swap(type_string, other.type_string);
+        std::swap(texHeight, other.texHeight);
+        std::swap(texWidth, other.texWidth);
 
         // Reset other
         other.ID = 0;
@@ -28,8 +35,8 @@ TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
 
 void TextureBase::changeFilteringMethod(GLenum mag, GLenum min) {
     glBindTexture(this->type, this->ID);
-    glTexParameteri(this->type,GL_TEXTURE_MAG_FILTER, mag);
-    glTexParameteri(this->type,GL_TEXTURE_MIN_FILTER, min);
+    glTexParameteri(this->type, GL_TEXTURE_MAG_FILTER, mag);
+    glTexParameteri(this->type, GL_TEXTURE_MIN_FILTER, min);
 }
 
 void TextureBase::bind() {
@@ -38,19 +45,18 @@ void TextureBase::bind() {
 }
 
 void TextureBase::unbind() {
-    glBindTexture(this->type,0);
+    glBindTexture(this->type, 0);
     glGetError();
 }
 
 void TextureBase::loadPNG(const char *path) {
 
     int width, height, nrComponents;
-    unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
-    if (data)
-    {
+    unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
+    if (data) {
         this->texWidth = width;
         this->texHeight = height;
-        this ->wasFound = true;
+        this->wasFound = true;
 
         GLenum format;
         if (nrComponents == 1)
@@ -70,11 +76,8 @@ void TextureBase::loadPNG(const char *path) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 
-
         stbi_image_free(data);
-    }
-    else
-    {
+    } else {
         this->wasFound = false;
         std::cerr << "Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
@@ -84,12 +87,12 @@ void TextureBase::loadPNG(const char *path) {
 
 void TextureBase::loadHRI(const char *path) {
     int width, height, nrComponents;
-    float* data = stbi_loadf(path, &width, &height, &nrComponents, 0);
-    if (data)
-    {
+    float *data = stbi_loadf(path, &width, &height, &nrComponents, 0);
+    if (data) {
         this->texWidth = width;
         this->texHeight = height;
         this->wasFound = true;
+
 
         GLenum format;
         if (nrComponents == 1)
@@ -108,15 +111,13 @@ void TextureBase::loadHRI(const char *path) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        std::cout<<"HDRI TEXTURE LOADED \xE2\x9C\x93"<<std::endl;
+        std::cout << "HDRI TEXTURE LOADED \xE2\x9C\x93" << std::endl;
         std::string base_filename = path;
         base_filename = base_filename.substr(base_filename.find_last_of("/\\") + 1);
-        std::cout<<"Image:"<<base_filename<<std::endl<<std::endl;
+        std::cout << "Image:" << base_filename << std::endl << std::endl;
 
         stbi_image_free(data);
-    }
-    else
-    {
+    } else {
         this->wasFound = false;
         std::cerr << "HDRI Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);

@@ -21,7 +21,6 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/Cube/CubeGeometry.h
         Includes/Renderer/Utils/VAO/VAO.cpp
         Includes/Renderer/Utils/VAO/VAO.h
-        Includes/Debug/DebugLogger.h
         Includes/Renderer/Geometry/Shapes/Cube/cubeVertexData.h
         Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.cpp
         Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.h
@@ -98,6 +97,7 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.h
         Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.cpp
         Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.h
+        Includes/Debug/DebugLogger.cpp
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

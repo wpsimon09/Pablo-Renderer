@@ -14,7 +14,7 @@ SkyBoxMaterial::SkyBoxMaterial(Shader *shader, Texture3D skyBox, std::string sha
 
 void SkyBoxMaterial::configureShader() {
     this->shader->use();
-    this->shader->setInt(cubeMapUnifrom->shaderName, cubeMapUnifrom->cubeMap.samplerID);
+    this->shader->setInt(cubeMapUnifrom->shaderName,this->cubeMapUnifrom->cubeMap.samplerID);
     glActiveTexture(GL_TEXTURE0 +  this->cubeMapUnifrom->cubeMap.samplerID);
-    this->cubeMapUnifrom->cubeMap.bind();
+    glBindTexture(GL_TEXTURE_CUBE_MAP, this->cubeMapUnifrom->cubeMap.ID);
 }

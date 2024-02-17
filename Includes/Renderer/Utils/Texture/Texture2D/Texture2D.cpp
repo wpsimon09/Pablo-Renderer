@@ -8,6 +8,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial):TextureBase() {
     this->isPBRMaterial = isPBRMaterial;
     this->fullPath = path;
     this->type = GL_TEXTURE_2D;
+    this->type_string = "GL_TEXTURE_2D";
     glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
     this->loadPNG(path);
 }
