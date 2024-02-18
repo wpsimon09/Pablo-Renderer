@@ -29,6 +29,7 @@ struct PBRMaterial{
 class Material {
 public:
     std::unique_ptr<Shader> shader;
+
     Material() = default;
     Material(std::unique_ptr<Shader> shader) {
         this->shader = std::move(shader);

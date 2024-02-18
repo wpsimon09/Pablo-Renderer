@@ -4,8 +4,8 @@
 
 #include "ModelSceneNode.h"
 
-ModelSceneNode::ModelSceneNode(Shader *shader, std::string path): SceneNode() {
-    this->shader = shader;
+ModelSceneNode::ModelSceneNode(std::unique_ptr<Shader> shader, std::string path): SceneNode() {
+    this->shader = std::move(shader);
     Assimp::Importer importer;
 
     const aiScene *scene = importer.ReadFile(path.c_str(),
@@ -97,16 +97,16 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
-    Geometry* renderableGeometry = new ModelGeometry(std::string(mesh->mName.C_Str()),vertecies, indecies);
-    Material* renderableMaterial = this->processRenderableMaterial(meshMaterial);
-    Renderable* processedRenderable = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
+    std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(std::string(mesh->mName.C_Str()),vertecies, indecies);
+    std::unique_ptr<Material> renderableMaterial = std::move(this->processRenderableMaterial(meshMaterial));
+    std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), std::move(renderableMaterial), mesh->mName.C_Str());
 
-    this->addChild(new SceneNode(processedRenderable));
+    this->addChild(std::make_unique<SceneNode>(std::move(processedRenderable)));
 
 }
 
-Material *ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    PBRTextured* material = new PBRTextured(shader);
+std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
+    std::unique_ptr<PBRTextured> material = std::make_unique<PBRTextured>(std::move(shader));
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 

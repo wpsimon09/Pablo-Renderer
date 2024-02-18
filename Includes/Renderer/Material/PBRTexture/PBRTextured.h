@@ -25,9 +25,9 @@ public:
      * @param shader shader that will be assosiated with texture
      * @param shaderNamingConvention naming conventions used in the shader for unifrom samplers
      * */
-    explicit PBRTextured(Shader* shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
+    explicit PBRTextured(std::unique_ptr<Shader> shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
 
-    explicit PBRTextured(Shader* shader);
+    explicit PBRTextured(std::unique_ptr<Shader> shader);
 
     void configureShader() override;
 

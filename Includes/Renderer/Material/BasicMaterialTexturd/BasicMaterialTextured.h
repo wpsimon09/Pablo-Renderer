@@ -19,13 +19,13 @@ struct TextureUniform{
 
 class BasicMaterialTextured: public  Material{
 public:
-    BasicMaterialTextured(Shader *shader, const char* path, std::string shaderName = "FragmentColor");
+    BasicMaterialTextured(std::unique_ptr<Shader> shader, const char* path, std::string shaderName = "FragmentColor");
 
-    BasicMaterialTextured(Shader *shader, TextureBase texture2D, std::string shaderName = "FragmentColor");
+    BasicMaterialTextured(std::unique_ptr<Shader> shader, TextureBase texture2D, std::string shaderName = "FragmentColor");
 
     void configureShader() override;
 
-    TextureUniform *texture;
+    std::unique_ptr<TextureUniform> texture;
 };
 
 #endif //PABLO_RENDERER_BASICMATERIALTEXTURED_H

@@ -12,11 +12,11 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     this->color = std::make_unique<LightProperty<glm::vec3>>(color, "lightColors[0]");
 
     std::unique_ptr<Geometry> geometry = std::make_unique<ScreenSpaceQuadGeometry>();
-    std::unique_ptr <Material> material = std::make_unique<BasicMaterialTextured>(new Shader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png");
+    std::unique_ptr <Material> material = std::make_unique<BasicMaterialTextured>(std::make_unique<Shader>("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png");
     material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
-    std::unique_ptr<Renderable> lightTexutre = std::make_unique<Renderable>(geometry, material);
-    this->lightIcon = std::make_unique<SceneNode>(lightTexutre);
+    std::unique_ptr<Renderable> lightTexutre = std::make_unique<Renderable>(std::move(geometry),std::move(material));
+    this->lightIcon = std::make_unique<SceneNode>(std::move(lightTexutre));
     this->lightIcon->setPositions(this->position->property);
 }
 
