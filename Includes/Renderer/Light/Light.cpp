@@ -8,15 +8,15 @@
 #include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
 
 Light::Light(glm::vec3 position, glm::vec3 color) {
-    this->position = new LightProperty(position, "lightPositions[0]");
-    this->color = new LightProperty(color, "lightColors[0]");
+    this->position = std::make_unique<LightProperty<glm::vec3>>(position, "lightPositions[0]");
+    this->color = std::make_unique<LightProperty<glm::vec3>>(color, "lightColors[0]");
 
-    Geometry *geometry = new ScreenSpaceQuadGeometry();
-    Material *material = new BasicMaterialTextured(new Shader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png");
+    std::unique_ptr<Geometry> geometry = std::make_unique<ScreenSpaceQuadGeometry>();
+    std::unique_ptr <Material> material = std::make_unique<BasicMaterialTextured>(new Shader("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png");
     material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
-    Renderable *lightTexutre = new Renderable(geometry, material);
-    this->lightIcon = new SceneNode(lightTexutre);
+    std::unique_ptr<Renderable> lightTexutre = std::make_unique<Renderable>(geometry, material);
+    this->lightIcon = std::make_unique<SceneNode>(lightTexutre);
     this->lightIcon->setPositions(this->position->property);
 }
 

@@ -10,7 +10,7 @@
 
 class SceneNode {
 public:
-    SceneNode(Renderable* renderable = NULL);
+    SceneNode(std::unique_ptr<Renderable> renderable = NULL);
     ~SceneNode();
 public:
 
