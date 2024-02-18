@@ -8,11 +8,12 @@
 #include "Shader.h"
 #include "Renderer/Utils/Texture/TextureBase.h"
 #include "Debug/DebugLogger.h"
+#include "memory"
 class ShaderHelper {
 public:
     static void setTransfomrationMatrices(Shader *shader, glm::mat4 model = glm::mat4(1.0f), glm::mat4 view = glm::mat4(1.0f) , glm::mat4 projection = glm::mat4(1.0f));
 
-    static void setTextureToShader(Shader* shader,TextureBase texture, std::string shaderName);
+    static void setTextureToShader(Shader* shader,std::unique_ptr<TextureBase>texture, std::string shaderName);
 };
 
 

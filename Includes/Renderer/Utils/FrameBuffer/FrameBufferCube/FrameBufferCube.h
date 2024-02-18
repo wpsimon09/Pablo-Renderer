@@ -11,14 +11,15 @@
 #include "Renderer/Utils/Texture/Texture3D/Texture3D.h"
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 #include "Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.h"
+#include "memory"
 
 class FrameBufferCube:public OGLObject {
 public:
-    FrameBufferCube(int width, int height, Shader* shader, Texture3D texture,unsigned int mipLevels = 0);
+    FrameBufferCube(int width, int height, Shader* shader, std::unique_ptr<Texture3D> texture,unsigned int mipLevels = 0);
     GLuint ID;
-    Texture3D renderToSelf(unsigned int mipLevel = 0);
+    std::unique_ptr<Texture3D> renderToSelf(unsigned int mipLevel = 0);
 
-    Texture3D colorAttachmentCube;
+    std::unique_ptr<Texture3D> colorAttachmentCube;
 private:
     unsigned int mipLevels;
     Shader* shader;

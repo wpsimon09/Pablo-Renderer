@@ -19,7 +19,7 @@ glm::mat4 captureViews[] =
         };
 
 
-FrameBufferCube::FrameBufferCube(int width, int height, Shader *shader, Texture3D texture, unsigned int mipLevels) {
+FrameBufferCube::FrameBufferCube(int width, int height, Shader *shader, std::unique_ptr<Texture3D> texture, unsigned int mipLevels) {
     // SHADER
     this->shader = shader;
 
@@ -73,7 +73,7 @@ FrameBufferCube &FrameBufferCube::operator=(FrameBufferCube &&other) noexcept {
     return *this;
 }
 
-Texture3D FrameBufferCube::renderToSelf(unsigned int mipLevel) {
+std::unique_ptr<Texture3D> FrameBufferCube::renderToSelf(unsigned int mipLevel) {
     glViewport(0,0, width, height);
     glCheckError();
 
@@ -81,7 +81,7 @@ Texture3D FrameBufferCube::renderToSelf(unsigned int mipLevel) {
     glCheckError();
 
     for (int i = 0; i <6 ; ++i) {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, colorAttachmentCube.ID, mipLevel);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, colorAttachmentCube->ID, mipLevel);
         glCheckError();
 
         glClear(GL_COLOR_BUFFER_BIT );
