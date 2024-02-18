@@ -4,7 +4,7 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(Shader* shader, glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(shader) {
+PBRColor::PBRColor(std::unique_ptr<Shader> shader, glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(std::move(shader)) {
     this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(std::move(albedo), "Albedo");
     this->rougness = std::make_unique<PBRMaterial<float>>(std::move(rougness), shaderNamingConvention + "Rougness");
     this->metalness = std::make_unique<PBRMaterial<float>>(std::move(metallic), shaderNamingConvention + "Metalness");

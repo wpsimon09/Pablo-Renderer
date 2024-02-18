@@ -10,7 +10,7 @@
 
 class PBRColor: public Material {
 public:
-    explicit PBRColor(Shader* shader, glm::vec3 albedo = glm::vec3(0.4f, 0.4f, 0.4f), float metallic = 0.7f , float rougness = 0.2f, float ao= 0.6f, std::string shaderNamingConvention = "_val");
+    explicit PBRColor(std::unique_ptr<Shader> shader, glm::vec3 albedo = glm::vec3(0.4f, 0.4f, 0.4f), float metallic = 0.7f , float rougness = 0.2f, float ao= 0.6f, std::string shaderNamingConvention = "_val");
 private:
     std::unique_ptr<PBRMaterial<glm::vec3>> albedo;
     std::unique_ptr<PBRMaterial<float>> metalness;

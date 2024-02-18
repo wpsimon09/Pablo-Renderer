@@ -24,8 +24,8 @@ public:
 
     void setup();
 
-    Camera* camera;
-    Light* light;
+    std::unique_ptr<Camera> camera;
+    std::unique_ptr<Light> light;
 
 };
 

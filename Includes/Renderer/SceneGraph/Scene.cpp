@@ -6,8 +6,8 @@
 
 Scene::Scene() {
     Scene::root = new SceneNode();
-    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
-    this->light = new Light(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(5.0f, 5.0f, 4.2f));
+    this->camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+    this->light = std::make_unique<Light>(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(5.0f, 5.0f, 4.2f));
     Scene::root->addChild(this->light->lightIcon);
 }
 

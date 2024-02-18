@@ -14,19 +14,19 @@ public:
     ~SceneNode();
 public:
 
-    Renderable *getRenderable() const;
-    void setRenderable(Renderable *renderable);
+    std::unique_ptr<Renderable> getRenderable() ;
+    void setRenderable(std::unique_ptr<Renderable> renderable);
 
-    void addChild(SceneNode* sceneNode);
+    void addChild(std::unique_ptr<SceneNode> sceneNode);
     void update();
     void render();
 
-    std::vector<SceneNode*>::const_iterator getChildIteratorStart();
-    std::vector<SceneNode*>::const_iterator getChildIteratorEnd();
+    std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorStart();
+    std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorEnd();
 
     //facade
     void setPositions(glm::vec3 position)   {this->transformation->setPosition(position);}
-    const glm::vec3 getPosition() const {return this->transformation->getPosition();}
+    glm::vec3 getPosition() const {return this->transformation->getPosition();}
 
     void setRotations(glm::vec3 rotationsEurel) {this->transformation->setRotations(rotationsEurel);}
     const glm::vec3 getRotations() const {return this->transformation->getRotations(); }
@@ -39,11 +39,11 @@ public:
     const unsigned long getNumberOfChildren() const{return this->children.size();}
 
 protected:
-    Renderable* renderable;
     SceneNode* parent;
+    std::unique_ptr<Renderable> renderable;
 
-    Transformations *transformation;
-    std::vector<SceneNode*> children;
+    std::unique_ptr<Transformations> transformation;
+    std::vector<std::unique_ptr<SceneNode>> children;
 };
 
 

@@ -77,25 +77,18 @@ int main() {
 
     Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
-    //cerate material properties
-    Material *cubeGoldMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Gold");
-    Material *cubeWallMaterial = new PBRTextured(&PBRShader, "Assets/Textures/PBR/Wall");
-    Material *cubeRustedIron = new PBRTextured(&PBRShader, "Assets/Textures/PBR/RustedIron");
-
-    Geometry *cubeGeometry = new CubeGeometry();
-    Geometry* planeGeometry = new PlaneGeometry();
+    std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
+    std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();
 
     IBLPipeLine iblPipeLine("Assets/Textures/HDR/sunrise.hdr");
     iblPipeLine.generateIBLTextures();
 
-    Material *skyBox = new SkyBoxMaterial(&skyBoxShader, std::move(iblPipeLine.envMap), "enviromentMap");
+    std::unique_ptr<Material> skyBox = std::make_unique<SkyBoxMaterial>(&skyBoxShader, std::move(iblPipeLine.envMap), "enviromentMap");
 
     //create renderable object
-    Renderable cubeGold(cubeGeometry, cubeGoldMaterial);
-    Renderable cubeWall(cubeGeometry, cubeWallMaterial);
-    Renderable skyboxCube(cubeGeometry, skyBox);
+    Renderable skyboxCube(std::move(cubeGeometry), std::move(skyBox));
 
-    Renderable *gridRenderable = new Grid();
+    std::unique_ptr<Renderable> gridRenderable = std::make_unique<Grid>();
 
     ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
@@ -111,7 +104,7 @@ int main() {
     withcerMedailon.setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
     withcerMedailon.setScale(glm::vec3(0.3));
 
-    SceneNode gridSceneNode(gridRenderable);
+    SceneNode gridSceneNode(std::move(gridRenderable));
     gridSceneNode.setPositions(glm::vec3(0.0f, -0.2f, 0.0f));
 
     Scene scene;

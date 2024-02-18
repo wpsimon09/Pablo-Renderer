@@ -28,10 +28,10 @@ struct PBRMaterial{
 
 class Material {
 public:
-    Shader* shader;
+    std::unique_ptr<Shader> shader;
     Material() = default;
-    Material(Shader *shader) {
-        this->shader = shader;
+    Material(std::unique_ptr<Shader> shader) {
+        this->shader = std::move(shader);
     }
     virtual void configureShader(){};
     ~Material() = default;
