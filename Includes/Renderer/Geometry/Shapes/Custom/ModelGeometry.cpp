@@ -11,13 +11,7 @@
 ModelGeometry::ModelGeometry(std::string name, std::vector<Vertex> verticies,std::vector<unsigned int> indecies): Geometry() {
     this->name = std::move(name);
     this->shapes = GL_TRIANGLES;
-    this->vao = new VAO(std::move(verticies), std::move(indecies));
-}
-
-ModelGeometry::ModelGeometry(const char *pathToTheModel): Geometry() {
-    Model model(pathToTheModel);
-    this->shapes = GL_TRIANGLES;
-    this->vao = model.parseToRenderable();
+    this->vao = std::make_unique<VAO>(std::move(verticies), std::move(indecies));
 }
 
 void ModelGeometry::render() const {

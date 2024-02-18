@@ -9,6 +9,7 @@
 #include "vector"
 #include "Renderer/Utils/Vertex/Vertex.h"
 #include "Renderer/Utils/VAO/VAO.h"
+#include "memory"
 
 class Geometry {
 public:
@@ -23,7 +24,7 @@ protected:
     unsigned int numIndecies;
     GLenum shapes;
     std::string name;
-    VAO *vao;
+    std::unique_ptr<VAO> vao;
 public:
     unsigned int getVerticies(){return this->numVerticies;}
     void setVerticies(unsigned int verticies){this->numVerticies = verticies;}

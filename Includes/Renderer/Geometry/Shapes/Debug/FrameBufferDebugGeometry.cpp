@@ -6,7 +6,7 @@
 #include "debugFrameBufferPlaneData.h"
 FrameBufferDebugGeometry::FrameBufferDebugGeometry(): Geometry() {
     this->name;
-    this->vao = new VAO(frameBufferDebugPlane, sizeof(frameBufferDebugPlane)/sizeof(float), false, true);
+    this->vao = std::make_unique<VAO>(frameBufferDebugPlane, sizeof(frameBufferDebugPlane)/sizeof(float), false, true);
     this->numVerticies = 6;
     this->shapes = GL_TRIANGLES;
     this->numIndecies = 0;
