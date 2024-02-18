@@ -2,6 +2,7 @@
 // Created by wpsimon09 on 15/02/24.
 //
 
+#include <utility>
 #include "TextureBase.h"
 
 TextureBase::TextureBase(TextureBase &&other) noexcept: ID(other.ID), isPBRMaterial(other.isPBRMaterial),
@@ -15,18 +16,15 @@ TextureBase::TextureBase(TextureBase &&other) noexcept: ID(other.ID), isPBRMater
 TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
     if (this != &other) {
         release();
-        std::swap(ID, other.ID);
-        std::swap(isPBRMaterial, other.isPBRMaterial);
-        std::swap(fullPath, other.fullPath);
-        std::swap(wasFound, other.wasFound);
-        std::swap(samplerID, other.samplerID);
-        std::swap(type, other.type);
-        std::swap(type_string, other.type_string);
-        std::swap(texHeight, other.texHeight);
-        std::swap(texWidth, other.texWidth);
-
-        // Reset other
-        other.ID = 0;
+        ID = std::exchange(other.ID, 0);
+        isPBRMaterial = other.isPBRMaterial;
+        fullPath = std::move(other.fullPath);
+        samplerID = other.samplerID;
+        wasFound = other.wasFound;
+        type = other.type;
+        type_string = std::move(other.type_string);
+        texWidth = other.texWidth;
+        texHeight = other.texHeight;
     }
     return *this;;
 

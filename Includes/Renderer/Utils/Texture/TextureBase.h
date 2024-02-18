@@ -42,7 +42,9 @@ protected:
     int texWidth, texHeight;
 private:
     void release() {
-
+        if (ID != 0) {
+            // Reset ID to indicate that the texture has been released
+        }
     };
 
 public:

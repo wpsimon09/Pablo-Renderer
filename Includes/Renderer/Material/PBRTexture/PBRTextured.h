@@ -31,14 +31,14 @@ public:
 
     void configureShader() override;
 
-    void addTexture(PBRMaterial<Texture2D>* texture);
+    void addTexture(std::unique_ptr<PBRMaterial<Texture2D> > texture);
 
     void clearAddedTextures();
 
     ~PBRTextured()= default;
 
 private:
-    std::vector<PBRMaterial<Texture2D>*> textures;
+    std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> textures;
 };
 
 
