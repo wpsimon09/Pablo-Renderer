@@ -41,7 +41,9 @@ protected:
 
     int texWidth, texHeight;
 private:
-    void release() {};
+    void release() {
+
+    };
 
 public:
 

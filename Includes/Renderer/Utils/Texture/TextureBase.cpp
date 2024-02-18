@@ -14,8 +14,7 @@ TextureBase::TextureBase(TextureBase &&other) noexcept: ID(other.ID), isPBRMater
 
 TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
     if (this != &other) {
-
-        glDeleteTextures(1, &this->ID);
+        release();
         std::swap(ID, other.ID);
         std::swap(isPBRMaterial, other.isPBRMaterial);
         std::swap(fullPath, other.fullPath);

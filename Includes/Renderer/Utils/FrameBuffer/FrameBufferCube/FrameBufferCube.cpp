@@ -24,7 +24,7 @@ FrameBufferCube::FrameBufferCube(int width, int height, Shader *shader, Texture3
     this->shader = shader;
 
     // FRAME BUFFER CREATING
-    glCreateFramebuffers(1,&this->ID);
+    glGenFramebuffers(1,&this->ID);
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
 
     // RENDER BUFFER CREATION
@@ -74,24 +74,23 @@ FrameBufferCube &FrameBufferCube::operator=(FrameBufferCube &&other) noexcept {
 }
 
 Texture3D FrameBufferCube::renderToSelf(unsigned int mipLevel) {
+    glViewport(0,0, width, height);
+    glCheckError();
+
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
     glCheckError();
 
-    glViewport(0,0, width, height);
-    glCheckError();
-    std::cout<<"Generating cube map from HDR"<<std::endl;
     for (int i = 0; i <6 ; ++i) {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, colorAttachmentCube.ID, mipLevel);
         glCheckError();
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT );
         glCheckError();
         ShaderHelper::setTransfomrationMatrices(shader, glm::mat4(1.0), captureViews[i], captureProjection);
         this->geometry->render();
     }
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     this->unbind();
-    std::cout<<"DONE !"<<std::endl;
     return std::move(colorAttachmentCube);
 }
 
