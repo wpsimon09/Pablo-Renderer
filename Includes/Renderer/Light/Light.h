@@ -29,7 +29,7 @@ public:
 
     void processInput(GLFWwindow* window);
 
-    virtual void update(Shader* shader);
+    virtual void update(std::unique_ptr<Shader> shader);
 
     std::unique_ptr<SceneNode> lightIcon;
 

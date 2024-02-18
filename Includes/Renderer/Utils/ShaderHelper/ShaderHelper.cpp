@@ -4,14 +4,14 @@
 
 #include "ShaderHelper.h"
 
-void ShaderHelper::setTransfomrationMatrices(Shader *shader, glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
+void ShaderHelper::setTransfomrationMatrices(std::unique_ptr<Shader> shader, glm::mat4 model, glm::mat4 view, glm::mat4 projection) {
     shader->use();
     shader->setMat4("projection", projection);
     shader->setMat4("view", view);
     shader->setMat4("model", model);
 }
 
-void ShaderHelper::setTextureToShader(Shader *shader,  std::unique_ptr<TextureBase> texture, std::string shaderName) {
+void ShaderHelper::setTextureToShader(std::unique_ptr<Shader> shader,  std::unique_ptr<TextureBase> texture, std::string shaderName) {
     shader->use();
     shader->setInt(shaderName, texture->samplerID);
     glActiveTexture(GL_TEXTURE0 + texture->samplerID);

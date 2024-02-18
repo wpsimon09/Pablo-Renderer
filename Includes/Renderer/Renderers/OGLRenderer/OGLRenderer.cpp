@@ -5,8 +5,8 @@
 #include "OGLRenderer.h"
 
 
-OGLRenderer::OGLRenderer(Scene *scene,  GLFWwindow* window) {
-    this->scene = scene;
+OGLRenderer::OGLRenderer(std::unique_ptr<Scene> scene,  GLFWwindow* window) {
+    this->scene = std::move(scene);
     this->window = window;
 }
 
@@ -17,23 +17,23 @@ void OGLRenderer::render(FrameBuffer* frameBuffer) {
 
     this->scene->update();
 
-    renderSceneGraph(Scene::root);
+    renderSceneGraph(std::move(Scene::root));
 }
 
-void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
+void OGLRenderer::renderSceneGraph(std::unique_ptr<SceneNode> sceneNode) {
     if (sceneNode->getRenderable()){
-        Renderable *renderable = sceneNode->getRenderable();
-        Shader *shader = renderable->getShader();
+        std::unique_ptr<Renderable> renderable = sceneNode->getRenderable();
+        std::unique_ptr<Shader> shader = renderable->getShader();
 
-        this->scene->light->update(shader);
-        this->scene->camera->update(shader);
+        this->scene->light->update(std::move(shader));
+        this->scene->camera->update(std::move(shader));
 
-        ShaderHelper::setTransfomrationMatrices(shader, sceneNode->getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
+        ShaderHelper::setTransfomrationMatrices(std::move(shader), sceneNode->getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
 
         sceneNode->render();
     }
-    for (std::vector<SceneNode*>::const_iterator i = sceneNode->getChildIteratorStart(); i<sceneNode->getChildIteratorEnd(); ++i) {
-        this->renderSceneGraph(*i);
+    for (auto &childNode : sceneNode->getChildren()) {
+        this->renderSceneGraph(std::move(childNode));
     }
 }
 

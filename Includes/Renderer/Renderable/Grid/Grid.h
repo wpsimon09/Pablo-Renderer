@@ -14,7 +14,7 @@ class Grid: public Renderable {
 public:
     explicit Grid();
 private:
-    Shader* mainShader;
+    std::unique_ptr<Shader> mainShader;
 };
 
 

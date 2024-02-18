@@ -20,7 +20,7 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     this->lightIcon->setPositions(this->position->property);
 }
 
-void Light::update(Shader *shader) {
+void Light::update(std::unique_ptr<Shader> shader) {
     shader->use();
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->color->property);

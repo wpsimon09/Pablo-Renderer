@@ -66,4 +66,10 @@ void SceneNode::render() {
     }
 }
 
+std::vector<std::unique_ptr<SceneNode>> SceneNode::getChildren() {
+    if(!this->children.empty()){
+        return std::move(this->children);
+    }
+}
+
 
