@@ -7,6 +7,7 @@
 
 #include "Shader.h"
 #include "Renderer/Utils/Texture/TextureBase.h"
+#include "Debug/DebugLogger.h"
 class ShaderHelper {
 public:
     static void setTransfomrationMatrices(Shader *shader, glm::mat4 model = glm::mat4(1.0f), glm::mat4 view = glm::mat4(1.0f) , glm::mat4 projection = glm::mat4(1.0f));

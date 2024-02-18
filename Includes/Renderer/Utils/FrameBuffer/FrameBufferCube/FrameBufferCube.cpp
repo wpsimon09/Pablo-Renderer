@@ -51,6 +51,8 @@ FrameBufferCube::FrameBufferCube(int width, int height, Shader *shader, Texture3
     this->width = width;
     this->height = height;
 
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 }
 
 FrameBufferCube::FrameBufferCube(FrameBufferCube &&other) noexcept : ID(other.ID),mipLevels(other.mipLevels), colorAttachmentCube(std::move(other.colorAttachmentCube)), shader(other.shader), renderBuffer(other.renderBuffer), geometry(other.geometry) {

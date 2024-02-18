@@ -4,7 +4,7 @@
 
 #include "HDRToCubeMap.h"
 
-HDRToCubeMap::HDRToCubeMap(): BaseStage(), result(1980, 1980, GL_RGB32F, GL_RGBA, GL_FLOAT) {
+HDRToCubeMap::HDRToCubeMap(): BaseStage(), result(1980, 1980, GL_RGB32F) {
     this->shader = new Shader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "Cube map shader");
     this->frameBufferCube = new FrameBufferCube(1980, 1980,this->shader,std::move(result));
 }

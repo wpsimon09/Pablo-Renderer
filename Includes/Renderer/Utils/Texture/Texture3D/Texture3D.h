@@ -10,8 +10,7 @@
 class Texture3D:public TextureBase {
 public:
     Texture3D()=default;
-    Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels = GL_RGB, GLenum internalFomrat = GL_RGB,
-              GLenum dataType = GL_UNSIGNED_BYTE);
+    Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum type = GL_RGB);
 ;
 };
 
