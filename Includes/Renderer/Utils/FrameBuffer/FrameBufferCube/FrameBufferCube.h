@@ -15,16 +15,16 @@
 
 class FrameBufferCube:public OGLObject {
 public:
-    FrameBufferCube(int width, int height, Shader* shader, std::unique_ptr<Texture3D> texture,unsigned int mipLevels = 0);
+    FrameBufferCube(int width, int height, std::unique_ptr<Shader> shader, std::unique_ptr<Texture3D> texture,unsigned int mipLevels = 0);
     GLuint ID;
     std::unique_ptr<Texture3D> renderToSelf(unsigned int mipLevel = 0);
 
     std::unique_ptr<Texture3D> colorAttachmentCube;
 private:
     unsigned int mipLevels;
-    Shader* shader;
-    RenderBuffer* renderBuffer;
-    Geometry* geometry;
+    std::unique_ptr<Shader> shader;
+    std::unique_ptr<RenderBuffer> renderBuffer;
+    std::unique_ptr<Geometry> geometry;
     int width, height;
 public:
     void clear(){}

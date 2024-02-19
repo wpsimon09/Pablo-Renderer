@@ -19,7 +19,7 @@ public:
 private:
     std::unique_ptr<TextureHDRi> hdriTexture;
 
-    HDRToCubeMap* hdrToCubeMap;
+    std::unique_ptr<HDRToCubeMap> hdrToCubeMap;
 
 
 };

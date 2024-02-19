@@ -5,14 +5,14 @@
 #include "FrameBuffer.h"
 
 FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable(), colorAttachment(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F, GL_RGBA) {
-    this->shader = new Shader("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
+    this->shader = std::make_unique<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
     //FRAME BUFFER CONFIG
     glCreateFramebuffers(1, &this->ID);
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
 
     // RENDER BUFFER CONFIG
-    this->renderBuffer = new RenderBuffer(SCR_WIDTH, SCR_HEIGHT);
+    this->renderBuffer = std::make_unique<RenderBuffer>(SCR_WIDTH, SCR_HEIGHT);
     this->renderBuffer->bind();
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
 
@@ -22,8 +22,8 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable(), colorAttac
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment.ID, 0);
 
     //RENDERBUFFER SCREEN-SPACE QUAD CONFIG
-    this->objectGeometry = new ScreenSpaceQuadGeometry();
-    this->objectMaterial = new BasicMaterialTextured(this->shader,std::move(this->colorAttachment));
+    this->objectGeometry = std::make_unique<ScreenSpaceQuadGeometry>();
+    this->objectMaterial = std::make_unique<BasicMaterialTextured>(std::move(this->shader),std::move(this->colorAttachment));
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
         std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
     }
@@ -69,12 +69,12 @@ void FrameBuffer::drawInsideSelf() {
     this->objectGeometry->render();
 }
 
-void FrameBuffer::setShader(Shader *shader) {
-    this->shader = shader;
-    this->objectMaterial->shader = shader;
+void FrameBuffer::setShader(std::unique_ptr<Shader> shader) {
+    this->shader = std::move(shader);
+    this->objectMaterial->shader = std::move(shader);
 }
 
-FrameBuffer::FrameBuffer(FrameBuffer &&other):ID(other.ID), colorAttachment(std::move(other.colorAttachment)), renderBuffer(other.renderBuffer), width(other.width), height(other.height), shader(other.shader) {
+FrameBuffer::FrameBuffer(FrameBuffer &&other):ID(other.ID), colorAttachment(std::move(other.colorAttachment)), renderBuffer(std::move(other.renderBuffer)), width(other.width), height(other.height), shader(std::move(other).shader) {
 
 }
 

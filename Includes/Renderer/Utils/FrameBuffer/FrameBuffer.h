@@ -25,7 +25,7 @@ public:
 
     void unbind() override;
 
-    void setShader(Shader *shader);
+    void setShader(std::unique_ptr<Shader> shader);
 
     void dispalyOnScreen();
 
@@ -33,8 +33,8 @@ public:
 
     void changeFilteringMethod(GLenum mag, GLenum min);
 protected:
-    Shader *shader;
-    RenderBuffer *renderBuffer;
+    std::unique_ptr<Shader> shader;
+    std::unique_ptr<RenderBuffer> renderBuffer;
     Texture2D colorAttachment;
     int width, height;
 private:

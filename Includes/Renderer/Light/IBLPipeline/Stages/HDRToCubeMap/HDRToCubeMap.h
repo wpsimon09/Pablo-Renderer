@@ -14,7 +14,7 @@ public:
     void execute(std::unique_ptr<TextureBase> input) override;
     std::unique_ptr<Texture3D> result;
 protected:
-    FrameBufferCube *frameBufferCube;
+    std::unique_ptr<FrameBufferCube> frameBufferCube;
 };
 
 

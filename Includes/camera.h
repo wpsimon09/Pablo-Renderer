@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Shader.h"
 #include <vector>
+#include "memory"
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
@@ -115,7 +116,7 @@ public:
             Zoom = 45.0f;
     }
 
-    void update(std::unique_ptr<Shader> shader){
+    void update(std::unique_ptr<Shader> shader) const{
         shader->use();
         shader->setVec3("camPos", this->Position);
     }
