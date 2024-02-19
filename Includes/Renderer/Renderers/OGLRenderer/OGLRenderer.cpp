@@ -10,7 +10,7 @@ OGLRenderer::OGLRenderer(std::unique_ptr<Scene> scene,  GLFWwindow* window) {
     this->window = window;
 }
 
-void OGLRenderer::render(FrameBuffer* frameBuffer) {
+void OGLRenderer::render(std::unique_ptr<FrameBuffer> frameBuffer) {
     frameBuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.11f, 0.11f, 0.11f, 1.0f);

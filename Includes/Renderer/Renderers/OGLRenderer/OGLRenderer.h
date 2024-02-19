@@ -12,7 +12,7 @@ class OGLRenderer {
 public:
     OGLRenderer(std::unique_ptr<Scene> scene, GLFWwindow* window);
     void init();
-    void render(FrameBuffer* frameBuffer);
+    void render(std::unique_ptr<FrameBuffer> frameBuffer);
 private:
     std::unique_ptr<Scene> scene;
     GLFWwindow* window;
