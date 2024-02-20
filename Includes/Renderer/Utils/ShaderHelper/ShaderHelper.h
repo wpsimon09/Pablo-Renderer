@@ -11,9 +11,9 @@
 #include "memory"
 class ShaderHelper {
 public:
-    static void setTransfomrationMatrices(std::unique_ptr<Shader> shader, glm::mat4 model = glm::mat4(1.0f), glm::mat4 view = glm::mat4(1.0f) , glm::mat4 projection = glm::mat4(1.0f));
+    static void setTransfomrationMatrices(std::shared_ptr<Shader> shader, glm::mat4 model = glm::mat4(1.0f), glm::mat4 view = glm::mat4(1.0f) , glm::mat4 projection = glm::mat4(1.0f));
 
-    static void setTextureToShader(std::unique_ptr<Shader> shader,std::unique_ptr<TextureBase>texture, std::string shaderName);
+    static void setTextureToShader(std::shared_ptr<Shader> shader,std::unique_ptr<TextureBase>texture, std::string shaderName);
 };
 
 

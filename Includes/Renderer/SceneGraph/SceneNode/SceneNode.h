@@ -41,7 +41,7 @@ public:
     const unsigned long getNumberOfChildren() const{return this->children.size();}
 
 protected:
-    std::shared_ptr<SceneNode> parent;
+    SceneNode* parent;
     std::unique_ptr<Renderable> renderable;
 
     std::unique_ptr<Transformations> transformation;

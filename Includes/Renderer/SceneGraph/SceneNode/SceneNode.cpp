@@ -39,7 +39,7 @@ void SceneNode::addChild(std::unique_ptr<SceneNode> sceneNode) {
     children.push_back(std::move(sceneNode));
 
     //sets parent of the child to be this
-    sceneNode->parent = SceneNode::;
+    sceneNode->parent = this;
 }
 
 void SceneNode::update() {

@@ -12,12 +12,12 @@ class OGLRenderer {
 public:
     OGLRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
     void init();
-    void render(std::shared_ptr<FrameBuffer> frameBuffer);
+    void render(std::unique_ptr<FrameBuffer> frameBuffer);
 private:
     std::shared_ptr<Scene> scene;
     GLFWwindow* window;
 
-    void renderSceneGraph(std::unique_ptr<SceneNode> sceneNode);
+    void renderSceneGraph(SceneNode& sceneNode);
 };
 
 #endif //PABLO_RENDERER_OGLRENDERER_H

@@ -116,7 +116,7 @@ public:
             Zoom = 45.0f;
     }
 
-    void update(std::unique_ptr<Shader> shader) const{
+    void update(const std::shared_ptr<Shader>& shader) const{
         shader->use();
         shader->setVec3("camPos", this->Position);
     }
