@@ -4,7 +4,7 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(std::unique_ptr<Shader> shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(std::move(shader)) {
+PBRTextured::PBRTextured(std::shared_ptr<Shader> shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(std::move(shader)) {
     this->shader = std::move(shader);
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
@@ -58,8 +58,7 @@ void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {
 }
 
 
-PBRTextured::PBRTextured(std::unique_ptr<Shader> shader) : Material(std::move(shader)) {
-    this->shader = std::move(shader);
+PBRTextured::PBRTextured(std::shared_ptr<Shader> shader) : Material(std::move(shader)) {
 }
 
 

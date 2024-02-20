@@ -51,19 +51,19 @@ int main() {
         return -1;
     }
 
-    std::unique_ptr<Shader> PBRShader(new Shader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader"));
-    std::unique_ptr<Shader> PBRColorShader(new Shader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2"));
-    std::unique_ptr<Shader> PBRTexturedModel(new Shader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel"));
-    std::unique_ptr<Shader> shadowMapShader(new Shader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map"));
-    std::unique_ptr<Shader> floorShader(new Shader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor"));
-    std::unique_ptr<Shader> finalShaderStage(new Shader("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader"));
-    std::unique_ptr<Shader> hdrToCubeMapShader(new Shader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "Cube map shader"));
-    std::unique_ptr<Shader> envToIrrandianceShader(new Shader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl", "Irradiance map shader"));
-    std::unique_ptr<Shader> skyBoxShader(new Shader("VertexShader/PBR/SkyBoxVertex.glsl", "FragmentShader/PBR/SkyBoxFragment.glsl", "Sky box shader"));
-    std::unique_ptr<Shader> envToPrefilter(new Shader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cubeData map"));
-    std::unique_ptr<Shader> brdfLutTextureShader(new Shader("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map"));
-    std::unique_ptr<Shader> lutDebug(new Shader("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG"));
-    std::unique_ptr<Shader> proceduralFloorTextureShader(new Shader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker"));
+    std::unique_ptr<Shader> PBRShader = std::make_unique<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
+    std::unique_ptr<Shader> PBRColorShader = std::make_unique<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
+    std::unique_ptr<Shader> PBRTexturedModel = std::make_unique<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
+    std::unique_ptr<Shader> shadowMapShader = std::make_unique<Shader>("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
+    std::unique_ptr<Shader> floorShader = std::make_unique<Shader>("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
+    std::unique_ptr<Shader> finalShaderStage = std::make_unique<Shader>("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader");
+    std::unique_ptr<Shader> hdrToCubeMapShader = std::make_unique<Shader>("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "Cube map shader");
+    std::unique_ptr<Shader> envToIrrandianceShader = std::make_unique<Shader>("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl", "Irradiance map shader");
+    std::unique_ptr<Shader> skyBoxShader = std::make_unique<Shader>("VertexShader/PBR/SkyBoxVertex.glsl", "FragmentShader/PBR/SkyBoxFragment.glsl", "Sky box shader");
+    std::unique_ptr<Shader> envToPrefilter = std::make_unique<Shader>("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cubeData map");
+    std::unique_ptr<Shader> brdfLutTextureShader = std::make_unique<Shader>("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
+    std::unique_ptr<Shader> lutDebug = std::make_unique<Shader>("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG");
+    std::unique_ptr<Shader> proceduralFloorTextureShader = std::make_unique<Shader>("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
 
     std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
     std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();

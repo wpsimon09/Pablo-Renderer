@@ -10,11 +10,11 @@
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 class OGLRenderer {
 public:
-    OGLRenderer(std::unique_ptr<Scene> scene, GLFWwindow* window);
+    OGLRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
     void init();
-    void render(std::unique_ptr<FrameBuffer> frameBuffer);
+    void render(std::shared_ptr<FrameBuffer> frameBuffer);
 private:
-    std::unique_ptr<Scene> scene;
+    std::shared_ptr<Scene> scene;
     GLFWwindow* window;
 
     void renderSceneGraph(std::unique_ptr<SceneNode> sceneNode);

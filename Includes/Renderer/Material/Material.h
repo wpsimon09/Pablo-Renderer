@@ -4,6 +4,8 @@
 
 #ifndef CLIONTEST_MATERIAL_H
 #define CLIONTEST_MATERIAL_H
+#include <utility>
+
 #include "Shader.h"
 #include "iostream"
 #include "memory"
@@ -28,10 +30,10 @@ struct PBRMaterial{
 
 class Material {
 public:
-    std::unique_ptr<Shader> shader;
+    std::shared_ptr<Shader> shader;
 
     Material() = default;
-    Material(std::unique_ptr<Shader> shader) {
+    explicit Material(std::shared_ptr<Shader> shader) {
         this->shader = std::move(shader);
     }
     virtual void configureShader(){};

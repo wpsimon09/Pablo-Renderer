@@ -5,12 +5,12 @@
 #include "OGLRenderer.h"
 
 
-OGLRenderer::OGLRenderer(std::unique_ptr<Scene> scene,  GLFWwindow* window) {
+OGLRenderer::OGLRenderer(std::shared_ptr<Scene> scene,  GLFWwindow* window) {
     this->scene = std::move(scene);
     this->window = window;
 }
 
-void OGLRenderer::render(std::unique_ptr<FrameBuffer> frameBuffer) {
+void OGLRenderer::render(std::shared_ptr<FrameBuffer> frameBuffer) {
     frameBuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.11f, 0.11f, 0.11f, 1.0f);
@@ -20,10 +20,10 @@ void OGLRenderer::render(std::unique_ptr<FrameBuffer> frameBuffer) {
     renderSceneGraph(std::move(Scene::root));
 }
 
-void OGLRenderer::renderSceneGraph(std::unique_ptr<SceneNode> sceneNode) {
+void OGLRenderer::renderSceneGraph(std::shared_ptr<SceneNode> sceneNode) {
     if (sceneNode->getRenderable()){
-        std::unique_ptr<Renderable> renderable = sceneNode->getRenderable();
-        std::unique_ptr<Shader> shader = renderable->getShader();
+        auto renderable = sceneNode->getRenderable();
+        auto shader = renderable->getShader();
 
         this->scene->light->update(std::move(shader));
         this->scene->camera->update(std::move(shader));

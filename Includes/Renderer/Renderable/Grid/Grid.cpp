@@ -6,6 +6,7 @@
 
 Grid::Grid():Renderable(){
     this->name = "Grid";
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------- CHECK FOR OWNER SHIP HERE -----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!§
     this->mainShader = std::make_unique<Shader>("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
 
     this->objectMaterial = std::make_unique<BasicMaterialColor>(std::move(mainShader));

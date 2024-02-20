@@ -29,9 +29,9 @@ public:
 
     void processInput(GLFWwindow* window);
 
-    virtual void update(std::unique_ptr<Shader> shader);
+    virtual void update(std::shared_ptr<Shader> shader);
 
-    std::unique_ptr<SceneNode> lightIcon;
+    std::unique_ptr<SceneNode> lightSceneNode;
 
 protected:
 

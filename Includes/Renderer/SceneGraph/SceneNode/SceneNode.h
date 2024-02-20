@@ -14,14 +14,14 @@ public:
     ~SceneNode();
 public:
 
-    std::unique_ptr<Renderable> getRenderable() ;
+    const std::unique_ptr<Renderable> & getRenderable() const ;
     void setRenderable(std::unique_ptr<Renderable> renderable);
 
     void addChild(std::unique_ptr<SceneNode> sceneNode);
     void update();
     void render();
 
-    std::vector<std::unique_ptr<SceneNode>> getChildren();
+    const std::vector<std::unique_ptr<SceneNode>> & getChildren() const;
 
     std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorStart();
     std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorEnd();
@@ -41,7 +41,7 @@ public:
     const unsigned long getNumberOfChildren() const{return this->children.size();}
 
 protected:
-    SceneNode* parent;
+    std::shared_ptr<SceneNode> parent;
     std::unique_ptr<Renderable> renderable;
 
     std::unique_ptr<Transformations> transformation;

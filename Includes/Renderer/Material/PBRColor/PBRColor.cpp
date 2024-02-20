@@ -4,11 +4,11 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(std::unique_ptr<Shader> shader, glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(std::move(shader)) {
-    this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(std::move(albedo), "Albedo");
-    this->rougness = std::make_unique<PBRMaterial<float>>(std::move(rougness), shaderNamingConvention + "Rougness");
-    this->metalness = std::make_unique<PBRMaterial<float>>(std::move(metallic), shaderNamingConvention + "Metalness");
-    this->ao = std::make_unique<PBRMaterial<float>>(std::move(ao), shaderNamingConvention + "Ao");
+PBRColor::PBRColor(std::shared_ptr<Shader> shader, glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(std::move(shader)) {
+    this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(albedo, "Albedo");
+    this->rougness = std::make_unique<PBRMaterial<float>>(rougness, shaderNamingConvention + "Rougness");
+    this->metalness = std::make_unique<PBRMaterial<float>>(metallic, shaderNamingConvention + "Metalness");
+    this->ao = std::make_unique<PBRMaterial<float>>(ao, shaderNamingConvention + "Ao");
 }
 
 

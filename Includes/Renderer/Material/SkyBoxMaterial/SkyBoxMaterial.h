@@ -20,7 +20,7 @@ struct CubeMapUnifrom{
 
 class SkyBoxMaterial: public Material {
 public:
-    SkyBoxMaterial(std::unique_ptr<Shader> shader,std::unique_ptr<Texture3D> skyBox, std::string shaderName);
+    SkyBoxMaterial(std::shared_ptr<Shader> shader,std::unique_ptr<Texture3D> skyBox, std::string shaderName);
 
     void configureShader() override;
 

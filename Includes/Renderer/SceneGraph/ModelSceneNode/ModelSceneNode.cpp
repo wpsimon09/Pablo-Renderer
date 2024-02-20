@@ -101,7 +101,9 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     std::unique_ptr<PBRTextured> renderableMaterial = this->processRenderableMaterial(meshMaterial);
     std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), std::move(renderableMaterial), mesh->mName.C_Str());
 
-    this->addChild(std::make_unique<SceneNode>(std::move(processedRenderable)));
+    std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));
+
+    this->addChild(std::move(processedNode));
 
 }
 
@@ -114,7 +116,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap",2));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap",3));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_HEIGHT,"_normalMap",3));
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap",4));
 

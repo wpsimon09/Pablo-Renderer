@@ -19,8 +19,8 @@ SceneNode::~SceneNode() {
     else delete this;
 }
 
-std::unique_ptr<Renderable> SceneNode::getRenderable() {
-    return std::move(renderable);
+const std::unique_ptr<Renderable> & SceneNode::getRenderable()const {
+    return renderable;
 }
 
 void SceneNode::setRenderable(std::unique_ptr<Renderable> renderable) {
@@ -39,13 +39,12 @@ void SceneNode::addChild(std::unique_ptr<SceneNode> sceneNode) {
     children.push_back(std::move(sceneNode));
 
     //sets parent of the child to be this
-    sceneNode->parent = this;
+    sceneNode->parent = SceneNode::;
 }
 
 void SceneNode::update() {
     if(parent){
         this->transformation->computeModelMatrix(parent->transformation->getModelMatrix());
-
     }
     else {
         this->transformation->computeModelMatrix();
@@ -66,9 +65,9 @@ void SceneNode::render() {
     }
 }
 
-std::vector<std::unique_ptr<SceneNode>> SceneNode::getChildren() {
+const std::vector<std::unique_ptr<SceneNode>> & SceneNode::getChildren() const {
     if(!this->children.empty()){
-        return std::move(this->children);
+        return this->children;
     }
 }
 

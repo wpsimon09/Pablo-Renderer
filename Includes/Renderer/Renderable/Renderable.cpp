@@ -28,7 +28,7 @@ Renderable::Renderable(std::unique_ptr<Geometry> geometry, std::unique_ptr<Mater
     this->modelMatrix = glm::mat4(1.0f);
 }
 
-Renderable::Renderable(std::unique_ptr<Shader> shader) {
+Renderable::Renderable(std::shared_ptr<Shader> shader) {
     //default values
     this->objectMaterial = std::make_unique<PBRColor>(std::move(shader));
     this->objectGeometry = std::make_unique<CubeGeometry>();
@@ -40,8 +40,8 @@ void Renderable::render() {
     this->objectGeometry->render();
 }
 
-std::unique_ptr<Shader> Renderable::getShader() {
-    return std::move(this->objectMaterial->shader);
+std::shared_ptr<Shader> Renderable::getShader() {
+    return this->objectMaterial->shader;
 }
 
 Renderable::Renderable() {

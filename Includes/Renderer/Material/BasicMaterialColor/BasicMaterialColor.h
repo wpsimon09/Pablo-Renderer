@@ -21,7 +21,7 @@ struct ColorUnifrom{
 
 class BasicMaterialColor:public Material {
 public:
-    BasicMaterialColor(std::unique_ptr<Shader> shader, glm::vec3 color = glm::vec3(1.0), std::string shaderName="color");
+    BasicMaterialColor(std::shared_ptr<Shader> shader, glm::vec3 color = glm::vec3(1.0), std::string shaderName="color");
     void configureShader() override;
 private:
     std::unique_ptr<ColorUnifrom> color;

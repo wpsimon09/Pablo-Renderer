@@ -27,7 +27,7 @@ public:
     std::string name;
 
     Renderable(std::unique_ptr<Geometry> geometry, std::unique_ptr<Material>  material, std::string name = "renderable");
-    Renderable(std::unique_ptr<Shader> shader);
+    Renderable(std::shared_ptr<Shader> shader);
     Renderable();
 
     virtual void render();
@@ -35,7 +35,7 @@ public:
 
     void setModelMatrix(glm::mat4 modelMatrix){this->modelMatrix = modelMatrix;}
 
-    std::unique_ptr<Shader> getShader();
+    std::shared_ptr<Shader> getShader();
 };
 
 
