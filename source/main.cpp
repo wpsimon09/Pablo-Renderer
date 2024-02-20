@@ -51,69 +51,58 @@ int main() {
         return -1;
     }
 
-    Shader PBRShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
-
-    Shader PBRColorShader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
-
-    Shader PBRTexturedModel("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
-
-    Shader shadowMapShader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
-
-    Shader floorShader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
-
-    Shader finalShaderStage("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader");
-
-    Shader hdrToCubeMapShader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "Cube map shader");
-
-    Shader envToIrrandianceShader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl", "Irradiance map shader");
-
-    Shader skyBoxShader("VertexShader/PBR/SkyBoxVertex.glsl", "FragmentShader/PBR/SkyBoxFragment.glsl", "Sky box shader");
-
-    Shader envToPrefilter("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cubeData map");
-
-    Shader brdfLutTextureShader("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
-
-    Shader lutDebug("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG");
-
-    Shader proceduralFloorTextureShader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
+    std::unique_ptr<Shader> PBRShader(new Shader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader"));
+    std::unique_ptr<Shader> PBRColorShader(new Shader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2"));
+    std::unique_ptr<Shader> PBRTexturedModel(new Shader("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel"));
+    std::unique_ptr<Shader> shadowMapShader(new Shader("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map"));
+    std::unique_ptr<Shader> floorShader(new Shader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor"));
+    std::unique_ptr<Shader> finalShaderStage(new Shader("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader"));
+    std::unique_ptr<Shader> hdrToCubeMapShader(new Shader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "Cube map shader"));
+    std::unique_ptr<Shader> envToIrrandianceShader(new Shader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl", "Irradiance map shader"));
+    std::unique_ptr<Shader> skyBoxShader(new Shader("VertexShader/PBR/SkyBoxVertex.glsl", "FragmentShader/PBR/SkyBoxFragment.glsl", "Sky box shader"));
+    std::unique_ptr<Shader> envToPrefilter(new Shader("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cubeData map"));
+    std::unique_ptr<Shader> brdfLutTextureShader(new Shader("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map"));
+    std::unique_ptr<Shader> lutDebug(new Shader("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG"));
+    std::unique_ptr<Shader> proceduralFloorTextureShader(new Shader("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker"));
 
     std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
     std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();
 
-    IBLPipeLine iblPipeLine("Assets/Textures/HDR/sunrise.hdr");
-    iblPipeLine.generateIBLTextures();
+    //std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    //iblPipeLine->generateIBLTextures();
 
-    std::unique_ptr<Material> skyBox = std::make_unique<SkyBoxMaterial>(&skyBoxShader, std::move(iblPipeLine.envMap), "enviromentMap");
+    //std::unique_ptr<Material> skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), std::move(iblPipeLine->envMap), "enviromentMap");
 
     //create renderable object
-    Renderable skyboxCube(std::move(cubeGeometry), std::move(skyBox));
+    //std::unique_ptr<Renderable> skyboxCube = std::make_unique<Renderable>(std::move(cubeGeometry), std::move(skyBox));
 
     std::unique_ptr<Renderable> gridRenderable = std::make_unique<Grid>();
 
-    ModelSceneNode sunbro_helmet(&PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
-    sunbro_helmet.setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
-    sunbro_helmet.setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
-    sunbro_helmet.setScale(glm::vec3(0.07f));
+    std::unique_ptr<ModelSceneNode> sunbro_helmet = std::make_unique<ModelSceneNode>(std::move(PBRTexturedModel), "Assets/Model/sunbro_helmet/scene.gltf");
+    sunbro_helmet->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
+    sunbro_helmet->setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
+    sunbro_helmet->setScale(glm::vec3(0.07f));
 
-    ModelSceneNode sword(&PBRTexturedModel, "Assets/Model/sword/scene.gltf");
-    sword.setScale(glm::vec3(0.09f));
-    sword.setPositions(glm::vec3(5.0f, 2.0f, 0.0f));
+    std::unique_ptr<ModelSceneNode> sword  = std::make_unique<ModelSceneNode>(std::move(PBRTexturedModel), "Assets/Model/sword/scene.gltf");
+    sword->setScale(glm::vec3(0.09f));
+    sword->setPositions(glm::vec3(5.0f, 2.0f, 0.0f));
 
-    ModelSceneNode withcerMedailon(&PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
-    withcerMedailon.setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-    withcerMedailon.setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
-    withcerMedailon.setScale(glm::vec3(0.3));
+    std::unique_ptr<ModelSceneNode> withcerMedailon = std::make_unique<ModelSceneNode>(std::move(PBRTexturedModel), "Assets/Model/witcher_medalion/scene.gltf");
+    withcerMedailon->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
+    withcerMedailon->setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
+    withcerMedailon->setScale(glm::vec3(0.3));
 
-    SceneNode gridSceneNode(std::move(gridRenderable));
-    gridSceneNode.setPositions(glm::vec3(0.0f, -0.2f, 0.0f));
+    std::unique_ptr<SceneNode> gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
+    gridSceneNode->setPositions(glm::vec3(0.0f, -0.2f, 0.0f));
 
-    Scene scene;
-    scene.add(&sunbro_helmet);
-    scene.add(&sword);
-    scene.add(&withcerMedailon);
-    scene.add(&gridSceneNode);
-    scene.add(&skyboxCube);
-    PabloRenderer pabloRenderer(&scene, window);
+    std::unique_ptr<Scene> scene = std::make_unique<Scene>();
+    scene->add(std::move(sunbro_helmet));
+    scene->add(std::move(sword));
+    scene->add(std::move(withcerMedailon));
+    scene->add(std::move(gridSceneNode));
+    //scene->add(std::move(skyboxCube));
+
+    PabloRenderer pabloRenderer(std::move(scene), window);
 
     pabloRenderer.init();
 

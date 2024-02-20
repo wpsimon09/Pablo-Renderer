@@ -4,12 +4,12 @@
 
 #include "PabloRenderer.h"
 
-PabloRenderer::PabloRenderer(Scene *scene, GLFWwindow *window) {
-    this->scene = scene;
-    PabloRenderer::instace = this;
+PabloRenderer::PabloRenderer(std::unique_ptr<Scene> scene, GLFWwindow *window) {
+    this->scene = std::move(scene);
+    PabloRenderer::instace.reset(this);
     this->lightSpeed = 2.5f * deltaTime;
     this->window = window;
-    this->renderer = new OGLRenderer(scene, window);
+    this->renderer = std::make_unique<OGLRenderer>(std::move(scene), window);
 
     glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
 
@@ -17,8 +17,8 @@ PabloRenderer::PabloRenderer(Scene *scene, GLFWwindow *window) {
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    this->frameBuffers.push_back(new FrameBuffer(this->windowWidth, this->windowHeight));
-    this->frameBuffers.push_back(new FrameBufferDebug(this->windowWidth, this->windowHeight));
+    this->frameBuffers.push_back(std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight));
+    this->frameBuffers.push_back(std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight));
 }
 
 void PabloRenderer::init() {
@@ -45,8 +45,8 @@ void PabloRenderer::render() {
         //-----------------
         // ACTUAL RENDERING
         //-----------------
-        this->renderer->render(this->frameBuffers[0]);
-        this->renderer->render(this->frameBuffers[1]);
+        this->renderer->render(std::move(this->frameBuffers[0]));
+        this->renderer->render(std::move(this->frameBuffers[1]));
 
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER

@@ -98,7 +98,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
     std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(std::string(mesh->mName.C_Str()),vertecies, indecies);
-    std::unique_ptr<Material> renderableMaterial = std::move(this->processRenderableMaterial(meshMaterial));
+    std::unique_ptr<PBRTextured> renderableMaterial = this->processRenderableMaterial(meshMaterial);
     std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), std::move(renderableMaterial), mesh->mName.C_Str());
 
     this->addChild(std::make_unique<SceneNode>(std::move(processedRenderable)));
@@ -122,7 +122,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN,"_rougnessMetalnessMap",6));
 
-    return material;
+    return std::move(material);
 }
 
 std::unique_ptr<PBRMaterial<Texture2D>>

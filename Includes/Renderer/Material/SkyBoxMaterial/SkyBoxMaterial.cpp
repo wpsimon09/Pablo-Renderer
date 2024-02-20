@@ -6,8 +6,8 @@
 
 #include <utility>
 
-SkyBoxMaterial::SkyBoxMaterial(Shader *shader, std::unique_ptr<Texture3D> skyBox, std::string shaderName):Material() {
-    this->shader = shader;
+SkyBoxMaterial::SkyBoxMaterial(std::unique_ptr<Shader> shader, std::unique_ptr<Texture3D> skyBox, std::string shaderName):Material() {
+    this->shader = std::move(shader);
     this->cubeMapUnifrom = new CubeMapUnifrom(std::move(skyBox), std::move(shaderName));
     this->cubeMapUnifrom->cubeMap->setSamplerID(0);
 }

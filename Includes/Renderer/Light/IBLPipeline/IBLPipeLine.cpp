@@ -5,7 +5,7 @@
 #include "IBLPipeLine.h"
 
 IBLPipeLine::IBLPipeLine(const char *path) {
-    this->hdrToCubeMap = new HDRToCubeMap();
+    this->hdrToCubeMap = std::make_unique<HDRToCubeMap>();
     this->hdriTexture = std::make_unique<TextureHDRi>(path);
 }
 
