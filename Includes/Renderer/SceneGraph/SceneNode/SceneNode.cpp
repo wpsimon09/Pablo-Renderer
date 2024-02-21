@@ -10,14 +10,7 @@ SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
     this->transformation = std::make_unique<Transformations>();
 }
 
-SceneNode::~SceneNode() {
-    if (parent){
-        for (int i = children.size() - 1; i >= 0; --i) {
-            //delete children[i];
-        }
-    }
-    else delete this;
-}
+SceneNode::~SceneNode()=default;
 
 const std::unique_ptr<Renderable> & SceneNode::getRenderable()const {
     return renderable;
@@ -36,10 +29,11 @@ std::vector<std::unique_ptr<SceneNode>>::const_iterator SceneNode::getChildItera
 }
 
 void SceneNode::addChild(std::unique_ptr<SceneNode> sceneNode) {
+    sceneNode->parent = this;
+
     children.push_back(std::move(sceneNode));
 
     //sets parent of the child to be this
-    sceneNode->parent = this;
 }
 
 void SceneNode::update() {

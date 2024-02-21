@@ -15,7 +15,7 @@ public:
     //-------------------
     // GENERATED TEXTURES
     //-------------------
-    std::unique_ptr<Texture3D> envMap;
+    std::unique_ptr<HDRToCubeMap> envMap;
 private:
     std::shared_ptr<TextureHDRi> hdriTexture;
 

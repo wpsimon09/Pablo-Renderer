@@ -11,12 +11,13 @@ void ShaderHelper::setTransfomrationMatrices(std::shared_ptr<Shader> shader, glm
     shader->setMat4("model", model);
 }
 
-void ShaderHelper::setTextureToShader(std::shared_ptr<Shader> shader,  std::unique_ptr<TextureBase> texture, std::string shaderName) {
+
+void ShaderHelper::setTextureToShader(std::shared_ptr<Shader> shader,  TextureBase texture, std::string shaderName) {
     shader->use();
-    shader->setInt(shaderName, texture->samplerID);
-    glActiveTexture(GL_TEXTURE0 + texture->samplerID);
+    shader->setInt(shaderName, texture.samplerID);
+    glActiveTexture(GL_TEXTURE0 + texture.samplerID);
     glCheckError();
-    glBindTexture(GL_TEXTURE_2D, texture->ID);
+    glBindTexture(GL_TEXTURE_2D, texture.ID);
     glCheckError();
 }
 

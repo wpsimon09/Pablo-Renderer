@@ -15,10 +15,10 @@
 class Scene {
 public:
     Scene();
-    inline static std::unique_ptr<SceneNode> root;
+    inline static std::shared_ptr<SceneNode> root;
 
-    void add(std::unique_ptr<SceneNode> child, std::unique_ptr<SceneNode> parent = std::move(root));
-    void add(std::unique_ptr<Renderable> renderable, std::unique_ptr<SceneNode> parent= std::move(root));
+    void add(std::unique_ptr<SceneNode> child, std::shared_ptr<SceneNode> parent = root);
+    void add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent= root);
 
     void update(Shader *shader = NULL);
 
