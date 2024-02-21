@@ -19,7 +19,7 @@ public:
 
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
 
-    Texture2D getRenderedResult();
+    const std::unique_ptr<Texture2D> & getRenderedResult() const;
 
     void bind() override;
 
@@ -35,7 +35,7 @@ public:
 protected:
     std::unique_ptr<Shader> shader;
     std::unique_ptr<RenderBuffer> renderBuffer;
-    Texture2D colorAttachment;
+    std::unique_ptr<Texture2D> colorAttachment;
     int width, height;
 private:
     void clear() {

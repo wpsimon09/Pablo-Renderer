@@ -45,8 +45,8 @@ void PabloRenderer::render() {
         //-----------------
         // ACTUAL RENDERING
         //-----------------
-        this->renderer->render(std::move(this->frameBuffers[0]));
-        this->renderer->render(std::move(this->frameBuffers[1]));
+        this->renderer->render(this->frameBuffers[0]);
+        this->renderer->render(this->frameBuffers[1]);
 
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER

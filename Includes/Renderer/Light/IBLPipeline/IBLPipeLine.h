@@ -17,7 +17,7 @@ public:
     //-------------------
     std::unique_ptr<Texture3D> envMap;
 private:
-    std::unique_ptr<TextureHDRi> hdriTexture;
+    std::shared_ptr<TextureHDRi> hdriTexture;
 
     std::unique_ptr<HDRToCubeMap> hdrToCubeMap;
 

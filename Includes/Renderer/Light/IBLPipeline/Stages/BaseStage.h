@@ -12,7 +12,7 @@ protected:
     BaseStage() =default ;
     std::unique_ptr<Shader> shader;
 public:
-    virtual void execute(std::unique_ptr<TextureBase> input){};
+    virtual void execute(TextureBase input){};
 };
 
 

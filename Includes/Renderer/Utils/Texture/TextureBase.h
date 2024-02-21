@@ -54,7 +54,7 @@ public:
     //------------------------
     ~TextureBase() { release(); }
 
-    TextureBase(const TextureBase &) = delete;
+    TextureBase(const TextureBase &) = default;
 
     TextureBase &operator=(const TextureBase &) = delete;
 

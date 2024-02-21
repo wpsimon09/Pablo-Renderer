@@ -8,7 +8,7 @@ FrameBufferDebug::FrameBufferDebug(int width, int height) : FrameBuffer(width, h
     this->shader = std::make_unique<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/Debug/FrameBufferDebug2.glsl", "Small freme buffer shader");
     this->name = "Small frame buffer";
     this->objectGeometry = std::make_unique<FrameBufferDebugGeometry>();
-    this->objectMaterial = std::make_unique<BasicMaterialTextured>(std::move(this->shader), std::move(this->colorAttachment));
+    this->objectMaterial = std::make_unique<BasicMaterialTextured>(std::move(this->shader), *this->colorAttachment);
 }
 
 void FrameBufferDebug::changeTexture(TextureBase texture) {

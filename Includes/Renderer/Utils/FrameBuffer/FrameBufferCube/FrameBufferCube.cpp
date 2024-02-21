@@ -18,10 +18,9 @@ glm::mat4 captureViews[] =
                 glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
         };
 
-
-FrameBufferCube::FrameBufferCube(int width, int height, std::unique_ptr<Shader> shader, std::unique_ptr<Texture3D> texture, unsigned int mipLevels) {
+FrameBufferCube::FrameBufferCube(int width, int height, std::shared_ptr<Shader> shader, std::shared_ptr<Texture3D> texture, unsigned int mipLevels) {
     // SHADER
-    this->shader =std::move(shader);
+    this->shader = std::move(shader);
 
     // FRAME BUFFER CREATING
     glGenFramebuffers(1,&this->ID);
@@ -73,7 +72,7 @@ FrameBufferCube &FrameBufferCube::operator=(FrameBufferCube &&other) noexcept {
     return *this;
 }
 
-std::unique_ptr<Texture3D> FrameBufferCube::renderToSelf(unsigned int mipLevel) {
+std::shared_ptr<Texture3D> FrameBufferCube::renderToSelf(unsigned int mipLevel) {
     glViewport(0,0, width, height);
     glCheckError();
 

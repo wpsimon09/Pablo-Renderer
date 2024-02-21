@@ -4,7 +4,7 @@
 
 #include "FrameBuffer.h"
 
-FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable(), colorAttachment(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F, GL_RGBA) {
+FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable() {
     this->shader = std::make_unique<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
 
     //FRAME BUFFER CONFIG
@@ -17,13 +17,14 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable(), colorAttac
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
 
     //COLOR ATTACHMENT
-    this->colorAttachment.bind();
-    this->colorAttachment.setSamplerID(0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment.ID, 0);
+    this->colorAttachment = std::make_unique<Texture2D>(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F, GL_RGBA);
+    this->colorAttachment->bind();
+    this->colorAttachment->setSamplerID(0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
 
     //RENDERBUFFER SCREEN-SPACE QUAD CONFIG
     this->objectGeometry = std::make_unique<ScreenSpaceQuadGeometry>();
-    this->objectMaterial = std::make_unique<BasicMaterialTextured>(std::move(this->shader),std::move(this->colorAttachment));
+    this->objectMaterial = std::make_unique<BasicMaterialTextured>(std::move(this->shader),*this->colorAttachment);
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
         std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
     }
@@ -49,8 +50,8 @@ void FrameBuffer::unbind() {
     glGetError();
 }
 
-Texture2D FrameBuffer::getRenderedResult() {
-    return std::move(this->colorAttachment);
+const std::unique_ptr<Texture2D> & FrameBuffer::getRenderedResult() const {
+    return this->colorAttachment;
 }
 
 void FrameBuffer::dispalyOnScreen() {
@@ -89,6 +90,6 @@ FrameBuffer &FrameBuffer::operator=(FrameBuffer &&other) noexcept {
 }
 
 void FrameBuffer::changeFilteringMethod(GLenum mag, GLenum min) {
-    this->colorAttachment.changeFilteringMethod(mag, min);
+    this->colorAttachment->changeFilteringMethod(mag, min);
 }
 

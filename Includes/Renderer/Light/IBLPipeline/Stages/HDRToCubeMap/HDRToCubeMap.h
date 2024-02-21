@@ -11,8 +11,8 @@
 class HDRToCubeMap:public BaseStage {
 public:
     HDRToCubeMap();
-    void execute(std::unique_ptr<TextureBase> input) override;
-    std::unique_ptr<Texture3D> result;
+    void execute(TextureBase input) override;
+    std::shared_ptr<Texture3D> result;
 protected:
     std::unique_ptr<FrameBufferCube> frameBufferCube;
 };
