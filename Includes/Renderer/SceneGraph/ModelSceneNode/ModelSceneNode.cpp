@@ -116,7 +116,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap",2));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_HEIGHT,"_normalMap",3));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap",3));
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap",4));
 
