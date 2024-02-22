@@ -15,11 +15,10 @@
 
 class ModelSceneNode:public SceneNode  {
 public:
-    explicit ModelSceneNode(std::unique_ptr<Shader> shader, std::string path);
+    explicit ModelSceneNode(std::shared_ptr<Shader> shader, std::string path);
     std::string directory;
-    static inline SceneNode* rootNode;
 private:
-    std::unique_ptr<Shader> shader;
+    std::shared_ptr<Shader> shader;
 
     std::vector<std::unique_ptr<Texture2D>>loadedTextures;
     void processNode(aiNode* node, const aiScene* scene);

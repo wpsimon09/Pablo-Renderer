@@ -4,7 +4,7 @@
 
 #include "ModelSceneNode.h"
 
-ModelSceneNode::ModelSceneNode(std::unique_ptr<Shader> shader, std::string path): SceneNode() {
+ModelSceneNode::ModelSceneNode(std::shared_ptr<Shader> shader, std::string path): SceneNode() {
     this->shader = std::move(shader);
     Assimp::Importer importer;
 
@@ -108,7 +108,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 }
 
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    std::unique_ptr<PBRTextured> material = std::make_unique<PBRTextured>(std::move(shader));
+    std::unique_ptr<PBRTextured> material = std::make_unique<PBRTextured>(shader);
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 

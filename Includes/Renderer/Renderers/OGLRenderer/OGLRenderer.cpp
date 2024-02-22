@@ -24,7 +24,7 @@ void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
-    if (sceneNode.getRenderable()){
+    if (sceneNode.getRenderable() != nullptr){
         // reference ot unique_ptr of renderable inside scene node
         auto& renderable = sceneNode.getRenderable();
 

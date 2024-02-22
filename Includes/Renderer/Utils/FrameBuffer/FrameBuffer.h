@@ -51,7 +51,7 @@ public:
 
     FrameBuffer &operator=(const FrameBuffer &) = delete;
 
-    ~FrameBuffer() { this->clear(); }
+    ~FrameBuffer() {  }
 
     FrameBuffer(FrameBuffer &&other);
     FrameBuffer& operator =(FrameBuffer &&other) noexcept ;

@@ -17,8 +17,7 @@ void Scene::update(Shader *shader) {
 
 void Scene::setup() {
     auto floor = std::make_unique<Floor>();
-    floor->setScale(glm::vec3(5.0f, 1.0f, 5.0f));
-    this->add(std::move(floor));
+    //this->add(std::move(floor));
 }
 
 void Scene::add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent) {

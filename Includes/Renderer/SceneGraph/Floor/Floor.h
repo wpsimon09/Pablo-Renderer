@@ -15,7 +15,7 @@ class Floor : public SceneNode{
 public:
     Floor();
 private:
-    std::unique_ptr<Shader> shader;
+    std::shared_ptr<Shader> shader;
 };
 
 
