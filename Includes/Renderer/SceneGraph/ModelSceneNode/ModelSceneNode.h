@@ -20,7 +20,7 @@ public:
 private:
     std::shared_ptr<Shader> shader;
 
-    std::vector<std::unique_ptr<Texture2D>>loadedTextures;
+    std::vector<std::shared_ptr<Texture2D>>loadedTextures;
     void processNode(aiNode* node, const aiScene* scene);
     void processRenderable(aiMesh* mesh, const aiScene* scene);
     std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial* meshMaterial);

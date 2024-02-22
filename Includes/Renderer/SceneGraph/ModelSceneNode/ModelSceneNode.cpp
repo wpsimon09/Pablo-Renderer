@@ -134,13 +134,13 @@ ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type
         if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
             for(auto &loaded_texture : this->loadedTextures ){
                 if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
-                    return std::make_unique<PBRMaterial<Texture2D>>(std::move(loaded_texture), shaderName,samplerID);
+                    return std::make_unique<PBRMaterial<Texture2D>>(loaded_texture, shaderName,samplerID);
                 }
             }
 
             Texture2D loadedTexture((directory +"/"+path.C_Str()).c_str());
-            this->loadedTextures.push_back(std::make_unique<Texture2D>(std::move(loadedTexture)));
-            return std::make_unique<PBRMaterial<Texture2D>>(std::move(loadedTexture), shaderName, samplerID);
+            this->loadedTextures.push_back(std::make_shared<Texture2D>(loadedTexture));
+            return std::make_unique<PBRMaterial<Texture2D>>(loadedTexture, shaderName, samplerID);
         }
 
         return nullptr;
