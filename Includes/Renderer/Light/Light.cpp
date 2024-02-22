@@ -16,8 +16,9 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
     std::unique_ptr<Renderable> lightRenderable = std::make_unique<Renderable>(std::move(geometry), std::move(material));
-    this->lightSceneNode = std::make_unique<SceneNode>(std::move(lightRenderable));
+    this->lightSceneNode = std::make_shared<SceneNode>(std::move(lightRenderable));
     this->lightSceneNode->setPositions(this->position->property);
+    this->lightSceneNode->setScale(glm::vec3(0.2));
 }
 
 void Light::update(std::shared_ptr<Shader> shader) {
@@ -26,7 +27,6 @@ void Light::update(std::shared_ptr<Shader> shader) {
     shader->setVec3(this->color->uniformName, this->color->property);
 
     this->lightSceneNode->setPositions(this->position->property);
-    this->lightSceneNode->setScale(glm::vec3(0.2));
 }
 
 void Light::setX(float pos) {
@@ -54,4 +54,8 @@ void Light::processInput(GLFWwindow* window) {
         this->position->property.y -= lightSpeed;
     if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
         this->position->property.y += lightSpeed;
+}
+
+void Light::render() {
+    this->lightSceneNode->render();
 }

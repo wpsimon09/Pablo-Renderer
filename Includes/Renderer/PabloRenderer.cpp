@@ -4,8 +4,8 @@
 
 #include "PabloRenderer.h"
 
-PabloRenderer::PabloRenderer(std::unique_ptr<Scene> scene, GLFWwindow *window) {
-    this->scene = std::move(scene);
+PabloRenderer::PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow *window) {
+    this->scene = scene;
     PabloRenderer::instace.reset(this);
     this->lightSpeed = 2.5f * deltaTime;
     this->window = window;

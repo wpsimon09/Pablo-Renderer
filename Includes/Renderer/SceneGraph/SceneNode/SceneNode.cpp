@@ -60,9 +60,8 @@ void SceneNode::render() {
 }
 
 const std::vector<std::unique_ptr<SceneNode>> & SceneNode::getChildren() const {
-    if(!this->children.empty()){
-        return this->children;
-    }
+    return this->children;
 }
+
 
 

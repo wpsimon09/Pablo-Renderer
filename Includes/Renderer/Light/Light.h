@@ -29,9 +29,13 @@ public:
 
     void processInput(GLFWwindow* window);
 
+    /**
+     * Lets updates the shader abut the current light position
+     * */
     virtual void update(std::shared_ptr<Shader> shader);
 
-    std::unique_ptr<SceneNode> lightSceneNode;
+    virtual void render();
+    std::shared_ptr<SceneNode> lightSceneNode;
 
 protected:
 

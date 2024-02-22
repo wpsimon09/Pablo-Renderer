@@ -11,7 +11,7 @@
 #include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
 class PabloRenderer {
 public:
-    PabloRenderer(std::unique_ptr<Scene> scene, GLFWwindow* window);
+    PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
 
     void init();
     void render();
@@ -20,7 +20,7 @@ private:
 
     std::unique_ptr<OGLRenderer> renderer;
 
-    std::unique_ptr<Scene> scene;
+    std::shared_ptr<Scene> scene;
 
     GLFWwindow* window;
 

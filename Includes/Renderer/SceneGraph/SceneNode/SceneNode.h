@@ -21,7 +21,7 @@ public:
     void update();
     void render();
 
-    const std::vector<std::unique_ptr<SceneNode>> & getChildren() const;
+    const std::vector<std::unique_ptr<SceneNode>> &getChildren() const;
 
     std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorStart();
     std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorEnd();
