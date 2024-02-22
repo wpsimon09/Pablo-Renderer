@@ -4,12 +4,12 @@
 
 #include "PabloRenderer.h"
 
-PabloRenderer::PabloRenderer(Scene *scene, GLFWwindow *window) {
+PabloRenderer::PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow *window) {
     this->scene = scene;
-    PabloRenderer::instace = this;
+    PabloRenderer::instace.reset(this);
     this->lightSpeed = 2.5f * deltaTime;
     this->window = window;
-    this->renderer = new OGLRenderer(scene, window);
+    this->renderer = std::make_unique<OGLRenderer>(std::move(scene), window);
 
     glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
 
@@ -17,8 +17,8 @@ PabloRenderer::PabloRenderer(Scene *scene, GLFWwindow *window) {
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    this->frameBuffers.push_back(new FrameBuffer(this->windowWidth, this->windowHeight));
-    this->frameBuffers.push_back(new FrameBufferDebug(this->windowWidth, this->windowHeight));
+    this->frameBuffers.push_back(std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight));
+    this->frameBuffers.push_back(std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight));
 }
 
 void PabloRenderer::init() {
@@ -26,6 +26,10 @@ void PabloRenderer::init() {
 }
 
 void PabloRenderer::render() {
+    TextureHDRi tex("Assets/Textures/HDR/sunrise.hdr");
+    FrameBufferDebug debug2(this->windowWidth, this->windowHeight);
+    debug2.changeTexture(std::move(tex));
+
     while (!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
         this->deltaTime = currentFrame - this->lastFrame;
@@ -50,6 +54,7 @@ void PabloRenderer::render() {
         for(auto &frameBuffer: this->frameBuffers){
             frameBuffer->dispalyOnScreen();
         }
+        //debug2.dispalyOnScreen();
         glfwSwapBuffers(this->window);
         glfwPollEvents();
     }

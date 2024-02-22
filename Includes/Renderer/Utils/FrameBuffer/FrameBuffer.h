@@ -7,7 +7,7 @@
 
 #include "glad/glad.h"
 #include "RenderBuffer/RenderBuffer.h"
-#include "Renderer/Utils/Texture/Texture2D.h"
+#include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include "Shader.h"
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
@@ -19,23 +19,23 @@ public:
 
     FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
 
-    Texture2D getRenderedResult();
+    const std::unique_ptr<Texture2D> & getRenderedResult() const;
 
     void bind() override;
 
     void unbind() override;
 
-    void setShader(Shader *shader);
+    void setShader(std::unique_ptr<Shader> shader);
 
     void dispalyOnScreen();
 
-    void drawInsideSelf();
+    virtual void drawInsideSelf();
 
     void changeFilteringMethod(GLenum mag, GLenum min);
 protected:
-    Shader *shader;
-    RenderBuffer *renderBuffer;
-    Texture2D colorAttachment;
+    std::unique_ptr<Shader> shader;
+    std::unique_ptr<RenderBuffer> renderBuffer;
+    std::unique_ptr<Texture2D> colorAttachment;
     int width, height;
 private:
     void clear() {
@@ -50,8 +50,6 @@ public:
     FrameBuffer(const FrameBuffer &) = delete;
 
     FrameBuffer &operator=(const FrameBuffer &) = delete;
-
-    ~FrameBuffer() { this->clear(); }
 
     FrameBuffer(FrameBuffer &&other);
     FrameBuffer& operator =(FrameBuffer &&other) noexcept ;

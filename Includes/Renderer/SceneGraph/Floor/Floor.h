@@ -1,3 +1,4 @@
+
 //
 // Created by wpsimon09 on 04/02/24.
 //
@@ -14,7 +15,7 @@ class Floor : public SceneNode{
 public:
     Floor();
 private:
-    Shader* shader;
+    std::shared_ptr<Shader> shader;
 };
 
 

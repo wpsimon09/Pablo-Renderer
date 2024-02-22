@@ -6,7 +6,7 @@
 #define PABLO_RENDERER_PBRTEXTURED_H
 
 #include "Renderer/Material/Material.h"
-#include "Renderer/Utils/Texture/Texture2D.h"
+#include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include "iostream"
 #include "vector"
 #include "ostream"
@@ -25,20 +25,18 @@ public:
      * @param shader shader that will be assosiated with texture
      * @param shaderNamingConvention naming conventions used in the shader for unifrom samplers
      * */
-    explicit PBRTextured(Shader* shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
+    explicit PBRTextured(std::shared_ptr<Shader> shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
 
-    explicit PBRTextured(Shader* shader);
+    explicit PBRTextured(std::shared_ptr<Shader> shader);
 
     void configureShader() override;
 
-    void addTexture(PBRMaterial<Texture2D>* texture);
-
-    void clearAddedTextures();
+    void addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture);
 
     ~PBRTextured()= default;
 
 private:
-    std::vector<PBRMaterial<Texture2D>*> textures;
+    std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> textures;
 };
 
 

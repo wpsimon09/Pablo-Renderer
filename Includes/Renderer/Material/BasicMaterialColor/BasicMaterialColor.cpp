@@ -10,8 +10,7 @@ void BasicMaterialColor::configureShader() {
 
 }
 
-BasicMaterialColor::BasicMaterialColor(Shader *shader, glm::vec3 color, std::string shaderName):Material() {
-    this->color = new ColorUnifrom(shaderName, color);
-    this->shader = shader;
+BasicMaterialColor::BasicMaterialColor(std::shared_ptr<Shader> shader, glm::vec3 color, std::string shaderName):Material(std::move(shader)) {
+    this->color = std::make_unique<ColorUnifrom>(shaderName, color);
 }
 

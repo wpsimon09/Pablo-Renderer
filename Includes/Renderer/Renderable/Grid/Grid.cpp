@@ -6,10 +6,11 @@
 
 Grid::Grid():Renderable(){
     this->name = "Grid";
-    this->mainShader = new Shader("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!----------------- CHECK FOR OWNER SHIP HERE -----------------------!!!!!!!!!!!!!!!!!!!!!!!!!!!!§
+    this->mainShader = std::make_unique<Shader>("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
 
-    this->objectMaterial = new BasicMaterialColor(mainShader);
-    this->objectGeometry = new GridGeometry();
+    this->objectMaterial = std::make_unique<BasicMaterialColor>(std::move(mainShader));
+    this->objectGeometry = std::make_unique<GridGeometry>();
     //this->objectMaterial = new BasicMaterialTextured(mainShader, "Assets/Textures/AdvancedLightning/grid_ch.png", "texture_diffuse0");
 }
 

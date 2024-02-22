@@ -23,27 +23,25 @@ class Light {
 public:
     Light(glm::vec3 position, glm::vec3 color);
 
-    LightProperty<glm::vec3> *getPosition() const {return position;}
-    void setPosition(LightProperty<glm::vec3> *position) {Light::position = position;}
-
-    LightProperty<glm::vec3> *getColor() const {return color;}
-    void setColor(LightProperty<glm::vec3> *color) {Light::color = color;}
-
     void setX(float pos);
     void setY(float pos);
     void setZ(float pos);
 
     void processInput(GLFWwindow* window);
 
-    virtual void update(Shader* shader);
+    /**
+     * Lets updates the shader abut the current light position
+     * */
+    virtual void update(std::shared_ptr<Shader> shader);
 
-    SceneNode* lightIcon;
+    virtual void render();
+    std::shared_ptr<SceneNode> lightSceneNode;
 
 protected:
 
     const float lightSpeed = 0.05f;
-    LightProperty<glm::vec3>* position;
-    LightProperty<glm::vec3>* color;
+    std::unique_ptr<LightProperty<glm::vec3>> position;
+    std::unique_ptr<LightProperty<glm::vec3>> color;
 };
 
 

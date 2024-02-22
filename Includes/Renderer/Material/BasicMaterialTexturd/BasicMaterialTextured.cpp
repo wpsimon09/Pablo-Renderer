@@ -6,10 +6,9 @@
 
 #include <utility>
 
-BasicMaterialTextured::BasicMaterialTextured(Shader *shader, const char *path, std::string shaderName):Material() {
-    this->shader = shader;
+    BasicMaterialTextured::BasicMaterialTextured(std::shared_ptr<Shader> shader, const char *path, std::string shaderName):Material(std::move(shader)) {
     Texture2D texture(path);
-    this->texture = new TextureUniform(std::move(shaderName),std::move(texture));
+    this->texture = std::make_unique<TextureUniform>(std::move(shaderName),std::move(texture));
     this->texture->texture2D.setSamplerID(0);
 }
 
@@ -21,10 +20,11 @@ void BasicMaterialTextured::configureShader() {
     glBindTexture(GL_TEXTURE_2D, this->texture->texture2D.ID);
 }
 
-BasicMaterialTextured::BasicMaterialTextured(Shader* shader,Texture2D texture2D, std::string shaderName): Material() {
-    this->shader = shader;
-    this->texture = new TextureUniform(std::move(shaderName), std::move(texture2D));
+BasicMaterialTextured::BasicMaterialTextured(std::shared_ptr<Shader> shader, TextureBase texture2D, std::string shaderName): Material(std::move(shader)) {
+    this->texture = std::make_unique<TextureUniform>(std::move(shaderName), std::move(texture2D));
 }
+
+
 
 
 

@@ -6,16 +6,16 @@
 #define PABLO_RENDERER_PBRCOLOR_H
 
 #include "Renderer/Material/Material.h"
+#include "memory"
 
 class PBRColor: public Material {
 public:
-    explicit PBRColor(Shader* shader, std::string shaderNamingConvention = "_val");
-    explicit PBRColor(Shader* shader, glm::vec3 albedo, float metallic , float rougness, float ao, std::string shaderNamingConvention = "_val");
+    explicit PBRColor(std::shared_ptr<Shader> shader, glm::vec3 albedo = glm::vec3(0.4f, 0.4f, 0.4f), float metallic = 0.7f , float rougness = 0.2f, float ao= 0.6f, std::string shaderNamingConvention = "_val");
 private:
-    PBRMaterial<glm::vec3>* albedo;
-    PBRMaterial<float>* metalness;
-    PBRMaterial<float>* rougness ;
-    PBRMaterial<float>* ao;
+    std::unique_ptr<PBRMaterial<glm::vec3>> albedo;
+    std::unique_ptr<PBRMaterial<float>> metalness;
+    std::unique_ptr<PBRMaterial<float>> rougness ;
+    std::unique_ptr<PBRMaterial<float>> ao;
 public:
     PBRMaterial<glm::vec3> *getAlbedo() const;
 

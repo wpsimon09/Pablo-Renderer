@@ -20,14 +20,14 @@
 
 class Renderable {
 protected:
-    Geometry *objectGeometry;
-    Material *objectMaterial;
+    std::unique_ptr<Geometry> objectGeometry;
+    std::unique_ptr<Material> objectMaterial;
     glm::mat4 modelMatrix;
 public:
     std::string name;
 
-    Renderable(Geometry* geometry, Material * material, std::string name = "renderable");
-    Renderable(Shader *shader);
+    Renderable(std::unique_ptr<Geometry> geometry, std::unique_ptr<Material>  material, std::string name = "renderable");
+    Renderable(std::shared_ptr<Shader> shader);
     Renderable();
 
     virtual void render();
@@ -35,7 +35,7 @@ public:
 
     void setModelMatrix(glm::mat4 modelMatrix){this->modelMatrix = modelMatrix;}
 
-    Shader* getShader();
+    std::shared_ptr<Shader> getShader();
 };
 
 

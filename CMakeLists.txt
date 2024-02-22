@@ -21,7 +21,6 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/Cube/CubeGeometry.h
         Includes/Renderer/Utils/VAO/VAO.cpp
         Includes/Renderer/Utils/VAO/VAO.h
-        Includes/Debug/DebugLogger.h
         Includes/Renderer/Geometry/Shapes/Cube/cubeVertexData.h
         Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.cpp
         Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.h
@@ -35,8 +34,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Material/PBRColor/PBRColor.h
         Includes/Renderer/Material/PBRTexture/PBRTextured.cpp
         Includes/Renderer/Material/PBRTexture/PBRTextured.h
-        Includes/Renderer/Utils/Texture/Texture2D.cpp
-        Includes/Renderer/Utils/Texture/Texture2D.h
+        Includes/Renderer/Utils/Texture/Texture2D/Texture2D.cpp
+        Includes/Renderer/Utils/Texture/Texture2D/Texture2D.h
         Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.cpp
         Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h
         Includes/Renderer/SceneGraph/SceneNode/SceneNode.cpp
@@ -76,6 +75,29 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.h
         Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.cpp
         Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.h
+        Includes/Renderer/Utils/Texture/TextureHDR/TextureHDRi.cpp
+        Includes/Renderer/Utils/Texture/TextureHDR/TextureHDRi.h
+        Includes/Renderer/Utils/Texture/Texture3D/Texture3D.cpp
+        Includes/Renderer/Utils/Texture/Texture3D/Texture3D.h
+        Includes/Renderer/Utils/Texture/TextureBase.cpp
+        Includes/Renderer/Utils/Texture/TextureBase.h
+        Includes/Renderer/Light/IBLPipeline/IBLPipeLine.cpp
+        Includes/Renderer/Light/IBLPipeline/IBLPipeLine.h
+        Includes/Renderer/Light/IBLPipeline/Stages/HDRToCubeMap/HDRToCubeMap.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/HDRToCubeMap/HDRToCubeMap.h
+        Includes/Renderer/Light/IBLPipeline/Stages/BRDF/BRDF.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/BRDF/BRDF.h
+        Includes/Renderer/Light/IBLPipeline/Stages/Irradiance/Irradiance.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/Irradiance/Irradiance.h
+        Includes/Renderer/Light/IBLPipeline/Stages/PrefilterMap/PrefilterMap.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/PrefilterMap/PrefilterMap.h
+        Includes/Renderer/Light/IBLPipeline/Stages/BaseStage.cpp
+        Includes/Renderer/Light/IBLPipeline/Stages/BaseStage.h
+        Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.cpp
+        Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.h
+        Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.cpp
+        Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.h
+        Includes/Debug/DebugLogger.cpp
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

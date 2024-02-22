@@ -4,48 +4,41 @@
 
 #include "SceneNode.h"
 
-SceneNode::SceneNode(Renderable *renderable) {
-    this->renderable = renderable;
+SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
+    this->renderable = std::move(renderable);
     this->parent = nullptr;
-    this->transformation = new Transformations();
+    this->transformation = std::make_unique<Transformations>();
 }
 
-SceneNode::~SceneNode() {
-    if (parent){
-        for (int i = children.size() - 1; i >= 0; --i) {
-            //delete children[i];
-        }
-    }
-    else delete this;
-}
+SceneNode::~SceneNode()=default;
 
-Renderable *SceneNode::getRenderable() const {
+const std::unique_ptr<Renderable> & SceneNode::getRenderable()const {
     return renderable;
 }
 
-void SceneNode::setRenderable(Renderable *renderable) {
-    SceneNode::renderable = renderable;
+void SceneNode::setRenderable(std::unique_ptr<Renderable> renderable) {
+    this->renderable =std::move(renderable);
 }
 
-std::vector<SceneNode *>::const_iterator SceneNode::getChildIteratorStart() {
+std::vector<std::unique_ptr<SceneNode>>::const_iterator SceneNode::getChildIteratorStart() {
     return this->children.begin();
 }
 
-std::vector<SceneNode *>::const_iterator SceneNode::getChildIteratorEnd() {
+std::vector<std::unique_ptr<SceneNode>>::const_iterator SceneNode::getChildIteratorEnd() {
     return this->children.end();
 }
 
-void SceneNode::addChild(SceneNode *sceneNode) {
-    children.push_back(sceneNode);
+void SceneNode::addChild(std::unique_ptr<SceneNode> sceneNode) {
+    sceneNode->parent = this;
+
+    children.push_back(std::move(sceneNode));
 
     //sets parent of the child to be this
-    sceneNode->parent = this;
 }
 
 void SceneNode::update() {
     if(parent){
         this->transformation->computeModelMatrix(parent->transformation->getModelMatrix());
-
     }
     else {
         this->transformation->computeModelMatrix();
@@ -65,5 +58,10 @@ void SceneNode::render() {
         renderable->render();
     }
 }
+
+const std::vector<std::unique_ptr<SceneNode>> & SceneNode::getChildren() const {
+    return this->children;
+}
+
 
 

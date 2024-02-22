@@ -129,7 +129,7 @@ unsigned int loadIrradianceMap(const char *path)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-		std::cout << "HDRi texture loaded! " << std::endl;
+		std::cout << "TextureHDR texture loaded! " << std::endl;
 		std::cout << "Width: " << width << std::endl;
 		std::cout << "Height: " << height << std::endl;
 		std::cout << "Nr components: " << nrComponents << std::endl <<std::endl;

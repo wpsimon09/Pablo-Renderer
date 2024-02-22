@@ -15,17 +15,16 @@
 
 class ModelSceneNode:public SceneNode  {
 public:
-    explicit ModelSceneNode(Shader* shader, std::string path);
+    explicit ModelSceneNode(std::shared_ptr<Shader> shader, std::string path);
     std::string directory;
-    static inline SceneNode* rootNode;
 private:
-    Shader *shader;
-    Material *modelMaterial;
-    std::vector<Texture2D>loadedTextures;
+    std::shared_ptr<Shader> shader;
+
+    std::vector<std::shared_ptr<Texture2D>>loadedTextures;
     void processNode(aiNode* node, const aiScene* scene);
     void processRenderable(aiMesh* mesh, const aiScene* scene);
-    Material *processRenderableMaterial(aiMaterial* meshMaterial);
-    PBRMaterial<Texture2D>* processMaterialProperty(aiMaterial* material, aiTextureType type, const std::string& shaderName, const int samplerID);
+    std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial* meshMaterial);
+    std::unique_ptr<PBRMaterial<Texture2D>> processMaterialProperty(aiMaterial* material, aiTextureType type, const std::string& shaderName, const int samplerID);
 };
 
 

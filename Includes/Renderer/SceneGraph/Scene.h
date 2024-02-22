@@ -15,17 +15,17 @@
 class Scene {
 public:
     Scene();
-    inline static SceneNode* root;
+    inline static std::shared_ptr<SceneNode> root;
 
-    void add(SceneNode* child, SceneNode *parent = root);
-    void add(Renderable* renderable, SceneNode *parent= root);
+    void add(std::unique_ptr<SceneNode> child, std::shared_ptr<SceneNode> parent = root);
+    void add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent= root);
 
     void update(Shader *shader = NULL);
 
     void setup();
 
-    Camera* camera;
-    Light* light;
+    std::unique_ptr<Camera> camera;
+    std::unique_ptr<Light> light;
 
 };
 

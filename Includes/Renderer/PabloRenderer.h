@@ -8,22 +8,23 @@
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.h"
+#include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
 class PabloRenderer {
 public:
-    PabloRenderer(Scene* scene, GLFWwindow* window);
+    PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
 
     void init();
     void render();
 private:
-    inline static PabloRenderer *instace ;
+    inline static std::unique_ptr<PabloRenderer> instace ;
 
-    OGLRenderer *renderer;
+    std::unique_ptr<OGLRenderer> renderer;
 
-    Scene* scene;
+    std::shared_ptr<Scene> scene;
 
     GLFWwindow* window;
 
-    std::vector<FrameBuffer*> frameBuffers;
+    std::vector<std::unique_ptr<FrameBuffer>> frameBuffers;
 
     float deltaTime;
     float lastFrame;

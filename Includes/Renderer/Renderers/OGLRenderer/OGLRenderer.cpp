@@ -5,35 +5,41 @@
 #include "OGLRenderer.h"
 
 
-OGLRenderer::OGLRenderer(Scene *scene,  GLFWwindow* window) {
-    this->scene = scene;
+OGLRenderer::OGLRenderer(std::shared_ptr<Scene> scene,  GLFWwindow* window) {
+    this->scene = std::move(scene);
     this->window = window;
 }
 
-void OGLRenderer::render(FrameBuffer* frameBuffer) {
+void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
     frameBuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.11f, 0.11f, 0.11f, 1.0f);
 
     this->scene->update();
-
-    renderSceneGraph(Scene::root);
+    if(Scene::root){
+        renderSceneGraph(*Scene::root);
+        this->scene->light->render();
+    }else
+        std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
 }
 
-void OGLRenderer::renderSceneGraph(SceneNode *sceneNode) {
-    if (sceneNode->getRenderable()){
-        Renderable *renderable = sceneNode->getRenderable();
-        Shader *shader = renderable->getShader();
+void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
+    if (sceneNode.getRenderable() != nullptr){
+        // reference ot unique_ptr of renderable inside scene node
+        auto& renderable = sceneNode.getRenderable();
+
+        //shared_ptr here
+        auto shader = renderable->getShader();
 
         this->scene->light->update(shader);
         this->scene->camera->update(shader);
 
-        ShaderHelper::setTransfomrationMatrices(shader, sceneNode->getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
+        ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
 
-        sceneNode->render();
+        sceneNode.render();
     }
-    for (std::vector<SceneNode*>::const_iterator i = sceneNode->getChildIteratorStart(); i<sceneNode->getChildIteratorEnd(); ++i) {
-        this->renderSceneGraph(*i);
+    for (auto &childNode : sceneNode.getChildren()) {
+        this->renderSceneGraph(*childNode);
     }
 }
 

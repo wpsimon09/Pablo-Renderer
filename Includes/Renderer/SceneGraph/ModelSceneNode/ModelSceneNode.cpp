@@ -4,8 +4,8 @@
 
 #include "ModelSceneNode.h"
 
-ModelSceneNode::ModelSceneNode(Shader *shader, std::string path): SceneNode() {
-    this->shader = shader;
+ModelSceneNode::ModelSceneNode(std::shared_ptr<Shader> shader, std::string path): SceneNode() {
+    this->shader = std::move(shader);
     Assimp::Importer importer;
 
     const aiScene *scene = importer.ReadFile(path.c_str(),
@@ -97,16 +97,18 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
-    Geometry* renderableGeometry = new ModelGeometry(std::string(mesh->mName.C_Str()),vertecies, indecies);
-    Material* renderableMaterial = this->processRenderableMaterial(meshMaterial);
-    Renderable* processedRenderable = new Renderable(renderableGeometry, renderableMaterial, mesh->mName.C_Str());
+    std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(std::string(mesh->mName.C_Str()),vertecies, indecies);
+    std::unique_ptr<PBRTextured> renderableMaterial = this->processRenderableMaterial(meshMaterial);
+    std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), std::move(renderableMaterial), mesh->mName.C_Str());
 
-    this->addChild(new SceneNode(processedRenderable));
+    std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));
+
+    this->addChild(std::move(processedNode));
 
 }
 
-Material *ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    PBRTextured* material = new PBRTextured(shader);
+std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
+    std::unique_ptr<PBRTextured> material = std::make_unique<PBRTextured>(shader);
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 
@@ -114,7 +116,7 @@ Material *ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap",2));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap",3));
+    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_HEIGHT,"_normalMap",3));
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap",4));
 
@@ -122,23 +124,23 @@ Material *ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
 
     material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN,"_rougnessMetalnessMap",6));
 
-    return material;
+    return std::move(material);
 }
 
-PBRMaterial<Texture2D> *
+std::unique_ptr<PBRMaterial<Texture2D>>
 ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string& shaderName,const int samplerID) {
         aiString path;
 
         if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
             for(auto &loaded_texture : this->loadedTextures ){
-                if(std::strcmp(loaded_texture.getFullPath().c_str(), path.C_Str()) == 0){
-                    return new PBRMaterial<Texture2D>(std::move(loaded_texture), shaderName,samplerID);
+                if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
+                    return std::make_unique<PBRMaterial<Texture2D>>(loaded_texture, shaderName,samplerID);
                 }
             }
 
             Texture2D loadedTexture((directory +"/"+path.C_Str()).c_str());
-            this->loadedTextures.push_back(std::move(loadedTexture));
-            return new PBRMaterial<Texture2D>(std::move(loadedTexture), shaderName, samplerID);
+            this->loadedTextures.push_back(std::make_shared<Texture2D>(loadedTexture));
+            return std::make_unique<PBRMaterial<Texture2D>>(loadedTexture, shaderName, samplerID);
         }
 
         return nullptr;

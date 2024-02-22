@@ -21,7 +21,7 @@ GridGeometry::GridGeometry(): Geometry() {
 
     std::copy(vertices.begin(), vertices.end(), vertexData);
 
-    this->vao = new VAO(vertexData,sizeof(vertexData)/sizeof(float), false ,false);
+    this->vao = std::make_unique<VAO>(vertices.data(), sizeof(vertexData)/sizeof(float), false ,false);
     this->shapes = GL_LINES;
     this->name = "GRID";
     this->numVerticies = vertices.size()/3;

@@ -10,14 +10,14 @@
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 class OGLRenderer {
 public:
-    OGLRenderer(Scene* scene, GLFWwindow* window);
+    OGLRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
     void init();
-    void render(FrameBuffer* frameBuffer);
+    void render(std::unique_ptr<FrameBuffer>& frameBuffer);
 private:
-    Scene* scene;
+    std::shared_ptr<Scene> scene;
     GLFWwindow* window;
 
-    void renderSceneGraph(SceneNode* sceneNode);
+    void renderSceneGraph(SceneNode& sceneNode);
 };
 
 #endif //PABLO_RENDERER_OGLRENDERER_H
