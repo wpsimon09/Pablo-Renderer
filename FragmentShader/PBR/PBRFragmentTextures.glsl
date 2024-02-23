@@ -165,7 +165,7 @@ void main()
     color = color/ (color + vec3(1.0));
     
     // gamma corection
-    color = pow(color,vec3(1.0/2.2));
+    //color = pow(color,vec3(1.0/2.2));
 
     //todo go over every texture to see which one is off
     FragColor = vec4(color, 1.0);

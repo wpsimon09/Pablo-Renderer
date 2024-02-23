@@ -18,7 +18,6 @@ void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
     this->scene->update();
     if(Scene::root){
         renderSceneGraph(*Scene::root);
-        this->scene->light->render();
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
 }
@@ -32,6 +31,7 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         auto shader = renderable->getShader();
 
         this->scene->light->update(shader);
+        this->scene->light->render();
         this->scene->camera->update(shader);
 
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
