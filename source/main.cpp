@@ -95,11 +95,14 @@ int main() {
     std::unique_ptr<SceneNode> gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->setPositions(glm::vec3(0.0f, -0.2f, 0.0f));
 
+    auto floor = std::make_unique<Floor>();
+
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
+    scene->add(std::move(floor));
     //scene->add(std::move(skyboxCube));
 
     PabloRenderer pabloRenderer(scene, window);

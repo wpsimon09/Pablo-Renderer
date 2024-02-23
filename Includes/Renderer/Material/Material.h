@@ -34,7 +34,7 @@ public:
 
     Material() = default;
     explicit Material(std::shared_ptr<Shader> shader) {
-        this->shader =std::move(shader);
+        this->shader = std::move(shader);
     }
     virtual void configureShader(){};
     ~Material() = default;

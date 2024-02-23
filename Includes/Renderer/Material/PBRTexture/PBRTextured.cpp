@@ -5,7 +5,6 @@
 #include "PBRTextured.h"
 
 PBRTextured::PBRTextured(std::shared_ptr<Shader> shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(std::move(shader)) {
-    this->shader = std::move(shader);
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
 

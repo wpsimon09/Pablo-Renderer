@@ -16,8 +16,7 @@ void Scene::update(Shader *shader) {
 }
 
 void Scene::setup() {
-    auto floor = std::make_unique<Floor>();
-    //this->add(std::move(floor));
+
 }
 
 void Scene::add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent) {

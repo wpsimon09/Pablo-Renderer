@@ -10,7 +10,7 @@
 #include "Shader.h"
 #include "Renderer/Geometry/Geometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
-#include "Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h"
+#include "Renderer/Material/PBRTexture/PBRTextured.h"
 class Floor : public SceneNode{
 public:
     Floor();
