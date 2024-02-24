@@ -10,7 +10,7 @@
 class BaseStage {
 protected:
     BaseStage() =default ;
-    std::unique_ptr<Shader> shader;
+    std::shared_ptr<Shader> shader;
 public:
     virtual void execute(TextureBase input){};
 };

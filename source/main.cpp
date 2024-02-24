@@ -68,13 +68,13 @@ int main() {
     std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
     std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();
 
-    //std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
-    //iblPipeLine->generateIBLTextures();
+    std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    iblPipeLine->generateIBLTextures();
 
-    //std::unique_ptr<Material> skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), std::move(iblPipeLine->envMap), "enviromentMap");
+    auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
 
     //create renderable object
-    //std::unique_ptr<Renderable> skyboxCube = std::make_unique<Renderable>(std::move(cubeGeometry), std::move(skyBox));
+    std::unique_ptr<Renderable> skyboxCube = std::make_unique<Renderable>(std::move(cubeGeometry), std::move(skyBox));
 
     std::unique_ptr<Renderable> gridRenderable = std::make_unique<Grid>();
 
@@ -103,7 +103,7 @@ int main() {
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
-    //scene->add(std::move(skyboxCube));
+    scene->add(std::move(skyboxCube));
 
     PabloRenderer pabloRenderer(scene, window);
 

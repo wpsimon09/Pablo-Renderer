@@ -85,7 +85,7 @@ std::shared_ptr<Texture3D> FrameBufferCube::renderToSelf(unsigned int mipLevel) 
 
         glClear(GL_COLOR_BUFFER_BIT );
         glCheckError();
-        ShaderHelper::setTransfomrationMatrices(std::move(shader), glm::mat4(1.0), captureViews[i], captureProjection);
+        ShaderHelper::setTransfomrationMatrices(shader, glm::mat4(1.0), captureViews[i], captureProjection);
         this->geometry->render();
     }
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
