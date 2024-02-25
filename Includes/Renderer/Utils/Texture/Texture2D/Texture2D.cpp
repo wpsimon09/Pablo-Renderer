@@ -17,7 +17,7 @@ Texture2D::Texture2D() {
 }
 
 
-Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels, GLenum internalFomrat, GLenum dataType) {
+Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt) {
     this->type = GL_TEXTURE_2D;
     this->isPBRMaterial = false;
     this->wasFound = true;
@@ -26,7 +26,7 @@ Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels, GLenum
     glGenTextures(1, &this->ID);
 
     glBindTexture(GL_TEXTURE_2D, this->ID);
-    glTexImage2D(GL_TEXTURE_2D, 0, colorChannels, SCR_WIDTH, SCR_HEIGHT, 0, internalFomrat, dataType, NULL);
+    glTexStorage2D(GL_TEXTURE_2D, 1, foramt, SCR_WIDTH, SCR_HEIGHT);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

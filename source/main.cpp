@@ -68,7 +68,7 @@ int main() {
     std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
     std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();
 
-    std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/pure_sky.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");

@@ -57,23 +57,14 @@ FrameBufferCube::FrameBufferCube(int width, int height, std::shared_ptr<Shader> 
 
 
 std::shared_ptr<Texture3D> FrameBufferCube::renderToSelf(TextureBase input,unsigned int mipLevel) {
-    //ShaderHelper::setTextureToShader(shader, input, "envMap");
+    ShaderHelper::setTextureToShader(shader, input, "envMap");
     glViewport(0, 0, width, height);
-
-
+    this->bind();
     for (int i = 0; i < 6; ++i) {
-        this->bind();
-        shader->use();
-        shader->setInt("envMap", input.samplerID);
-        glActiveTexture(GL_TEXTURE0 + input.samplerID);
-        glCheckError();
-        glBindTexture(GL_TEXTURE_2D, input.ID);
-        glCheckError();
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                                colorAttachmentCube->ID, mipLevel);
         glCheckError();
 
-        //!!!!!!!!!!!!! FRAME BUFFER STATUS IS INCOMPLETE_ATTACHEMENT !!!!!!!!!!!!!!!!!!!!!!
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glCheckError();
         ShaderHelper::setTransfomrationMatrices(shader, glm::mat4(1.0), captureViews[i], captureProjection);
