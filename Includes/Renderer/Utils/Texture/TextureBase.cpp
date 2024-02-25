@@ -83,6 +83,7 @@ void TextureBase::loadPNG(const char *path) {
 }
 
 void TextureBase::loadHRI(const char *path) {
+    stbi_set_flip_vertically_on_load(true);
     int width, height, nrComponents;
     float *data = stbi_loadf(path, &width, &height, &nrComponents, 0);
     if (data) {
@@ -119,4 +120,5 @@ void TextureBase::loadHRI(const char *path) {
         std::cerr << "HDRI Texture failed to load at path: " << path << std::endl;
         stbi_image_free(data);
     }
+    stbi_set_flip_vertically_on_load(false);
 }

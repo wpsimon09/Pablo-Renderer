@@ -7,10 +7,13 @@
 RenderBuffer::RenderBuffer(int SCR_WIDTH, int SCR_HEIGHT) {
     glGenRenderbuffers(1, &this->ID);
     glCheckError();
+
     glBindRenderbuffer(GL_RENDERBUFFER, this->ID);
     glCheckError();
+
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT);
     glCheckError();
+
     glBindRenderbuffer(GL_RENDERBUFFER,0);
     glCheckError();
 }
