@@ -22,6 +22,7 @@ void IBLPipeLine::generateIBLTextures() {
     //-----------------------
     this->hdrToCubeMap->execute(*this->inputHDRI);
     this->envMap = std::move(this->hdrToCubeMap->result);
+    this->envMap->setSamplerID(7);
 
     //----------------------
     // CREATE IRRADIANCE MAP
