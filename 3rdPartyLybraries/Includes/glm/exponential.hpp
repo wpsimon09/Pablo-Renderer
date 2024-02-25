@@ -27,7 +27,7 @@ namespace glm
 
 	/// Returns 'base' raised to the power 'exponent'.
 	///
-	/// @param base Floating point value. pow function is defined for input values of 'base' defined in the range (inf-, inf+) in the limit of the type qualifier.
+	/// @param base Floating point value. pow function is defined for inputHDRI values of 'base' defined in the range (inf-, inf+) in the limit of the type qualifier.
 	/// @param exponent Floating point value representing the 'exponent'.
 	///
 	/// @see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/pow.xml">GLSL pow man page</a>
@@ -37,7 +37,7 @@ namespace glm
 
 	/// Returns the natural exponentiation of x, i.e., e^x.
 	///
-	/// @param v exp function is defined for input values of v defined in the range (inf-, inf+) in the limit of the type qualifier.
+	/// @param v exp function is defined for inputHDRI values of v defined in the range (inf-, inf+) in the limit of the type qualifier.
 	/// @tparam L An integer between 1 and 4 included that qualify the dimension of the vector.
 	/// @tparam T Floating-point scalar types.
 	///
@@ -50,7 +50,7 @@ namespace glm
 	/// returns the value y which satisfies the equation x = e^y.
 	/// Results are undefined if v <= 0.
 	///
-	/// @param v log function is defined for input values of v defined in the range (0, inf+) in the limit of the type qualifier.
+	/// @param v log function is defined for inputHDRI values of v defined in the range (0, inf+) in the limit of the type qualifier.
 	/// @tparam L An integer between 1 and 4 included that qualify the dimension of the vector.
 	/// @tparam T Floating-point scalar types.
 	///
@@ -61,7 +61,7 @@ namespace glm
 
 	/// Returns 2 raised to the v power.
 	///
-	/// @param v exp2 function is defined for input values of v defined in the range (inf-, inf+) in the limit of the type qualifier.
+	/// @param v exp2 function is defined for inputHDRI values of v defined in the range (inf-, inf+) in the limit of the type qualifier.
 	/// @tparam L An integer between 1 and 4 included that qualify the dimension of the vector.
 	/// @tparam T Floating-point scalar types.
 	///
@@ -73,7 +73,7 @@ namespace glm
 	/// Returns the base 2 log of x, i.e., returns the value y,
 	/// which satisfies the equation x = 2 ^ y.
 	///
-	/// @param v log2 function is defined for input values of v defined in the range (0, inf+) in the limit of the type qualifier.
+	/// @param v log2 function is defined for inputHDRI values of v defined in the range (0, inf+) in the limit of the type qualifier.
 	/// @tparam L An integer between 1 and 4 included that qualify the dimension of the vector.
 	/// @tparam T Floating-point scalar types.
 	///
@@ -84,7 +84,7 @@ namespace glm
 
 	/// Returns the positive square root of v.
 	///
-	/// @param v sqrt function is defined for input values of v defined in the range [0, inf+) in the limit of the type qualifier.
+	/// @param v sqrt function is defined for inputHDRI values of v defined in the range [0, inf+) in the limit of the type qualifier.
 	/// @tparam L An integer between 1 and 4 included that qualify the dimension of the vector.
 	/// @tparam T Floating-point scalar types.
 	///
@@ -95,7 +95,7 @@ namespace glm
 
 	/// Returns the reciprocal of the positive square root of v.
 	///
-	/// @param v inversesqrt function is defined for input values of v defined in the range [0, inf+) in the limit of the type qualifier.
+	/// @param v inversesqrt function is defined for inputHDRI values of v defined in the range [0, inf+) in the limit of the type qualifier.
 	/// @tparam L An integer between 1 and 4 included that qualify the dimension of the vector.
 	/// @tparam T Floating-point scalar types.
 	///

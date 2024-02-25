@@ -82,7 +82,7 @@ namespace glm
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackUnorm2x16: f / 65535.0
 	///
-	/// The first component of the returned vector will be extracted from the least significant bits of the input;
+	/// The first component of the returned vector will be extracted from the least significant bits of the inputHDRI;
 	/// the last component will be extracted from the most significant bits.
 	///
 	/// @see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/unpackUnorm2x16.xml">GLSL unpackUnorm2x16 man page</a>
@@ -95,7 +95,7 @@ namespace glm
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackSnorm2x16: clamp(f / 32767.0, -1, +1)
 	///
-	/// The first component of the returned vector will be extracted from the least significant bits of the input;
+	/// The first component of the returned vector will be extracted from the least significant bits of the inputHDRI;
 	/// the last component will be extracted from the most significant bits.
 	///
 	/// @see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/unpackSnorm2x16.xml">GLSL unpackSnorm2x16 man page</a>
@@ -108,7 +108,7 @@ namespace glm
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackUnorm4x8: f / 255.0
 	///
-	/// The first component of the returned vector will be extracted from the least significant bits of the input;
+	/// The first component of the returned vector will be extracted from the least significant bits of the inputHDRI;
 	/// the last component will be extracted from the most significant bits.
 	///
 	/// @see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/unpackUnorm4x8.xml">GLSL unpackUnorm4x8 man page</a>
@@ -121,7 +121,7 @@ namespace glm
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackSnorm4x8: clamp(f / 127.0, -1, +1)
 	///
-	/// The first component of the returned vector will be extracted from the least significant bits of the input;
+	/// The first component of the returned vector will be extracted from the least significant bits of the inputHDRI;
 	/// the last component will be extracted from the most significant bits.
 	///
 	/// @see <a href="http://www.opengl.org/sdk/docs/manglsl/xhtml/unpackSnorm4x8.xml">GLSL unpackSnorm4x8 man page</a>

@@ -6,11 +6,26 @@
 
 IBLPipeLine::IBLPipeLine(const char *path) {
     this->hdrToCubeMap = std::make_unique<HDRToCubeMap>();
-    this->hdriTexture = std::make_unique<TextureHDRi>(path);
+    this->hdrToIrradiance = std::make_unique<Irradiance>();
+    this->inputHDRI = std::make_unique<TextureHDRi>(path);
+
 }
 
 void IBLPipeLine::generateIBLTextures() {
-    this->hdriTexture->setSamplerID(0);
-    this->hdrToCubeMap->execute(*this->hdriTexture);
+    //----------------------
+    // CONFIGURE HRI TEXTURE
+    //----------------------
+    this->inputHDRI->setSamplerID(0);
+
+    //-----------------------
+    // CREATE ENVIRONMENT MAP
+    //-----------------------
+    this->hdrToCubeMap->execute(*this->inputHDRI);
     this->envMap = std::move(this->hdrToCubeMap->result);
+
+    //----------------------
+    // CREATE IRRADIANCE MAP
+    //----------------------
+    this->hdrToIrradiance->execute(*this->envMap);
+    this->irradianceMap = std::move(this->hdrToIrradiance->result);
 }
