@@ -18,9 +18,12 @@ glm::mat4 captureViews[] =
                 glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
         };
 
-FrameBufferCube::FrameBufferCube(int width, int height, std::shared_ptr<Shader> shader, std::shared_ptr<Texture3D> texture, unsigned int mipLevels) {
+FrameBufferCube::FrameBufferCube(int width, int height, std::shared_ptr<Shader> shader, unsigned int mipLevels) {
     // SHADER
     this->shader = std::move(shader);
+
+    // CUBE COLOR ATTACHMENT
+    this->colorAttachmentCube = std::make_shared<Texture3D>(width, height, GL_RGBA32F);
 
     // FRAME BUFFER CREATING
     glGenFramebuffers(1,&this->ID);
@@ -30,9 +33,6 @@ FrameBufferCube::FrameBufferCube(int width, int height, std::shared_ptr<Shader> 
     this->renderBuffer = std::make_unique<RenderBuffer>(width, height);
     this->renderBuffer->bind();
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
-
-    // TEXTURE 3D
-    this->colorAttachmentCube = std::move(texture);
 
     // MIP LEVELS
     this->mipLevels = mipLevels;
@@ -56,27 +56,34 @@ FrameBufferCube::FrameBufferCube(int width, int height, std::shared_ptr<Shader> 
 
 
 std::shared_ptr<Texture3D> FrameBufferCube::renderToSelf(TextureBase input,unsigned int mipLevel) {
-    glViewport(0,0, (float)width, (float)height);
+    //ShaderHelper::setTextureToShader(shader, input, "envMap");
+    glViewport(0, 0, width, height);
+
+    shader->use();
+    shader->setInt("envMap", input.samplerID);
+    glActiveTexture(GL_TEXTURE0 + input.samplerID);
+    glCheckError();
+    glBindTexture(GL_TEXTURE_2D, input.ID);
     glCheckError();
 
-    glCheckError();
-
-    ShaderHelper::setTextureToShader(shader, input, "envMap" );
-
-    for (int i = 0; i <6 ; ++i) {
-        glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, colorAttachmentCube->ID, mipLevel);
+    for (int i = 0; i < 6; ++i) {
+        this->bind();
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                               colorAttachmentCube->ID, mipLevel);
         glCheckError();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+        //!!!!!!!!!!!!! FRAME BUFFER STATUS IS INCOMPLETE_ATTACHEMENT !!!!!!!!!!!!!!!!!!!!!!
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         glCheckError();
         ShaderHelper::setTransfomrationMatrices(shader, glm::mat4(1.0), captureViews[i], captureProjection);
         this->geometry->render();
     }
-    //glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+
     this->unbind();
     return std::move(colorAttachmentCube);
 }
-
 //-------------
 // C++ RULE 3/5
 //-------------

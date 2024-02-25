@@ -15,7 +15,7 @@
 
 class FrameBufferCube:public OGLObject {
 public:
-    FrameBufferCube(int width, int height, std::shared_ptr<Shader> shader, std::shared_ptr<Texture3D> texture,unsigned int mipLevels = 0);
+    FrameBufferCube(int width, int height, std::shared_ptr<Shader> shader, unsigned int mipLevels = 0);
     GLuint ID;
     std::shared_ptr<Texture3D> renderToSelf(TextureBase input,unsigned int mipLevel = 0);
 

@@ -10,7 +10,7 @@ HDRToCubeMap::HDRToCubeMap(): BaseStage() {
 }
 
 void HDRToCubeMap::execute(TextureBase input) {
-    this->frameBufferCube = std::make_unique<FrameBufferCube>(1980, 1980,this->shader,std::move(result));
+    this->frameBufferCube = std::make_unique<FrameBufferCube>(1980, 1980,this->shader);
     this->result = this->frameBufferCube->renderToSelf(input);
     //texture has no sampler probably here
     //delete this->frameBufferCube;

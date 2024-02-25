@@ -21,6 +21,7 @@ public:
     bool isPBRMaterial;
     std::string fullPath;
     unsigned int samplerID;
+    int texWidth, texHeight;
 
     void changeFilteringMethod(GLenum mag, GLenum min);
 
@@ -39,7 +40,6 @@ protected:
     void loadPNG(const char*path);
     void loadHRI(const char*path);
 
-    int texWidth, texHeight;
 private:
     void release() {
         if (ID != 0) {
