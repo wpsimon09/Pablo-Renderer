@@ -34,7 +34,7 @@ void PBRPipeline::generateHdrCubeMap(Shader shader, unsigned int VAO) {
     shader.setInt("equirectangularMap", 0);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, this->HDRTexture);
-    this->frameBuffer->mountTexture(hdrCubeMap);
+    this->frameBuyffer->mountTexture(hdrCubeMap);
     glViewport(0,0, this->frameBuffer->texture->getDimentions().x, this->frameBuffer->texture->getDimentions().y);
     this->frameBuffer->use();
     for (int i = 0; i < 6; ++i)

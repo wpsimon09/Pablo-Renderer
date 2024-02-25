@@ -33,7 +33,7 @@ public:
 
     void changeFilteringMethod(GLenum mag, GLenum min);
 protected:
-    std::unique_ptr<Shader> shader;
+    std::shared_ptr<Shader> shader;
     std::unique_ptr<RenderBuffer> renderBuffer;
     std::unique_ptr<Texture2D> colorAttachment;
     int width, height;

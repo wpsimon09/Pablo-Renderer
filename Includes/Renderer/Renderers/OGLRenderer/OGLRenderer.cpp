@@ -16,6 +16,7 @@ void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
     glClearColor(0.11f, 0.11f, 0.11f, 1.0f);
 
     this->scene->update();
+    this->scene->light->render();
     if(Scene::root){
         renderSceneGraph(*Scene::root);
     }else
@@ -31,7 +32,6 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         auto shader = renderable->getShader();
 
         this->scene->light->update(shader);
-        this->scene->light->render();
         this->scene->camera->update(shader);
 
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
