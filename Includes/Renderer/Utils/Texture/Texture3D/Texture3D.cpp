@@ -4,7 +4,7 @@
 
 #include "Texture3D.h"
 
-Texture3D::Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum type):TextureBase() {
+Texture3D::Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt): TextureBase() {
     this->type = GL_TEXTURE_CUBE_MAP;
     this->type_string = "GL_TEXTURE_CUBE_MAP";
     this->wasFound = true;
@@ -14,18 +14,33 @@ Texture3D::Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum type):TextureBase() {
     this->texHeight = SCR_HEIGHT;
 
     glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &this->ID);
+    glCheckError();
+
     glBindTexture(GL_TEXTURE_CUBE_MAP, this->ID);
+    glCheckError();
 
     for (int i = 0; i < 6; ++i)
     {
-        glTexStorage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 1, type, SCR_WIDTH, SCR_HEIGHT);
+        glTexStorage2D(GL_TEXTURE_CUBE_MAP , 1, foramt, SCR_WIDTH, SCR_HEIGHT);
+        glCheckError();
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glCheckError();
+
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glCheckError();
+
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glCheckError();
+
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glCheckError();
+
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glCheckError();
+
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    glCheckError();
 }
 
 

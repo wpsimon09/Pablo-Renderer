@@ -52,7 +52,7 @@ public:
     //------------------------
     // C++ RULE 3/5 PRINCIPLES
     //------------------------
-    ~TextureBase() { release(); }
+    ~TextureBase() = default; //{ release(); }
 
     TextureBase(const TextureBase &) = default;
 

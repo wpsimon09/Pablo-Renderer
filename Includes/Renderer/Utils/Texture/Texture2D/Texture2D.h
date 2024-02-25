@@ -21,6 +21,7 @@ public:
 
     explicit Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum colorChannels = GL_RGB, GLenum internalFomrat = GL_RGB,
                        GLenum dataType = GL_UNSIGNED_BYTE);
+    ~Texture2D() = default;
 };
 
 

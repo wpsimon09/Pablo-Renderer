@@ -36,6 +36,8 @@ public:
     void setModelMatrix(glm::mat4 modelMatrix){this->modelMatrix = modelMatrix;}
 
     std::shared_ptr<Shader> getShader();
+
+    ~Renderable()=default;
 };
 
 

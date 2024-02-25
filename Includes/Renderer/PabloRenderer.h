@@ -15,6 +15,8 @@ public:
 
     void init();
     void render();
+
+    ~PabloRenderer()=default;
 private:
     inline static std::unique_ptr<PabloRenderer> instace ;
 

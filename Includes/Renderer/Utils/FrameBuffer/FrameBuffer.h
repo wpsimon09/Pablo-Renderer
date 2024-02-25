@@ -47,6 +47,7 @@ public:
     //-------------
     // C++ RULE 3/5
     //-------------
+    ~FrameBuffer() = default;
     FrameBuffer(const FrameBuffer &) = delete;
 
     FrameBuffer &operator=(const FrameBuffer &) = delete;

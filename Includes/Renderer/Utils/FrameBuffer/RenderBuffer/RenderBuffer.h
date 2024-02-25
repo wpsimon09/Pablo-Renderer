@@ -6,6 +6,7 @@
 #define PABLO_RENDERER_RENDERBUFFER_H
 #include "glad/glad.h"
 #include "Renderer/Utils/OGLObject/OGLObject.h"
+#include "Debug/DebugLogger.h"
 
 class RenderBuffer: public OGLObject{
 public:

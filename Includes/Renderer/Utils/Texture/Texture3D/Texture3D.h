@@ -6,11 +6,12 @@
 #define PABLO_RENDERER_TEXTURE3D_H
 
 #include "Renderer/Utils/Texture/TextureBase.h"
+#include "Debug/DebugLogger.h"
 
 class Texture3D:public TextureBase {
 public:
     Texture3D()=default;
-    Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum type = GL_RGB);
+    Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt = GL_RGB);
 ;
 };
 
