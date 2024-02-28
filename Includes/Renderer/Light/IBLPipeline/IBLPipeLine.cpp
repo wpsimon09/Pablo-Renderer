@@ -5,9 +5,11 @@
 #include "IBLPipeLine.h"
 
 IBLPipeLine::IBLPipeLine(const char *path) {
+    this->inputHDRI = std::make_unique<TextureHDRi>(path);
+
     this->hdrToCubeMap = std::make_unique<HDRToCubeMap>();
     this->hdrToIrradiance = std::make_unique<Irradiance>();
-    this->inputHDRI = std::make_unique<TextureHDRi>(path);
+    this->hdrToPrefilterMap = std::make_shared<PrefilterMap>();
 
 }
 
@@ -29,4 +31,10 @@ void IBLPipeLine::generateIBLTextures() {
     //----------------------
     this->hdrToIrradiance->execute(*this->envMap);
     this->irradianceMap = std::move(this->hdrToIrradiance->result);
+
+    //---------------------
+    // CREATE PREFILTER MAP
+    //---------------------
+    this->hdrToPrefilterMap->execute(*this->envMap);
+    this->prefilterMap = std::move(this->hdrToPrefilterMap->result);
 }

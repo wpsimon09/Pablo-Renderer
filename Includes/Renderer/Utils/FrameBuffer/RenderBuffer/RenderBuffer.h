@@ -17,6 +17,8 @@ public:
     void bind() override;
 
     void unbind() override;
+
+    void updateDimetions(unsigned int width, unsigned int heihgt);
 };
 
 

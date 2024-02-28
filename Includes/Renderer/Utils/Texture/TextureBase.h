@@ -35,6 +35,8 @@ public:
 
     void unbind() override;
 
+    void generateMipMaps();
+
     const std::string &getFullPath() const { return this->fullPath; };
 protected:
     void loadPNG(const char*path);
@@ -48,7 +50,6 @@ private:
     };
 
 public:
-
     //------------------------
     // C++ RULE 3/5 PRINCIPLES
     //------------------------

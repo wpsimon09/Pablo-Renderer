@@ -70,10 +70,11 @@ std::shared_ptr<Texture3D> FrameBufferCube::renderToSelf(TextureBase input,unsig
         ShaderHelper::setTransfomrationMatrices(shader, glm::mat4(1.0), captureViews[i], captureProjection);
         this->geometry->render();
     }
+    colorAttachmentCube->bind();
     glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
     this->unbind();
-    return std::move(colorAttachmentCube);
+    return colorAttachmentCube;
 }
 //-------------
 // C++ RULE 3/5
@@ -106,6 +107,15 @@ void FrameBufferCube::unbind() {
 void FrameBufferCube::bind() {
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
     glCheckError();
+}
+
+void FrameBufferCube::updateDimetions(unsigned int widht, unsigned int height) {
+    this->bind();
+    this->renderBuffer->updateDimetions(widht, height);
+    this->renderBuffer->bind();
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
+    glCheckError();
+    this->unbind();
 }
 
 

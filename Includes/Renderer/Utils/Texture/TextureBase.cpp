@@ -122,3 +122,8 @@ void TextureBase::loadHRI(const char *path) {
     }
     stbi_set_flip_vertically_on_load(false);
 }
+
+void TextureBase::generateMipMaps() {
+    glBindTexture(this->type, this->ID);
+    glGenerateMipmap(this->type);
+}
