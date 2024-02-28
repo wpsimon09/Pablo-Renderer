@@ -23,7 +23,7 @@ FrameBufferCube::FrameBufferCube(int width, int height, std::shared_ptr<Shader> 
     this->shader = std::move(shader);
 
     // CUBE COLOR ATTACHMENT
-    this->colorAttachmentCube = std::make_shared<Texture3D>(width, height, GL_RGBA32F);
+    this->colorAttachmentCube = std::make_shared<Texture3D>(width, height, GL_RGBA32F,mipLevels);
 
     // FRAME BUFFER CREATING
     glGenFramebuffers(1,&this->ID);

@@ -4,7 +4,7 @@
 
 #include "Texture3D.h"
 
-Texture3D::Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt): TextureBase() {
+Texture3D::Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt, unsigned int levels): TextureBase() {
     this->type = GL_TEXTURE_CUBE_MAP;
     this->type_string = "GL_TEXTURE_CUBE_MAP";
     this->wasFound = true;
@@ -19,7 +19,7 @@ Texture3D::Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt): TextureBase(
     glBindTexture(GL_TEXTURE_CUBE_MAP, this->ID);
     glCheckError();
 
-    glTexStorage2D(GL_TEXTURE_CUBE_MAP , 1, foramt, SCR_WIDTH, SCR_HEIGHT);
+    glTexStorage2D(GL_TEXTURE_CUBE_MAP , levels, foramt, SCR_WIDTH, SCR_HEIGHT);
     glCheckError();
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

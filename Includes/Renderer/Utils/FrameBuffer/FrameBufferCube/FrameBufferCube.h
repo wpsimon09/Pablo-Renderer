@@ -15,7 +15,7 @@
 
 class FrameBufferCube : public OGLObject {
 public:
-    FrameBufferCube(int width, int height, std::shared_ptr<Shader> shader, unsigned int mipLevels = 0);
+    FrameBufferCube(int width, int height, std::shared_ptr<Shader> shader, unsigned int mipLevels = 1);
 
     GLuint ID;
 
