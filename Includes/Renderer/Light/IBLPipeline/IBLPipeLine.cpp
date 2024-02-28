@@ -10,6 +10,7 @@ IBLPipeLine::IBLPipeLine(const char *path) {
     this->hdrToCubeMap = std::make_unique<HDRToCubeMap>();
     this->hdrToIrradiance = std::make_unique<Irradiance>();
     this->hdrToPrefilterMap = std::make_shared<PrefilterMap>();
+    this->brdfStage = std::make_shared<BRDF>();
 
 }
 
@@ -37,4 +38,10 @@ void IBLPipeLine::generateIBLTextures() {
     //---------------------
     this->hdrToPrefilterMap->execute(*this->envMap);
     this->prefilterMap = std::move(this->hdrToPrefilterMap->result);
+
+    //------------------------
+    // CREATE BRDF LUT TEXTURE
+    //------------------------
+    this->brdfStage->execute(*this->envMap);
+    this->BRDFLutTexture = std::move(this->brdfStage->result);
 }

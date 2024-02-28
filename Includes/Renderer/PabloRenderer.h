@@ -16,6 +16,7 @@ public:
     void init();
     void render();
 
+    void setDebugTexture(std::shared_ptr<Texture2D> debugTexture);
     ~PabloRenderer()=default;
 private:
     inline static std::unique_ptr<PabloRenderer> instace ;
@@ -27,6 +28,7 @@ private:
     GLFWwindow* window;
 
     std::vector<std::unique_ptr<FrameBuffer>> frameBuffers;
+    std::unique_ptr<FrameBufferDebug> debugFrameBuffer;
 
     float deltaTime;
     float lastFrame;

@@ -5,9 +5,14 @@
 #ifndef PABLO_RENDERER_BRDF_H
 #define PABLO_RENDERER_BRDF_H
 
-
-class BRDF {
-
+#include "Renderer/Light/IBLPipeline/Stages/BaseStage.h"
+class BRDF: public BaseStage{
+public:
+    BRDF();
+    void execute(TextureBase input) override;
+    std::shared_ptr<Texture2D>result;
+protected:
+    std::unique_ptr<FrameBuffer> frameBuffer;
 };
 
 

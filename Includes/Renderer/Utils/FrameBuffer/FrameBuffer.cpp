@@ -4,8 +4,13 @@
 
 #include "FrameBuffer.h"
 
-FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable() {
-    this->shader = std::make_unique<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
+FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement):Renderable() {
+    if(!customShader){
+        this->shader = std::make_unique<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
+    }
+    else{
+        this->shader = customShader;
+    }
 
     //FRAME BUFFER CONFIG
     glCreateFramebuffers(1, &this->ID);
@@ -17,7 +22,12 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT):Renderable() {
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
 
     //COLOR ATTACHMENT
-    this->colorAttachment = std::make_unique<Texture2D>(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F);
+    if(!colorAttachment){
+        this->colorAttachment = std::make_unique<Texture2D>(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F);
+    }
+    else{
+        this->colorAttachment = std::move(customColorAttachement);
+    }
     this->colorAttachment->bind();
     this->colorAttachment->setSamplerID(0);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
@@ -50,7 +60,7 @@ void FrameBuffer::unbind() {
     glGetError();
 }
 
-const std::unique_ptr<Texture2D> & FrameBuffer::getRenderedResult() const {
+std::shared_ptr<Texture2D> FrameBuffer::getRenderedResult(){
     return this->colorAttachment;
 }
 

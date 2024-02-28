@@ -18,7 +18,8 @@ PabloRenderer::PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow *window) {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     this->frameBuffers.push_back(std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight));
-    this->frameBuffers.push_back(std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight));
+
+    this->debugFrameBuffer = std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight);
 }
 
 void PabloRenderer::init() {
@@ -26,9 +27,6 @@ void PabloRenderer::init() {
 }
 
 void PabloRenderer::render() {
-    TextureHDRi tex("Assets/Textures/HDR/sunrise.hdr");
-    FrameBufferDebug debug2(this->windowWidth, this->windowHeight);
-    debug2.changeTexture(std::move(tex));
 
     while (!glfwWindowShouldClose(window)){
         float currentFrame = static_cast<float>(glfwGetTime());
@@ -46,7 +44,6 @@ void PabloRenderer::render() {
         // ACTUAL RENDERING
         //-----------------
         this->renderer->render(this->frameBuffers[0]);
-        this->renderer->render(this->frameBuffers[1]);
 
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER
@@ -54,7 +51,8 @@ void PabloRenderer::render() {
         for(auto &frameBuffer: this->frameBuffers){
             frameBuffer->dispalyOnScreen();
         }
-        debug2.dispalyOnScreen();
+        debugFrameBuffer->dispalyOnScreen();
+
         glfwSwapBuffers(this->window);
         glfwPollEvents();
     }
@@ -103,4 +101,8 @@ void PabloRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos)
 
     instace->scene->camera->ProcessMouseMovement(xOffset, yOffset);
 
+}
+
+void PabloRenderer::setDebugTexture(std::shared_ptr<Texture2D> debugTexture) {
+    this->debugFrameBuffer->changeTexture(*debugTexture);
 }

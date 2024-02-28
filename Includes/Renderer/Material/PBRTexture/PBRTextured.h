@@ -7,6 +7,7 @@
 
 #include "Renderer/Material/Material.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
+#include "Renderer/Utils/Texture/TextureBase.h"
 #include "iostream"
 #include "vector"
 #include "ostream"
@@ -16,7 +17,7 @@ public:
     // assumption here is made that within the directory materials follow the following naming convention
     // the path parameter should be passed as
     // Assets/Textures/directory
-    // albedo.png/jpg, metallic.png/jpg, rougness.png/jpg
+    // albedo.png/jpg, metallic.png/jpg, rougness.png/jpg...
 
     /**
      * Loads material from texture folder
@@ -37,6 +38,7 @@ public:
 
 private:
     std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> textures;
+    std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> IBLtextures;
 };
 
 

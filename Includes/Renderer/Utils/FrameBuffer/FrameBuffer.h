@@ -17,9 +17,9 @@ class FrameBuffer : public OGLObject, public Renderable {
 public:
     GLuint ID;
 
-    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT);
+    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, std::shared_ptr<Shader> customShader = nullptr,std::unique_ptr<Texture2D> customColorAttachement = nullptr );
 
-    const std::unique_ptr<Texture2D> & getRenderedResult() const;
+    std::shared_ptr<Texture2D> getRenderedResult();
 
     void bind() override;
 
@@ -35,7 +35,7 @@ public:
 protected:
     std::shared_ptr<Shader> shader;
     std::unique_ptr<RenderBuffer> renderBuffer;
-    std::unique_ptr<Texture2D> colorAttachment;
+    std::shared_ptr<Texture2D> colorAttachment;
     int width, height;
 private:
     void clear() {

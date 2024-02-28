@@ -69,7 +69,7 @@ int main() {
     std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/forest.hdr");
     iblPipeLine->generateIBLTextures();
 
-    auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->prefilterMap, "enviromentMap");
+    auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
 
     //create renderable object
     std::unique_ptr<Renderable> skyboxCube = std::make_unique<Renderable>(std::move(cubeGeometry), std::move(skyBox));
@@ -104,8 +104,8 @@ int main() {
     scene->add(std::move(skyboxCube));
 
     PabloRenderer pabloRenderer(scene, window);
-
     pabloRenderer.init();
+    pabloRenderer.setDebugTexture(iblPipeLine->BRDFLutTexture);
 
     //------------------
     // LOAD PBR TEXTURES
