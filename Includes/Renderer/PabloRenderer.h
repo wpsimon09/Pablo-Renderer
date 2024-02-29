@@ -17,7 +17,8 @@ public:
     void render();
 
     void setDebugTexture(std::shared_ptr<Texture2D> debugTexture);
-    ~PabloRenderer()=default;
+
+    ~PabloRenderer(){};
 private:
     inline static std::unique_ptr<PabloRenderer> instace ;
 
