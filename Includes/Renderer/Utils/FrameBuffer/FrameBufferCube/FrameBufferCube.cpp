@@ -71,7 +71,9 @@ std::shared_ptr<Texture3D> FrameBufferCube::renderToSelf(TextureBase input,unsig
         this->geometry->render();
     }
     colorAttachmentCube->bind();
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    if(mipLevel >0){
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+    }
 
     this->unbind();
     return colorAttachmentCube;

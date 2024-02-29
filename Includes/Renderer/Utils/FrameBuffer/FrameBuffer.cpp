@@ -5,7 +5,7 @@
 #include "FrameBuffer.h"
 
 FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement):Renderable() {
-    if(!customShader){
+    if(customShader == nullptr){
         this->shader = std::make_unique<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
     }
     else{
@@ -20,6 +20,7 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> c
     this->renderBuffer = std::make_unique<RenderBuffer>(SCR_WIDTH, SCR_HEIGHT);
     this->renderBuffer->bind();
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
+    glCheckError();
 
     //COLOR ATTACHMENT
     if(customColorAttachement == nullptr){
@@ -34,7 +35,7 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> c
 
     //RENDERBUFFER SCREEN-SPACE QUAD CONFIG
     this->objectGeometry = std::make_unique<ScreenSpaceQuadGeometry>();
-    this->objectMaterial = std::make_unique<BasicMaterialTextured>(std::move(this->shader),*this->colorAttachment);
+    this->objectMaterial = std::make_unique<BasicMaterialTextured>(this->shader,*this->colorAttachment);
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
         std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
     }
@@ -75,8 +76,9 @@ void FrameBuffer::drawInsideSelf() {
     glViewport(0, 0, width, height);
     this->bind();
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    this->objectMaterial->configureShader();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //this->objectMaterial->configureShader();
+    this->shader->use();
     this->objectGeometry->render();
 }
 

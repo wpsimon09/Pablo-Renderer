@@ -9,7 +9,7 @@
 class BRDF: public BaseStage{
 public:
     BRDF();
-    void execute(TextureBase input) override;
+    void execute();
     std::shared_ptr<Texture2D>result;
 protected:
     std::unique_ptr<FrameBuffer> frameBuffer;

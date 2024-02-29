@@ -42,6 +42,6 @@ void IBLPipeLine::generateIBLTextures() {
     //------------------------
     // CREATE BRDF LUT TEXTURE
     //------------------------
-    this->brdfStage->execute(*this->envMap);
+    this->brdfStage->execute();
     this->BRDFLutTexture = std::move(this->brdfStage->result);
 }
