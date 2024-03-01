@@ -17,7 +17,7 @@ Texture2D::Texture2D() {
 }
 
 
-Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt) {
+Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt):TextureBase() {
     this->type = GL_TEXTURE_2D;
     this->isPBRMaterial = false;
     this->wasFound = true;

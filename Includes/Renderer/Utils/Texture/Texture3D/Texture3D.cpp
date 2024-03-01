@@ -31,14 +31,16 @@ Texture3D::Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt, unsigned int 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     glCheckError();
 
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, levels >1 ? GL_LINEAR_MIPMAP_LINEAR:GL_LINEAR);
     glCheckError();
 
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glCheckError();
 
-    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
-    glCheckError();
+    if(levels > 1){
+        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+        glCheckError();
+    }
 }
 
 

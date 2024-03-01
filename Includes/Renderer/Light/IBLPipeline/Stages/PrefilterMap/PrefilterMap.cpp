@@ -23,9 +23,7 @@ void PrefilterMap::execute(TextureBase input) {
         float rougness = (float)mip/(float)(maxMipMapLevels-1);
         shader->setFloat("rougness", rougness);
 
-        for (int i = 0; i < 6; ++i) {
-            this->frameBufferCube->renderToSelf(input, mip);
-        }
+        this->frameBufferCube->renderToSelf(input, mip);
     }
     this->result = frameBufferCube->colorAttachmentCube;
 }

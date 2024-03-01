@@ -40,7 +40,7 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> c
         std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
     }
     else{
-        std::cerr<<"!!!!!!! FRAME BUFFER NOT COMPL                                                                                                                                                                                                                                                                                                                                      ETE !!!!!!!!"<<std::endl;
+        std::cerr<<"!!!!!!! FRAME BUFFER NOT COMPLETE !!!!!!!!"<<std::endl;
     }
 
     this->width = SCR_WIDTH;

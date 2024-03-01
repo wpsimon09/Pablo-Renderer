@@ -122,6 +122,6 @@ void TextureBase::loadHRI(const char *path) {
 }
 
 void TextureBase::generateMipMaps() {
-    glBindTexture(this->type, this->ID);
-    glGenerateMipmap(this->type);
+    //glBindTexture(this->type, this->ID);
+    //glGenerateMipmap(this->type);
 }

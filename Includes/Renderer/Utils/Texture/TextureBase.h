@@ -12,7 +12,7 @@
 
 class TextureBase : public OGLObject {
 public:
-    TextureBase()=default;
+    TextureBase() {};
 
     GLuint ID;
     GLenum type;
