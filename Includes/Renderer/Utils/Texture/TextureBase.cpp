@@ -65,7 +65,8 @@ void TextureBase::loadPNG(const char *path) {
 
         glBindTexture(GL_TEXTURE_2D, this->ID);
         glCheckError();
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        //OpenGL throwing error at forestRock/displacement map
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, nrComponents >1 ? GL_UNSIGNED_BYTE:GL_BYTE, data);
         glCheckError();
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
