@@ -8,7 +8,7 @@
 #include "Renderer/Utils/OGLObject/OGLObject.h"
 #include "iostream"
 #include "stb_image.h"
-
+#include "Debug/DebugLogger.h"
 
 class TextureBase : public OGLObject {
 public:

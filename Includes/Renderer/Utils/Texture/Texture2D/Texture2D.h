@@ -11,7 +11,7 @@
 #include "memory"
 #include "Renderer/Utils/OGLObject/OGLObject.h"
 #include "Renderer/Utils/Texture/TextureBase.h"
-
+#include "Debug/DebugLogger.h"
 
 class Texture2D : public TextureBase  {
 public:

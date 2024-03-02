@@ -10,6 +10,8 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial):TextureBase() {
     this->type = GL_TEXTURE_2D;
     this->type_string = "GL_TEXTURE_2D";
     glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
+    glCheckError();
+
     this->loadPNG(path);
 }
 
@@ -25,17 +27,26 @@ Texture2D::Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt):TextureBase()
     this->texWidth = SCR_WIDTH;
     this->texHeight = SCR_HEIGHT;
     glCreateTextures(GL_TEXTURE_2D,1, &this->ID);
+    glCheckError();
 
     glBindTexture(GL_TEXTURE_2D, this->ID);
+    glCheckError();
+
     glTexStorage2D(GL_TEXTURE_2D, 1, foramt, SCR_WIDTH, SCR_HEIGHT);
+    glCheckError();
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+    glCheckError();
     //chceck the texture parameters here
     glBindTexture(GL_TEXTURE_2D,0);
+    glCheckError();
+
 }
 
 
