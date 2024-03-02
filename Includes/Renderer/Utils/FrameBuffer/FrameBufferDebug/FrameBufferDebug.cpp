@@ -7,7 +7,7 @@
 FrameBufferDebug::FrameBufferDebug(int width, int height) : FrameBuffer(width, height) {
     this->shader = std::make_shared<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/Debug/FrameBufferDebug2.glsl", "Small freme buffer shader");
     this->name = "Small frame buffer";
-    this->objectGeometry = std::make_unique<FrameBufferDebugGeometry>();
+    this->objectGeometry = std::make_unique<ScreenSpaceQuadGeometry>();
     this->objectMaterial = std::make_unique<BasicMaterialTextured>(this->shader, *this->colorAttachment);
 }
 

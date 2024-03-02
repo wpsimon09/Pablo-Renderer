@@ -125,3 +125,10 @@ void TextureBase::generateMipMaps() {
     //glBindTexture(this->type, this->ID);
     //glGenerateMipmap(this->type);
 }
+
+void TextureBase::setUnpaceAlligment(int alligment) {
+    this->bind();
+    glPixelStorei(GL_UNPACK_ALIGNMENT, alligment);
+    glPixelStorei(GL_PACK_ALIGNMENT, alligment);
+    this->unbind();
+}

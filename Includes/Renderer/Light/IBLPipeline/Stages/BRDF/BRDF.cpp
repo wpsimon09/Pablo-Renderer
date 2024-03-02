@@ -10,6 +10,7 @@ BRDF::BRDF() {
 
 void BRDF::execute() {
     auto colorAttachemnt = std::make_unique<Texture2D>(512,512, GL_RG16F);
+    colorAttachemnt->setUnpaceAlligment(6);
     this->frameBuffer = std::make_unique<FrameBuffer>(512,512, this->shader,std::move(colorAttachemnt));
     this->frameBuffer->drawInsideSelf();
     this->result = std::move(frameBuffer->getRenderedResult());

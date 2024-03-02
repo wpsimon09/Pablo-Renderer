@@ -37,6 +37,8 @@ public:
 
     void generateMipMaps();
 
+    void setUnpaceAlligment(int alligment);
+
     const std::string &getFullPath() const { return this->fullPath; };
 protected:
     void loadPNG(const char*path);
