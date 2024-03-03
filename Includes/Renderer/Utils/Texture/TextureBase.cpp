@@ -129,9 +129,8 @@ void TextureBase::generateMipMaps() {
     //glGenerateMipmap(this->type);
 }
 
-void TextureBase::setUnpaceAlligment(int alligment) {
+void TextureBase::setUnpackAlignment(int alligment) {
     this->bind();
     glPixelStorei(GL_UNPACK_ALIGNMENT, alligment);
-    glPixelStorei(GL_PACK_ALIGNMENT, alligment);
     this->unbind();
 }

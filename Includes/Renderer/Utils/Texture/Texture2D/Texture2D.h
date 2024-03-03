@@ -19,7 +19,7 @@ public:
 
     explicit Texture2D(const char *path, bool isPBRMaterial = false);
 
-    explicit Texture2D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt = GL_RGB);
+    explicit Texture2D(int width, int height, GLenum foramt = GL_RGB);
     ~Texture2D() = default;
 };
 

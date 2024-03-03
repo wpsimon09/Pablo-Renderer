@@ -76,9 +76,8 @@ void FrameBuffer::drawInsideSelf() {
     glViewport(0, 0, width, height);
     this->bind();
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //this->objectMaterial->configureShader();
-    this->shader->use();
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    this->objectMaterial->configureShader();
     this->objectGeometry->render();
 }
 
