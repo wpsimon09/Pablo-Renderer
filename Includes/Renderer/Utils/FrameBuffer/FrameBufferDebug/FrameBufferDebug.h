@@ -14,5 +14,4 @@ public:
     void changeTexture(TextureBase texture);
 };
 
-
 #endif //PABLO_RENDERER_FRAMEBUFFERDEBUG_H
