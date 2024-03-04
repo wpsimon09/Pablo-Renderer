@@ -62,6 +62,8 @@ int main() {
     std::shared_ptr<Shader> brdfLutTextureShader = std::make_shared<Shader>("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
     std::shared_ptr<Shader> lutDebug = std::make_shared<Shader>("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG");
     std::shared_ptr<Shader> proceduralFloorTextureShader = std::make_shared<Shader>("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
+    std::shared_ptr<Shader> PBRTexturedModelIBL = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR_IBL");
+    PBRTexturedModelIBL->supportsIBL = true;
 
     std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
     std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();
