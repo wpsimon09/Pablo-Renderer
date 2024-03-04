@@ -9,7 +9,7 @@ IBLPipeLine::IBLPipeLine(const char *path) {
 
     this->hdrToCubeMap = std::make_unique<HDRToCubeMap>();
     this->hdrToIrradiance = std::make_unique<Irradiance>();
-    this->hdrToPrefilterMap = std::make_shared<PrefilterMap>();
+    this->hdrToPrefilterMap = std::make_unique<PrefilterMap>();
     this->brdfStage = std::make_shared<BRDF>();
 
 }
@@ -31,17 +31,17 @@ void IBLPipeLine::generateIBLTextures() {
     // CREATE IRRADIANCE MAP
     //----------------------
     this->hdrToIrradiance->execute(*this->envMap);
-    this->iblTextures.push_back(std::move(this->hdrToIrradiance->result));
+    this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToIrradiance->result), "irradianceMap"));
 
     //---------------------
     // CREATE PREFILTER MAP
     //---------------------
     this->hdrToPrefilterMap->execute(*this->envMap);
-    this->iblTextures.push_back(std::move(this->hdrToPrefilterMap->result));
+    this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToPrefilterMap->result), "irradianceMap"));
 
     //------------------------
     // CREATE BRDF LUT TEXTURE
     //------------------------
     this->brdfStage->execute();
-    iblTextures.push_back(std::move(this->brdfStage->result));
+    iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->brdfStage->result), "irradianceMap"));
 }
