@@ -14,7 +14,7 @@ public:
     static void setTransfomrationMatrices(std::shared_ptr<Shader> shader, glm::mat4 model = glm::mat4(1.0f),
                                           glm::mat4 view = glm::mat4(1.0f), glm::mat4 projection = glm::mat4(1.0f));
 
-    static void setTextureToShader(std::shared_ptr<Shader> shader, TextureBase texture, std::string shaderName);
+    static void setTextureToShader(std::shared_ptr<Shader> shader, const TextureBase& texture, std::string shaderName);
 
 };
 #endif //PABLO_RENDERER_SHADERHELPER_H
