@@ -20,6 +20,9 @@ public:
     // GENERATED TEXTURES
     //-------------------
     std::shared_ptr<Texture3D> envMap;
+
+    std::vector<std::shared_ptr<TextureBase>> iblTextures;
+
     std::shared_ptr<Texture3D> irradianceMap;
     std::shared_ptr<Texture3D> prefilterMap;
     std::shared_ptr<Texture2D> BRDFLutTexture;

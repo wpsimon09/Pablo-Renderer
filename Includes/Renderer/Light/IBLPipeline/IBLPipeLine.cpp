@@ -31,17 +31,17 @@ void IBLPipeLine::generateIBLTextures() {
     // CREATE IRRADIANCE MAP
     //----------------------
     this->hdrToIrradiance->execute(*this->envMap);
-    this->irradianceMap = std::move(this->hdrToIrradiance->result);
+    this->iblTextures.push_back(std::move(this->hdrToIrradiance->result));
 
     //---------------------
     // CREATE PREFILTER MAP
     //---------------------
     this->hdrToPrefilterMap->execute(*this->envMap);
-    this->prefilterMap = std::move(this->hdrToPrefilterMap->result);
+    this->iblTextures.push_back(std::move(this->hdrToPrefilterMap->result));
 
     //------------------------
     // CREATE BRDF LUT TEXTURE
     //------------------------
     this->brdfStage->execute();
-    this->BRDFLutTexture = std::move(this->brdfStage->result);
+    iblTextures.push_back(std::move(this->brdfStage->result));
 }
