@@ -21,3 +21,14 @@ void ShaderHelper::setTextureToShader(std::shared_ptr<Shader> shader,  const Tex
     glCheckError();
 }
 
+void
+ShaderHelper::setTextureToShader(std::shared_ptr<Shader> shader, const TextureBase &texture, std::string shaderName,
+                                 int samplerID) {
+    shader->use();
+    shader->setInt(shaderName, texture.samplerID);
+    glActiveTexture(GL_TEXTURE0 + texture.samplerID);
+    glCheckError();
+    glBindTexture(texture.type, texture.ID);
+    glCheckError();
+}
+

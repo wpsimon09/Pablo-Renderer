@@ -16,5 +16,7 @@ public:
 
     static void setTextureToShader(std::shared_ptr<Shader> shader, const TextureBase& texture, std::string shaderName);
 
+    static void setTextureToShader(std::shared_ptr<Shader> shader, const TextureBase& texture, std::string shaderName, int samplerID);
+
 };
 #endif //PABLO_RENDERER_SHADERHELPER_H

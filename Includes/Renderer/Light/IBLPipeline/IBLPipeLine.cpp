@@ -45,3 +45,9 @@ void IBLPipeLine::generateIBLTextures() {
     this->brdfStage->execute();
     iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->brdfStage->result), "irradianceMap"));
 }
+
+void IBLPipeLine::configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount) {
+    for (auto& iblTexture: this->iblTextures) {
+        ShaderHelper::setTextureToShader(shader,*iblTexture->type, iblTexture->shaderName, maximalSamplerCount++);
+    }
+}

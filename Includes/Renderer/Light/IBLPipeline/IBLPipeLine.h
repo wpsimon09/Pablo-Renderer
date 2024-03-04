@@ -15,17 +15,16 @@ class IBLPipeLine {
 public:
     explicit IBLPipeLine(const char* path);
     void generateIBLTextures();
+    void configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount);
 
     std::shared_ptr<Texture3D> envMap;
 
     //-------------------
     // GENERATED TEXTURES
     //-------------------
-
     //vector of shared pointers of PBR Material struct with texture and shader name
     // bit confusing but it iss what it iss
     std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> iblTextures;
-
 private:
 
     std::shared_ptr<TextureHDRi> inputHDRI;
