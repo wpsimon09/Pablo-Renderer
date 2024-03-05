@@ -22,6 +22,10 @@ class Renderable {
 protected:
     std::unique_ptr<Geometry> objectGeometry;
     std::unique_ptr<Material> objectMaterial;
+public:
+    const std::unique_ptr<Material> &getObjectMaterial() const;
+
+protected:
     glm::mat4 modelMatrix;
 public:
     std::string name;

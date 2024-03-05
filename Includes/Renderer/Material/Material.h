@@ -39,6 +39,10 @@ public:
     virtual void configureShader(){};
     ~Material() = default;
     virtual void printLog() const{};
+protected:
+    int samplerCount;
+public:
+    int getSamplerCount() const {  return samplerCount;  }
 };
 
 

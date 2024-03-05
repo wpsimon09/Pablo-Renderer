@@ -27,6 +27,14 @@ void Scene::add(std::unique_ptr<SceneNode> child, std::shared_ptr<SceneNode> par
     parent->addChild(std::move(child));
 }
 
+const std::shared_ptr<IBLPipeLine> &Scene::getIblPipeLine() const {
+    return iblPipeLine;
+}
+
+void Scene::setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine) {
+    Scene::iblPipeLine = iblPipeLine;
+}
+
 
 
 

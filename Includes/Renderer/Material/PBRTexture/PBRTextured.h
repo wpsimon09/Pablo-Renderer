@@ -37,7 +37,6 @@ public:
     ~PBRTextured()= default;
 
 private:
-    int samplerCount;
     std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> textures;
     std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> IBLtextures;
 };

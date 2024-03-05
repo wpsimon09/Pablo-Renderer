@@ -24,15 +24,14 @@ public:
 
     void setup();
 
-    void setIblPiepline(const std::shared_ptr<IBLPipeLine>& iblPipeLine){
-        this->iblPipeLine = iblPipeLine;
-    }
-
     std::unique_ptr<Camera> camera;
     std::unique_ptr<Light> light;
 private:
-    std::weak_ptr<IBLPipeLine> iblPipeLine;
+    std::shared_ptr<IBLPipeLine> iblPipeLine;
+public:
+    const std::shared_ptr<IBLPipeLine> &getIblPipeLine() const;
 
+    void setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine);
 };
 
 

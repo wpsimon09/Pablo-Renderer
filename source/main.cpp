@@ -68,7 +68,7 @@ int main() {
     std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
     std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();
 
-    std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
@@ -104,6 +104,8 @@ int main() {
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
     scene->add(std::move(skyboxCube));
+
+    scene->setIblPipeLine(iblPipeLine);
 
     PabloRenderer pabloRenderer(scene, window);
     pabloRenderer.init();
