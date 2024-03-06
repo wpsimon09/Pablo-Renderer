@@ -26,7 +26,6 @@ public:
     // bit confusing but it iss what it iss
     std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> iblTextures;
 private:
-
     std::shared_ptr<TextureHDRi> inputHDRI;
 
     std::unique_ptr<PrefilterMap> hdrToPrefilterMap;

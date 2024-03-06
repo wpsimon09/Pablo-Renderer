@@ -37,17 +37,19 @@ void IBLPipeLine::generateIBLTextures() {
     // CREATE PREFILTER MAP
     //---------------------
     this->hdrToPrefilterMap->execute(*this->envMap);
-    this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToPrefilterMap->result), "irradianceMap"));
+    this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToPrefilterMap->result), "prefilterMap"));
 
     //------------------------
     // CREATE BRDF LUT TEXTURE
     //------------------------
     this->brdfStage->execute();
-    iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->brdfStage->result), "irradianceMap"));
+    iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->brdfStage->result), "BRDFtexture"));
 }
 
 void IBLPipeLine::configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount) {
+    int i = maximalSamplerCount;
     for (auto& iblTexture: this->iblTextures) {
-        ShaderHelper::setTextureToShader(shader,*iblTexture->type, iblTexture->shaderName, maximalSamplerCount++);
+        ShaderHelper::setTextureToShader(shader,*iblTexture->type, iblTexture->shaderName, i);
+        i++;
     }
 }

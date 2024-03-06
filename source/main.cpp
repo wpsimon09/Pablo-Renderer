@@ -78,7 +78,7 @@ int main() {
 
     std::unique_ptr<Renderable> gridRenderable = std::make_unique<Grid>();
 
-    std::unique_ptr<ModelSceneNode> sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
+    std::unique_ptr<ModelSceneNode> sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
     sunbro_helmet->setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
     sunbro_helmet->setScale(glm::vec3(0.07f));
