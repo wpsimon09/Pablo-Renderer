@@ -34,7 +34,6 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         if(shader->supportsIBL){
             scene->getIblPipeLine()->configureShader(shader, renderable->getObjectMaterial()->getSamplerCount());
         }
-
         this->scene->light->update(shader);
         this->scene->camera->update(shader);
 

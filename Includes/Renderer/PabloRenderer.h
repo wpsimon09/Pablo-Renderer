@@ -16,7 +16,7 @@ public:
     void init();
     void render();
 
-    void setDebugTexture(std::shared_ptr<Texture2D> debugTexture);
+    void setDebugTexture(std::shared_ptr<TextureBase> debugTexture);
 
     ~PabloRenderer(){};
 private:

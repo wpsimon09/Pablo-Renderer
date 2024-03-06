@@ -110,6 +110,8 @@ int main() {
     PabloRenderer pabloRenderer(scene, window);
     pabloRenderer.init();
 
+    pabloRenderer.setDebugTexture(iblPipeLine->iblTextures[2]->type);
+
     //------------------
     // LOAD PBR TEXTURES
     //------------------
