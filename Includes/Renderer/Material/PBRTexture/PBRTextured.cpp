@@ -44,10 +44,7 @@ void PBRTextured::configureShader() {
 
     for (auto &texture : this->textures) {
         if(texture != nullptr ){
-            this->shader->use();
-            this->shader->setInt(texture->shaderName, texture->samplerID);
-            glActiveTexture(GL_TEXTURE0 + texture->samplerID);
-            glBindTexture(GL_TEXTURE_2D, texture->type->ID);
+            ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);
         }
     }
 }

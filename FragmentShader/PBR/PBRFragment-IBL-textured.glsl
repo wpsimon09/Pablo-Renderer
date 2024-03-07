@@ -115,8 +115,8 @@ void main()
 {
     //sampler the texture maps
     albedo = texture(_albedoMap, fs_in.TexCoords).rgb;
-    metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
     roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
+    metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
     ao = texture(_aoMap, fs_in.TexCoords).r;
     emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
 
@@ -199,8 +199,7 @@ void main()
     vec3 color = ambient + Lo;
 
     //HDR
-    color = color / (color + vec3(1.0));
+    //color = color / (color + vec3(1.0));
 
-    FragColor = vec4(specular, 1.0);
-
+    FragColor = vec4(diffuse, 1.0);
 }
