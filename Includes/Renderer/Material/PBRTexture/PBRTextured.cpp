@@ -44,7 +44,8 @@ void PBRTextured::configureShader() {
 
     for (auto &texture : this->textures) {
         if(texture != nullptr ){
-            ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);
+            texture->type->setSamplerID(texture->samplerID);
+            ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName);
         }
     }
 }

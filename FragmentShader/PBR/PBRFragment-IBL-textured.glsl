@@ -29,7 +29,7 @@ uniform sampler2D _albedoMap;
 uniform sampler2D _rougnessMetalnessMap;
 uniform sampler2D _normalMap;
 uniform sampler2D _aoMap;
-uniform sampler2D _emmisionMap;
+//uniform sampler2D _emmisionMap;
 
 const float PI = 3.14159265359;
 
@@ -118,7 +118,7 @@ void main()
     roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
     metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
     ao = texture(_aoMap, fs_in.TexCoords).r;
-    emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
+    //emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
 
     //normal
     //vec3 N = normalize(fs_in.Normal);
@@ -194,12 +194,12 @@ void main()
     vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
     vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
     
-    vec3 ambient = (kD * diffuse + specular ) * ao ;
-    ambient += ( 4.0 * emmisive);
+    vec3 ambient = (kD * diffuse + specular ) * 0.3 ;
+    //ambient += ( 4.0 * emmisive);
     vec3 color = ambient + Lo;
 
     //HDR
-    //color = color / (color + vec3(1.0));
+    color = color / (color + vec3(1.0));
 
-    FragColor = vec4(diffuse, 1.0);
+    FragColor = vec4(color, 1.0);
 }
