@@ -103,6 +103,6 @@ void PabloRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos)
 
 }
 
-void PabloRenderer::setDebugTexture(std::shared_ptr<Texture2D> debugTexture) {
+void PabloRenderer::setDebugTexture(std::shared_ptr<TextureBase> debugTexture) {
     this->debugFrameBuffer->changeTexture(*debugTexture);
 }

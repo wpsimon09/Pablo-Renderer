@@ -48,4 +48,8 @@ Renderable::Renderable() {
 
 }
 
+const std::unique_ptr<Material> &Renderable::getObjectMaterial() const {
+    return objectMaterial;
+}
+
 

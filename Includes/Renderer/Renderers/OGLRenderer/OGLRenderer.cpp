@@ -31,12 +31,17 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         //shared_ptr here
         auto shader = renderable->getShader();
 
-        this->scene->light->update(shader);
         this->scene->camera->update(shader);
 
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
 
+        this->scene->light->update(shader);
+
         sceneNode.render();
+
+        if(shader->supportsIBL){
+            scene->getIblPipeLine()->configureShader(shader, renderable->getObjectMaterial()->getSamplerCount());
+        }
     }
     for (auto &childNode : sceneNode.getChildren()) {
         this->renderSceneGraph(*childNode);

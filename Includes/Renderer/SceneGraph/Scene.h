@@ -11,7 +11,7 @@
 #include "SceneNode/SceneNode.h"
 #include "Renderer/SceneGraph/Floor/Floor.h"
 #include "Renderer/Renderable/Grid/Grid.h"
-
+#include "Renderer/Light/IBLPipeline/IBLPipeLine.h"
 class Scene {
 public:
     Scene();
@@ -26,7 +26,12 @@ public:
 
     std::unique_ptr<Camera> camera;
     std::unique_ptr<Light> light;
+private:
+    std::shared_ptr<IBLPipeLine> iblPipeLine;
+public:
+    const std::shared_ptr<IBLPipeLine> &getIblPipeLine() const;
 
+    void setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine);
 };
 
 

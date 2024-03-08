@@ -11,6 +11,7 @@
 #include "iostream"
 #include "vector"
 #include "ostream"
+#include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 class PBRTextured : public Material{
 public:
     // ASSUMPTION WARNING

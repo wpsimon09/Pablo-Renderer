@@ -62,11 +62,13 @@ int main() {
     std::shared_ptr<Shader> brdfLutTextureShader = std::make_shared<Shader>("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
     std::shared_ptr<Shader> lutDebug = std::make_shared<Shader>("VertexShader/LutTextureDebugVertex.glsl", "FragmentShader/LutTextureDebugFragment.glsl", "LUT_Texture_qDEBUG");
     std::shared_ptr<Shader> proceduralFloorTextureShader = std::make_shared<Shader>("VertexShader/FloorGridVertex.glsl", "FragmentShader/FloorGridFragment.glsl", "Floor grid baker");
+    std::shared_ptr<Shader> PBRTexturedModelIBL = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR_IBL");
+    PBRTexturedModelIBL->supportsIBL = true;
 
     std::unique_ptr<Geometry> cubeGeometry = std::make_unique<CubeGeometry>();
     std::unique_ptr<Geometry> planeGeometry = std::make_unique<PlaneGeometry>();
 
-    std::unique_ptr<IBLPipeLine> iblPipeLine = std::make_unique<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
@@ -76,16 +78,16 @@ int main() {
 
     std::unique_ptr<Renderable> gridRenderable = std::make_unique<Grid>();
 
-    std::unique_ptr<ModelSceneNode> sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModel, "Assets/Model/sunbro_helmet/scene.gltf");
+    std::unique_ptr<ModelSceneNode> sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
     sunbro_helmet->setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
     sunbro_helmet->setScale(glm::vec3(0.07f));
 
-    std::unique_ptr<ModelSceneNode> sword  = std::make_unique<ModelSceneNode>(PBRTexturedModel, "Assets/Model/sword/scene.gltf");
+    std::unique_ptr<ModelSceneNode> sword  = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sword/scene.gltf");
     sword->setScale(glm::vec3(0.09f));
     sword->setPositions(glm::vec3(5.0f, 2.0f, 0.0f));
 
-    std::unique_ptr<ModelSceneNode> withcerMedailon = std::make_unique<ModelSceneNode>(PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
+    std::unique_ptr<ModelSceneNode> withcerMedailon = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/witcher_medalion/scene.gltf");
     withcerMedailon->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
     withcerMedailon->setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
     withcerMedailon->setScale(glm::vec3(0.3));
@@ -103,9 +105,12 @@ int main() {
     scene->add(std::move(floor));
     scene->add(std::move(skyboxCube));
 
+    scene->setIblPipeLine(iblPipeLine);
+
     PabloRenderer pabloRenderer(scene, window);
     pabloRenderer.init();
-    pabloRenderer.setDebugTexture(iblPipeLine->BRDFLutTexture);
+
+    pabloRenderer.setDebugTexture(iblPipeLine->iblTextures[2]->type);
 
     //------------------
     // LOAD PBR TEXTURES

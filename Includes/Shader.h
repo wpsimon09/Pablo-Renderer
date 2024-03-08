@@ -13,6 +13,7 @@ class Shader
 {
 public:
     unsigned int ID;
+    bool supportsIBL = false;
     std::string name;
     Shader(const char* vertexPath, const char* fragmentPath, std::string name = "undefined")
     {

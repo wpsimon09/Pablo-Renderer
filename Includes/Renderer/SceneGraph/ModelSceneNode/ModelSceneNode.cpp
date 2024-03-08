@@ -78,7 +78,6 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
                 tempBitanget.y = mesh->mBitangents[i].y;
                 tempBitanget.z = mesh->mBitangents[i].z;
             }
-
             vertex.bitangent = tempBitanget;
         } else
             vertex.uv = glm::vec2(0.0f, 0.0f);
