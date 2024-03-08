@@ -83,11 +83,11 @@ int main() {
     sunbro_helmet->setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
     sunbro_helmet->setScale(glm::vec3(0.07f));
 
-    std::unique_ptr<ModelSceneNode> sword  = std::make_unique<ModelSceneNode>(PBRTexturedModel, "Assets/Model/sword/scene.gltf");
+    std::unique_ptr<ModelSceneNode> sword  = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sword/scene.gltf");
     sword->setScale(glm::vec3(0.09f));
     sword->setPositions(glm::vec3(5.0f, 2.0f, 0.0f));
 
-    std::unique_ptr<ModelSceneNode> withcerMedailon = std::make_unique<ModelSceneNode>(PBRTexturedModel, "Assets/Model/witcher_medalion/scene.gltf");
+    std::unique_ptr<ModelSceneNode> withcerMedailon = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/witcher_medalion/scene.gltf");
     withcerMedailon->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
     withcerMedailon->setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
     withcerMedailon->setScale(glm::vec3(0.3));
