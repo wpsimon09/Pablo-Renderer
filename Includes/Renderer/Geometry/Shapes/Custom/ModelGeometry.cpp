@@ -5,7 +5,6 @@
 #include "ModelGeometry.h"
 
 #include <utility>
-#include "Model.h"
 
 
 ModelGeometry::ModelGeometry(std::string name, std::vector<Vertex> verticies,std::vector<unsigned int> indecies): Geometry() {
