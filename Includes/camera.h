@@ -49,7 +49,7 @@ public:
         WorldUp = up;
         Yaw = yaw;
         Pitch = pitch;
-        this->projection = glm::perspective(glm::radians(this->Zoom), (float)800 / (float)600, 0.1f, 200.0f);
+        this->projection = glm::perspective(glm::radians(this->Zoom), (float)800 / (float)600, 0.1f, 70.0f);
         updateCameraVectors();
     }
     // constructor with scalar values

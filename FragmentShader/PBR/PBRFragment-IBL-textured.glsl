@@ -118,7 +118,7 @@ void main()
     roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
     metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
     ao = texture(_aoMap, fs_in.TexCoords).r;
-    //emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
+    emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
 
     //normal
     //vec3 N = normalize(fs_in.Normal);
@@ -195,7 +195,7 @@ void main()
     vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
     
     vec3 ambient = (kD * diffuse + specular ) * 0.3 ;
-    //ambient += ( 4.0 * emmisive);
+    ambient += ( 4.0 * emmisive);
     vec3 color = ambient + Lo;
 
     //HDR
