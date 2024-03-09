@@ -34,7 +34,3 @@ const std::shared_ptr<IBLPipeLine> &Scene::getIblPipeLine() const {
 void Scene::setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine) {
     Scene::iblPipeLine = iblPipeLine;
 }
-
-
-
-

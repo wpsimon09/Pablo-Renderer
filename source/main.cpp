@@ -69,7 +69,7 @@ int main() {
     auto cubeGeometry = std::make_unique<CubeGeometry>();
     auto planeGeometry = std::make_unique<PlaneGeometry>();
 
-    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/pure_sky.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
@@ -106,7 +106,7 @@ int main() {
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
-    //scene->add(std::move(skyboxCube));
+//    scene->add(std::move(skyboxCube));
 
     scene->setIblPipeLine(iblPipeLine);
 

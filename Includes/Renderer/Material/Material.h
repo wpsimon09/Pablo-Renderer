@@ -40,7 +40,7 @@ public:
     ~Material() = default;
     virtual void printLog() const{};
 protected:
-    int samplerCount;
+    int samplerCount = 0;
 public:
     int getSamplerCount() const {  return samplerCount;  }
 };
