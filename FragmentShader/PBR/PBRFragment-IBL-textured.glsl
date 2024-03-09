@@ -29,7 +29,7 @@ uniform sampler2D _albedoMap;
 uniform sampler2D _rougnessMetalnessMap;
 uniform sampler2D _normalMap;
 uniform sampler2D _aoMap;
-//uniform sampler2D _emmisionMap;
+uniform sampler2D _emmisionMap;
 
 const float PI = 3.14159265359;
 
