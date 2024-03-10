@@ -11,19 +11,37 @@
 #include "Renderer/Light/IBLPipeline/Stages/BRDF/BRDF.h"
 #include "Renderer/Material/Material.h"
 
+/***
+ * Class responsible for executing splits sum approximation based on the provided HDRi equirectangular map of the environment
+ */
 class IBLPipeLine {
 public:
+    /***
+     * Creates instance of the IBL pipeline
+     * @param path path to the equirectangular map of the environment
+     */
     explicit IBLPipeLine(const char* path);
+
+    /***
+     * Generates and stores the generated textures inside vector
+     */
     void generateIBLTextures();
+
+    /**
+     * Pass the generated textures to the provided shader
+     * @param shader shader that has ability to render IBL
+     * @param maximalSamplerCount number indicating which is the last used texture sampler eg.: albedo (0), normal(1), max sampler is hence 1
+     */
     void configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount);
 
+    /***
+     * Cube map texture of the
+     */
     std::shared_ptr<Texture3D> envMap;
 
-    //-------------------
-    // GENERATED TEXTURES
-    //-------------------
-    //vector of shared pointers of PBR Material struct with texture and shader name
-    // bit confusing but it iss what it iss
+    /***
+     * Generated IBL textures
+     */
     std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> iblTextures;
 private:
     std::shared_ptr<TextureHDRi> inputHDRI;

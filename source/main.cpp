@@ -54,7 +54,7 @@ int main() {
     auto PBRShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
     auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
     auto PBRTexturedModel = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
-    auto PBRTexutreIBLOBJ = std::make_shared<Shader>("","PBRFragment-IBL-textured-object.glsl", "PBR For simple geometry")
+    auto PBRTexutreIBLOBJ = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","PBRFragment-IBL-textured-object.glsl", "PBR For simple geometry");
     auto shadowMapShader = std::make_shared<Shader>("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
     auto floorShader = std::make_shared<Shader>("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
     auto finalShaderStage = std::make_shared<Shader>("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader");

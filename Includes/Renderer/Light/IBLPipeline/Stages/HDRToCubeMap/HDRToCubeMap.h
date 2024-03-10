@@ -8,6 +8,9 @@
 #include "Renderer/Light/IBLPipeline/Stages/BaseStage.h"
 #include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
 
+/***
+ * Converts equirectangular map to the Cube Map
+ */
 class HDRToCubeMap:public BaseStage {
 public:
     HDRToCubeMap();
