@@ -18,6 +18,10 @@
 #include "Renderer/Material/PBRTexture/PBRTextured.h"
 #include "Renderer/Geometry/Shapes/Custom/ModelGeometry.h"
 
+/***
+ * Class representing renderable object
+ * stores material and geometry that will be used for the rendering
+ */
 class Renderable {
 protected:
     std::unique_ptr<Geometry> objectGeometry;
@@ -30,10 +34,25 @@ protected:
 public:
     std::string name;
 
+    /***
+     * Creates instance of the Renderable class
+     * @param geometry Geometry for renterable to have
+     * @param material Material for renderable to hav e
+     * @param name name of the renderable default is "rendereable"
+     */
     Renderable(std::unique_ptr<Geometry> geometry, std::unique_ptr<Material>  material, std::string name = "renderable");
+
+    /***
+    * Creates instance of the renderable class
+    * @param shader Shader for renderable to use
+    */
     Renderable(std::shared_ptr<Shader> shader);
     Renderable();
 
+    /***
+     * Initiates the glDrawElements call and calls configureShader method on the material class
+     * Mehtod will draw the renderable to the currently bound GL_FRAMEBUFFER
+     */
     virtual void render();
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 

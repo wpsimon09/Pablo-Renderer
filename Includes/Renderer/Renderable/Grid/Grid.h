@@ -10,8 +10,16 @@
 #include "Renderer/Geometry/Shapes/GridPlane/GridGeometry.h"
 #include "Renderer/Material/BasicMaterialColor/BasicMaterialColor.h"
 
+/***
+ * Predefined renderable to represent the grid
+ */
 class Grid: public Renderable {
 public:
+    /***
+     * Creates a grid
+     * Material: basic material color (white)
+     * Geometry: grid geometry
+     */
     explicit Grid();
 private:
     std::unique_ptr<Shader> mainShader;
