@@ -8,43 +8,77 @@
 #include "Renderer/Utils/Transformations/Transformations.h"
 #include "Renderer/Renderable/Renderable.h"
 
+/***
+ * Scene graph pattern implementation
+ */
 class SceneNode {
 public:
+    /***
+     * Creates a new scene node
+     * @param renderable renderable which scene node posses
+     */
     SceneNode(std::unique_ptr<Renderable> renderable = NULL);
+
     ~SceneNode();
+
 public:
 
-    const std::unique_ptr<Renderable> & getRenderable() const ;
+    const std::unique_ptr<Renderable> &getRenderable() const;
+
     void setRenderable(std::unique_ptr<Renderable> renderable);
 
+    /***
+     * Adds child to self
+     * @param sceneNode child to be added
+     */
     void addChild(std::unique_ptr<SceneNode> sceneNode);
+
+    /***
+     * Updates self and child's positions and other parameters
+     */
     void update();
+
+    /***
+     * Renders self and all the children to the currently bound GL_FRAMEBUFFER
+     */
     void render();
 
+    /***
+     * Getter for children
+     * @return reference to the all children owned by the scene node
+     */
     const std::vector<std::unique_ptr<SceneNode>> &getChildren() const;
 
     std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorStart();
+
     std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorEnd();
 
     //facade
-    void setPositions(glm::vec3 position)   {this->transformation->setPosition(position);}
-    glm::vec3 getPosition() const {return this->transformation->getPosition();}
+    void setPositions(glm::vec3 position) { this->transformation->setPosition(position); }
 
-    void setRotations(glm::vec3 rotationsEurel) {this->transformation->setRotations(rotationsEurel);}
-    const glm::vec3 getRotations() const {return this->transformation->getRotations(); }
+    glm::vec3 getPosition() const { return this->transformation->getPosition(); }
 
-    void setScale(glm::vec3 scale) {this->transformation->setScale(scale);}
-    const glm::vec3 getScale() const {return this->transformation->getScale();}
+    void setRotations(glm::vec3 rotationsEurel) { this->transformation->setRotations(rotationsEurel); }
 
-    const glm::mat4 getModelMatrix() const {return this->transformation->getModelMatrix();}
+    const glm::vec3 getRotations() const { return this->transformation->getRotations(); }
 
-    const unsigned long getNumberOfChildren() const{return this->children.size();}
+    void setScale(glm::vec3 scale) { this->transformation->setScale(scale); }
+
+    const glm::vec3 getScale() const { return this->transformation->getScale(); }
+
+    const glm::mat4 getModelMatrix() const { return this->transformation->getModelMatrix(); }
+
+    const unsigned long getNumberOfChildren() const { return this->children.size(); }
 
 protected:
-    SceneNode* parent;
+    SceneNode *parent;
     std::unique_ptr<Renderable> renderable;
 
     std::unique_ptr<Transformations> transformation;
+
+    /***
+     * Children owned by the scene node
+     */
     std::vector<std::unique_ptr<SceneNode>> children;
 };
 

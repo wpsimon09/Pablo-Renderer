@@ -11,7 +11,7 @@ Scene::Scene() {
 }
 
 
-void Scene::update(Shader *shader) {
+void Scene::update() {
     Scene::root->update();
 }
 
