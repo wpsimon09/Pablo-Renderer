@@ -24,10 +24,10 @@
  */
 class Renderable {
 protected:
-    std::unique_ptr<Geometry> objectGeometry;
-    std::unique_ptr<Material> objectMaterial;
+    std::shared_ptr<Geometry> objectGeometry;
+    std::shared_ptr<Material> objectMaterial;
 public:
-    const std::unique_ptr<Material> &getObjectMaterial() const;
+    const std::shared_ptr<Material> &getObjectMaterial() const;
 
 protected:
     glm::mat4 modelMatrix;
@@ -40,7 +40,7 @@ public:
      * @param material Material for renderable to hav e
      * @param name name of the renderable default is "rendereable"
      */
-    Renderable(std::unique_ptr<Geometry> geometry, std::unique_ptr<Material>  material, std::string name = "renderable");
+    Renderable(std::shared_ptr<Geometry> geometry, std::shared_ptr<Material>  material, std::string name = "renderable");
 
     /***
     * Creates instance of the renderable class

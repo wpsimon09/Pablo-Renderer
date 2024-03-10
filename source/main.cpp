@@ -55,6 +55,8 @@ int main() {
     auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
     auto PBRTexturedModel = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
     auto PBRTexutreIBLOBJ = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","PBRFragment-IBL-textured-object.glsl", "PBR For simple geometry");
+    PBRTexutreIBLOBJ->supportsIBL = true;
+
     auto shadowMapShader = std::make_shared<Shader>("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
     auto floorShader = std::make_shared<Shader>("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
     auto finalShaderStage = std::make_shared<Shader>("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader");
@@ -67,10 +69,9 @@ int main() {
     auto PBRTexturedModelIBL = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR_IBL");
     PBRTexturedModelIBL->supportsIBL = true;
 
-    auto cubeGeometry = std::make_unique<CubeGeometry>();
+    auto cubeGeometry = std::make_shared<CubeGeometry>();
     auto planeGeometry = std::make_unique<PlaneGeometry>();
-
-    auto goldCubeMaterial = std::make_unique<PBRTextured>(PBRTexturedModelIBL, "Assets/Textures/PBR/Gold");
+    auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexturedModelIBL, "Assets/Textures/PBR/Gold");
 
     auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
     iblPipeLine->generateIBLTextures();
@@ -78,9 +79,14 @@ int main() {
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
 
     //create renderable object
-    auto skyboxCube = std::make_unique<Renderable>(std::move(cubeGeometry), std::move(skyBox));
+    auto skyboxCube = std::make_unique<Renderable>(cubeGeometry, std::move(skyBox));
 
     auto gridRenderable = std::make_unique<Grid>();
+
+    auto goldCubeRenderable = std::make_unique<Renderable>(cubeGeometry,goldCubeMaterial);
+    auto goldCubeSceneNode = std::make_unique<SceneNode>(std::move(goldCubeRenderable));
+    goldCubeSceneNode->setPositions(glm::vec3(-3.0f, 1.0f, 0.0f));
+
 
     auto sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
@@ -109,6 +115,7 @@ int main() {
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
+    scene->add(std::move(goldCubeSceneNode));
     //scene->add(std::move(skyboxCube));
 
     scene->setIblPipeLine(iblPipeLine);

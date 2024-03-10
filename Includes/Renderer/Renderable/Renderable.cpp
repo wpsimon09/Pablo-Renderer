@@ -21,7 +21,7 @@ std::ostream &operator<<(std::ostream &os, Renderable &obj) {
 }
 
 
-Renderable::Renderable(std::unique_ptr<Geometry> geometry, std::unique_ptr<Material>  material, std::string name) {
+Renderable::Renderable(std::shared_ptr<Geometry> geometry, std::shared_ptr<Material>  material, std::string name) {
     this->name = std::move(name);
     this->objectGeometry = std::move(geometry);
     this->objectMaterial = std::move(material);
@@ -48,7 +48,7 @@ Renderable::Renderable() {
 
 }
 
-const std::unique_ptr<Material> &Renderable::getObjectMaterial() const {
+const std::shared_ptr<Material> &Renderable::getObjectMaterial() const {
     return objectMaterial;
 }
 
