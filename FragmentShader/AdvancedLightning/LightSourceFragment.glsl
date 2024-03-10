@@ -14,5 +14,5 @@ void main() {
 	if(texColor.a < 0.1)
 		discard;
 
-	FragmentColor = vec4(lightColor, 1.0f);
+	FragmentColor = vec4(1.0,1.0,1.0, 1.0f);
 }

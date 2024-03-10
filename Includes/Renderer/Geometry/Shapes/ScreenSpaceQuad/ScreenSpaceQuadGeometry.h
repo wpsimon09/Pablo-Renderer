@@ -7,8 +7,15 @@
 
 #include "Renderer/Geometry/Geometry.h"
 
+/***
+ * Geometry representing the whole screen mostly used for FrameBuffer rendering
+ */
 class ScreenSpaceQuadGeometry: public Geometry {
 public:
+    /***
+     * Creates an instance of the Screen space quad geometry
+     * @param name name for the geometry
+     */
     explicit ScreenSpaceQuadGeometry(std::string name = "SCREEN SPACE QUAD");
 };
 

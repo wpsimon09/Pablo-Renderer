@@ -54,6 +54,7 @@ int main() {
     auto PBRShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
     auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
     auto PBRTexturedModel = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-Textured-Model.glsl", "PBRTexturedModel");
+    auto PBRTexutreIBLOBJ = std::make_shared<Shader>("","PBRFragment-IBL-textured-object.glsl", "PBR For simple geometry")
     auto shadowMapShader = std::make_shared<Shader>("VertexShader/AdvancedLightning/ShadowMapVertex.glsl", "FragmentShader/AdvancedLightning/ShadowMapFragement.glsl", "shadow map");
     auto floorShader = std::make_shared<Shader>("VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl", "floor");
     auto finalShaderStage = std::make_shared<Shader>("VertexShader/AdvancedLightning/FinalVertex.glsl", "FragmentShader/AdvancedLightning/FinalFragment.glsl", "final shader");
@@ -69,7 +70,9 @@ int main() {
     auto cubeGeometry = std::make_unique<CubeGeometry>();
     auto planeGeometry = std::make_unique<PlaneGeometry>();
 
-    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    auto goldCubeMaterial = std::make_unique<PBRTextured>(PBRTexturedModelIBL, "Assets/Textures/PBR/Gold");
+
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
@@ -104,9 +107,9 @@ int main() {
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
-    scene->add(std::move(gridSceneNode));
+    //scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
-//    scene->add(std::move(skyboxCube));
+    scene->add(std::move(skyboxCube));
 
     scene->setIblPipeLine(iblPipeLine);
 

@@ -7,9 +7,16 @@
 
 #include "Renderer/Geometry/Geometry.h"
 
+/***
+ * Geometry representing plane that spans through 200m
+ */
 class HugePlane: public Geometry {
 public:
-    explicit HugePlane(std::string name = "plane");
+    /***
+     * Creates an instance of the Huge Plane geometry
+     * @param name name for the geometry instance
+     */
+    explicit HugePlane(std::string name = "huge plane");
 };
 
 

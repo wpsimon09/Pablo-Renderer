@@ -11,11 +11,11 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     this->position = std::make_unique<LightProperty<glm::vec3>>(position, "lightPositions[0]");
     this->color = std::make_unique<LightProperty<glm::vec3>>(color, "lightColors[0]");
 
-    std::unique_ptr<Geometry> geometry = std::make_unique<ScreenSpaceQuadGeometry>();
-    std::unique_ptr<Material> material = std::make_unique<BasicMaterialTextured>(std::make_shared<Shader>("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png", "lightTexture");
+    auto geometry = std::make_unique<ScreenSpaceQuadGeometry>();
+    auto material = std::make_unique<BasicMaterialTextured>(std::make_shared<Shader>("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png", "lightTexture");
     material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
-    std::unique_ptr<Renderable> lightRenderable = std::make_unique<Renderable>(std::move(geometry), std::move(material));
+    auto lightRenderable = std::make_unique<Renderable>(std::move(geometry), std::move(material));
     this->lightSceneNode = std::make_shared<SceneNode>(std::move(lightRenderable));
     this->lightSceneNode->setScale(glm::vec3(0.2));
     this->lightSceneNode->setPositions(this->position->property);

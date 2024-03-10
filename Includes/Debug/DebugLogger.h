@@ -6,6 +6,10 @@
 #define PABLO_RENDERER_DEBUGLOGGER_H
 #include "glad.h"
 #include "iostream"
+
+/**
+ * Checks for openGL errors
+ * */
 GLenum glCheckError_(const char *file, int line);
 
 #define glCheckError() glCheckError_(__FILE__, __LINE__)

@@ -16,11 +16,11 @@ void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
     this->scene->update();
-    this->scene->light->render();
     if(Scene::root){
         renderSceneGraph(*Scene::root);
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
+    this->scene->light->render();
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {

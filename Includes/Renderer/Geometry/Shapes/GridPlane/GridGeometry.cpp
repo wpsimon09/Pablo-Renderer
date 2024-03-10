@@ -4,26 +4,33 @@
 
 #include "GridGeometry.h"
 
-GridGeometry::GridGeometry(): Geometry() {
+GridGeometry::GridGeometry(float size, int divisions) : Geometry() {
     std::vector<float> vertices;
-    float gridSize = 400.0f;
-    int divisions = 80;
-    float step = gridSize / divisions;
 
-    for (int i = -divisions; i <= divisions; ++i){
-        vertices.push_back(i * step); vertices.push_back(0.0f); vertices.push_back(-gridSize);
-        vertices.push_back(i * step); vertices.push_back(0.0f); vertices.push_back(gridSize);
-        vertices.push_back(-gridSize); vertices.push_back(0.0f); vertices.push_back(i * step);
-        vertices.push_back(gridSize); vertices.push_back(0.0f); vertices.push_back(i * step);
+    float step = size / divisions;
+
+    for (int i = -divisions; i <= divisions; ++i) {
+        vertices.push_back(i * step);
+        vertices.push_back(0.0f);
+        vertices.push_back(-size);
+        vertices.push_back(i * step);
+        vertices.push_back(0.0f);
+        vertices.push_back(size);
+        vertices.push_back(-size);
+        vertices.push_back(0.0f);
+        vertices.push_back(i * step);
+        vertices.push_back(size);
+        vertices.push_back(0.0f);
+        vertices.push_back(i * step);
     }
 
     float vertexData[vertices.size()];
 
     std::copy(vertices.begin(), vertices.end(), vertexData);
 
-    this->vao = std::make_unique<VAO>(vertices.data(), sizeof(vertexData)/sizeof(float), false ,false);
+    this->vao = std::make_unique<VAO>(vertices.data(), sizeof(vertexData) / sizeof(float), false, false);
     this->shapes = GL_LINES;
     this->name = "GRID";
-    this->numVerticies = vertices.size()/3;
+    this->numVerticies = vertices.size() / 3;
     this->numIndecies = 0;
 }

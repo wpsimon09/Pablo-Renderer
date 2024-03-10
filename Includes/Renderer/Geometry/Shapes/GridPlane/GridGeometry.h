@@ -7,9 +7,17 @@
 
 #include "Renderer/Geometry/Geometry.h"
 
+/***
+ * Creates a grid formed with lines
+ */
 class GridGeometry:public Geometry{
 public:
-    GridGeometry();
+    /***
+     * Creates instance of the gird geomtry
+     * @param size size of the grid
+     * @param divisions number of divisions
+     */
+    explicit GridGeometry(float size = 400.0f, int divisions = 80);
 };
 
 

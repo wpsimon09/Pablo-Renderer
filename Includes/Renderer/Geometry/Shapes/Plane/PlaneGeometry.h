@@ -8,8 +8,15 @@
 #include "Renderer/Geometry/Geometry.h"
 
 
+/***
+ * Class representing geometry of the plane
+ */
 class PlaneGeometry: public Geometry {
 public:
+    /***
+     * Creates an instance of the PalneGeometry class
+     * @param name name for the geometry default is "plane"
+     */
     explicit PlaneGeometry(std::string name = "plane");
 
 };

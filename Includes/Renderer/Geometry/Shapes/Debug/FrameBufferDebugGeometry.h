@@ -7,8 +7,14 @@
 
 #include "Renderer/Geometry/Geometry.h"
 
-class FrameBufferDebugGeometry :public Geometry{
+/***
+ * Represents geometry of the small square that server as placeholder for displaying color attachment of the GL_FRAMEBUFFER
+ */
+class FrameBufferDebugGeometry : public Geometry {
 public:
+    /***
+     * Creates the instance of the frame buffer debug geometry
+     */
     FrameBufferDebugGeometry();
 };
 
