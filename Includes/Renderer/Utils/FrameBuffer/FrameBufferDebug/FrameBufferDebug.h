@@ -10,7 +10,8 @@
 
 /***
  * Represent debug frame buffer which is inherited from FrameBuffer class
- * Only difference is in the geometry of the FrameBuffer which is set to debug frame buffer geomtry
+ * Only difference is in the geometry of the FrameBuffer which is set to debug frame buffer geometry
+ * @inherit FrameBuffer
  */
 class FrameBufferDebug: public FrameBuffer {
 public:

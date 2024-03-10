@@ -22,7 +22,7 @@ int main() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-    glfwWindowHint(GLFW_SAMPLES, 16);
+    glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Pablo-renderer", NULL, NULL);
@@ -107,9 +107,9 @@ int main() {
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
-    //scene->add(std::move(gridSceneNode));
+    scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
-    scene->add(std::move(skyboxCube));
+    //scene->add(std::move(skyboxCube));
 
     scene->setIblPipeLine(iblPipeLine);
 
