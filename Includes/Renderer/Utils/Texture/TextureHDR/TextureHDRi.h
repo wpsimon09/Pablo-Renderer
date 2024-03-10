@@ -7,6 +7,10 @@
 
 #include "Renderer/Utils/Texture/TextureBase.h"
 
+/***
+ * Class representing HDRTexture
+ * @inherit TextureBase
+ */
 class TextureHDRi:public TextureBase {
 public:
     TextureHDRi()=default;

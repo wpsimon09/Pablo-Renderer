@@ -8,11 +8,14 @@
 #include "Renderer/Utils/Texture/TextureBase.h"
 #include "Debug/DebugLogger.h"
 
+/***
+ * Class representing GL_CUBEMAP_TEXTURE
+ * @inherit TextureBase
+ */
 class Texture3D:public TextureBase {
 public:
     Texture3D()=default;
     Texture3D(int SCR_WIDTH, int SCR_HEIGHT, GLenum foramt = GL_RGB, unsigned int levels = 1);
-;
 };
 
 #endif //PABLO_RENDERER_TEXTURE3D_H
