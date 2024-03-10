@@ -12,22 +12,6 @@ PBRColor::PBRColor(std::shared_ptr<Shader> shader, glm::vec3 albedo, float metal
 }
 
 
-PBRMaterial<glm::vec3> *PBRColor::getAlbedo() const {
-    return albedo.get();
-}
-
-PBRMaterial<float> *PBRColor::getMetalness() const {
-    return metalness.get();
-}
-
-PBRMaterial<float> *PBRColor::getRougness() const {
-    return rougness.get();
-}
-
-PBRMaterial<float> *PBRColor::getAo() const {
-    return ao.get();
-}
-
 std::ostream &operator<<(std::ostream &os, const PBRColor &mat) {
     os<<"PBR material using COLORS has following properties"<<std::endl;
 

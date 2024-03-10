@@ -8,24 +8,37 @@
 #include "Renderer/Material/Material.h"
 #include "Renderer/Utils/Texture/Texture3D/Texture3D.h"
 
-struct CubeMapUnifrom{
+/***
+ * Structure representing cube map which is later passed to the shader as a uniform
+ */
+struct CubeMapUnifrom {
     Texture3D cubeMap;
     std::string shaderName;
 
-    CubeMapUnifrom(Texture3D cubeMapTexture, std::string shaderName){
+    /***
+     * Creates the unifrom
+     * @param cubeMapTexture cube map texture that will be used as sky-box
+     * @param shaderName name of the uniform in the shader
+     */
+    CubeMapUnifrom(Texture3D cubeMapTexture, std::string shaderName) {
         this->cubeMap = std::move(cubeMapTexture);
         this->shaderName = std::move(shaderName);
     }
 };
 
-class SkyBoxMaterial: public Material {
+/**
+ * class representing skybox  materials?
+ */
+class SkyBoxMaterial : public Material {
 public:
-    SkyBoxMaterial(std::shared_ptr<Shader> shader,Texture3D skyBox, std::string shaderName);
-
+    SkyBoxMaterial(std::shared_ptr<Shader> shader, Texture3D skyBox, std::string shaderName);
+    /**
+    * passes all relevant uniform to the shader
+    */
     void configureShader() override;
 
 private:
-    CubeMapUnifrom* cubeMapUnifrom;
+    CubeMapUnifrom *cubeMapUnifrom;
 };
 
 

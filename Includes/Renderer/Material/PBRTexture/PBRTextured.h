@@ -12,14 +12,12 @@
 #include "vector"
 #include "ostream"
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
+
+/***
+ * Class representing PBR material with textures
+ */
 class PBRTextured : public Material{
 public:
-    // ASSUMPTION WARNING
-    // assumption here is made that within the directory materials follow the following naming convention
-    // the path parameter should be passed as
-    // Assets/Textures/directory
-    // albedo.png/jpg, metallic.png/jpg, rougness.png/jpg...
-
     /**
      * Loads material from texture folder
      * @param fileFormat format of the texture file default value is .png
@@ -29,17 +27,30 @@ public:
      * */
     explicit PBRTextured(std::shared_ptr<Shader> shader, std::string pathToTheDirectory,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
 
+    /***
+     * Creates empty instance of the class
+     * @param shader shader the material should use
+     */
     explicit PBRTextured(std::shared_ptr<Shader> shader);
 
+    /***
+     * Passes all information to the shader unifroms
+     */
     void configureShader() override;
 
+    /***
+     * Adds texture to be used as material property
+     * @param texture texture representing material proerty
+     */
     void addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture);
 
     ~PBRTextured()= default;
 
 private:
+    /***
+     * All the textures the material possess
+     */
     std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> textures;
-    std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> IBLtextures;
 };
 
 
