@@ -8,9 +8,18 @@
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Geometry/Shapes/Debug/FrameBufferDebugGeometry.h"
 
+/***
+ * Represent debug frame buffer which is inherited from FrameBuffer class
+ * Only difference is in the geometry of the FrameBuffer which is set to debug frame buffer geomtry
+ */
 class FrameBufferDebug: public FrameBuffer {
 public:
     FrameBufferDebug(int width, int height);
+
+    /***
+     * Change the texture we want to display
+     * @param texture new texture to be displayed
+     */
     void changeTexture(TextureBase texture);
 };
 

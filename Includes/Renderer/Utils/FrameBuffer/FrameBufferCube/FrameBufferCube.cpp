@@ -111,9 +111,9 @@ void FrameBufferCube::bind() {
     glCheckError();
 }
 
-void FrameBufferCube::updateDimetions(unsigned int widht, unsigned int height) {
+void FrameBufferCube::updateDimetions(unsigned int width, unsigned int height) {
     this->bind();
-    this->renderBuffer->updateDimetions(widht, height);
+    this->renderBuffer->updateDimetions(width, height);
     this->renderBuffer->bind();
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
     glCheckError();

@@ -28,10 +28,10 @@ void RenderBuffer::unbind() {
     glCheckError();
 }
 
-void RenderBuffer::updateDimetions(unsigned int width, unsigned int heihgt) {
+void RenderBuffer::updateDimetions(unsigned int width, unsigned int height) {
     this->bind();
 
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8,width, heihgt);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
     glCheckError();
 
     this->unbind();
