@@ -9,7 +9,14 @@
 
 class OGLObject {
 public:
+    /***
+     * Virtual method for binding
+     */
     virtual void bind(){};
+
+    /***
+     * Virtual method for unbinding
+     */
     virtual void unbind(){};
 };
 
