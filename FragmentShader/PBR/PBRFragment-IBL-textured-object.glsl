@@ -23,14 +23,12 @@ vec3  albedo;
 float metallic;
 float roughness;
 float ao;
-vec3 emmisive;
 
 uniform sampler2D _albedoMap;
-uniform sampler2D _rougnessMap;
-uniform sampler2D _metalnessMap;
+uniform sampler2D _roughnessMap;
+uniform sampler2D _metallicMap;
 uniform sampler2D _normalMap;
 uniform sampler2D _aoMap;
-uniform sampler2D _emmisionMap;
 
 const float PI = 3.14159265359;
 
@@ -116,14 +114,13 @@ void main()
 {
     //sampler the texture maps
     albedo = texture(_albedoMap, fs_in.TexCoords).rgb;
-    roughness = texture(_rougnessmap, fs_in.TexCoords);
-    metallic = texture(_metalnessmap, fs_in.TexCoords);
+    roughness = texture(_roughnessMap, fs_in.TexCoords).r;
+    metallic = texture(_metallicMap, fs_in.TexCoords).r;
     ao = texture(_aoMap, fs_in.TexCoords).r;
-    emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
+    vec3 N = getNormalFromMap();;
 
     //normal
     //vec3 N = normalize(fs_in.Normal);
-    vec3 N = getNormalFromMap();;
     //N = normalize(fs_in.Normal);
     //view direction;
     vec3 V = normalize(camPos - fs_in.FragPos);
@@ -196,11 +193,10 @@ void main()
     vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
 
     vec3 ambient = (kD * diffuse + specular ) * 0.3 ;
-    ambient += ( 4.0 * emmisive);
     vec3 color = ambient + Lo;
 
     //HDR
     color = color / (color + vec3(1.0));
 
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(albedo, 1.0);
 }
