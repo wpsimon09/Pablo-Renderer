@@ -10,7 +10,7 @@ in VS_OUT {
     mat3 TBN;
     float hasNormalMap;
 }fs_in;
-
+/**
 layout (binding = 1, std140) uniform TEXTURE_BLOCK
 {
     uniform samplerCube irradianceMap;
@@ -24,6 +24,7 @@ layout (binding = 1, std140) uniform TEXTURE_BLOCK
     uniform sampler2D _aoMap;
 
 };
+**/
 
 uniform samplerCube irradianceMap;
 uniform samplerCube prefilterMap;
