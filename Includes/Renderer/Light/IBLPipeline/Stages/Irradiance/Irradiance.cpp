@@ -15,3 +15,4 @@ void Irradiance::execute(TextureBase input) {
     this->result = this->frameBufferCube->renderToSelf(input);
     this->frameBufferCube.reset();
 }
+

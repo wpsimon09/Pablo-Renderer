@@ -184,7 +184,7 @@ void main()
     kD *= 1.0 - metallic;
 
     vec3 irradiance = texture(irradianceMap, N).rgb;
-    vec3 diffuse = irradiance * albedo ;
+    vec3 diffuse = irradiance * albedo;
 
     const float MAX_REFLECTION_LOD = 4.0;
     vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
@@ -198,5 +198,5 @@ void main()
     //HDR
     color = color / (color + vec3(1.0));
 
-    FragColor = vec4(albedo, 1.0);
+    FragColor = vec4(color, 1.0);
 }

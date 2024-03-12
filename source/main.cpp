@@ -69,7 +69,7 @@ int main() {
     auto PBRTexturedModelIBL = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR_IBL");
     PBRTexturedModelIBL->supportsIBL = true;
 
-    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto cubeGeometry = std::make_shared<CubeGeometry>();

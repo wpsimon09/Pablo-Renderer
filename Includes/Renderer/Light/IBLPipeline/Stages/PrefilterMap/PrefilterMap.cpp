@@ -11,12 +11,12 @@ PrefilterMap::PrefilterMap() {
 void PrefilterMap::execute(TextureBase input) {
     unsigned int maxMipMapLevels = 5;
 
-    this->frameBufferCube = std::make_unique<FrameBufferCube>(128,128, this->shader, maxMipMapLevels);
+    this->frameBufferCube = std::make_unique<FrameBufferCube>(512,512, this->shader, maxMipMapLevels);
     this->frameBufferCube->colorAttachmentCube->changeFilteringMethod(GL_LINEAR, GL_LINEAR_MIPMAP_LINEAR);
 
     for (int mip = 0; mip < maxMipMapLevels; ++mip) {
-        unsigned int mipW =  static_cast<unsigned int>(128 * std::pow(0.5, mip));
-        unsigned int mipH =  static_cast<unsigned int>(128 * std::pow(0.5, mip));
+        unsigned int mipW =  static_cast<unsigned int>(512 * std::pow(0.5, mip));
+        unsigned int mipH =  static_cast<unsigned int>(512 * std::pow(0.5, mip));
 
         this->frameBufferCube->updateDimetions(mipW, mipH);
         

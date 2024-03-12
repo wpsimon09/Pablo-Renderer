@@ -41,7 +41,6 @@ PBRTextured::PBRTextured(std::shared_ptr<Shader> shader, std::string pathToTheDi
 }
 
 void PBRTextured::configureShader() {
-
     for (auto &texture : this->textures) {
         if(texture != nullptr ){
             ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);
