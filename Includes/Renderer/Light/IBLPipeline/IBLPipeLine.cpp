@@ -43,7 +43,7 @@ void IBLPipeLine::generateIBLTextures() {
     // CREATE BRDF LUT TEXTURE
     //------------------------
     this->brdfStage->execute();
-    iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->brdfStage->result), "BRDFtexture"));
+    this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->brdfStage->result), "BRDFtexture"));
 }
 
 void IBLPipeLine::configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount) {

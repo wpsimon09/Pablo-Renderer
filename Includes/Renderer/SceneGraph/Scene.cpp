@@ -16,7 +16,6 @@ void Scene::update() {
 }
 
 void Scene::setup() {
-
 }
 
 void Scene::add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent) {

@@ -1,4 +1,4 @@
-#version 330 core
+#version 460 core
 
 out vec4 FragColor;
 
@@ -11,6 +11,20 @@ in VS_OUT {
     float hasNormalMap;
 }fs_in;
 
+layout (binding = 1, std140) uniform TEXTURE_BLOCK
+{
+    uniform samplerCube irradianceMap;
+    uniform samplerCube prefilterMap;
+    uniform sampler2D BRDFtexture;
+
+    uniform sampler2D _albedoMap;
+    uniform sampler2D _roughnessMap;
+    uniform sampler2D _metallicMap;
+    uniform sampler2D _normalMap;
+    uniform sampler2D _aoMap;
+
+};
+
 uniform samplerCube irradianceMap;
 uniform samplerCube prefilterMap;
 uniform sampler2D BRDFtexture;
@@ -18,6 +32,8 @@ uniform sampler2D BRDFtexture;
 uniform vec3 lightPositions[5];
 uniform vec3 lightColors[5];
 uniform vec3 camPos;
+
+
 
 vec3  albedo;
 float metallic;

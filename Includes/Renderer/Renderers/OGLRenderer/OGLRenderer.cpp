@@ -13,14 +13,14 @@ OGLRenderer::OGLRenderer(std::shared_ptr<Scene> scene,  GLFWwindow* window) {
 void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
     frameBuffer->bind();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     this->scene->update();
     if(Scene::root){
         renderSceneGraph(*Scene::root);
+        this->scene->light->render();
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
-    this->scene->light->render();
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {

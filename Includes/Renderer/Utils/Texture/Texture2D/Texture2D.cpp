@@ -13,6 +13,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial):TextureBase() {
     glCheckError();
 
     this->loadPNG(path);
+
 }
 
 Texture2D::Texture2D() {

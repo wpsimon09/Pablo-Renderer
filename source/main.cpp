@@ -75,7 +75,6 @@ int main() {
     auto cubeGeometry = std::make_shared<CubeGeometry>();
     auto planeGeometry = std::make_shared<PlaneGeometry>();
 
-
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
 
     //create renderable object
@@ -110,15 +109,16 @@ int main() {
     floor->setPositions(glm::vec3(-6, 0.0, 0.0));
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
-    scene->add(std::move(goldCubeSceneNode));
-    scene->add(std::move(gridSceneNode));
+    scene->setIblPipeLine(iblPipeLine);
+
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(floor));
+    scene->add(std::move(goldCubeSceneNode));
+    scene->add(std::move(gridSceneNode));
     //scene->add(std::move(skyboxCube));
 
-    scene->setIblPipeLine(iblPipeLine);
 
     PabloRenderer pabloRenderer(scene, window);
     pabloRenderer.init();
