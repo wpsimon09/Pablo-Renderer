@@ -9,6 +9,7 @@
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.h"
 #include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
+
 class PabloRenderer {
 public:
     PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
@@ -20,7 +21,7 @@ public:
 
     ~PabloRenderer(){};
 private:
-    inline static std::unique_ptr<PabloRenderer> instace ;
+    inline static std::unique_ptr<PabloRenderer> instace;
 
     std::unique_ptr<OGLRenderer> renderer;
 

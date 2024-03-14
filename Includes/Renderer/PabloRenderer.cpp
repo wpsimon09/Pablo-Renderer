@@ -6,10 +6,10 @@
 
 PabloRenderer::PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow *window) {
     this->scene = scene;
-    PabloRenderer::instace.reset(this);
     this->lightSpeed = 2.5f * deltaTime;
     this->window = window;
     this->renderer = std::make_unique<OGLRenderer>(std::move(scene), window);
+    PabloRenderer::instace.reset(this);
 
     glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
 
@@ -53,8 +53,6 @@ void PabloRenderer::render() {
         }
         debugFrameBuffer->dispalyOnScreen();
 
-        glBindTexture(GL_TEXTURE_2D,0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP,0);
         glfwSwapBuffers(this->window);
         glfwPollEvents();
     }
