@@ -10,7 +10,7 @@
 /***
  * Stage that creates different textures for different rougness levels and stores it as mip maps
  */
-class PrefilterMap:public BaseStage {
+class PrefilterMap:public BaseStage<> {
 public:
     PrefilterMap();
     /***
@@ -19,10 +19,6 @@ public:
      */
     void execute(TextureBase input) override;
 
-    /***
-     * Results of concrete stage
-     */
-    std::shared_ptr<Texture3D> result;
 protected:
     /***
      * Frame buffer when actual rendering takes place and results are initially stored inside the frame buffer's color attachment

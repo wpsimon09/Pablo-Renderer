@@ -10,18 +10,16 @@
 /***
  * Generates the look up texture for Bidirectional Reflectance Distribution Function
  */
-class BRDF: public BaseStage{
+class BRDF: public BaseStage<Texture2D>{
 public:
     BRDF();
-    /***
-     * Executes the stage without any input
-     */
-    void execute();
 
     /***
-     * Stored result of the execution
+     * Executes the stage
+     * @param input this input has no impact on the rendering and is not used
      */
-    std::shared_ptr<Texture2D>result;
+    void execute(TextureBase input) override;
+
 protected:
     std::unique_ptr<FrameBuffer> frameBuffer;
 };

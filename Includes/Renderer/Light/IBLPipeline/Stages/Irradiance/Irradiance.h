@@ -8,8 +8,9 @@
 
 /***
  * Class responsible for generating irradiance map
+ * @inherit BaseStage
  */
-class Irradiance:public BaseStage {
+class Irradiance:public BaseStage<> {
 public:
     Irradiance();
 
@@ -19,10 +20,6 @@ public:
      */
     void execute(TextureBase input) override;
 
-    /***
-     * Stored result of the concrete stage
-     */
-    std::shared_ptr<Texture3D> result;
 private:
     std::unique_ptr<FrameBufferCube> frameBufferCube;
 };

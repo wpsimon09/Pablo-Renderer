@@ -49,7 +49,7 @@ private:
     //---------------------------
     // STAGES OF THE IBL PIPELINE
     //---------------------------
-    std::vector<std::unique_ptr<BaseStage>> stages;
+    std::vector<std::unique_ptr<BaseStage<>>> stages;
 
     std::unique_ptr<PrefilterMap> hdrToPrefilterMap;
     std::unique_ptr<HDRToCubeMap> hdrToCubeMap;

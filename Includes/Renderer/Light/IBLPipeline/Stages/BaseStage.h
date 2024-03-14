@@ -36,6 +36,11 @@ public:
      * Result of the stage
      */
     std::shared_ptr<T> result;
+
+    /***
+     * Name of the shader uniform where the texture will be uploaded
+     */
+    std::string shaderName;
 };
 
 

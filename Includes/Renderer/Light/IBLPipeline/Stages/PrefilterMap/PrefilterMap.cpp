@@ -4,7 +4,7 @@
 
 #include "PrefilterMap.h"
 
-PrefilterMap::PrefilterMap() {
+PrefilterMap::PrefilterMap():BaseStage<>() {
     this->shader = std::make_shared<Shader>("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "Prefiltering cubeData map");
 }
 

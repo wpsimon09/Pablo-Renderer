@@ -26,6 +26,10 @@ void IBLPipeLine::generateIBLTextures() {
     //----------------------
     this->inputHDRI->setSamplerID(0);
 
+    for(auto &stage: stages){
+        this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToIrradiance->result), "irradianceMap"));
+    }
+
     //-----------------------
     // CREATE ENVIRONMENT MAP
     //-----------------------
