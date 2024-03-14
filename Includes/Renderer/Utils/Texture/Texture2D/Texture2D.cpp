@@ -14,6 +14,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial):TextureBase() {
 
     this->loadPNG(path);
 
+
 }
 
 Texture2D::Texture2D() {

@@ -11,6 +11,7 @@
 /***
  * Stage of the IBL pipeline that is meant to be inherited by concrete steps
  */
+template<typename T = Texture3D>
 class BaseStage {
 protected:
     BaseStage() =default ;
@@ -25,6 +26,16 @@ public:
      * @param input input texture should be HDR texture or HDR converted to cube map
      */
     virtual void execute(TextureBase input){};
+
+    /***
+     * Binds all textures to texture targets to 0
+     */
+    virtual void clearBindings(){}
+
+    /***
+     * Result of the stage
+     */
+    std::shared_ptr<T> result;
 };
 
 

@@ -15,6 +15,7 @@
 
 /***
  * Class representing PBR material with textures
+ * @inherit Material.h
  */
 class PBRTextured : public Material{
 public:

@@ -35,7 +35,7 @@ public:
     void configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount);
 
     /***
-     * Cube map texture of the
+     * Cube map texture of the equirectangualr map
      */
     std::shared_ptr<Texture3D> envMap;
 
@@ -45,6 +45,11 @@ public:
     std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> iblTextures;
 private:
     std::shared_ptr<TextureHDRi> inputHDRI;
+
+    //---------------------------
+    // STAGES OF THE IBL PIPELINE
+    //---------------------------
+    std::vector<std::unique_ptr<BaseStage>> stages;
 
     std::unique_ptr<PrefilterMap> hdrToPrefilterMap;
     std::unique_ptr<HDRToCubeMap> hdrToCubeMap;

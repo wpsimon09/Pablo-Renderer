@@ -64,6 +64,11 @@ public:
      */
     virtual void configureShader() {};
 
+    /***
+     * Unbinds all of the textures bound during rendering
+     */
+    virtual void unbindTextures(){}
+
     ~Material() = default;
 
     virtual void printLog() const {};

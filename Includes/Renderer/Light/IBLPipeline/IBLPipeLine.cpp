@@ -7,6 +7,12 @@
 IBLPipeLine::IBLPipeLine(const char *path) {
     this->inputHDRI = std::make_unique<TextureHDRi>(path);
 
+
+    stages.push_back(std::make_unique<HDRToCubeMap>());
+    stages.push_back(std::make_unique<Irradiance>());
+    stages.push_back(std::make_unique<PrefilterMap>());
+    stages.push_back(std::make_unique<BRDF>());
+
     this->hdrToCubeMap = std::make_unique<HDRToCubeMap>();
     this->hdrToIrradiance = std::make_unique<Irradiance>();
     this->hdrToPrefilterMap = std::make_unique<PrefilterMap>();
@@ -24,6 +30,8 @@ void IBLPipeLine::generateIBLTextures() {
     // CREATE ENVIRONMENT MAP
     //-----------------------
     this->hdrToCubeMap->execute(*this->inputHDRI);
+    this->hdrToCubeMap->clearBindings();
+
     this->envMap = std::move(this->hdrToCubeMap->result);
     this->envMap->setSamplerID(7);
 
