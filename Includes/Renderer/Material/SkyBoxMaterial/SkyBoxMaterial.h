@@ -12,7 +12,7 @@
  * Structure representing cube map which is later passed to the shader as a uniform
  */
 struct CubeMapUnifrom {
-    Texture3D cubeMap;
+    TextureBase cubeMap;
     std::string shaderName;
 
     /***
@@ -20,7 +20,7 @@ struct CubeMapUnifrom {
      * @param cubeMapTexture cube map texture that will be used as sky-box
      * @param shaderName name of the uniform in the shader
      */
-    CubeMapUnifrom(Texture3D cubeMapTexture, std::string shaderName) {
+    CubeMapUnifrom(TextureBase cubeMapTexture, std::string shaderName) {
         this->cubeMap = std::move(cubeMapTexture);
         this->shaderName = std::move(shaderName);
     }
@@ -31,7 +31,7 @@ struct CubeMapUnifrom {
  */
 class SkyBoxMaterial : public Material {
 public:
-    SkyBoxMaterial(std::shared_ptr<Shader> shader, Texture3D skyBox, std::string shaderName);
+    SkyBoxMaterial(std::shared_ptr<Shader> shader, TextureBase skyBox, std::string shaderName);
     /**
     * passes all relevant uniform to the shader
     */
