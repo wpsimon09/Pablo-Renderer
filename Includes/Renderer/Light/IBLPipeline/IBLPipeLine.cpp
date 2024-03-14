@@ -21,6 +21,8 @@ void IBLPipeLine::generateIBLTextures() {
 
     bool firstIteration = true;
     for(auto &stage: stages){
+        // for the first iteration HDR map should be input for the rest of the IBL stages
+        // Environment map should be the input which is always stored as first IBL texture
         stage->execute(firstIteration ? *this->inputHDRI : *iblTextures[0]->type);
         this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(stage->result), stage->shaderName));
         firstIteration = false;

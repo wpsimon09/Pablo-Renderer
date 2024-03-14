@@ -123,7 +123,7 @@ int main() {
     PabloRenderer pabloRenderer(scene, window);
     pabloRenderer.init();
 
-    pabloRenderer.setDebugTexture(iblPipeLine->iblTextures[2]->type);
+    pabloRenderer.setDebugTexture(iblPipeLine->iblTextures[3]->type);
 
     //------------------
     // LOAD PBR TEXTURES
