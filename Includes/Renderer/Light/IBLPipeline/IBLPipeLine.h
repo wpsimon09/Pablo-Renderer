@@ -37,7 +37,7 @@ public:
     /***
      * Cube map texture of the equirectangualr map
      */
-    std::shared_ptr<Texture3D> envMap;
+    std::shared_ptr<TextureBase> envMap;
 
     /***
      * Generated IBL textures
@@ -49,7 +49,7 @@ private:
     //---------------------------
     // STAGES OF THE IBL PIPELINE
     //---------------------------
-    std::vector<std::unique_ptr<BaseStage<>>> stages;
+    std::vector<std::unique_ptr<BaseStage>> stages;
 
     std::unique_ptr<PrefilterMap> hdrToPrefilterMap;
     std::unique_ptr<HDRToCubeMap> hdrToCubeMap;

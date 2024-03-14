@@ -26,7 +26,8 @@ void IBLPipeLine::generateIBLTextures() {
     this->inputHDRI->setSamplerID(0);
 
     for(auto &stage: stages){
-        this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToIrradiance->result), stage->shaderName));
+        stage->execute(*inputHDRI);
+        this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(stage->result), stage->shaderName));
     }
 
     //-----------------------
@@ -35,7 +36,7 @@ void IBLPipeLine::generateIBLTextures() {
     this->hdrToCubeMap->execute(*this->inputHDRI);
     this->hdrToCubeMap->clearBindings();
 
-    this->envMap = std::move(this->hdrToCubeMap->result);
+    this->envMap = this->stages[0]->result;
     this->envMap->setSamplerID(7);
 
     //----------------------
