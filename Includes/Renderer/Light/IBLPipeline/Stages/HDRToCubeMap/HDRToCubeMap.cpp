@@ -6,6 +6,7 @@
 
 HDRToCubeMap::HDRToCubeMap(): BaseStage() {
     this->shader = std::make_shared<Shader>("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "Cube map shader");
+    this->shaderName = "envMap";
 }
 
 void HDRToCubeMap::execute(TextureBase input) {

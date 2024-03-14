@@ -10,7 +10,7 @@
 /***
  * Stage that creates different textures for different rougness levels and stores it as mip maps
  */
-class PrefilterMap:public BaseStage<> {
+class PrefilterMap:public BaseStage{
 public:
     PrefilterMap();
     /***

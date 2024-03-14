@@ -4,8 +4,9 @@
 
 #include "BRDF.h"
 
-BRDF::BRDF():BaseStage<Texture2D>() {
+BRDF::BRDF():BaseStage() {
     this->shader = std::make_shared<Shader>("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
+    this->shaderName = "BRDFtexture";
 }
 
 void BRDF::execute(TextureBase input) {

@@ -11,7 +11,7 @@
 /***
  * Converts equirectangular map to the Cube Map
  */
-class HDRToCubeMap:public BaseStage<> {
+class HDRToCubeMap:public BaseStage {
 public:
     HDRToCubeMap();
     void execute(TextureBase input) override;

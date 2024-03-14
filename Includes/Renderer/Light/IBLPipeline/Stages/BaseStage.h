@@ -11,7 +11,6 @@
 /***
  * Stage of the IBL pipeline that is meant to be inherited by concrete steps
  */
-template<typename T = Texture3D>
 class BaseStage {
 protected:
     BaseStage() =default ;
@@ -35,7 +34,7 @@ public:
     /***
      * Result of the stage
      */
-    std::shared_ptr<T> result;
+    std::shared_ptr<TextureBase> result;
 
     /***
      * Name of the shader uniform where the texture will be uploaded

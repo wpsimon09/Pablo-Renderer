@@ -5,9 +5,9 @@
 #include "Irradiance.h"
 
 
-Irradiance::Irradiance():BaseStage<>() {
+Irradiance::Irradiance():BaseStage() {
     this->shader = std::make_shared<Shader>("VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl", "Irradiance map shader");
-
+    this->shaderName = "irradianceMap";
 }
 
 void Irradiance::execute(TextureBase input) {

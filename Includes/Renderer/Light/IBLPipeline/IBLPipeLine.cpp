@@ -7,7 +7,6 @@
 IBLPipeLine::IBLPipeLine(const char *path) {
     this->inputHDRI = std::make_unique<TextureHDRi>(path);
 
-
     stages.push_back(std::make_unique<HDRToCubeMap>());
     stages.push_back(std::make_unique<Irradiance>());
     stages.push_back(std::make_unique<PrefilterMap>());
@@ -27,7 +26,7 @@ void IBLPipeLine::generateIBLTextures() {
     this->inputHDRI->setSamplerID(0);
 
     for(auto &stage: stages){
-        this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToIrradiance->result), "irradianceMap"));
+        this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->hdrToIrradiance->result), stage->shaderName));
     }
 
     //-----------------------
@@ -54,7 +53,7 @@ void IBLPipeLine::generateIBLTextures() {
     //------------------------
     // CREATE BRDF LUT TEXTURE
     //------------------------
-    this->brdfStage->execute();
+    this->brdfStage->execute(*this->envMap);
     this->iblTextures.push_back(std::make_shared<PBRMaterial<TextureBase>>(std::move(this->brdfStage->result), "BRDFtexture"));
 }
 

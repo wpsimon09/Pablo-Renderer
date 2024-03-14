@@ -9,8 +9,9 @@
 
 /***
  * Generates the look up texture for Bidirectional Reflectance Distribution Function
+ * @inherit Base stage
  */
-class BRDF: public BaseStage<Texture2D>{
+class BRDF: public BaseStage{
 public:
     BRDF();
 

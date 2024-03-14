@@ -10,7 +10,7 @@
  * Class responsible for generating irradiance map
  * @inherit BaseStage
  */
-class Irradiance:public BaseStage<> {
+class Irradiance:public BaseStage {
 public:
     Irradiance();
 
