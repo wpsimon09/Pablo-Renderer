@@ -12,6 +12,7 @@
 #include "Renderer/PabloRenderer.h"
 #include "Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.h"
 #include "Renderer/Light/IBLPipeline/IBLPipeLine.h"
+#include "Renderer/Geometry/Shapes/Sphere/SphereGeometry.h"
 
 //screen coordinates
 int SCR_WIDTH = 800;
@@ -24,6 +25,7 @@ int main() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
 
     GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Pablo-renderer", NULL, NULL);
     if (window == NULL)
@@ -74,6 +76,7 @@ int main() {
 
     auto cubeGeometry = std::make_shared<CubeGeometry>();
     auto planeGeometry = std::make_shared<PlaneGeometry>();
+    auto sphereGeomtery = std::make_shared<SphereGeometry>();
 
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
 
@@ -83,7 +86,7 @@ int main() {
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Gold");
-    auto goldCubeRenderable = std::make_unique<Renderable>(cubeGeometry,goldCubeMaterial);
+    auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeomtery,goldCubeMaterial);
     auto goldCubeSceneNode = std::make_unique<SceneNode>(std::move(goldCubeRenderable));
     goldCubeSceneNode->setPositions(glm::vec3(-3.0f, 1.0f, 0.0f));
 
