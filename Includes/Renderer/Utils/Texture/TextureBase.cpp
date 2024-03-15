@@ -46,8 +46,8 @@ void TextureBase::unbind() {
     glGetError();
 }
 
-void TextureBase::loadPNG(const char *path) {
-
+void TextureBase::loadPNG(const char *path, bool flip) {
+    stbi_set_flip_vertically_on_load(flip);
     int width, height, nrComponents;
     unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);
     if (data) {
@@ -66,7 +66,7 @@ void TextureBase::loadPNG(const char *path) {
         glBindTexture(GL_TEXTURE_2D, this->ID);
         glCheckError();
         //OpenGL throwing error at forestRock/displacement map
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, nrComponents >1 ? GL_UNSIGNED_BYTE:GL_BYTE, data);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data);
         glCheckError();
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

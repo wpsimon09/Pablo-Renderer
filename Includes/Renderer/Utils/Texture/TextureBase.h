@@ -88,8 +88,9 @@ protected:
     /***
      * Loads PNG image to the texture
      * @param path path to the texture that needs to be loaded with file extension .png
+     * @param flip should the loader flip the image texture @def false
      */
-    void loadPNG(const char*path);
+    void loadPNG(const char*path, bool flip = false);
 
     /***
      * Loads equirectangular HDR texture

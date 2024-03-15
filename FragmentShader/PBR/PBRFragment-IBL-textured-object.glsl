@@ -10,21 +10,6 @@ in VS_OUT {
     mat3 TBN;
     float hasNormalMap;
 }fs_in;
-/**
-layout (binding = 1, std140) uniform TEXTURE_BLOCK
-{
-    uniform samplerCube irradianceMap;
-    uniform samplerCube prefilterMap;
-    uniform sampler2D BRDFtexture;
-
-    uniform sampler2D _albedoMap;
-    uniform sampler2D _roughnessMap;
-    uniform sampler2D _metallicMap;
-    uniform sampler2D _normalMap;
-    uniform sampler2D _aoMap;
-
-};
-**/
 
 uniform samplerCube irradianceMap;
 uniform samplerCube prefilterMap;
@@ -209,7 +194,7 @@ void main()
     vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
     vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
 
-    vec3 ambient = (kD * diffuse + specular ) * 0.3 ;
+    vec3 ambient = (kD * diffuse + specular ) * 0.8 ;
     vec3 color = ambient + Lo;
 
     //HDR
