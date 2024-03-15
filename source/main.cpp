@@ -111,11 +111,11 @@ int main() {
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
 
+    scene->add(std::move(goldCubeSceneNode));
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(floor));
-    scene->add(std::move(goldCubeSceneNode));
     scene->add(std::move(gridSceneNode));
     //scene->add(std::move(skyboxCube));
 

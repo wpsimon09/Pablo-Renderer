@@ -37,11 +37,12 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
 
         this->scene->light->update(shader);
 
-        sceneNode.render();
-
         if(shader->supportsIBL){
             scene->getIblPipeLine()->configureShader(shader, renderable->getObjectMaterial()->getSamplerCount());
         }
+
+        sceneNode.render();
+
     }
     for (auto &childNode : sceneNode.getChildren()) {
         this->renderSceneGraph(*childNode);
