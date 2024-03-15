@@ -98,6 +98,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.cpp
         Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.h
         Includes/Debug/DebugLogger.cpp
+        Includes/Renderer/Geometry/Shapes/Sphere/SphereGeometry.cpp
+        Includes/Renderer/Geometry/Shapes/Sphere/SphereGeometry.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
