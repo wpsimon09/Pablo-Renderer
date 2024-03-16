@@ -51,7 +51,7 @@ void PabloRenderer::render() {
         for(auto &frameBuffer: this->frameBuffers){
             frameBuffer->dispalyOnScreen();
         }
-        debugFrameBuffer->dispalyOnScreen();
+        //debugFrameBuffer->dispalyOnScreen();
 
         glfwSwapBuffers(this->window);
         glfwPollEvents();

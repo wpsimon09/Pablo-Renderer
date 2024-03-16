@@ -71,12 +71,12 @@ int main() {
     auto PBRTexturedModelIBL = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR_IBL");
     PBRTexturedModelIBL->supportsIBL = true;
 
-    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto cubeGeometry = std::make_shared<CubeGeometry>();
     auto planeGeometry = std::make_shared<PlaneGeometry>();
-    auto sphereGeomtery = std::make_shared<SphereGeometry>();
+    auto sphereGeometry = std::make_shared<SphereGeometry>();
 
     auto skyBox = std::make_unique<SkyBoxMaterial>(std::move(skyBoxShader), *iblPipeLine->envMap, "enviromentMap");
 
@@ -86,7 +86,7 @@ int main() {
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Gold");
-    auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeomtery,goldCubeMaterial);
+    auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
     auto goldCubeSceneNode = std::make_unique<SceneNode>(std::move(goldCubeRenderable));
     goldCubeSceneNode->setPositions(glm::vec3(-3.0f, 1.0f, 0.0f));
 
@@ -115,11 +115,11 @@ int main() {
     scene->setIblPipeLine(iblPipeLine);
 
     scene->add(std::move(goldCubeSceneNode));
-    scene->add(std::move(sunbro_helmet));
-    scene->add(std::move(sword));
-    scene->add(std::move(withcerMedailon));
-    scene->add(std::move(floor));
-    scene->add(std::move(gridSceneNode));
+    //scene->add(std::move(sunbro_helmet));
+    //scene->add(std::move(sword));
+    //scene->add(std::move(withcerMedailon));
+    //scene->add(std::move(gridSceneNode));
+    //scene->add(std::move(floor));
     //scene->add(std::move(skyboxCube));
 
 
@@ -128,9 +128,6 @@ int main() {
 
     pabloRenderer.setDebugTexture(iblPipeLine->iblTextures[3]->type);
 
-    //------------------
-    // LOAD PBR TEXTURES
-    //------------------
     pabloRenderer.render();
 
     return 0;

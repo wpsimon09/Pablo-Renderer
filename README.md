@@ -3,8 +3,7 @@
 As title suggests Pablo is a rendering engine that supports PBR materials and 3D models together with 
 **Image based lightning**
 
-This rendering engine serves a purpose of learning hwo does PBR workflow works.
-Hence the code is messy and does not follow best principles yet. 
+It provides fast and convenient way of rendering various geometry with different materials 
 
 This renderer is build using 
 
@@ -32,13 +31,47 @@ This renderer is build using
 
 ----
 
+# Example
+To create sphere using IBL within the framework the code would look like this
+
+```c++
+auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
+iblPipeLine->generateIBLTextures();
+
+//Create geometry
+auto sphereGeometry = std::make_shared<SphereGeometry>();
+
+//Create material
+auto goldMaterial = std::make_shared<PBRTextured>(PBRTexutreShader, "Assets/Textures/PBR/Gold");
+
+//Create renderable
+auto sphereRenderable = std::make_unique<Renderable>(sphereGeometry, goldMaterial);
+
+//createScene
+auto scene = std::make_shared<Scene>();
+scene->setIblPipeLine(iblPipeLine);
+
+scene->add(std::move(sphereRenderable));
+
+PabloRenderer pabloRenderer(scene, window);
+pabloRenderer.init();
+    
+pabloRenderer.render();
+```
+
+The result of the snippet will look like this 
+
+![img.png](Assets/ReadmeImages/resutl.png)
+
+As of now renderer's shader only support one directional light which is going to change in the near future
+
 # Images
-![Assets/ReadmeImages/medailon.png](Assets/ReadmeImages/medailon.png)
+![Geralt's sword ](Assets/ReadmeImages/sword2.png)
 
 ----
 
-![Assets/ReadmeImages/mortier.png](Assets/ReadmeImages/mortier.png)
+![Simple spehere](Assets/ReadmeImages/sphere.png)
 
 ----
 
-![Assets/ReadmeImages/witcher-skybox.png](Assets/ReadmeImages/witcher-skybox.png)
+![Geralt's medailon](Assets/ReadmeImages/medailon_2.png)

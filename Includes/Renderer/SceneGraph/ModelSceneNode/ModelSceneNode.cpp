@@ -102,6 +102,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 
     std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));
 
+
     this->addChild(std::move(processedNode));
 
 }
