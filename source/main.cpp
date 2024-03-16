@@ -20,38 +20,9 @@ int SCR_HEIGHT = 600;
 
 
 int main() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
-    glfwWindowHint(GLFW_SAMPLES, 8);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Pablo-renderer", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-
-    //this code is to make context on the window current and to initialize glad
-    glfwMakeContextCurrent(window);
-    gladLoadGL();
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glEnable(GL_MULTISAMPLE);
-    glEnable(GL_FRAMEBUFFER_SRGB);
-    glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-    glEnable(GL_BLEND);
-    glDisable(GL_CULL_FACE);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
+    PabloRenderer pabloRenderer;
+    pabloRenderer.init(SCR_WIDTH, SCR_HEIGHT);
 
     auto PBRShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
     auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
@@ -115,16 +86,14 @@ int main() {
     scene->setIblPipeLine(iblPipeLine);
 
     scene->add(std::move(goldCubeSceneNode));
-    //scene->add(std::move(sunbro_helmet));
-    //scene->add(std::move(sword));
-    //scene->add(std::move(withcerMedailon));
-    //scene->add(std::move(gridSceneNode));
-    //scene->add(std::move(floor));
-    //scene->add(std::move(skyboxCube));
+    scene->add(std::move(sunbro_helmet));
+    scene->add(std::move(sword));
+    scene->add(std::move(withcerMedailon));
+    scene->add(std::move(gridSceneNode));
+    scene->add(std::move(floor));
+    scene->add(std::move(skyboxCube));
 
-
-    PabloRenderer pabloRenderer(scene, window);
-    pabloRenderer.init();
+    pabloRenderer.attachScene(scene);
 
     pabloRenderer.setDebugTexture(iblPipeLine->iblTextures[3]->type);
 

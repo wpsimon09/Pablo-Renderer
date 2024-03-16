@@ -35,7 +35,7 @@ void IBLPipeLine::generateIBLTextures() {
 void IBLPipeLine::configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount) {
     int i = maximalSamplerCount+1;
     for (auto& iblTexture: this->iblTextures) {
-        ShaderHelper::setTextureToShader(shader,*iblTexture->type, iblTexture->shaderName, i);
+            ShaderHelper::setTextureToShader(shader,*iblTexture->type, iblTexture->shaderName, i);
         i++;
     }
 }

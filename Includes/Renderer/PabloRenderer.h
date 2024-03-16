@@ -12,9 +12,21 @@
 
 class PabloRenderer {
 public:
-    PabloRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
+    PabloRenderer();
 
-    void init();
+    /***
+     * Initialize the OpenGL context, widow and pablo render itself
+     * @param width width of the window
+     * @param height heights of the window
+     */
+    void init(unsigned int width, unsigned int height);
+
+    /***
+     * Attaches scene to the renderer based on what we want to render
+     * @param scene scene to be attached
+     */
+    void attachScene(std::shared_ptr<Scene> scene);
+
     void render();
 
     void setDebugTexture(std::shared_ptr<TextureBase> debugTexture);
@@ -23,14 +35,14 @@ public:
 private:
     inline static std::unique_ptr<PabloRenderer> instace;
 
-    std::unique_ptr<OGLRenderer> renderer;
+    std::unique_ptr<OGLRenderer> renderer = nullptr;
 
-    std::shared_ptr<Scene> scene;
+    std::shared_ptr<Scene> scene = nullptr;
 
-    GLFWwindow* window;
+    GLFWwindow* window = nullptr;
 
     std::vector<std::unique_ptr<FrameBuffer>> frameBuffers;
-    std::unique_ptr<FrameBufferDebug> debugFrameBuffer;
+    std::unique_ptr<FrameBufferDebug> debugFrameBuffer ;
 
     float deltaTime;
     float lastFrame;
@@ -49,6 +61,8 @@ private:
     static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
     static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
+    bool glInit(unsigned int width, unsigned int height);
 
 };
 
