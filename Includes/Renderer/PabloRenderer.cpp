@@ -11,7 +11,8 @@ PabloRenderer::PabloRenderer() {
 
 void PabloRenderer::init(unsigned int width, unsigned int height) {
 
-    this->glInit(width, height);
+    if(!this->glInit(width, height))
+        std::cerr<<"OPENGL CONTEXT NOT INITIALIZED";
 
     glfwGetWindowSize(window, &this->windowWidth, &this->windowHeight);
 
@@ -19,9 +20,6 @@ void PabloRenderer::init(unsigned int width, unsigned int height) {
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    this->frameBuffers.push_back(std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight));
-
-    this->debugFrameBuffer = std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight);
 }
 
 void PabloRenderer::render() {
@@ -108,6 +106,10 @@ void PabloRenderer::setDebugTexture(std::shared_ptr<TextureBase> debugTexture) {
 void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
     this->scene = scene;
     this->scene->setup();
+
+    this->frameBuffers.push_back(std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight));
+
+    this->debugFrameBuffer = std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight);
 
     this->renderer = std::make_unique<OGLRenderer>(std::move(scene), this->window);
 }
