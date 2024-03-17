@@ -12,7 +12,8 @@
 
 class PabloRenderer {
 public:
-    PabloRenderer();
+
+    static PabloRenderer* getInstance();
 
     /***
      * Initialize the OpenGL context, widow and pablo render itself
@@ -27,13 +28,22 @@ public:
      */
     void attachScene(std::shared_ptr<Scene> scene);
 
+    /***
+     * Renders the attached scene
+     */
     void render();
 
+    /***
+     * Sets the texture to the small rectangle on top right corner
+     * @param debugTexture
+     */
     void setDebugTexture(std::shared_ptr<TextureBase> debugTexture);
 
-    ~PabloRenderer(){};
+    ~PabloRenderer(){delete PabloRenderer::instance;};
 private:
-    inline static std::unique_ptr<PabloRenderer> instace;
+    PabloRenderer();
+
+    inline static PabloRenderer* instance = nullptr;
 
     std::unique_ptr<OGLRenderer> renderer = nullptr;
 
