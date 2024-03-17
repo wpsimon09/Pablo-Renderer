@@ -5,8 +5,7 @@
 #include "PabloRenderer.h"
 
 PabloRenderer::PabloRenderer() {
-    this->lightSpeed = 2.5f * deltaTime;
-    PabloRenderer::instace.reset(this);
+
 }
 
 void PabloRenderer::init(unsigned int width, unsigned int height) {
@@ -78,24 +77,24 @@ void PabloRenderer::processInput(GLFWwindow *window) {
 }
 
 void PabloRenderer::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    instace->scene->camera->ProcessMouseScroll(static_cast<float>(yoffset));
+    instance->scene->camera->ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
 void PabloRenderer::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if (instace->firstMouse) // initially set to true
+    if (instance->firstMouse) // initially set to true
     {
-        instace->lastX = xpos;
-        instace->lastY = ypos;
-        instace->firstMouse = false;
+        instance->lastX = xpos;
+        instance->lastY = ypos;
+        instance->firstMouse = false;
     }
 
-    float xOffset = xpos - instace->lastX;
-    float yOffset = ypos - instace->lastY; //calculate how much does mouse move
+    float xOffset = xpos - instance->lastX;
+    float yOffset = ypos - instance->lastY; //calculate how much does mouse move
 
-    instace->lastX = xpos;
-    instace->lastY = ypos; //update last mouse position
+    instance->lastX = xpos;
+    instance->lastY = ypos; //update last mouse position
 
-    instace->scene->camera->ProcessMouseMovement(xOffset, yOffset);
+    instance->scene->camera->ProcessMouseMovement(xOffset, yOffset);
 
 }
 
@@ -150,3 +149,12 @@ bool PabloRenderer::glInit(unsigned int width, unsigned int height) {
 
     return true;
 }
+
+PabloRenderer* PabloRenderer::getInstance() {
+    if(PabloRenderer::instance == nullptr){
+        PabloRenderer::instance = new PabloRenderer();
+        return PabloRenderer::instance;
+    }else
+        return PabloRenderer::instance;
+}
+

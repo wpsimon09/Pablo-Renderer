@@ -21,8 +21,8 @@ int SCR_HEIGHT = 600;
 
 int main() {
 
-    PabloRenderer pabloRenderer;
-    pabloRenderer.init(SCR_WIDTH, SCR_HEIGHT);
+    auto pabloRenderer = PabloRenderer::getInstance();
+    pabloRenderer->init(SCR_WIDTH, SCR_HEIGHT);
 
     auto PBRShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
     auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
@@ -93,11 +93,12 @@ int main() {
     scene->add(std::move(floor));
     scene->add(std::move(skyboxCube));
 
-    pabloRenderer.attachScene(scene);
+    pabloRenderer->attachScene(scene);
 
-    pabloRenderer.setDebugTexture(iblPipeLine->iblTextures[3]->type);
+    pabloRenderer->setDebugTexture(iblPipeLine->iblTextures[3]->type);
 
-    pabloRenderer.render();
+    pabloRenderer->render();
+
 
     return 0;
 }

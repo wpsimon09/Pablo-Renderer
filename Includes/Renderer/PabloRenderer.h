@@ -12,7 +12,12 @@
 
 class PabloRenderer {
 public:
-    PabloRenderer();
+
+    /***
+     * Gets the instance of the Pablo Renderer by usage of raw pointers
+     * @return pointer to static instance of PabloRenderer class
+     */
+    static PabloRenderer* getInstance();
 
     /***
      * Initialize the OpenGL context, widow and pablo render itself
@@ -27,13 +32,22 @@ public:
      */
     void attachScene(std::shared_ptr<Scene> scene);
 
+    /***
+     * Renders the attached scene
+     */
     void render();
 
+    /***
+     * Sets the texture to the small rectangle on top right corner
+     * @param debugTexture
+     */
     void setDebugTexture(std::shared_ptr<TextureBase> debugTexture);
 
-    ~PabloRenderer(){};
+    ~PabloRenderer(){delete PabloRenderer::instance;};
 private:
-    inline static std::unique_ptr<PabloRenderer> instace;
+    PabloRenderer();
+
+    inline static PabloRenderer* instance = nullptr;
 
     std::unique_ptr<OGLRenderer> renderer = nullptr;
 
@@ -54,14 +68,41 @@ private:
     int windowHeight;
     int windowWidth;
 
+    /***
+     * Sets the window where to draw to
+     * @param window window where to draw
+     */
     void setWindow(GLFWwindow* window);
 
+    /***
+     * Process the input for the application
+     * @param window window in which to process the input
+     */
     void processInput(GLFWwindow* window);
 
+
+    /***
+     * Processes event when mouse wheel has scrolled
+     * @param window window in which to event occurred
+     * @param xoffset offset on x axis
+     * @param yoffset offset on y axis
+     */
     static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
+    /***
+     * Function that process mouse movement call back
+     * @param window window in which to process the callback
+     * @param xpos position on x axis
+     * @param ypos position on y axis
+     */
     static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
+    /***
+     * Initializes OpenGL context
+     * @param width width of the window
+     * @param height height of the height
+     * @return true if the context was initialized otherwise false
+     */
     bool glInit(unsigned int width, unsigned int height);
 
 };
