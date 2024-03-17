@@ -4,9 +4,13 @@
 
 #include "ModelSceneNode.h"
 
-ModelSceneNode::ModelSceneNode(std::shared_ptr<Shader> shader, std::string path): SceneNode() {
+#include <utility>
+
+ModelSceneNode::ModelSceneNode(std::shared_ptr<Shader> shader, std::string path, std::shared_ptr<PBRTextured> mat): SceneNode() {
     this->shader = std::move(shader);
     Assimp::Importer importer;
+
+    this->material = std::move(mat);
 
     const aiScene *scene = importer.ReadFile(path.c_str(),
                                              aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace );
@@ -97,34 +101,39 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
     std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(std::string(mesh->mName.C_Str()),vertecies, indecies);
-    std::unique_ptr<PBRTextured> renderableMaterial = this->processRenderableMaterial(meshMaterial);
-    std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), std::move(renderableMaterial), mesh->mName.C_Str());
+
+    std::shared_ptr<PBRTextured> renderableMaterial;
+    if(this->material == nullptr){
+        renderableMaterial = this->processRenderableMaterial(meshMaterial);
+    }
+    else
+        renderableMaterial = this->material;
+
+    std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial, mesh->mName.C_Str());
 
     std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));
 
-
     this->addChild(std::move(processedNode));
-
 }
 
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    std::unique_ptr<PBRTextured> material = std::make_unique<PBRTextured>(shader);
+    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(shader);
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
+    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
+    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS,"_metalnessMap",2));
+    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS, "_metalnessMap", 2));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS,"_normalMap",3));
+    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS, "_normalMap", 3));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION,"_aoMap",4));
+    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION, "_aoMap", 4));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE,"_emmisionMap",5));
+    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE, "_emmisionMap", 5));
 
-    material->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN,"_rougnessMetalnessMap",6));
+    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6));
 
-    return std::move(material);
+    return std::move(mat);
 }
 
 std::unique_ptr<PBRMaterial<Texture2D>>

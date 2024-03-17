@@ -61,7 +61,7 @@ int main() {
     auto goldCubeSceneNode = std::make_unique<SceneNode>(std::move(goldCubeRenderable));
     goldCubeSceneNode->setPositions(glm::vec3(-3.0f, 1.0f, 0.0f));
 
-    auto sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf");
+    auto sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf", goldCubeMaterial);
     sunbro_helmet->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
     sunbro_helmet->setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
     sunbro_helmet->setScale(glm::vec3(0.07f));

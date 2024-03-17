@@ -15,14 +15,28 @@
 
 class ModelSceneNode:public SceneNode  {
 public:
-    explicit ModelSceneNode(std::shared_ptr<Shader> shader, std::string path);
+    explicit ModelSceneNode(std::shared_ptr<Shader> shader, std::string path, std::shared_ptr<PBRTextured> mat = nullptr);
     std::string directory;
 private:
+    std::shared_ptr<PBRTextured> material = nullptr;
     std::shared_ptr<Shader> shader;
 
     std::vector<std::shared_ptr<Texture2D>>loadedTextures;
+
+    /***
+     * Process node of the model from the assets
+     * @param node node to process
+     * @param scene scene in which the scene node is located
+     */
     void processNode(aiNode* node, const aiScene* scene);
+
+    /***
+     * Process renderable of the mesh
+     * @param mesh mesh to be processed
+     * @param scene scene in which the model is located
+     */
     void processRenderable(aiMesh* mesh, const aiScene* scene);
+
     std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial* meshMaterial);
     std::unique_ptr<PBRMaterial<Texture2D>> processMaterialProperty(aiMaterial* material, aiTextureType type, const std::string& shaderName, const int samplerID);
 };
