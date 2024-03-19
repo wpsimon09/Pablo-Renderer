@@ -26,6 +26,7 @@ Renderable::Renderable(std::shared_ptr<Geometry> geometry, std::shared_ptr<Mater
     this->objectGeometry = std::move(geometry);
     this->objectMaterial = std::move(material);
     this->modelMatrix = glm::mat4(1.0f);
+    this->transformations = std::make_unique<Transformations>();
 }
 
 Renderable::Renderable(std::shared_ptr<Shader> shader) {
@@ -33,6 +34,7 @@ Renderable::Renderable(std::shared_ptr<Shader> shader) {
     this->objectMaterial = std::make_unique<PBRColor>(std::move(shader));
     this->objectGeometry = std::make_unique<CubeGeometry>();
     this->modelMatrix = glm::mat4(1.0f);
+    this->transformations = std::make_unique<Transformations>();
 }
 
 void Renderable::render() {
@@ -50,6 +52,13 @@ Renderable::Renderable() {
 
 const std::shared_ptr<Material> &Renderable::getObjectMaterial() const {
     return objectMaterial;
+}
+
+void Renderable::update() {
+    if(!isPartOfSceneNode){
+        transformations->computeModelMatrix();
+        this->modelMatrix = transformations->getModelMatrix();
+    }
 }
 
 

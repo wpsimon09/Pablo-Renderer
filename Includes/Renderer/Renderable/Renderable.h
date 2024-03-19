@@ -27,8 +27,9 @@ protected:
     std::shared_ptr<Geometry> objectGeometry;
     std::shared_ptr<Material> objectMaterial;
 public:
+    std::unique_ptr<Transformations> transformations;
     const std::shared_ptr<Material> &getObjectMaterial() const;
-
+    bool isPartOfSceneNode = false;
 protected:
     glm::mat4 modelMatrix;
 public:
@@ -54,6 +55,9 @@ public:
      * Mehtod will draw the renderable to the currently bound GL_FRAMEBUFFER
      */
     virtual void render();
+
+    void update();
+
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 
     void setModelMatrix(glm::mat4 modelMatrix){this->modelMatrix = modelMatrix;}

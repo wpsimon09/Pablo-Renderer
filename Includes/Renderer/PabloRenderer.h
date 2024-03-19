@@ -9,6 +9,7 @@
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.h"
 #include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
+#include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
 class PabloRenderer {
 public:
@@ -16,6 +17,7 @@ public:
     /***
      * Gets the instance of the Pablo Renderer by usage of raw pointers
      * @return pointer to static instance of PabloRenderer class
+     * @desingPattern Singleton
      */
     static PabloRenderer* getInstance();
 
@@ -43,7 +45,17 @@ public:
      */
     void setDebugTexture(std::shared_ptr<TextureBase> debugTexture);
 
-    ~PabloRenderer(){delete PabloRenderer::instance;};
+    std::shared_ptr<Scene> getScene(){return this->scene;}
+
+    GLFWwindow * getWindow() {return this->window;}
+
+    /***
+     * Sets the window where to draw to
+    * @param window window where to draw
+    */
+    void setWindow(GLFWwindow* window);
+
+    ~PabloRenderer(){delete PabloRenderer::instance;}
 private:
     PabloRenderer();
 
@@ -58,6 +70,7 @@ private:
     std::vector<std::unique_ptr<FrameBuffer>> frameBuffers;
     std::unique_ptr<FrameBufferDebug> debugFrameBuffer ;
 
+public:
     float deltaTime;
     float lastFrame;
     float lastX = 0;
@@ -67,44 +80,6 @@ private:
 
     int windowHeight;
     int windowWidth;
-
-    /***
-     * Sets the window where to draw to
-     * @param window window where to draw
-     */
-    void setWindow(GLFWwindow* window);
-
-    /***
-     * Process the input for the application
-     * @param window window in which to process the input
-     */
-    void processInput(GLFWwindow* window);
-
-
-    /***
-     * Processes event when mouse wheel has scrolled
-     * @param window window in which to event occurred
-     * @param xoffset offset on x axis
-     * @param yoffset offset on y axis
-     */
-    static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
-    /***
-     * Function that process mouse movement call back
-     * @param window window in which to process the callback
-     * @param xpos position on x axis
-     * @param ypos position on y axis
-     */
-    static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-
-    /***
-     * Initializes OpenGL context
-     * @param width width of the window
-     * @param height height of the height
-     * @return true if the context was initialized otherwise false
-     */
-    bool glInit(unsigned int width, unsigned int height);
-
 };
 
 
