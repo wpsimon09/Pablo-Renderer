@@ -12,10 +12,10 @@ class GLFWHelper {
 private:
     inline static PabloRenderer *instance;
 public:
-    GLFWHelper(){
-        GLFWHelper::instance = PabloRenderer::getInstance();
-    };
-    
+    inline static void setInstance(PabloRenderer* inst){
+        instance = inst;
+    }
+
     /***
     * Process the input for the application
     * @param window window in which to process the input

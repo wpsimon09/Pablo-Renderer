@@ -8,6 +8,7 @@ PabloRenderer::PabloRenderer() {
 }
 
 void PabloRenderer::init(unsigned int width, unsigned int height) {
+    GLFWHelper::setInstance(PabloRenderer::instance);
     if(!GLFWHelper::glInit(width, height))
         std::cerr<<"OPENGL CONTEXT NOT INITIALIZED";
 }
