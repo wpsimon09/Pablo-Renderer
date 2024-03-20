@@ -29,10 +29,15 @@ public:
 
     const glm::vec3 &getPosition() const;
     void setPosition(const glm::vec3 &position);
+    void setPosition(float x, float y, float z);
+
     const glm::vec3 &getRotations() const;
     void setRotations(const glm::vec3 &rotations);
+    void setRotations(float x, float y, float z);
+
     const glm::vec3 &getScale() const;
     void setScale(const glm::vec3 &scale);
+    void setScale(float x, float y, float z);
 
     bool hasChanged() {return this->isDirty;}
 

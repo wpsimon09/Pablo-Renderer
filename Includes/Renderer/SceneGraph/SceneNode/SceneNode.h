@@ -17,11 +17,12 @@ public:
      * Creates a new scene node
      * @param renderable renderable which scene node posses
      */
-    explicit SceneNode(std::unique_ptr<Renderable> renderable = NULL);
+    explicit SceneNode(std::unique_ptr<Renderable> renderable = nullptr, std::unique_ptr<Transformations> transformations = nullptr);
 
     ~SceneNode();
 
 public:
+    std::unique_ptr<Transformations> transformation;
 
     const std::unique_ptr<Renderable> &getRenderable() const;
 
@@ -54,15 +55,9 @@ public:
     std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorEnd();
 
     //facade
-    void setPositions(glm::vec3 position) { this->transformation->setPosition(position); }
-
     glm::vec3 getPosition() const { return this->transformation->getPosition(); }
 
-    void setRotations(glm::vec3 rotationsEurel) { this->transformation->setRotations(rotationsEurel); }
-
     const glm::vec3 getRotations() const { return this->transformation->getRotations(); }
-
-    void setScale(glm::vec3 scale) { this->transformation->setScale(scale); }
 
     const glm::vec3 getScale() const { return this->transformation->getScale(); }
 
@@ -73,8 +68,6 @@ public:
 protected:
     SceneNode *parent;
     std::unique_ptr<Renderable> renderable;
-
-    std::unique_ptr<Transformations> transformation;
 
     /***
      * Children owned by the scene node

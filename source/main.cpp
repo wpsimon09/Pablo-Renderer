@@ -59,28 +59,26 @@ int main() {
     auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Gold");
     auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
     auto goldCubeSceneNode = std::make_unique<SceneNode>(std::move(goldCubeRenderable));
-    goldCubeSceneNode->setPositions(glm::vec3(-3.0f, 1.0f, 0.0f));
+    goldCubeSceneNode->transformation->setPosition(glm::vec3(-3.0f, 1.0f, 0.0f));
 
     auto sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf", goldCubeMaterial);
-    sunbro_helmet->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
-    sunbro_helmet->setPositions(glm::vec3(0.0F, 2.0F, 0.0f));
-    sunbro_helmet->setScale(glm::vec3(0.07f));
+    sunbro_helmet->transformation->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
+    sunbro_helmet->transformation->setPosition(glm::vec3(0.0F, 2.0F, 0.0f));
+    sunbro_helmet->transformation->setScale(glm::vec3(0.07f));
 
-    auto sword  = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sword/scene.gltf");
-    sword->setScale(glm::vec3(0.09f));
-    sword->setPositions(glm::vec3(5.0f, 2.0f, 0.0f));
+    auto sword  = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sword/scene.gltf", goldCubeMaterial);
+    sword->transformation->setScale(glm::vec3(0.09f));
+    sword->transformation->setPosition(glm::vec3(5.0f, 2.0f, 0.0f));
 
-    auto withcerMedailon = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/witcher_medalion/scene.gltf");
-    withcerMedailon->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-    withcerMedailon->setPositions(glm::vec3(10.0f, 2.0f, 0.0f));
-    withcerMedailon->setScale(glm::vec3(0.3));
+    auto withcerMedailon = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/witcher_medalion/scene.gltf", goldCubeMaterial);
+    withcerMedailon->transformation->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
+    withcerMedailon->transformation->setPosition(glm::vec3(10.0f, 2.0f, 0.0f));
+    withcerMedailon->transformation->setScale(glm::vec3(0.3));
 
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
-    gridSceneNode->setPositions(glm::vec3(0.0f, -0.2f, 0.0f));
+    gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
-    auto floor = std::make_unique<Floor>();
-    floor->setScale(glm::vec3(10.0f,1.0f, 10.0f));
-    floor->setPositions(glm::vec3(-6, 0.0, 0.0));
+    auto floor = std::make_unique<Renderable>(planeGeometry, goldCubeMaterial);
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
@@ -90,7 +88,7 @@ int main() {
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
-    scene->add(std::move(floor));
+    //scene->add(std::move(floor));
     scene->add(std::move(skyboxCube));
 
     pabloRenderer->attachScene(scene);

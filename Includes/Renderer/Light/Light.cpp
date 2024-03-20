@@ -17,8 +17,8 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     material->shader->setVec3("lightColor", this->color->property);
     auto lightRenderable = std::make_unique<Renderable>(std::move(geometry), std::move(material));
     this->lightSceneNode = std::make_shared<SceneNode>(std::move(lightRenderable));
-    this->lightSceneNode->setScale(glm::vec3(0.2));
-    this->lightSceneNode->setPositions(this->position->property);
+    this->lightSceneNode->transformation->setScale(glm::vec3(0.2));
+    this->lightSceneNode->transformation->setPosition(this->position->property);
 }
 
 void Light::update(std::shared_ptr<Shader> shader) {
@@ -26,7 +26,7 @@ void Light::update(std::shared_ptr<Shader> shader) {
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->color->property);
 
-    this->lightSceneNode->setPositions(this->position->property);
+    this->lightSceneNode->transformation->setPosition(this->position->property);
 }
 
 void Light::setX(float pos) {
