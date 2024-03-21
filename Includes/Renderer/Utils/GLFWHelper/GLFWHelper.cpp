@@ -77,7 +77,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 
     glfwSetCursorPosCallback(instance->getWindow(), mouse_callback);
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
-    glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
 
     return true;

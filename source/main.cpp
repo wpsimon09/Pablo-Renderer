@@ -58,8 +58,7 @@ int main() {
 
     auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Gold");
     auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
-    auto goldCubeSceneNode = std::make_unique<SceneNode>(std::move(goldCubeRenderable));
-    goldCubeSceneNode->transformation->setPosition(glm::vec3(-3.0f, 1.0f, 0.0f));
+    goldCubeRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
 
     auto sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf", goldCubeMaterial);
     sunbro_helmet->transformation->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
@@ -83,7 +82,7 @@ int main() {
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
 
-    scene->add(std::move(goldCubeSceneNode));
+    scene->add(std::move(goldCubeRenderable));
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));

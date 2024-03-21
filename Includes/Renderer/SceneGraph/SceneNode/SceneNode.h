@@ -17,7 +17,7 @@ public:
      * Creates a new scene node
      * @param renderable renderable which scene node posses
      */
-    explicit SceneNode(std::unique_ptr<Renderable> renderable = nullptr, std::unique_ptr<Transformations> transformations = nullptr);
+    explicit SceneNode(std::unique_ptr<Renderable> renderable = nullptr);
 
     ~SceneNode();
 

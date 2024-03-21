@@ -4,17 +4,16 @@
 
 #include "SceneNode.h"
 
-SceneNode::SceneNode(std::unique_ptr<Renderable> renderable, std::unique_ptr<Transformations> transformations ) {
+SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
     this->renderable = std::move(renderable);
-    if(renderable != nullptr){
-        if(!renderable->isPartOfSceneNode){
-            this->renderable->isPartOfSceneNode = true;
-            this->transformation = std::move(this->renderable->transformations);
-        }
+    if(this->renderable != nullptr && this->renderable->transformations != nullptr){
+        this->transformation = std::move(this->renderable->transformations);
+    }
+    else{
+        this->transformation = std::make_unique<Transformations>();
     }
 
     this->parent = nullptr;
-    this->transformation = std::make_unique<Transformations>();
 }
 
 SceneNode::~SceneNode()=default;
