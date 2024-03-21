@@ -38,7 +38,7 @@ public:
      * @param color color of the material (rgb)
      * @param shaderName name of the uniform inside the shader
      */
-    BasicMaterialColor(std::shared_ptr<Shader> shader, glm::vec3 color = glm::vec3(1.0), std::string shaderName="color");
+    explicit BasicMaterialColor(std::shared_ptr<Shader> shader, glm::vec3 color = glm::vec3(1.0), std::string shaderName="color");
 
     /***
      * Sends all of the relevant information to the shader

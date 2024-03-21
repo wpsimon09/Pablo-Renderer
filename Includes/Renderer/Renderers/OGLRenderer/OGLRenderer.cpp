@@ -18,7 +18,7 @@ void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
     this->scene->update();
     if(Scene::root){
         renderSceneGraph(*Scene::root);
-        this->scene->light->render();
+        this->scene->light->render(this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
 }

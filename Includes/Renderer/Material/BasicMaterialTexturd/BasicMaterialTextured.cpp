@@ -7,8 +7,8 @@
 #include <utility>
 
     BasicMaterialTextured::BasicMaterialTextured(std::shared_ptr<Shader> shader, const char *path, std::string shaderName):Material(std::move(shader)) {
-    Texture2D texture(path);
-    this->texture = std::make_unique<TextureUniform>(std::move(shaderName),std::move(texture));
+    Texture2D _texture(path);
+    this->texture = std::make_unique<TextureUniform>(std::move(shaderName),std::move(_texture));
     this->texture->texture2D.setSamplerID(0);
 }
 

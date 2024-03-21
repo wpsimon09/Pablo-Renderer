@@ -57,12 +57,12 @@ public:
     /***
      * Renders the light icon in the currently bound frame buffer
      */
-    virtual void render();
+    virtual void render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
 
     /***
-     * Scene node containing light icon information for rendering
+     * Renderer which purpose is to visualize light position in the world
      */
-    std::shared_ptr<SceneNode> lightSceneNode;
+    std::shared_ptr<Renderable> lightRenderable;
 
 protected:
 

@@ -87,7 +87,6 @@ int main() {
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
-    //scene->add(std::move(floor));
     scene->add(std::move(skyboxCube));
 
     pabloRenderer->attachScene(scene);
