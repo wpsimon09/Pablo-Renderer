@@ -39,6 +39,9 @@ void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
 
     instance->getScene()->camera->ProcessMouseMovement(xOffset, yOffset);
 
+    GLFWHelper::pointerX = xpos;
+    GLFWHelper::pointerY = ypos;
+
 }
 
 bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
@@ -47,7 +50,6 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
 
     instance->setWindow(glfwCreateWindow(width, height, "Pablo-renderer", NULL, NULL));
     if (instance->getWindow() == NULL)
@@ -79,6 +81,16 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
     glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
+    glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
 
     return true;
+}
+
+glm::vec2 GLFWHelper::getPointerPosition(bool normalize) {
+    if(normalize){
+        float mouseX_norm = (2.0 * pointerX)/GLFWHelper::screen_W - 1;
+        float mouseY_norm = 1.0 - (2* pointerY)/GLFWHelper::screen_H;
+        return {mouseX_norm, mouseY_norm};
+    }
+    return {pointerX, pointerY};
 }

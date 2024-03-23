@@ -6,12 +6,12 @@ in vec2 TexCoords;
 
 uniform sampler2D FragmentColor;
 
+uniform vec2 mouseFocusPoint;
 
 float redOffset   =  0.009;
 float greenOffset =  0.006;
 float blueOffset  = -0.006;
 
-vec2 mouseFocusPoint = vec2(0.5,0.5);
 
 void main(){
     vec3 color = texture(FragmentColor, TexCoords).rgb;

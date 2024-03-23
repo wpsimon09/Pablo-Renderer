@@ -11,6 +11,10 @@ class PabloRenderer;
 class GLFWHelper {
 private:
     inline static PabloRenderer *instance;
+    inline static float pointerX = 0;
+    inline static float pointerY = 0;
+    inline static int screen_W = 800;
+    inline static int screen_H = 600;
 public:
     inline static void setInstance(PabloRenderer* inst){
         instance = inst;
@@ -46,6 +50,12 @@ public:
      */
     static bool glInit(unsigned int width, unsigned int height);
 
+    /***
+     * Gets mouse pointer position on the window
+     * @param normalize should coordinates be in the NDC (-1,1)
+     * @return 2 component vector of mouse positions
+     */
+    static glm::vec2 getPointerPosition(bool normalize = false);
 
 };
 

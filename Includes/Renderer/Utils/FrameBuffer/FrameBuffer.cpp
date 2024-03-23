@@ -3,6 +3,7 @@
 //
 
 #include "FrameBuffer.h"
+#include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
 FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement):Renderable() {
     if(customShader == nullptr){
@@ -69,6 +70,7 @@ void FrameBuffer::dispalyOnScreen() {
     glViewport(0, 0, width, height);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     this->objectMaterial->configureShader();
+    this->objectMaterial->shader->setVec2("mouseFocusPoint",GLFWHelper::getPointerPosition(true));
     this->objectGeometry->render();
 }
 
