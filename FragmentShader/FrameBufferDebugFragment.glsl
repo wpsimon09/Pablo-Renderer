@@ -14,12 +14,30 @@ float blueOffset  = -0.006;
 
 
 void main(){
-    vec3 color = texture(FragmentColor, TexCoords).rgb;
+    //vec3 color = texture(FragmentColor, TexCoords).rgb;
 
     vec2 direction =  TexCoords - mouseFocusPoint;
 
-    FragColor.r  = texture(FragmentColor, TexCoords + (direction * vec2(redOffset  ))).r;
-    FragColor.g  = texture(FragmentColor, TexCoords + (direction * vec2(greenOffset))).g;
-    FragColor.ba = texture(FragmentColor, TexCoords + (direction * vec2(blueOffset ))).ba;
+    int pixelSize = 8;
 
+    vec4 color;
+
+    color.r  = texture(FragmentColor, TexCoords + (direction * vec2(redOffset  ))).r;
+    color.g  = texture(FragmentColor, TexCoords + (direction * vec2(greenOffset))).g;
+    color.ba = texture(FragmentColor, TexCoords + (direction * vec2(blueOffset ))).ba;
+
+    float x =  int(gl_FragCoord.x)%pixelSize;
+    float y = int (gl_FragCoord.y)%pixelSize;
+
+    x = floor(pixelSize/2.0) -x;
+    y = floor(pixelSize/2.0) - y;
+
+    x = gl_FragCoord.x +x;
+    y = gl_FragCoord.y + y;
+
+    vec2 texSize  = textureSize(FragmentColor, 0).xy;
+
+    color += texture(FragmentColor, vec2(x,y)/texSize).rgba;
+
+    FragColor = color;
 }
