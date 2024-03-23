@@ -53,6 +53,7 @@ public:
     /***
      * Gets mouse pointer position on the window
      * @param normalize should coordinates be in the NDC (-1,1)
+     * @def false
      * @return 2 component vector of mouse positions
      */
     static glm::vec2 getPointerPosition(bool normalize = false);
