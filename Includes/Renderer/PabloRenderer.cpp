@@ -4,8 +4,8 @@
 
 #include "PabloRenderer.h"
 
-PabloRenderer::PabloRenderer() {
-}
+#include <utility>
+
 
 void PabloRenderer::init(unsigned int width, unsigned int height) {
     GLFWHelper::setInstance(PabloRenderer::instance);
@@ -30,14 +30,18 @@ void PabloRenderer::render() {
         //-----------------
         // ACTUAL RENDERING
         //-----------------
-        this->renderer->render(this->scene,this->frameBuffers[0]);
+        auto currentRenderPass = renderPasses.begin();
+
+        currentRenderPass->second->render(this->scene, this->renderer);
+
+
 
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER
         //----------------------------------
-        for(auto &frameBuffer: this->frameBuffers){
-            frameBuffer->dispalyOnScreen();
-        }
+        this->outputFrameBuffer->setColorAttachment(renderPasses.find("ScenePass")->second->getRenderedResult());
+
+        this->outputFrameBuffer->dispalyOnScreen();
         //debugFrameBuffer->dispalyOnScreen();
 
         glfwSwapBuffers(this->window);
@@ -57,14 +61,16 @@ void PabloRenderer::setDebugTexture(std::shared_ptr<TextureBase> debugTexture) {
 }
 
 void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
-    this->scene = scene;
+    this->scene = std::move(scene);
     this->scene->setup();
 
-    this->frameBuffers.push_back(std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight));
+    this->outputFrameBuffer = std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight);
 
     this->debugFrameBuffer = std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight);
 
-    this->renderer = std::make_unique<OGLRenderer>();
+    this->renderPasses.insert({"ScenePass", std::make_unique<ScenePass>()});
+
+    this->renderer = std::make_shared<OGLRenderer>();
 }
 
 PabloRenderer* PabloRenderer::getInstance() {

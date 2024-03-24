@@ -4,12 +4,16 @@
 
 #ifndef PABLO_RENDERER_PABLORENDERER_H
 #define PABLO_RENDERER_PABLORENDERER_H
+#include "map"
+#include <iterator>
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.h"
 #include "Renderer/Utils/Texture/TextureHDR/TextureHDRi.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
+#include "Renderer/RenderPass/RenderPass.h"
+#include "Renderer/RenderPass/ScenePass/ScenePass.h"
 
 class PabloRenderer {
 public:
@@ -57,17 +61,19 @@ public:
 
     ~PabloRenderer(){delete PabloRenderer::instance;}
 private:
-    PabloRenderer();
+    PabloRenderer() = default;
 
     inline static PabloRenderer* instance = nullptr;
 
-    std::unique_ptr<OGLRenderer> renderer = nullptr;
+    std::shared_ptr<OGLRenderer> renderer = nullptr;
 
     std::shared_ptr<Scene> scene = nullptr;
 
+    std::map<std::string, std::unique_ptr<RenderPass>> renderPasses;
+
     GLFWwindow* window = nullptr;
 
-    std::vector<std::unique_ptr<FrameBuffer>> frameBuffers;
+    std::unique_ptr<FrameBuffer> outputFrameBuffer;
     std::unique_ptr<FrameBufferDebug> debugFrameBuffer ;
 
 public:

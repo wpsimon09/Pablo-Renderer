@@ -9,7 +9,6 @@
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/SceneGraph/Scene.h"
-#include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
 
 class RenderPass {
@@ -20,6 +19,7 @@ public:
 
     virtual std::shared_ptr<Texture2D> render(std::shared_ptr<Texture2D> input, std::shared_ptr<OGLRenderer> renderer){return nullptr;}
 
+    std::shared_ptr<Texture2D> getRenderedResult() {return this->renderPassResult;}
 protected:
     std::unique_ptr<FrameBuffer> frameBuffer;
     std::shared_ptr<Texture2D> renderPassResult;

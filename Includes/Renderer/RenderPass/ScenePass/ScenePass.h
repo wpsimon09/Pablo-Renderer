@@ -8,9 +8,8 @@
 #include "Renderer/RenderPass/RenderPass.h"
 
 class ScenePass: public RenderPass {
-    ScenePass();
-
 public:
+    ScenePass();
     std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer) override;
 };
 

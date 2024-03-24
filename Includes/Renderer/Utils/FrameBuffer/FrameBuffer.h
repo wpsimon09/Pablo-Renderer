@@ -70,6 +70,12 @@ public:
     virtual void drawInsideSelf();
 
     /***
+     * Sets the color attachment of frame buffer that is supposed to be rendered
+     * @param colorAttachment color attachment to use
+     */
+    void setColorAttachment(std::shared_ptr<Texture2D> colorAttachment);
+
+    /***
      * Changes filtering method of the color attachment
      * @param mag magnification filter GL_LINEAR, GL_CLAMP_TO_EDGE etc...
      * @param min minification filter GL_LINEAR, GL_CLAMP_TO_EDGE etc...

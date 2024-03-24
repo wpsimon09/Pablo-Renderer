@@ -5,5 +5,5 @@
 #include "RenderPass.h"
 
 RenderPass::RenderPass() {
-    this->renderPassResult = std::make_shared<Texture2D>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight(), GL_RGBA16F);
+    this->renderPassResult = std::make_shared<Texture2D>(600, 800, GL_RGBA16F);
 }

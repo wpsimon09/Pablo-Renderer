@@ -106,3 +106,7 @@ void FrameBuffer::changeFilteringMethod(GLenum mag, GLenum min) {
     this->colorAttachment->changeFilteringMethod(mag, min);
 }
 
+void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment) {
+    this->colorAttachment = std::move(colorAttachment);
+}
+
