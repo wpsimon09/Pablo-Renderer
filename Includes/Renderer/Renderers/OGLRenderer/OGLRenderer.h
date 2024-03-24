@@ -14,19 +14,13 @@
  */
 class OGLRenderer {
 public:
-    /***
-     * Creates an instance of the OGLRenderer class
-     * @param scene
-     * @param window
-     */
-    OGLRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
-    void init();
+    OGLRenderer()=default;
 
     /***
      * Renders the scene to the provided frame buffer
      * @param frameBuffer frame buffer where to render the scene
      */
-    void render(std::unique_ptr<FrameBuffer>& frameBuffer);
+    void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer);
 private:
     std::shared_ptr<Scene> scene;
     GLFWwindow* window;

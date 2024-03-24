@@ -102,6 +102,10 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Geometry/Shapes/Sphere/SphereGeometry.h
         Includes/Renderer/Utils/GLFWHelper/GLFWHelper.cpp
         Includes/Renderer/Utils/GLFWHelper/GLFWHelper.h
+        Includes/Renderer/RenderPass/RenderPass.cpp
+        Includes/Renderer/RenderPass/RenderPass.h
+        Includes/Renderer/RenderPass/ScenePass/ScenePass.cpp
+        Includes/Renderer/RenderPass/ScenePass/ScenePass.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

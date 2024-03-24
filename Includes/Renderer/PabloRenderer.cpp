@@ -30,7 +30,7 @@ void PabloRenderer::render() {
         //-----------------
         // ACTUAL RENDERING
         //-----------------
-        this->renderer->render(this->frameBuffers[0]);
+        this->renderer->render(this->scene,this->frameBuffers[0]);
 
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER
@@ -64,7 +64,7 @@ void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
 
     this->debugFrameBuffer = std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight);
 
-    this->renderer = std::make_unique<OGLRenderer>(std::move(scene), this->window);
+    this->renderer = std::make_unique<OGLRenderer>();
 }
 
 PabloRenderer* PabloRenderer::getInstance() {

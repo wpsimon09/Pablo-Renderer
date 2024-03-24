@@ -4,14 +4,14 @@
 
 #include "OGLRenderer.h"
 
+#include <utility>
 
-OGLRenderer::OGLRenderer(std::shared_ptr<Scene> scene,  GLFWwindow* window) {
-    this->scene = std::move(scene);
-    this->window = window;
-}
 
-void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
+
+void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer) {
     frameBuffer->bind();
+    this->scene = std::move(scene);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
