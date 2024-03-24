@@ -7,8 +7,7 @@
 
 #include "Renderer/Utils/Transformations/Transformations.h"
 #include "Renderer/Renderable/Renderable.h"
-#include "Renderer/SceneGraph/Scene.h"
-
+#include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 /***
  * Scene graph pattern implementation
  */
