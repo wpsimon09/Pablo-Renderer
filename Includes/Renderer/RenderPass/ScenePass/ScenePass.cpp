@@ -10,6 +10,6 @@ ScenePass::ScenePass():RenderPass() {
 
 std::shared_ptr<Texture2D> ScenePass::render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer) {
     renderer->render(scene, this->frameBuffer);
-
+    return this->frameBuffer->getRenderedResult();
 }
 

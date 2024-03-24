@@ -41,7 +41,7 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
             scene->getIblPipeLine()->configureShader(shader, renderable->getObjectMaterial()->getSamplerCount());
         }
 
-        sceneNode.render();
+        sceneNode.render(this->scene->renderingConstrains);
 
     }
     for (auto &childNode : sceneNode.getChildren()) {

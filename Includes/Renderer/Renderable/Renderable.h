@@ -28,6 +28,7 @@ protected:
     std::shared_ptr<Material> objectMaterial;
 public:
     std::unique_ptr<Transformations> transformations;
+    bool castsShadwo = true;
     const std::shared_ptr<Material> &getObjectMaterial() const;
     bool isPartOfSceneNode = false;
 protected:
