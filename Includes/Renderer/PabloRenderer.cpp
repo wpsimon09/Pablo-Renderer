@@ -9,13 +9,13 @@
 
 void PabloRenderer::init(unsigned int width, unsigned int height) {
     GLFWHelper::setInstance(PabloRenderer::instance);
-    if(!GLFWHelper::glInit(width, height))
-        std::cerr<<"OPENGL CONTEXT NOT INITIALIZED";
+    if (!GLFWHelper::glInit(width, height))
+        std::cerr << "OPENGL CONTEXT NOT INITIALIZED";
 }
 
 void PabloRenderer::render() {
 
-    while (!glfwWindowShouldClose(window)){
+    while (!glfwWindowShouldClose(window)) {
         auto currentFrame = static_cast<float>(glfwGetTime());
         this->deltaTime = currentFrame - this->lastFrame;
         this->lastFrame = currentFrame;
@@ -34,13 +34,10 @@ void PabloRenderer::render() {
 
         currentRenderPass->second->render(this->scene, this->renderer);
 
-
-
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER
         //----------------------------------
-        this->outputFrameBuffer->setColorAttachment(renderPasses.find("ScenePass")->second->getRenderedResult());
-
+        this->outputFrameBuffer->setColorAttachment(*renderPasses.find("ScenePass")->second->getRenderedResult());
         this->outputFrameBuffer->dispalyOnScreen();
         //debugFrameBuffer->dispalyOnScreen();
 
@@ -73,11 +70,11 @@ void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
     this->renderer = std::make_shared<OGLRenderer>();
 }
 
-PabloRenderer* PabloRenderer::getInstance() {
-    if(PabloRenderer::instance == nullptr){
+PabloRenderer *PabloRenderer::getInstance() {
+    if (PabloRenderer::instance == nullptr) {
         PabloRenderer::instance = new PabloRenderer();
         return PabloRenderer::instance;
-    }else
+    } else
         return PabloRenderer::instance;
 }
 

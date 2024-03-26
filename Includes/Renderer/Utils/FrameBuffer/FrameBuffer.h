@@ -73,7 +73,7 @@ public:
      * Sets the color attachment of frame buffer that is supposed to be rendered
      * @param colorAttachment color attachment to use
      */
-    void setColorAttachment(std::shared_ptr<Texture2D> colorAttachment);
+    void setColorAttachment(Texture2D colorAttachment);
 
     /***
      * Changes filtering method of the color attachment

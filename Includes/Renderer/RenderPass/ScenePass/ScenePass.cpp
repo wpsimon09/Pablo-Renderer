@@ -5,13 +5,13 @@
 #include "ScenePass.h"
 
 ScenePass::ScenePass():RenderPass() {
-    this->frameBuffer = std::make_unique<FrameBuffer>(600, 800);
+    this->frameBuffer = std::make_unique<FrameBuffer>(800, 600);
+    this->name = "scene pass";
 }
 
 std::shared_ptr<Texture2D> ScenePass::render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer) {
     renderer->render(scene, this->frameBuffer);
-    this->frameBuffer->drawInsideSelf();
-    this->result = renderpass result  //see render pass base class
-return this->frameBuffer->getRenderedResult();
+    this->renderPassResult = this->frameBuffer->getRenderedResult();
+    return this->renderPassResult;
 }
 

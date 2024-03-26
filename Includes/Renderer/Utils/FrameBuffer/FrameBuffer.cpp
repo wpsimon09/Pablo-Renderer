@@ -70,7 +70,6 @@ void FrameBuffer::dispalyOnScreen() {
     glViewport(0, 0, width, height);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     this->objectMaterial->configureShader();
-    this->objectMaterial->shader->setVec2("mouseFocusPoint",GLFWHelper::getPointerPosition(true));
     this->objectGeometry->render();
 }
 
@@ -106,7 +105,7 @@ void FrameBuffer::changeFilteringMethod(GLenum mag, GLenum min) {
     this->colorAttachment->changeFilteringMethod(mag, min);
 }
 
-void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment) {
-    this->colorAttachment = std::move(colorAttachment);
+void FrameBuffer::setColorAttachment(Texture2D colorAttachment) {
+    this->objectMaterial = std::make_unique<BasicMaterialTextured>(this->shader, std::move(colorAttachment));
 }
 

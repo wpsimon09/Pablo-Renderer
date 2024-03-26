@@ -23,6 +23,7 @@ public:
 protected:
     std::unique_ptr<FrameBuffer> frameBuffer;
     std::shared_ptr<Texture2D> renderPassResult;
+    std::string name = "";
 };
 
 
