@@ -35,7 +35,6 @@ void PabloRenderer::render() {
         currentRenderPass->second->render(this->scene, this->renderer);
 
 
-
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER
         //----------------------------------

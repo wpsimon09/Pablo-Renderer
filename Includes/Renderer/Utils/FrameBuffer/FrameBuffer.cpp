@@ -108,5 +108,6 @@ void FrameBuffer::changeFilteringMethod(GLenum mag, GLenum min) {
 
 void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment) {
     this->colorAttachment = std::move(colorAttachment);
+    this->objectMaterial = std::make_shared<BasicMaterialTextured>(this->shader, *std::move(this->colorAttachment));
 }
 
