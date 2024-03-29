@@ -43,9 +43,11 @@ public:
      * Generated IBL textures
      */
     std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> iblTextures;
+
+    int getSamplersCount() {return this->samplersCount; }
 private:
     std::shared_ptr<TextureHDRi> inputHDRI;
-
+    int samplersCount;
     //---------------------------
     // STAGES OF THE IBL PIPELINE
     //---------------------------

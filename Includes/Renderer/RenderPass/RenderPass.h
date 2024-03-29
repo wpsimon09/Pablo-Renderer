@@ -15,12 +15,15 @@ class RenderPass {
 public:
     RenderPass();
 
+    publi
+
     virtual std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer){return nullptr;}
 
     virtual std::shared_ptr<Texture2D> render(std::shared_ptr<Texture2D> input, std::shared_ptr<OGLRenderer> renderer){return nullptr;}
 
     std::shared_ptr<Texture2D> getRenderedResult() {return this->renderPassResult;}
 protected:
+    std::vector<std::shared_ptr<TextureBase>> inputs;
     std::unique_ptr<FrameBuffer> frameBuffer;
     std::shared_ptr<Texture2D> renderPassResult;
 };

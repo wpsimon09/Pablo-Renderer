@@ -25,8 +25,12 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
     if (sceneNode.getRenderable() != nullptr){
+        int textureSamplerCount;
+
         // reference ot unique_ptr of renderable inside scene node
         auto& renderable = sceneNode.getRenderable();
+
+        textureSamplerCount = renderable->getObjectMaterial()->getSamplerCount();
 
         //shared_ptr here
         auto shader = renderable->getShader();
@@ -38,7 +42,14 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         this->scene->light->update(shader);
 
         if(shader->supportsIBL){
-            scene->getIblPipeLine()->configureShader(shader, renderable->getObjectMaterial()->getSamplerCount());
+            scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);
+            textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
+        }
+
+        for(auto& input: this->renderPassInputs){
+            input->setSamplerID(textureSamplerCount);
+            ShaderHelper::setTextureToShader(shader, input, )
+            textureSamplerCount ++;
         }
 
         sceneNode.render(this->scene->renderingConstrains);
@@ -47,6 +58,10 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
     for (auto &childNode : sceneNode.getChildren()) {
         this->renderSceneGraph(*childNode);
     }
+}
+
+void OGLRenderer::setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) {
+    this->renderPassInputs = std::move(inputs);
 }
 
 

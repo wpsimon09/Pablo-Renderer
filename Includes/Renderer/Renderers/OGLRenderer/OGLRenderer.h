@@ -21,6 +21,8 @@ public:
      * @param frameBuffer frame buffer where to render the scene
      */
     void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer);
+
+    void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs);
 private:
     std::shared_ptr<Scene> scene;
     GLFWwindow* window;
@@ -30,6 +32,11 @@ private:
      * @param sceneNode scene node to render
      */
     void renderSceneGraph(SceneNode& sceneNode);
+
+    /***
+     * Inputs for the render pass
+     */
+    std::vector<std::shared_ptr<TextureBase>> renderPassInputs;
 };
 
 #endif //PABLO_RENDERER_OGLRENDERER_H
