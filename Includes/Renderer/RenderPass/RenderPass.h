@@ -15,8 +15,6 @@ class RenderPass {
 public:
     RenderPass();
 
-    publi
-
     virtual std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer){return nullptr;}
 
     virtual std::shared_ptr<Texture2D> render(std::shared_ptr<Texture2D> input, std::shared_ptr<OGLRenderer> renderer){return nullptr;}

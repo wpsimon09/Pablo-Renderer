@@ -21,6 +21,7 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
         this->scene->light->render(this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
+    this->renderPassInputs.clear();
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
@@ -46,10 +47,12 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
             textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
         }
 
-        for(auto& input: this->renderPassInputs){
-            input->setSamplerID(textureSamplerCount);
-            ShaderHelper::setTextureToShader(shader, input, )
-            textureSamplerCount ++;
+        if(this->renderPassInputs.empty()){
+            for(auto& input: this->renderPassInputs){
+                input->setSamplerID(textureSamplerCount);
+                ShaderHelper::setTextureToShader(shader, *input,input->shaderName);
+                textureSamplerCount ++;
+            }
         }
 
         sceneNode.render(this->scene->renderingConstrains);
