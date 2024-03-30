@@ -31,8 +31,10 @@ void PabloRenderer::render() {
         // ACTUAL RENDERING
         //-----------------
         auto currentRenderPass = renderPasses.begin();
-
-        currentRenderPass->second->render(this->scene, this->renderer);
+        while(currentRenderPass != renderPasses.end()){
+            currentRenderPass->second->render(this->scene, this->renderer);
+            currentRenderPass++;
+        }
 
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER
@@ -40,7 +42,8 @@ void PabloRenderer::render() {
         this->outputFrameBuffer->setColorAttachment(renderPasses.find("ScenePass")->second->getRenderedResult());
 
         this->outputFrameBuffer->dispalyOnScreen();
-        //debugFrameBuffer->dispalyOnScreen();
+        debugFrameBuffer->setColorAttachment(renderPasses.find("ShadowMapPass")->second->getRenderedResult());
+        debugFrameBuffer->dispalyOnScreen();
 
         glfwSwapBuffers(this->window);
         glfwPollEvents();
@@ -67,6 +70,7 @@ void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
     this->debugFrameBuffer = std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight);
 
     this->renderPasses.insert({"ScenePass", std::make_unique<ScenePass>()});
+    this->renderPasses.insert({"ShadowMapPass", std::make_unique<ShadowMapPass>()});
 
     this->renderer = std::make_shared<OGLRenderer>();
 }

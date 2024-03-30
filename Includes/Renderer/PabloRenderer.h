@@ -14,6 +14,7 @@
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 #include "Renderer/RenderPass/RenderPass.h"
 #include "Renderer/RenderPass/ScenePass/ScenePass.h"
+#include "Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h"
 
 class PabloRenderer {
 public:

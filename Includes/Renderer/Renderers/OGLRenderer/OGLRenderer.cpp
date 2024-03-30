@@ -21,7 +21,9 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
         this->scene->light->render(this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
+
     this->renderPassInputs.clear();
+    this->scene->renderingConstrains = NONE;
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {

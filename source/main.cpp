@@ -59,6 +59,7 @@ int main() {
     auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Gold");
     auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
     goldCubeRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
+    goldCubeRenderable->castsShadwo = true;
 
     auto sunbro_helmet = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet->transformation->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
