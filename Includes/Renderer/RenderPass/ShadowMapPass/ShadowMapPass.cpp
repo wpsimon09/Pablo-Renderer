@@ -6,7 +6,7 @@
 
 
 ShadowMapPass::ShadowMapPass() {
-    this->frameBuffer = std::make_unique<FrameBuffer>(1200, 1200);
+    this->frameBuffer = std::make_unique<FrameBuffer>(800, 600);
 }
 
 std::shared_ptr<Texture2D> ShadowMapPass::render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer) {
