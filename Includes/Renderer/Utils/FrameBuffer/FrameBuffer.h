@@ -85,7 +85,7 @@ public:
     /***
      * Gets rid of the color attachment of the frame buffer and only writes the depth values of the objects
      */
-    void makeDepthOnly();
+    void makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture = nullptr);
 protected:
     std::shared_ptr<Shader> shader;
     std::unique_ptr<RenderBuffer> renderBuffer;

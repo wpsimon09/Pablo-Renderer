@@ -111,7 +111,24 @@ void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment)
     this->objectMaterial = std::make_shared<BasicMaterialTextured>(this->shader, *std::move(this->colorAttachment));
 }
 
-void FrameBuffer::makeDepthOnly() {
-    this->bind()
+void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
+    if(depthMapTexture == nullptr){
+        this->colorAttachment = std::make_shared<Texture2D>(this->width, this->height, GL_DEPTH_COMPONENT32F);
+    }
+    else{
+        this->colorAttachment = std::move(depthMapTexture);
+    }
+    this->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
+    glCheckError();
+
+    //disable color buffer
+    glDrawBuffer(GL_NONE);
+    glCheckError();
+
+    glReadBuffer(GL_NONE);
+    glCheckError();
+
+    this->unbind();
 }
 
