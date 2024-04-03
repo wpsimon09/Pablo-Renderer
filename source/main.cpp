@@ -69,6 +69,7 @@ int main() {
     auto sword  = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sword/scene.gltf");
     sword->transformation->setScale(glm::vec3(0.09f));
     sword->transformation->setPosition(glm::vec3(5.0f, 2.0f, 0.0f));
+    sword->castsShadow(true);
 
     auto withcerMedailon = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/witcher_medalion/scene.gltf");
     withcerMedailon->transformation->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));

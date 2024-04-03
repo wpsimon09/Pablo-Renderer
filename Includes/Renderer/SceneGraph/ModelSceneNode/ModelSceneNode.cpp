@@ -155,4 +155,12 @@ ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type
         return nullptr;
 }
 
+void ModelSceneNode::castsShadow(bool hasShadow) {
+    for(auto &child: this->children){
+        if(child->getRenderable() != nullptr){
+            child->getRenderable()->castsShadwo = hasShadow;
+        }
+    }
+}
+
 

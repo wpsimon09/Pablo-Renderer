@@ -81,6 +81,11 @@ public:
      * @param min minification filter GL_LINEAR, GL_CLAMP_TO_EDGE etc...
      */
     void changeFilteringMethod(GLenum mag, GLenum min);
+
+    /***
+     * Gets rid of the color attachment of the frame buffer and only writes the depth values of the objects
+     */
+    void makeDepthOnly();
 protected:
     std::shared_ptr<Shader> shader;
     std::unique_ptr<RenderBuffer> renderBuffer;

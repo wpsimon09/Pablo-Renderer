@@ -46,5 +46,5 @@ void main(){
     for(int i = 0; i < 9; i++)
         col += sampleTex[i] * kernel[i];
 
-    FragColor =  vec4(texture(FragmentColor, TexCoords).rg,0.0, 1.0);
+    FragColor =  vec4(texture(FragmentColor, TexCoords).r,0.0,0.0, 1.0);
 }

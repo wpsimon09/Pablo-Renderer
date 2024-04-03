@@ -111,3 +111,7 @@ void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment)
     this->objectMaterial = std::make_shared<BasicMaterialTextured>(this->shader, *std::move(this->colorAttachment));
 }
 
+void FrameBuffer::makeDepthOnly() {
+    this->bind()
+}
+
