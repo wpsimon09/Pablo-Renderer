@@ -26,6 +26,11 @@ public:
     GLuint ID;
 
     /***
+     * Field marking if frame buffer has color attachment or not
+     */
+    bool isDepthOnly = false;
+
+    /***
      * Creates frame buffer instance
      * @param SCR_WIDTH width of the frame buffer
      * @param SCR_HEIGHT height of the frame buffer

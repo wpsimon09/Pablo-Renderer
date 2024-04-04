@@ -20,7 +20,7 @@ public:
      * Renders the scene to the provided frame buffer
      * @param frameBuffer frame buffer where to render the scene
      */
-    void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer);
+    virtual void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer);
 
     void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs);
 private:
@@ -31,7 +31,7 @@ private:
      * Renders the scene graph structure in recursive way
      * @param sceneNode scene node to render
      */
-    void renderSceneGraph(SceneNode& sceneNode);
+    virtual void renderSceneGraph(SceneNode& sceneNode);
 
     /***
      * Inputs for the render pass

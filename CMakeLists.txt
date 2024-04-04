@@ -109,6 +109,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/RenderingConstrains/RenderingConstrains.h
         Includes/Renderer/RenderPass/ShadowMapPass/ShadowMapPass.cpp
         Includes/Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h
+        Includes/Renderer/Renderers/DepthRenderer/DepthRenderer.cpp
+        Includes/Renderer/Renderers/DepthRenderer/DepthRenderer.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

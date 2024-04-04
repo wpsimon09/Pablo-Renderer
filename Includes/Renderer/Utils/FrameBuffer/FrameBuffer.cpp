@@ -119,6 +119,7 @@ void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
         this->colorAttachment = std::move(depthMapTexture);
     }
     this->bind();
+
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
     glCheckError();
 
@@ -129,6 +130,10 @@ void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
     glReadBuffer(GL_NONE);
     glCheckError();
 
+    this->objectMaterial = std::make_shared<BasicMaterialTextured>(this->shader, *this->colorAttachment);
+
     this->unbind();
+
+    this->isDepthOnly = true;
 }
 
