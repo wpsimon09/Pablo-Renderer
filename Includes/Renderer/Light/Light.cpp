@@ -18,6 +18,9 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     this->lightRenderable = std::make_shared<Renderable>(std::move(geometry), std::move(material));
     lightRenderable->transformations->setPosition(this->position->property);
     lightRenderable->transformations->setScale(0.2f,0.2f, 0.2f);
+
+    //light matrix calculations
+    this->createLightMatrices();
 }
 
 void Light::update(std::shared_ptr<Shader> shader) {
@@ -25,8 +28,14 @@ void Light::update(std::shared_ptr<Shader> shader) {
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->color->property);
 
+    if (shader->name == "ShadowMapShader"){
+        glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
+        shader->setMat4("lightSpaceMatrix",lightSpaceMatrix);
+    }
+
     this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->update();
+    this->updateLightViewMatrix();
 }
 
 void Light::setX(float pos) {
@@ -61,3 +70,19 @@ void Light::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
     ShaderHelper::setTransfomrationMatrices(shader, lightRenderable->transformations->getModelMatrix(), viewMatrix, projectionMatrix );
     this->lightRenderable->render();
 }
+
+void Light::createLightMatrices() {
+    glm::mat4 lightView = glm::lookAt(this->position->property, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    this->lightViewMatrix = std::make_unique<LightProperty<glm::mat4>>(lightView, "lightViewMatrix");
+
+    glm::mat4 lightPojection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, this->lightNearPlane, this->lightFarPlane);
+    this->lightProjectionMatrix = std::make_unique<LightProperty<glm::mat4>>(lightPojection, "lightProjectionMatrix");
+
+}
+
+void Light::updateLightViewMatrix() {
+    glm::mat4 lightView = glm::lookAt(this->position->property, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    this->lightViewMatrix = std::make_unique<LightProperty<glm::mat4>>(lightView, "lightViewMatrix");
+}
+
+
