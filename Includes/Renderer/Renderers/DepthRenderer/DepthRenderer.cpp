@@ -24,6 +24,7 @@ void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
     if(renderalbe != nullptr){
         this->scene->light->update(shader);
+        this->shader->setMat4("model",sceneNode.getModelMatrix());
         sceneNode.render(GEOMETRY_ONLY);
     }
 }
