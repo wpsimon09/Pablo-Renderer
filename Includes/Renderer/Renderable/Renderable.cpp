@@ -61,4 +61,8 @@ void Renderable::update() {
     }
 }
 
+void Renderable::renderGeomtry() {
+    this->objectGeometry->render();
+}
+
 

@@ -5,11 +5,25 @@
 #include "DepthRenderer.h"
 
 void DepthRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer> &frameBuffer) {
+    if(frameBuffer->isDepthOnly){
+        frameBuffer->bind();
+        glClear(GL_DEPTH_BUFFER_BIT);
+        this->scene = std::move(scene);
+        this->scene->update();
 
+        if(Scene::root){
+            renderSceneGraph(*Scene::root);
+        }
+        else
+            throw std::runtime_error("Scene has no root node");
+    }
+    throw std::runtime_error("FrameBuffer contains color buffer");
 }
 
 void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
-
-    //make shader that only takes position matricies and writes nothing to the color buffer as it is redundatn
+    if(renderalbe != nullptr){
+        this->scene->light->update(shader);
+        sceneNode.render(GEOMETRY_ONLY);
+    }
 }

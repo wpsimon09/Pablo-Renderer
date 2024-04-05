@@ -69,6 +69,10 @@ void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain) {
         else if (renderingConstrain == SHADOW_ONLY && renderable->castsShadwo){
             renderable->render();
         }
+        else if(renderingConstrain == GEOMETRY_ONLY){
+            renderable->renderGeomtry();
+        }
+
     }
 }
 

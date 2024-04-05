@@ -8,6 +8,7 @@
 enum RENDERING_CONSTRAINS{
     NONE = 0,
     SHADOW_ONLY = 1,
+    GEOMETRY_ONLY = 2
 };
 
 

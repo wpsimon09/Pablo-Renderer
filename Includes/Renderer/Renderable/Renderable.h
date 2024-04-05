@@ -57,6 +57,8 @@ public:
      */
     virtual void render();
 
+    virtual void renderGeomtry();
+
     void update();
 
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
