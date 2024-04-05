@@ -10,7 +10,7 @@
 
 class DepthRenderer:public OGLRenderer {
 public:
-    DepthRenderer():OGLRenderer(){};
+    DepthRenderer():OGLRenderer(){rendererType = DEPTH_ONLY;};
 
     void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer> &frameBuffer) override;
 

@@ -8,14 +8,16 @@
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
+#include "Renderer/Utils/RendererManager/RendererManager.h"
 
 /***
  * Class representing rendered powered by OpenGL api
  */
 class OGLRenderer {
 public:
-    OGLRenderer()=default;
+    OGLRenderer() { rendererType = COLOR_DEPTH_STENCIL; };
 
+    RENDERER_TYPE rendererType;
     /***
      * Renders the scene to the provided frame buffer
      * @param frameBuffer frame buffer where to render the scene
