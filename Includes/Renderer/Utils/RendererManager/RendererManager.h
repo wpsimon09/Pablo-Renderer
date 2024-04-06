@@ -9,7 +9,7 @@
 #include "memory"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Renderers/DepthRenderer/DepthRenderer.h"
-
+#include "Renderer/Renderers/Renderer.h"
 enum RENDERER_TYPE{
     COLOR_DEPTH_STENCIL = 1,
     DEPTH_ONLY = 2
@@ -19,9 +19,9 @@ class RendererManager {
 public:
     RendererManager();
 
-    inline static std::vector<std::shared_ptr<OGLRenderer>> renderers;
+    std::vector<std::shared_ptr<Renderer>> renderers;
 
-    static std::shared_ptr<OGLRenderer> requestRenderer(RENDERER_TYPE type = COLOR_DEPTH_STENCIL);
+    std::shared_ptr<Renderer> requestRenderer(RENDERER_TYPE type = COLOR_DEPTH_STENCIL);
 };
 
 

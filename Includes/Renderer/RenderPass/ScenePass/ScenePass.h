@@ -10,7 +10,7 @@
 class ScenePass: public RenderPass {
 public:
     ScenePass();
-    std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer) override;
+    std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) override;
 };
 
 

@@ -5,13 +5,15 @@
 #include "RendererManager.h"
 
 RendererManager::RendererManager() {
-    RendererManager::renderers.push_back(std::make_shared<OGLRenderer>());
-    RendererManager::renderers.push_back(std::make_shared<DepthRenderer>());
+    this->renderers.push_back(std::make_shared<OGLRenderer>());
+
+    //TODO create class that will be inhereted by all of the renderers in orhter to support polymorphism
 }
 
-std::shared_ptr<OGLRenderer> RendererManager::requestRenderer(RENDERER_TYPE type) {
+std::shared_ptr<Renderer> RendererManager::requestRenderer(RENDERER_TYPE type) {
     for(auto& renderer: renderers){
-        if(renderer->rendererType == type){
+
+        if(renderer->type == type){
             return renderer;
         }
     }

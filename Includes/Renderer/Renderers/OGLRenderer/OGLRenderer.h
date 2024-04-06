@@ -9,37 +9,20 @@
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Utils/RendererManager/RendererManager.h"
-
+#include "Renderer/Renderers/Renderer.h"
 /***
  * Class representing rendered powered by OpenGL api
  */
-class OGLRenderer {
+class OGLRenderer:public Renderer {
 public:
-    OGLRenderer() { rendererType = COLOR_DEPTH_STENCIL; };
+    OGLRenderer():Renderer() { this->type = COLOR_DEPTH_STENCIL; }
 
-    RENDERER_TYPE rendererType;
-    /***
-     * Renders the scene to the provided frame buffer
-     * @param frameBuffer frame buffer where to render the scene
-     */
-    virtual void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer);
+    void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer) override;
 
-    void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs);
+    void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) override;
 
 protected:
-    std::shared_ptr<Scene> scene;
-    GLFWwindow* window;
-
-    /***
-     * Renders the scene graph structure in recursive way
-     * @param sceneNode scene node to render
-     */
-    virtual void renderSceneGraph(SceneNode& sceneNode);
-
-    /***
-     * Inputs for the render pass
-     */
-    std::vector<std::shared_ptr<TextureBase>> renderPassInputs;
+    void renderSceneGraph(SceneNode& sceneNode) override;
 };
 
 #endif //PABLO_RENDERER_OGLRENDERER_H

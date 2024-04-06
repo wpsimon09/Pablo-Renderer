@@ -32,7 +32,9 @@ void PabloRenderer::render() {
         //-----------------
         auto currentRenderPass = renderPasses.begin();
         while(currentRenderPass != renderPasses.end()){
-            currentRenderPass->second->render(this->scene, this->renderer);
+            //TODO call request renderer here and store what renderer is needed
+            auto responseRenderer = rendererManager->requestRenderer(currentRenderPass->second->rendererType);
+            currentRenderPass->second->render(this->scene, responseRenderer);
             currentRenderPass++;
         }
 
@@ -71,6 +73,8 @@ void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
 
     this->renderPasses.insert({"ScenePass", std::make_unique<ScenePass>()});
     this->renderPasses.insert({"ShadowMapPass", std::make_unique<ShadowMapPass>()});
+
+    this->rendererManager = std::make_unique<RendererManager>();
 
     this->renderer = std::make_shared<OGLRenderer>();
 }

@@ -77,6 +77,8 @@ private:
     std::unique_ptr<FrameBuffer> outputFrameBuffer;
     std::unique_ptr<FrameBufferDebug> debugFrameBuffer ;
 
+    std::unique_ptr<RendererManager> rendererManager;
+
 public:
     float deltaTime;
     float lastFrame;

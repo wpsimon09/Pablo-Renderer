@@ -113,6 +113,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Renderers/DepthRenderer/DepthRenderer.h
         Includes/Renderer/Utils/RendererManager/RendererManager.cpp
         Includes/Renderer/Utils/RendererManager/RendererManager.h
+        Includes/Renderer/Renderers/Renderer.cpp
+        Includes/Renderer/Renderers/Renderer.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
