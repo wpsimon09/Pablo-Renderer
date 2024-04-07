@@ -5,7 +5,6 @@
 #ifndef PABLO_RENDERER_RENDERER_H
 #define PABLO_RENDERER_RENDERER_H
 
-#include "Renderer/Utils/RendererManager/RendererManager.h"
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"

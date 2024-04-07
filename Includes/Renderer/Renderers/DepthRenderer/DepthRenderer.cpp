@@ -17,7 +17,9 @@ void DepthRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBu
         else
             throw std::runtime_error("Scene has no root node");
     }
-    throw std::runtime_error("FrameBuffer contains color buffer");
+    else{
+        throw std::runtime_error("FrameBuffer contains color buffer");
+    }
 }
 
 void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {

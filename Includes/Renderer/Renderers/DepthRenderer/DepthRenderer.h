@@ -5,8 +5,8 @@
 #ifndef PABLO_RENDERER_DEPTHRENDERER_H
 #define PABLO_RENDERER_DEPTHRENDERER_H
 
-#include "Renderer/Renderers/Renderer.h"
 #include "memory"
+#include "Renderer/Renderers/Renderer.h"
 
 class DepthRenderer:public Renderer {
 public:
