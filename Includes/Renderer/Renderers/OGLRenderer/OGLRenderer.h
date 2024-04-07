@@ -5,11 +5,10 @@
 #ifndef PABLO_RENDERER_OGLRENDERER_H
 #define PABLO_RENDERER_OGLRENDERER_H
 
-#include "Renderer/SceneGraph/Scene.h"
-#include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
-#include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
-#include "Renderer/Utils/RendererManager/RendererManager.h"
 #include "Renderer/Renderers/Renderer.h"
+#include "Renderer/Utils/RendererManager/RendererManager.h"
+#include "vector"
+
 /***
  * Class representing rendered powered by OpenGL api
  */

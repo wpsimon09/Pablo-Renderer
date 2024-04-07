@@ -13,7 +13,6 @@ ShadowMapPass::ShadowMapPass() {
 
 std::shared_ptr<Texture2D> ShadowMapPass::render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) {
     scene->renderingConstrains = SHADOW_ONLY;
-    //TODO add rendering constrains to the scene as well as call this method in Pablo Renderer with depth renderer and set renderer paramter in the method to be optionsl
     renderer->render(scene, this->frameBuffer);
     this->renderPassResult = frameBuffer->getRenderedResult();
     return this->renderPassResult;

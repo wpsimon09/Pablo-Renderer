@@ -11,7 +11,7 @@ class ShadowMapPass:public RenderPass {
 public:
     ShadowMapPass();
 
-    std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<OGLRenderer> renderer) override;
+    std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) override;
 };
 
 

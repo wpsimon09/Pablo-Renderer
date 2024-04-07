@@ -10,10 +10,6 @@
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Renderers/DepthRenderer/DepthRenderer.h"
 #include "Renderer/Renderers/Renderer.h"
-enum RENDERER_TYPE{
-    COLOR_DEPTH_STENCIL = 1,
-    DEPTH_ONLY = 2
-};
 
 class RendererManager {
 public:

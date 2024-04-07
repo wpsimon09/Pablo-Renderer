@@ -32,7 +32,6 @@ void PabloRenderer::render() {
         //-----------------
         auto currentRenderPass = renderPasses.begin();
         while(currentRenderPass != renderPasses.end()){
-            //TODO call request renderer here and store what renderer is needed
             auto responseRenderer = rendererManager->requestRenderer(currentRenderPass->second->rendererType);
             currentRenderPass->second->render(this->scene, responseRenderer);
             currentRenderPass++;

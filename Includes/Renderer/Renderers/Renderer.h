@@ -10,6 +10,12 @@
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 
+enum RENDERER_TYPE{
+    COLOR_DEPTH_STENCIL = 1,
+    DEPTH_ONLY = 2
+};
+
+
 class Renderer {
 public:
     Renderer() = default;
