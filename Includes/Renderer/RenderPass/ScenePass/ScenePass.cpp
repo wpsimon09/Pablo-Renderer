@@ -10,6 +10,7 @@ ScenePass::ScenePass():RenderPass() {
 }
 
 std::shared_ptr<Texture2D> ScenePass::render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) {
+    scene->renderingConstrains = NONE;
     renderer->render(scene, this->frameBuffer);
     this->renderPassResult = this->frameBuffer->getRenderedResult();
     return this->renderPassResult;

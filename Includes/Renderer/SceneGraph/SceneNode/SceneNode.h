@@ -42,7 +42,7 @@ public:
     /***
      * Renders self and all the children to the currently bound GL_FRAMEBUFFER
      */
-    void render(RENDERING_CONSTRAINS renderingConstrain);
+    void render(RENDERING_CONSTRAINS renderingConstrain, bool geometryOnly = false);
 
     /***
      * Getter for children

@@ -61,18 +61,14 @@ const std::vector<std::unique_ptr<SceneNode>> & SceneNode::getChildren() const {
     return this->children;
 }
 
-void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain) {
+void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain,bool geometryOnly) {
     if (renderable){
         if(renderingConstrain == NONE){
             renderable->render();
         }
-        else if (renderingConstrain == SHADOW_ONLY && renderable->castsShadwo){
-            renderable->render();
-        }
-        else if(renderingConstrain == GEOMETRY_ONLY){
+        else if (renderingConstrain == SHADOW_ONLY && renderable->castsShadwo && geometryOnly){
             renderable->renderGeomtry();
         }
-
     }
 }
 

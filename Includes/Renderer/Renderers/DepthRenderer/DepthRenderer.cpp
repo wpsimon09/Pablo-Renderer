@@ -7,7 +7,10 @@
 void DepthRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer> &frameBuffer) {
     if(frameBuffer->isDepthOnly){
         frameBuffer->bind();
-        glClear(GL_DEPTH_BUFFER_BIT);
+        glViewport(0,0, frameBuffer->getWidht(), frameBuffer->getHeihgt());
+        glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+        glCheckError();
+
         this->scene = std::move(scene);
         this->scene->update();
 
@@ -20,6 +23,7 @@ void DepthRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBu
     else{
         throw std::runtime_error("FrameBuffer contains color buffer");
     }
+    this->scene->renderingConstrains = NONE;
 }
 
 void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
@@ -27,6 +31,6 @@ void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
     if(renderalbe != nullptr){
         this->scene->light->update(shader);
         this->shader->setMat4("model",sceneNode.getModelMatrix());
-        sceneNode.render(GEOMETRY_ONLY);
+        sceneNode.render(scene->renderingConstrains, true);
     }
 }

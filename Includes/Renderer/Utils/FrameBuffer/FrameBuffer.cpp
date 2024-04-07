@@ -37,12 +37,8 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> c
     //RENDERBUFFER SCREEN-SPACE QUAD CONFIG
     this->objectGeometry = std::make_unique<ScreenSpaceQuadGeometry>();
     this->objectMaterial = std::make_unique<BasicMaterialTextured>(this->shader,*this->colorAttachment);
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
-        std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
-    }
-    else{
-        std::cerr<<"!!!!!!! FRAME BUFFER NOT COMPLETE !!!!!!!!"<<std::endl;
-    }
+
+    this->checkFrameBufferCompleteness();
 
     this->width = SCR_WIDTH;
     this->height = SCR_HEIGHT;
@@ -113,11 +109,12 @@ void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment)
 
 void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
     if(depthMapTexture == nullptr){
-        this->colorAttachment = std::make_shared<Texture2D>(this->width, this->height, GL_DEPTH_COMPONENT32F);
+        this->colorAttachment = std::make_shared<Texture2D>(this->width, this->height, GL_DEPTH_COMPONENT);
     }
     else{
         this->colorAttachment = std::move(depthMapTexture);
     }
+
     this->bind();
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
@@ -132,8 +129,19 @@ void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
 
     this->objectMaterial = std::make_shared<BasicMaterialTextured>(this->shader, *this->colorAttachment);
 
+    this->checkFrameBufferCompleteness();
+
     this->unbind();
 
     this->isDepthOnly = true;
+}
+
+void FrameBuffer::checkFrameBufferCompleteness() {
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
+        std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
+    }
+    else{
+        std::cerr<<"!!!!!!! DEPTH FRAME BUFFER NOT COMPLETE !!!!!!!!"<<std::endl;
+    }
 }
 
