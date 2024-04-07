@@ -5,8 +5,8 @@
 #include "DepthRenderer.h"
 
 void DepthRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer> &frameBuffer) {
+    frameBuffer->bind();
     if(frameBuffer->isDepthOnly){
-        frameBuffer->bind();
         glViewport(0,0, frameBuffer->getWidht(), frameBuffer->getHeihgt());
         glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
         glCheckError();
@@ -32,5 +32,9 @@ void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
         this->scene->light->update(shader);
         this->shader->setMat4("model",sceneNode.getModelMatrix());
         sceneNode.render(scene->renderingConstrains, true);
+    }
+
+    for (auto &childNode : sceneNode.getChildren()) {
+        this->renderSceneGraph(*childNode);
     }
 }

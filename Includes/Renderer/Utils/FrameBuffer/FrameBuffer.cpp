@@ -109,7 +109,7 @@ void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment)
 
 void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
     if(depthMapTexture == nullptr){
-        this->colorAttachment = std::make_shared<Texture2D>(this->width, this->height, GL_DEPTH_COMPONENT);
+        this->colorAttachment = std::make_shared<Texture2D>(this->width, this->height, GL_DEPTH_COMPONENT32F);
     }
     else{
         this->colorAttachment = std::move(depthMapTexture);
