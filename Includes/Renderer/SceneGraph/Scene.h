@@ -12,6 +12,7 @@
 #include "Renderer/SceneGraph/Floor/Floor.h"
 #include "Renderer/Renderable/Grid/Grid.h"
 #include "Renderer/Light/IBLPipeline/IBLPipeLine.h"
+#include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 
 /***
  * Class that holds every information about what should be render and where in the world space
@@ -59,7 +60,7 @@ private:
     std::shared_ptr<IBLPipeLine> iblPipeLine;
 public:
     const std::shared_ptr<IBLPipeLine> &getIblPipeLine() const;
-
+    RENDERING_CONSTRAINS renderingConstrains = NONE;
     void setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine);
 };
 

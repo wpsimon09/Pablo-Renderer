@@ -16,6 +16,10 @@ RenderBuffer::RenderBuffer(int SCR_WIDTH, int SCR_HEIGHT) {
 
     glBindRenderbuffer(GL_RENDERBUFFER,0);
     glCheckError();
+
+    this->width = SCR_WIDTH;
+    this->height = SCR_HEIGHT;
+    this->attachment = GL_DEPTH24_STENCIL8;
 }
 
 void RenderBuffer::bind() {
@@ -35,5 +39,25 @@ void RenderBuffer::updateDimetions(unsigned int width, unsigned int height) {
     glCheckError();
 
     this->unbind();
+
+    this->width = width;
+    this->height = height;
+}
+
+void RenderBuffer::changeAttachment(GLenum atachment, bool hasSubsequentOperations) {
+    this->bind();
+
+    glRenderbufferStorage(GL_RENDERBUFFER, atachment, this->width, this->height);
+    glCheckError();
+
+    this->attachment = atachment;
+
+    if(!hasSubsequentOperations){
+        this->unbind();
+    }
+}
+
+GLenum RenderBuffer::getAttachemnt() {
+    return this->attachment;
 }
 

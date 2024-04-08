@@ -7,7 +7,7 @@
 
 #include "Renderer/Utils/Transformations/Transformations.h"
 #include "Renderer/Renderable/Renderable.h"
-
+#include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 /***
  * Scene graph pattern implementation
  */
@@ -42,7 +42,7 @@ public:
     /***
      * Renders self and all the children to the currently bound GL_FRAMEBUFFER
      */
-    void render();
+    void render(RENDERING_CONSTRAINS renderingConstrain, bool geometryOnly = false);
 
     /***
      * Getter for children

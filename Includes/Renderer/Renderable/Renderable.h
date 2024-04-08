@@ -28,6 +28,7 @@ protected:
     std::shared_ptr<Material> objectMaterial;
 public:
     std::unique_ptr<Transformations> transformations;
+    bool castsShadwo = false;
     const std::shared_ptr<Material> &getObjectMaterial() const;
     bool isPartOfSceneNode = false;
 protected:
@@ -55,6 +56,8 @@ public:
      * Mehtod will draw the renderable to the currently bound GL_FRAMEBUFFER
      */
     virtual void render();
+
+    virtual void renderGeomtry();
 
     void update();
 

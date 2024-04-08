@@ -79,7 +79,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 
     glfwSetCursorPosCallback(instance->getWindow(), mouse_callback);
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
-    glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
 
@@ -94,3 +94,5 @@ glm::vec2 GLFWHelper::getPointerPosition(bool normalize) {
     }
     return {pointerX, pointerY};
 }
+
+

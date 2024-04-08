@@ -26,6 +26,11 @@ public:
     GLuint ID;
 
     /***
+     * Field marking if frame buffer has color attachment or not
+     */
+    bool isDepthOnly = false;
+
+    /***
      * Creates frame buffer instance
      * @param SCR_WIDTH width of the frame buffer
      * @param SCR_HEIGHT height of the frame buffer
@@ -70,11 +75,25 @@ public:
     virtual void drawInsideSelf();
 
     /***
+     * Sets the color attachment of frame buffer that is supposed to be rendered
+     * @param colorAttachment color attachment to use
+     */
+    void setColorAttachment(std::shared_ptr<Texture2D> colorAttachment);
+
+    /***
      * Changes filtering method of the color attachment
      * @param mag magnification filter GL_LINEAR, GL_CLAMP_TO_EDGE etc...
      * @param min minification filter GL_LINEAR, GL_CLAMP_TO_EDGE etc...
      */
     void changeFilteringMethod(GLenum mag, GLenum min);
+
+    /***
+     * Gets rid of the color attachment of the frame buffer and only writes the depth values of the objects
+     */
+    void makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture = nullptr);
+
+    int getWidht() {return this->width;}
+    int getHeihgt() {return this->height;}
 protected:
     std::shared_ptr<Shader> shader;
     std::unique_ptr<RenderBuffer> renderBuffer;
@@ -86,6 +105,7 @@ private:
         //this->ID;
     };
 
+    void checkFrameBufferCompleteness();
 public:
     //-------------
     // C++ RULE 3/5

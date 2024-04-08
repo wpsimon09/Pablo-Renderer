@@ -64,9 +64,18 @@ public:
      */
     std::shared_ptr<Renderable> lightRenderable;
 
+    float lightNearPlane = 1.0f;
+    float lightFarPlane = 10.0f;
+
 protected:
+    void createLightMatrices();
+    virtual void updateLightViewMatrix();
 
     const float lightSpeed = 0.05f;
+    std::unique_ptr<LightProperty<glm::mat4>> lightViewMatrix;
+    std::unique_ptr<LightProperty<glm::mat4>> lightProjectionMatrix;
+    std::unique_ptr<LightProperty<glm::mat4>> lightModelMatrix;
+
     std::unique_ptr<LightProperty<glm::vec3>> position;
     std::unique_ptr<LightProperty<glm::vec3>> color;
 };

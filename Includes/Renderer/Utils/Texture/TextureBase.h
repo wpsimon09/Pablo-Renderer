@@ -39,6 +39,11 @@ public:
     std::string type_string;
 
     /***
+     * Name of unifrom sampler in shader
+     */
+    std::string shaderName;
+
+    /***
      * Sampler if the texture to be used in shader
      * this might be 0 or unused in some cases as the PBR material struct is sometimes handling samplers
      */

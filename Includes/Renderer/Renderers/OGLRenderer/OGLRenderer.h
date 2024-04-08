@@ -5,37 +5,23 @@
 #ifndef PABLO_RENDERER_OGLRENDERER_H
 #define PABLO_RENDERER_OGLRENDERER_H
 
-#include "Renderer/SceneGraph/Scene.h"
-#include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
-#include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
+#include "Renderer/Renderers/Renderer.h"
+#include "Renderer/Utils/RendererManager/RendererManager.h"
+#include "vector"
 
 /***
  * Class representing rendered powered by OpenGL api
  */
-class OGLRenderer {
+class OGLRenderer:public Renderer {
 public:
-    /***
-     * Creates an instance of the OGLRenderer class
-     * @param scene
-     * @param window
-     */
-    OGLRenderer(std::shared_ptr<Scene> scene, GLFWwindow* window);
-    void init();
+    OGLRenderer():Renderer() { this->type = COLOR_DEPTH_STENCIL; }
 
-    /***
-     * Renders the scene to the provided frame buffer
-     * @param frameBuffer frame buffer where to render the scene
-     */
-    void render(std::unique_ptr<FrameBuffer>& frameBuffer);
-private:
-    std::shared_ptr<Scene> scene;
-    GLFWwindow* window;
+    void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer) override;
 
-    /***
-     * Renders the scene graph structure in recursive way
-     * @param sceneNode scene node to render
-     */
-    void renderSceneGraph(SceneNode& sceneNode);
+    void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) override;
+
+protected:
+    void renderSceneGraph(SceneNode& sceneNode) override;
 };
 
 #endif //PABLO_RENDERER_OGLRENDERER_H

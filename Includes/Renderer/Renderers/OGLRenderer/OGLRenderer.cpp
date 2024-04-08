@@ -4,15 +4,16 @@
 
 #include "OGLRenderer.h"
 
+#include <utility>
 
-OGLRenderer::OGLRenderer(std::shared_ptr<Scene> scene,  GLFWwindow* window) {
-    this->scene = std::move(scene);
-    this->window = window;
-}
 
-void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
+
+void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer) {
     frameBuffer->bind();
+    this->scene = std::move(scene);
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
     this->scene->update();
@@ -21,12 +22,19 @@ void OGLRenderer::render(std::unique_ptr<FrameBuffer>& frameBuffer) {
         this->scene->light->render(this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
+
+    this->renderPassInputs.clear();
+    this->scene->renderingConstrains = NONE;
 }
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
     if (sceneNode.getRenderable() != nullptr){
+        int textureSamplerCount;
+
         // reference ot unique_ptr of renderable inside scene node
         auto& renderable = sceneNode.getRenderable();
+
+        textureSamplerCount = renderable->getObjectMaterial()->getSamplerCount();
 
         //shared_ptr here
         auto shader = renderable->getShader();
@@ -38,15 +46,28 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         this->scene->light->update(shader);
 
         if(shader->supportsIBL){
-            scene->getIblPipeLine()->configureShader(shader, renderable->getObjectMaterial()->getSamplerCount());
+            scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);
+            textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
         }
 
-        sceneNode.render();
+        if(this->renderPassInputs.empty()){
+            for(auto& input: this->renderPassInputs){
+                input->setSamplerID(textureSamplerCount);
+                ShaderHelper::setTextureToShader(shader, *input,input->shaderName);
+                textureSamplerCount ++;
+            }
+        }
+
+        sceneNode.render(this->scene->renderingConstrains);
 
     }
     for (auto &childNode : sceneNode.getChildren()) {
         this->renderSceneGraph(*childNode);
     }
+}
+
+void OGLRenderer::setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) {
+    this->renderPassInputs = std::move(inputs);
 }
 
 
