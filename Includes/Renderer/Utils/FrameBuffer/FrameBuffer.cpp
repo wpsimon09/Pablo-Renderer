@@ -109,17 +109,23 @@ void FrameBuffer::setColorAttachment(std::shared_ptr<Texture2D> colorAttachment)
 
 void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
     if(depthMapTexture == nullptr){
-        this->colorAttachment = std::make_shared<Texture2D>(this->width, this->height, GL_DEPTH24_STENCIL8);
+        this->colorAttachment = std::make_shared<Texture2D>(this->width, this->height, GL_DEPTH_COMPONENT24);
     }
     else{
         this->colorAttachment = std::move(depthMapTexture);
     }
 
+    glDeleteFramebuffers(1, &this->ID);
+    glCheckError();
+
+    glCreateFramebuffers(1, &this->ID);
+    glCheckError();
+
     this->bind();
 
-    this->renderBuffer->changeAttachment(GL_DEPTH_COMPONENT24, true);
+    this->renderBuffer->bind();
 
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, this->renderBuffer->getAttachemnt(), GL_RENDERBUFFER,this->renderBuffer->ID);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH24_STENCIL8, GL_RENDERBUFFER,this->renderBuffer->ID);
     glCheckError();
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
@@ -137,6 +143,7 @@ void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
     this->checkFrameBufferCompleteness();
 
     this->unbind();
+    this->renderBuffer->unbind();
 
     this->isDepthOnly = true;
 }
