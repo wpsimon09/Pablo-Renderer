@@ -30,20 +30,16 @@ void PabloRenderer::render() {
         //-----------------
         // ACTUAL RENDERING
         //-----------------
-        auto currentRenderPass = renderPasses.begin();
-        while(currentRenderPass != renderPasses.end()){
-            auto responseRenderer = rendererManager->requestRenderer(currentRenderPass->second->rendererType);
-            currentRenderPass->second->render(this->scene, responseRenderer);
-            currentRenderPass++;
-        }
+        this->renderGraph->build();
+
+        this->renderGraph->render();
+
+        this->renderGraph->displayResult( *this->outputFrameBuffer);
 
         //----------------------------------
         //DISPLAY THE RESULT OF FRAME BUFFER
         //----------------------------------
-        this->outputFrameBuffer->setColorAttachment(renderPasses.find("ScenePass")->second->getRenderedResult());
-
-        this->outputFrameBuffer->dispalyOnScreen();
-        debugFrameBuffer->setColorAttachment(renderPasses.find("ShadowMapPass")->second->getRenderedResult());
+        debugFrameBuffer->setColorAttachment(renderGraph->getDebugTexture("ShadowMapPass"));
         debugFrameBuffer->dispalyOnScreen();
 
         glfwSwapBuffers(this->window);
@@ -65,6 +61,9 @@ void PabloRenderer::setDebugTexture(std::shared_ptr<TextureBase> debugTexture) {
 void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
     this->scene = std::move(scene);
     this->scene->setup();
+
+    this->renderGraph = std::make_unique<RenderGraph>(this->scene);
+    this->renderGraph->init();
 
     this->outputFrameBuffer = std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight);
 

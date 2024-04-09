@@ -12,7 +12,7 @@
 
 class RenderGraph {
 public:
-    RenderGraph() = default;
+    explicit RenderGraph(std::shared_ptr<Scene> scene);
 
     void init();
 
@@ -20,12 +20,13 @@ public:
 
     void render();
 
-    void displayResult();
+    void displayResult(FrameBuffer &frameBuffer);
 
-    std::shared_ptr<TextureBase> getDebugTexture(std::string renderPassResult);
+    std::shared_ptr<Texture2D> getDebugTexture(std::string renderPassResult);
 private:
     std::unique_ptr<RendererManager> rendererManager;
     std::map<std::string, std::unique_ptr<RenderPass>> renderPasses;
+    std::shared_ptr<Scene> scene;
 };
 
 

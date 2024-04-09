@@ -15,6 +15,7 @@
 #include "Renderer/RenderPass/RenderPass.h"
 #include "Renderer/RenderPass/ScenePass/ScenePass.h"
 #include "Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h"
+#include "Renderer/RenderPass/RenderGraph/RenderGraph.h"
 
 class PabloRenderer {
 public:
@@ -66,8 +67,6 @@ private:
 
     inline static PabloRenderer* instance = nullptr;
 
-    std::shared_ptr<OGLRenderer> renderer = nullptr;
-
     std::shared_ptr<Scene> scene = nullptr;
 
     std::map<std::string, std::unique_ptr<RenderPass>> renderPasses;
@@ -76,8 +75,8 @@ private:
 
     std::unique_ptr<FrameBuffer> outputFrameBuffer;
     std::unique_ptr<FrameBufferDebug> debugFrameBuffer ;
-
     std::unique_ptr<RendererManager> rendererManager;
+    std::unique_ptr<RenderGraph> renderGraph;
 
 public:
     float deltaTime;
