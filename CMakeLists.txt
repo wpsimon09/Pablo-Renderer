@@ -115,6 +115,8 @@ add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
         Includes/Renderer/Utils/RendererManager/RendererManager.h
         Includes/Renderer/Renderers/Renderer.cpp
         Includes/Renderer/Renderers/Renderer.h
+        Includes/Renderer/RenderPass/RenderGraph/RenderGraph.cpp
+        Includes/Renderer/RenderPass/RenderGraph/RenderGraph.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

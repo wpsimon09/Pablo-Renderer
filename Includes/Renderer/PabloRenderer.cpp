@@ -74,8 +74,6 @@ void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
     this->renderPasses.insert({"ShadowMapPass", std::make_unique<ShadowMapPass>()});
 
     this->rendererManager = std::make_unique<RendererManager>();
-
-    this->renderer = std::make_shared<OGLRenderer>();
 }
 
 PabloRenderer* PabloRenderer::getInstance() {

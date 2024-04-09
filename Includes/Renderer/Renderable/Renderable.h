@@ -29,6 +29,7 @@ protected:
 public:
     std::unique_ptr<Transformations> transformations;
     bool castsShadwo = false;
+    bool recievesShadow = false;
     const std::shared_ptr<Material> &getObjectMaterial() const;
     bool isPartOfSceneNode = false;
 protected:
@@ -58,7 +59,7 @@ public:
     virtual void render();
 
     /***
-     * Renders only the goemtry of the model
+     * Renders only the geometry of the renderable
      */
     virtual void renderGeomtry();
 

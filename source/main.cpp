@@ -82,6 +82,7 @@ int main() {
 
     auto floor = std::make_unique<Renderable>(planeGeometry, rustedIronMaterial);
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
+    floor->recievesShadow = true;
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
