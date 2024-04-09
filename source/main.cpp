@@ -42,7 +42,7 @@ int main() {
     auto PBRTexturedModelIBL = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment-IBL-textured.glsl", "PBR_IBL");
     PBRTexturedModelIBL->supportsIBL = true;
 
-    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/pure_sky.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto cubeGeometry = std::make_shared<CubeGeometry>();
@@ -57,6 +57,7 @@ int main() {
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Gold");
+    auto rustedIronMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/RustedIron");
     auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
     goldCubeRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
     goldCubeRenderable->castsShadwo = true;
@@ -79,7 +80,8 @@ int main() {
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
-    auto floor = std::make_unique<Renderable>(planeGeometry, goldCubeMaterial);
+    auto floor = std::make_unique<Renderable>(planeGeometry, rustedIronMaterial);
+    floor->transformations->setScale(10.0f, 1.0f, 10.0f);
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
@@ -89,6 +91,7 @@ int main() {
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
+    scene->add(std::move(floor));
     scene->add(std::move(skyboxCube));
 
     pabloRenderer->attachScene(scene);

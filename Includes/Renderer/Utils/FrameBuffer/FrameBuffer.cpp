@@ -125,7 +125,7 @@ void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
 
     this->renderBuffer->bind();
 
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH24_STENCIL8, GL_RENDERBUFFER,this->renderBuffer->ID);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,this->renderBuffer->ID);
     glCheckError();
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, this->colorAttachment->ID, 0);

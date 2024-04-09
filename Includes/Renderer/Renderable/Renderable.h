@@ -57,6 +57,9 @@ public:
      */
     virtual void render();
 
+    /***
+     * Renders only the goemtry of the model
+     */
     virtual void renderGeomtry();
 
     void update();
