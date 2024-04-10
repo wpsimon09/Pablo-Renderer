@@ -24,6 +24,8 @@ public:
 
     void displayResult(FrameBuffer &frameBuffer);
 
+    void prepareForNextFrame();
+
     std::shared_ptr<Texture2D> getDebugTexture(std::string renderPassResult);
 private:
     std::unique_ptr<RendererManager> rendererManager;

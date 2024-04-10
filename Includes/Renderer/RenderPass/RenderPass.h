@@ -24,6 +24,8 @@ public:
 
     void addInput(std::shared_ptr<TextureBase> input);
 
+    void prepareForNextFrame();
+
     RENDERER_TYPE rendererType;
 protected:
     std::vector<std::shared_ptr<TextureBase>> inputs;

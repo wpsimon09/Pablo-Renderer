@@ -22,6 +22,7 @@ void RenderGraph::preProcessing() {
 }
 
 void RenderGraph::render() {
+    //TODO this has to be cleared as the input isnot being removed and render graph is not rendering from scratch every time
     this->scenePass->addInput(shadowMapPass->getRenderedResult());
     auto renderer = this->rendererManager->requestRenderer(scenePass->rendererType);
     this->scenePass->render(scene, renderer);
@@ -40,4 +41,10 @@ std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(std::string renderPassRe
 
 void RenderGraph::postProcessing() {
 
+}
+
+void RenderGraph::prepareForNextFrame() {
+    this->renderResults.clear();
+    this->scenePass->prepareForNextFrame();
+    this->shadowMapPass->prepareForNextFrame();
 }
