@@ -50,7 +50,7 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
             textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
         }
 
-        if(this->renderPassInputs.empty()){
+        if(!this->renderPassInputs.empty()){
             for(auto& input: this->renderPassInputs){
                 input->setSamplerID(textureSamplerCount);
                 ShaderHelper::setTextureToShader(shader, *input,input->shaderName);

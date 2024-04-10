@@ -28,10 +28,9 @@ void Light::update(std::shared_ptr<Shader> shader) {
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->color->property);
 
-    if (shader->name == "ShadowMapShader"){
-        glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
-        shader->setMat4("lightSpaceMatrix",lightSpaceMatrix);
-    }
+
+    glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
+    shader->setMat4("lightSpaceMatrix",lightSpaceMatrix);
 
     this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->update();

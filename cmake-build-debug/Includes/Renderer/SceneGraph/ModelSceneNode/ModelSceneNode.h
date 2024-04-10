@@ -1,0 +1,51 @@
+//
+// Created by wpsimon09 on 29/01/24.
+//
+
+#ifndef PABLO_RENDERER_MODELSCENENODE_H
+#define PABLO_RENDERER_MODELSCENENODE_H
+
+#include "Renderer/Renderable/Renderable.h"
+#include <assimp/Importer.hpp>
+#include <assimp/postprocess.h>
+#include <assimp/ai_assert.h>
+#include <assimp/scene.h>
+#include <vector>
+#include "Renderer/SceneGraph/SceneNode/SceneNode.h"
+
+class ModelSceneNode:public SceneNode  {
+public:
+    explicit ModelSceneNode(std::shared_ptr<Shader> shader, std::string path, std::shared_ptr<PBRTextured> mat = nullptr);
+    std::string directory;
+
+    /***
+     * Sets if the model is casting shadow
+     * @param hasShadow bool is model an occluder @def false
+     */
+    void castsShadow(bool hasShadow = false);
+private:
+    std::shared_ptr<PBRTextured> material = nullptr;
+    std::shared_ptr<Shader> shader;
+
+    std::vector<std::shared_ptr<Texture2D>>loadedTextures;
+
+    /***
+     * Process node of the model from the assets
+     * @param node node to process
+     * @param scene scene in which the scene node is located
+     */
+    void processNode(aiNode* node, const aiScene* scene);
+
+    /***
+     * Process renderable of the mesh
+     * @param mesh mesh to be processed
+     * @param scene scene in which the model is located
+     */
+    void processRenderable(aiMesh* mesh, const aiScene* scene);
+
+    std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial* meshMaterial);
+    std::unique_ptr<PBRMaterial<Texture2D>> processMaterialProperty(aiMaterial* material, aiTextureType type, const std::string& shaderName, const int samplerID);
+};
+
+
+#endif //PABLO_RENDERER_MODELSCENENODE_H

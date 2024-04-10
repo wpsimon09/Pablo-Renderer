@@ -1,0 +1,8 @@
+Model Information:
+* title:	Witcher 3 type sword
+* source:	https://sketchfab.com/3d-models/witcher-3-type-sword-4e5ea8310bd84e9a869d4c2d35fd3447
+* author:	bodyyyaaa_ (https://sketchfab.com/bodyyyaaa_)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

@@ -5,7 +5,7 @@ As title suggests Pablo is a rendering engine that supports PBR materials and 3D
 
 It provides fast and convenient way of rendering various geometry with different materials 
 
-This renderer is build using 
+This renderer is preProcessing using 
 
 **[GLFW](https://www.glfw.org)** for window management
 

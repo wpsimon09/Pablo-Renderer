@@ -1,0 +1,14 @@
+//
+// Created by wpsimon09 on 05/04/24.
+//
+
+#ifndef PABLO_RENDERER_RENDERPASSMANAGER_H
+#define PABLO_RENDERER_RENDERPASSMANAGER_H
+
+
+class RenderPassManager {
+
+};
+
+
+#endif //PABLO_RENDERER_RENDERPASSMANAGER_H

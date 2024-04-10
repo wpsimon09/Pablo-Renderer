@@ -1,0 +1,11 @@
+Model Information:
+* title:	Witcher Medalion
+* source:	https://sketchfab.com/3d-models/witcher-medalion-ab9ac0c114e74cd3b4e2c8895de46f80
+* author:	polish_farmer/ Eryk Stańko (https://sketchfab.com/polish_farmer)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Witcher Medalion" (https://sketchfab.com/3d-models/witcher-medalion-ab9ac0c114e74cd3b4e2c8895de46f80) by polish_farmer/ Eryk Stańko (https://sketchfab.com/polish_farmer) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

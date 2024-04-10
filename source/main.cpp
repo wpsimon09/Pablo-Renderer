@@ -66,6 +66,7 @@ int main() {
     sunbro_helmet->transformation->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
     sunbro_helmet->transformation->setPosition(glm::vec3(0.0F, 2.0F, 0.0f));
     sunbro_helmet->transformation->setScale(glm::vec3(0.07f));
+    sunbro_helmet->castsShadow(true);
 
     auto sword  = std::make_unique<ModelSceneNode>(PBRTexturedModelIBL, "Assets/Model/sword/scene.gltf");
     sword->transformation->setScale(glm::vec3(0.09f));

@@ -177,4 +177,4 @@ find_package(assimp REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
 set(BUILD_ASSIMP_TOOLS OFF)
 
-# Copy Assimp library files to the build directory
+# Copy Assimp library files to the preProcessing directory
