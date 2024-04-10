@@ -29,7 +29,7 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
 
 void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
     if (sceneNode.getRenderable() != nullptr){
-        int textureSamplerCount;
+        int textureSamplerCount = 0;
 
         // reference ot unique_ptr of renderable inside scene node
         auto& renderable = sceneNode.getRenderable();

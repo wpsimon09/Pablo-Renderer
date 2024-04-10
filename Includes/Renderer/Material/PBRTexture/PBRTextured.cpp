@@ -49,10 +49,10 @@ void PBRTextured::configureShader() {
 }
 
 void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {
-    this->samplerCount ++;
     if(texture != nullptr){
         texture->samplerID = samplerCount;
         this->textures.push_back(std::move(texture));
+        this->samplerCount ++;
     }
 }
 
