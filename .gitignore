@@ -71,6 +71,6 @@ atlassian-ide-plugin.xml
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
-crashlytics-preProcessing.properties
+crashlytics-build.properties
 fabric.properties
-cmake-preProcessing-debug/
+cmake-build-debug/
