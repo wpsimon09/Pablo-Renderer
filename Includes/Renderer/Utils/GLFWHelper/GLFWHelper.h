@@ -20,6 +20,8 @@ public:
         instance = inst;
     }
 
+    static void processResize(GLFWwindow *window);
+
     /***
     * Process the input for the application
     * @param window window in which to process the input

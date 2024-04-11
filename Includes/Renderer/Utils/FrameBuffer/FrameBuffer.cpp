@@ -63,7 +63,7 @@ std::shared_ptr<Texture2D> FrameBuffer::getRenderedResult(){
 }
 
 void FrameBuffer::dispalyOnScreen() {
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight());
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     this->objectMaterial->configureShader();
     this->objectMaterial->shader->setVec2("mouseFocusPoint",GLFWHelper::getPointerPosition(true));

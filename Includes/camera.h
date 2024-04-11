@@ -121,6 +121,10 @@ public:
         shader->setVec3("camPos", this->Position);
     }
 
+    void handleResizing(int newWidth, int newHeight){
+        this->projection = glm::perspective(glm::radians(this->Zoom), (float)newWidth / (float)newHeight, 0.1f, 200.0f);
+    }
+
     glm::mat4 getProjection(){return this->projection;}
 
 private:

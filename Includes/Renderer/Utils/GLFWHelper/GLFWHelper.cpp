@@ -80,10 +80,17 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwSetCursorPosCallback(instance->getWindow(), mouse_callback);
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
     glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
+    glfwSetWindowRefreshCallback(instance->getWindow(), processResize);
     glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
 
     return true;
+}
+
+void GLFWHelper::processResize(GLFWwindow *window) {
+    glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
+    instance->getScene()->camera->handleResizing(GLFWHelper::screen_W, GLFWHelper::screen_H);
+    std::cout<<GLFWHelper::screen_W<<std::endl;std::cout<<GLFWHelper::screen_H<<std::endl;
+
 }
 
 glm::vec2 GLFWHelper::getPointerPosition(bool normalize) {
@@ -94,5 +101,7 @@ glm::vec2 GLFWHelper::getPointerPosition(bool normalize) {
     }
     return {pointerX, pointerY};
 }
+
+
 
 
