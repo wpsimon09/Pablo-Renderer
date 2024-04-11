@@ -3,9 +3,10 @@
 //
 
 #include "ScenePass.h"
+#include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
 ScenePass::ScenePass():RenderPass() {
-    this->frameBuffer = std::make_unique<FrameBuffer>(800, 600);
+    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
     this->rendererType = COLOR_DEPTH_STENCIL;
 }
 

@@ -15,14 +15,14 @@
 #include "Renderer/Geometry/Shapes/Sphere/SphereGeometry.h"
 
 //screen coordinates
-int SCR_WIDTH = 800;
-int SCR_HEIGHT = 600;
+int SCR_WIDTH = 1920;
+int SCR_HEIGHT = 1080;
 
 
 int main() {
 
     auto pabloRenderer = PabloRenderer::getInstance();
-    pabloRenderer->init(SCR_WIDTH, SCR_HEIGHT);
+    pabloRenderer->init();
 
     auto PBRShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
     auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
@@ -57,7 +57,7 @@ int main() {
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldCubeMaterial = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Gold");
-    auto wall = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Wall");
+    auto wall = std::make_shared<PBRTextured>(PBRTexutreIBLOBJ, "Assets/Textures/PBR/Sand");
     auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
     goldCubeRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
     goldCubeRenderable->castsShadwo = true;

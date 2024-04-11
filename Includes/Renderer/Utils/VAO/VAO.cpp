@@ -123,7 +123,7 @@ VAO::VAO(float *vertecies, float numberOfComponents, bool hasNormals, bool hasTe
 
         this->hasNormals = false;
 
-        std::cout << "Created object has 2 vertex atributes" << std::endl;
+        std::cout << "Created object has 2 vertex attributes" << std::endl;
         std::cout << "0 - positions (vec3)" << std::endl;
         std::cout << "2 - texture coordinates (vec2)" << std::endl;
     }

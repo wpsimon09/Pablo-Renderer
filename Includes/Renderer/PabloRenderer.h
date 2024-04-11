@@ -32,7 +32,7 @@ public:
      * @param width width of the window
      * @param height heights of the window
      */
-    void init(unsigned int width, unsigned int height);
+    void init(unsigned int width = 0, unsigned int height=0);
 
     /***
      * Attaches scene to the renderer based on what we want to render

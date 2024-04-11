@@ -8,7 +8,7 @@ float screenSpaceQuadVertexData[] = {
         // positions        // texture Coords
         -1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
         -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-        1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+        1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
+        1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
 };
 #endif //PABLO_RENDERER_SCREENSPACEQUADVERTEXDATA_H

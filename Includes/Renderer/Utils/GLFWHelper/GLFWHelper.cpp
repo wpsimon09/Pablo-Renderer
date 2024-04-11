@@ -51,7 +51,8 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    instance->setWindow(glfwCreateWindow(width, height, "Pablo-renderer", NULL, NULL));
+
+    instance->setWindow(glfwCreateWindow(width == 0?screen_W:width, height==0? screen_H:0, "Pablo-renderer", NULL, NULL));
     if (instance->getWindow() == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -81,7 +82,12 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
     glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowRefreshCallback(instance->getWindow(), processResize);
-    glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
+    glfwGetWindowSize(instance->getWindow(), &screen_W, &screen_H);
+
+    int size;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE,&size);
+
+    std::cout<<size;
 
     return true;
 }

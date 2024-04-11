@@ -14,7 +14,7 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
+    glClearColor(1.0f, 0.01f, 0.01f, 1.0f);
 
     this->scene->update();
     if(Scene::root){

@@ -68,7 +68,7 @@ void PabloRenderer::attachScene(std::shared_ptr<Scene> scene) {
     this->renderGraph = std::make_unique<RenderGraph>(this->scene);
     this->renderGraph->init();
 
-    this->outputFrameBuffer = std::make_unique<FrameBuffer>(this->windowWidth, this->windowHeight);
+    this->outputFrameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight());
 
     this->debugFrameBuffer = std::make_unique<FrameBufferDebug>(this->windowWidth, this->windowHeight);
 }

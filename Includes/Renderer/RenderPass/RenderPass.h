@@ -11,7 +11,6 @@
 #include "Renderer/SceneGraph/Scene.h"
 #include "Renderer/Utils/RendererManager/RendererManager.h"
 
-
 class RenderPass {
 public:
     RenderPass();
