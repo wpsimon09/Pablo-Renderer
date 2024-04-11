@@ -14,6 +14,7 @@ in VS_OUT {
 uniform samplerCube irradianceMap;
 uniform samplerCube prefilterMap;
 uniform sampler2D BRDFtexture;
+uniform sampler2D shadowMap;
 
 uniform vec3 lightPositions[5];
 uniform vec3 lightColors[5];

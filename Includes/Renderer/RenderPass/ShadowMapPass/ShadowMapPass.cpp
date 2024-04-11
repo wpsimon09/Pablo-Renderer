@@ -9,12 +9,12 @@ ShadowMapPass::ShadowMapPass() {
     this->frameBuffer = std::make_unique<FrameBuffer>(800, 600);
     this->frameBuffer->makeDepthOnly();
     this->rendererType = DEPTH_ONLY;
-    this->renderPassResult->shaderName = "shadowMap";
 }
 
 std::shared_ptr<Texture2D> ShadowMapPass::render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) {
     scene->renderingConstrains = SHADOW_ONLY;
     renderer->render(scene, this->frameBuffer);
     this->renderPassResult = frameBuffer->getRenderedResult();
+    this->renderPassResult->shaderName = "shadowMap";
     return this->renderPassResult;
 }
