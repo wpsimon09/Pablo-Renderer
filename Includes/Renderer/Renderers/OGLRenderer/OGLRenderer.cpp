@@ -43,7 +43,7 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
 
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
 
-        this->scene->light->update(shader);
+        this->scene->light->update(shader, renderable->castsShadwo);
 
         if(shader->supportsIBL){
             scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);

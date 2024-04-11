@@ -23,7 +23,7 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     this->createLightMatrices();
 }
 
-void Light::update(std::shared_ptr<Shader> shader) {
+void Light::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
     shader->use();
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->color->property);

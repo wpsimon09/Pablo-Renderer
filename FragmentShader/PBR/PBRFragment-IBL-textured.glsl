@@ -195,7 +195,7 @@ void main()
     vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
     
     vec3 ambient = (kD * diffuse + specular ) * 0.3 ;
-    ambient += ( 4.0 * emmisive);
+    //ambient += ( 4.0 * emmisive);
     vec3 color = ambient + Lo;
 
     //HDR

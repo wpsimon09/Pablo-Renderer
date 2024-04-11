@@ -51,8 +51,9 @@ public:
     /***
      * Updates the shader that contains the light
      * @param shader shader in which the light should be updated
+     * @param isCastingShadows is object which is processing light casting shadow @def false
      */
-    virtual void update(std::shared_ptr<Shader> shader);
+    virtual void update(std::shared_ptr<Shader> shader, bool isCastingShadows = false);
 
     /***
      * Renders the light icon in the currently bound frame buffer
