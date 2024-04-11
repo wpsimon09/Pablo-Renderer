@@ -51,6 +51,10 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwWindowHint(GLFW_SAMPLES, 8);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
+    const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+    screen_W = mode->width;
+    screen_H = mode->height;
 
     instance->setWindow(glfwCreateWindow(width == 0?screen_W:width, height==0? screen_H:0, "Pablo-renderer", NULL, NULL));
     if (instance->getWindow() == NULL)
