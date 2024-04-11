@@ -22,12 +22,10 @@ void RenderGraph::preProcessing() {
 }
 
 void RenderGraph::render() {
-    //TODO this has to be cleared as the input isnot being removed and render graph is not rendering from scratch every time
     this->scenePass->addInput(shadowMapPass->getRenderedResult());
     auto renderer = this->rendererManager->requestRenderer(scenePass->rendererType);
     this->scenePass->render(scene, renderer);
     this->renderResults.insert({"ScenePass", scenePass->getRenderedResult()});
-
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
