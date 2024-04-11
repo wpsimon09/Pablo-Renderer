@@ -180,10 +180,12 @@ void main()
     //result
     vec3 Lo = vec3(0.0);
 
+    vec3 L;
+
     for(int i = 0; i<5 ; i++)
     {
         //light direction
-        vec3 L = normalize(lightPositions[i] - fs_in.FragPos);
+         L = normalize(lightPositions[i] - fs_in.FragPos);
 
         //hallfway vector;
         vec3 H = normalize(V + L);
@@ -228,22 +230,23 @@ void main()
     vec3 kD = vec3(1.0) - kS;
     kD *= 1.0 - metallic;
 
+    float shadowBias = max(0.09 * (1.0 - dot(N, L)), 0.05);
+
+    float shadow = caclualteShadow(fs_in.FragPosLight,shadowBias);
+
     vec3 irradiance = texture(irradianceMap, N).rgb;
-    vec3 diffuse = irradiance * albedo;
+
+    vec3 diffuse = (irradiance * albedo)*1-shadow;
 
     const float MAX_REFLECTION_LOD = 4.0;
     vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
 
     vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
-    vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
+    vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y))* 1-shadow;
 
-    vec3 ambient = (kD * diffuse + specular ) * 0.8 ;
-
-    float shadow = caclualteShadow(fs_in.FragPosLight,0.004);
+    vec3 ambient = (kD * diffuse + specular ) *(0.1 + 1-shadow) ;
 
     vec3 color = ambient + Lo;
-
-    color += 1-shadow;
 
     //HDR
     color = color / (color + vec3(1.0));

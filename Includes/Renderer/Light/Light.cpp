@@ -30,7 +30,7 @@ void Light::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
 
 
     glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
-    shader->setMat4("lightSpaceMatrix",lightSpaceMatrix);
+    shader->setMat4("lightMatrix",lightSpaceMatrix);
 
     this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->update();
