@@ -41,6 +41,8 @@ PBRTextured::PBRTextured(std::shared_ptr<Shader> shader, std::string pathToTheDi
 }
 
 void PBRTextured::configureShader() {
+    this->shader->use();
+    this->shader->setFloat("hasEmission", this->hasEmissionTexture);
     for (auto &texture : this->textures) {
         if(texture != nullptr){
             ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);

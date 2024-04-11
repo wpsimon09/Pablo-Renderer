@@ -133,6 +133,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6));
 
+    mat->hasEmissionTexture = this->hasEmissionTexture;
     return std::move(mat);
 }
 
@@ -141,6 +142,9 @@ ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type
         aiString path;
 
         if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
+            if(type == aiTextureType_EMISSIVE){
+                this->hasEmissionTexture = true;
+            }
             for(auto &loaded_texture : this->loadedTextures ){
                 if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
                     return std::make_unique<PBRMaterial<Texture2D>>(loaded_texture, shaderName,samplerID);

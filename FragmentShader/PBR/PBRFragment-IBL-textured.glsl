@@ -18,6 +18,7 @@ uniform sampler2D BRDFtexture;
 uniform vec3 lightPositions[5];
 uniform vec3 lightColors[5];
 uniform vec3 camPos;
+uniform float hasEmission;
 
 vec3  albedo;
 float metallic;
@@ -195,7 +196,9 @@ void main()
     vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
     
     vec3 ambient = (kD * diffuse + specular ) * 0.3 ;
-    //ambient += ( 4.0 * emmisive);
+    if(hasEmission == 1.0){
+        ambient += ( 4.0 * emmisive);
+    }
     vec3 color = ambient + Lo;
 
     //HDR

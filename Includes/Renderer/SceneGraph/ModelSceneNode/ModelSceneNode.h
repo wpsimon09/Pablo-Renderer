@@ -26,7 +26,7 @@ public:
 private:
     std::shared_ptr<PBRTextured> material = nullptr;
     std::shared_ptr<Shader> shader;
-
+    bool hasEmissionTexture = false;
     std::vector<std::shared_ptr<Texture2D>>loadedTextures;
 
     /***

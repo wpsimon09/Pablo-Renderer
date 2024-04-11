@@ -45,6 +45,8 @@ public:
      */
     void addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture);
 
+    bool hasEmissionTexture;
+
     ~PBRTextured()= default;
 
 private:
