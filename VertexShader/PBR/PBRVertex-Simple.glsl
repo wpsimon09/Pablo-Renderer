@@ -22,9 +22,6 @@ out VS_OUT {
     vec2 TexCoords;
     vec4 FragPosLight;
     mat3 TBN;
-    float isModel;
-    float hasEmission;
-    float reciviesShadow;
     float hasNormalMap;
 }vs_out;
 
@@ -32,12 +29,12 @@ void main()
 {
     mat3 normalMatrix = transpose(inverse(mat3(model)));
 
-    // transform the vectors to the world space 
+    // transform the vectors to the world space
     vec3 T = normalize(normalMatrix * aTangetn);
     vec3 N = normalize(normalMatrix * aNormal);
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
-    
+
     // create the TBN matrix
     mat3 TBN = transpose(mat3(T,B,N));
 
@@ -47,10 +44,6 @@ void main()
     vs_out.FragPosLight = lightMatrix * vec4(vs_out.FragPos ,1.0);
     vs_out.hasNormalMap = hasNormalMap;
     vs_out.TBN = TBN;
-
-    vs_out.hasEmission= hasEmission;
-    vs_out.isModel = isModel;
-    vs_out.reciviesShadow = reciviesShadow;
 
     gl_Position = projection * view * vec4(vs_out.FragPos, 1.0);
 }

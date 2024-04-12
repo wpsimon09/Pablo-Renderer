@@ -31,7 +31,7 @@ struct CubeMapUnifrom {
  */
 class SkyBoxMaterial : public Material {
 public:
-    SkyBoxMaterial(std::shared_ptr<Shader> shader, TextureBase skyBox, std::string shaderName);
+    SkyBoxMaterial(TextureBase skyBox, std::string shaderName);
     /**
     * passes all relevant uniform to the shader
     */

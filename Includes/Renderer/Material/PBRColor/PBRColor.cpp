@@ -4,7 +4,9 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(std::shared_ptr<Shader> shader, glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(std::move(shader)) {
+PBRColor::PBRColor(glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(std::move(shader)) {
+    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader color");
+
     this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(albedo, "Albedo");
     this->rougness = std::make_unique<PBRMaterial<float>>(rougness, shaderNamingConvention + "Rougness");
     this->metalness = std::make_unique<PBRMaterial<float>>(metallic, shaderNamingConvention + "Metalness");

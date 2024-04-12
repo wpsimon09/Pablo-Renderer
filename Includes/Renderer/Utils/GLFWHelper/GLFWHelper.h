@@ -13,8 +13,8 @@ private:
     inline static PabloRenderer *instance;
     inline static float pointerX = 0;
     inline static float pointerY = 0;
-    inline static int screen_W = 1300;
-    inline static int screen_H = 900;
+    inline static int screen_W = 800;
+    inline static int screen_H = 600;
 public:
     inline static void setInstance(PabloRenderer* inst){
         instance = inst;

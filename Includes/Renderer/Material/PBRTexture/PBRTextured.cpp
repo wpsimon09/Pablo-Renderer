@@ -4,9 +4,12 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(std::shared_ptr<Shader> shader, std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material(std::move(shader)) {
+PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::string shaderNamingConvention, std::string fileFormat): Material(std::move(shader)) {
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
+    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+    this->shader->supportsIBL = supportsIBL;
+    this->supportsIBL = supportsIBL;
 
     // Albedo map
     fullPath = pathToTheDirectory + "/albedo" + fileFormat;
@@ -59,7 +62,10 @@ void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {
 }
 
 
-PBRTextured::PBRTextured(std::shared_ptr<Shader> shader) : Material(std::move(shader)) {
+PBRTextured::PBRTextured(bool supportsIBL) : Material() {
+    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+    this->shader->supportsIBL = supportsIBL;
+    this->supportsIBL = supportsIBL;
 }
 
 

@@ -24,6 +24,8 @@ uniform vec3 lightPositions[5];
 uniform vec3 lightColors[5];
 uniform vec3 camPos;
 
+uniform float isModel;
+
 const float PI = 3.14159265359;
 
 vec3 getNormalFromMap()
