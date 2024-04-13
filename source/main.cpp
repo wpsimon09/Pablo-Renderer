@@ -47,7 +47,7 @@ int main() {
     goldCubeRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
     goldCubeRenderable->castsShadwo = true;
 
-    auto sunbro_helmet = std::make_unique<ModelSceneNode>("Assets/Model/sunbro_helmet/scene.gltf");
+    auto sunbro_helmet = std::make_unique<ModelSceneNode>("Assets/Model/sunbro_helmet/scene.gltf", goldCubeMaterial);
     sunbro_helmet->transformation->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
     sunbro_helmet->transformation->setPosition(glm::vec3(0.0F, 2.0F, 0.0f));
     sunbro_helmet->transformation->setScale(glm::vec3(0.07f));

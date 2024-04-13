@@ -102,14 +102,18 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(std::string(mesh->mName.C_Str()),vertecies, indecies);
 
     std::shared_ptr<PBRTextured> renderableMaterial;
+    bool hasModelTextures;
     if(this->material == nullptr){
         renderableMaterial = this->processRenderableMaterial(meshMaterial);
+        hasModelTextures = true;
     }
-    else
+    else{
         renderableMaterial = this->material;
+        hasModelTextures = false;
+    }
 
     std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial, mesh->mName.C_Str());
-    processedRenderable->isModel = true;
+    processedRenderable->isModel = hasModelTextures;
 
     std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));
 
