@@ -240,7 +240,7 @@ void main()
         shadow = 0.6;
     }
 
-    vec3 ambient = (albedo + ao) *(1-shadow);
+    vec3 ambient = (albedo * ao) *(1-shadow);
     if(fs_in.hasEmission == 1.0){
         ambient += ( 4.0 * emmisive);
     }
