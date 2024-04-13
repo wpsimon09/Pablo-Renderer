@@ -30,6 +30,7 @@ public:
     std::unique_ptr<Transformations> transformations;
     bool castsShadwo = false;
     bool recievesShadow = false;
+    bool isModel = false;
     const std::shared_ptr<Material> &getObjectMaterial() const;
     bool isPartOfSceneNode = false;
 protected:

@@ -15,7 +15,7 @@
 
 class ModelSceneNode:public SceneNode  {
 public:
-    explicit ModelSceneNode(std::shared_ptr<Shader> shader, std::string path, std::shared_ptr<PBRTextured> mat = nullptr);
+    explicit ModelSceneNode( std::string path, std::shared_ptr<PBRTextured> mat = nullptr);
     std::string directory;
 
     /***

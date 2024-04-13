@@ -6,7 +6,8 @@
 
 #include <utility>
 
-SkyBoxMaterial::SkyBoxMaterial(std::shared_ptr<Shader> shader, TextureBase skyBox, std::string shaderName):Material(std::move(shader)) {
+SkyBoxMaterial::SkyBoxMaterial(TextureBase skyBox, std::string shaderName):Material() {
+    this->shader = std::make_shared<Shader>("VertexShader/PBR/SkyBoxVertex.glsl", "FragmentShader/PBR/SkyBoxFragment.glsl", "Sky box shader");
     this->cubeMapUnifrom = new CubeMapUnifrom(std::move(skyBox), std::move(shaderName));
     this->cubeMapUnifrom->cubeMap.setSamplerID(0);
 }

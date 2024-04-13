@@ -6,8 +6,7 @@
 
 #include <utility>
 
-ModelSceneNode::ModelSceneNode(std::shared_ptr<Shader> shader, std::string path, std::shared_ptr<PBRTextured> mat): SceneNode() {
-    this->shader = std::move(shader);
+ModelSceneNode::ModelSceneNode(std::string path, std::shared_ptr<PBRTextured> mat): SceneNode() {
     Assimp::Importer importer;
 
     this->material = std::move(mat);
@@ -110,6 +109,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
         renderableMaterial = this->material;
 
     std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial, mesh->mName.C_Str());
+    processedRenderable->isModel = true;
 
     std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));
 
@@ -117,7 +117,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 }
 
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(shader);
+    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>();
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 

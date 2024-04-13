@@ -86,12 +86,6 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
     glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowRefreshCallback(instance->getWindow(), processResize);
-    glfwGetWindowSize(instance->getWindow(), &screen_W, &screen_H);
-
-    int size;
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE,&size);
-
-    std::cout<<size;
 
     return true;
 }

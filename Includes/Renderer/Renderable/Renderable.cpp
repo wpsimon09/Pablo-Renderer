@@ -31,13 +31,16 @@ Renderable::Renderable(std::shared_ptr<Geometry> geometry, std::shared_ptr<Mater
 
 Renderable::Renderable(std::shared_ptr<Shader> shader) {
     //default values
-    this->objectMaterial = std::make_unique<PBRColor>(std::move(shader));
+    this->objectMaterial = std::make_unique<PBRColor>();
     this->objectGeometry = std::make_unique<CubeGeometry>();
     this->modelMatrix = glm::mat4(1.0f);
     this->transformations = std::make_unique<Transformations>();
 }
 
 void Renderable::render() {
+    this->objectMaterial->shader->use();
+    this->objectMaterial->shader->setFloat("isModel", this->isModel);
+    this->objectMaterial->shader->setFloat("reciviesShadow", this->recievesShadow);
     this->objectMaterial->configureShader();
     this->objectGeometry->render();
 }
