@@ -41,8 +41,8 @@ int main() {
 
     auto gridRenderable = std::make_unique<Grid>();
 
-    auto goldCubeMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold");
-    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Sand");
+    auto goldCubeMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
+    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Sand", true);
     auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
     goldCubeRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
     goldCubeRenderable->castsShadwo = true;

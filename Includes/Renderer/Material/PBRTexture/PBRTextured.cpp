@@ -4,7 +4,7 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::string shaderNamingConvention, std::string fileFormat): Material(std::move(shader)) {
+PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::string shaderNamingConvention, std::string fileFormat): Material() {
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
     this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
@@ -41,6 +41,7 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::s
     texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
     this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "displacementMap", 5));
 
+    this->hasEmissionTexture = false;
 }
 
 void PBRTextured::configureShader() {

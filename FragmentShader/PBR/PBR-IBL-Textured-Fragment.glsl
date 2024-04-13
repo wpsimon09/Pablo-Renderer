@@ -165,12 +165,12 @@ void main()
 {
     //sampler the texture maps
     albedo = texture(_albedoMap, fs_in.TexCoords).rgb;
-    if(fs_in.isModel != 0.0){
-        roughness = texture(_roughnessMap, fs_in.TexCoords).r;
-        metallic = texture(_metallicMap, fs_in.TexCoords).r;
-    }else{
+    if(fs_in.isModel == 1.0){
         roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
         metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
+    }else{
+        roughness = texture(_roughnessMap, fs_in.TexCoords).r;
+        metallic = texture(_metallicMap, fs_in.TexCoords).r;
     }
     emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
     ao = texture(_aoMap, fs_in.TexCoords).r;
@@ -249,11 +249,11 @@ void main()
     if(fs_in.reciviesShadow == 1){
         shadow = caclualteShadow(fs_in.FragPosLight,shadowBias);
     }else{
-        shadow = 0.5;
+        shadow = 0.6;
     }
     vec3 irradiance = texture(irradianceMap, N).rgb;
 
-    vec3 diffuse = (irradiance * albedo)*1-shadow;
+    vec3 diffuse = (irradiance * albedo)*(1-shadow);
 
     const float MAX_REFLECTION_LOD = 4.0;
     vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
