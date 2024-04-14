@@ -27,7 +27,7 @@ int main() {
     auto PBRShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
     auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
 
-    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/garden.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/hill.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto cubeGeometry = std::make_shared<CubeGeometry>();

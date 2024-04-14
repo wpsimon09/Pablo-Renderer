@@ -13,8 +13,8 @@ private:
     inline static PabloRenderer *instance;
     inline static float pointerX = 0;
     inline static float pointerY = 0;
-    inline static int screen_W = 800;
-    inline static int screen_H = 600;
+    inline static int screen_W ;
+    inline static int screen_H ;
 public:
     inline static void setInstance(PabloRenderer* inst){
         instance = inst;
@@ -67,6 +67,8 @@ public:
     static int getScreenWidth() {return GLFWHelper::screen_W;};
 
     static int getScreenHeight() {return GLFWHelper::screen_H;};
+
+    static glm::vec2 getDefaultFrameBufferDimentions();
 };
 
 

@@ -237,7 +237,7 @@ void main()
     if(fs_in.reciviesShadow == 1){
         shadow = caclualteShadow(fs_in.FragPosLight,shadowBias);
     }else{
-        shadow = 0.6;
+        shadow = 0.3;
     }
 
     vec3 ambient = (albedo * ao) *(1-shadow);
