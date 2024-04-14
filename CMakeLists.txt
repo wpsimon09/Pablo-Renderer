@@ -3,11 +3,25 @@ project(Pablo-Renderer)
 
 set(CMAKE_CXX_STANDARD 23)
 
-file(GLOB_RECURSE SOURCES "source/*.cpp" "Includes/**/*.cpp" "Includes/Renderer/**/*.cpp")
-file(GLOB_RECURSE HEADERS "Includes/**/*.h" "Includes/Renderer/**/*.h")
+file(GLOB_RECURSE SOURCES "source/*.cpp"
+        "Includes/**/*.cpp"
+        "Includes/Renderer/**/*.cpp"
+        "3rdPartyLybraries/Includes/imgui/*.cpp"
+)
+
+file(GLOB_RECURSE HEADERS "Includes/**/*.h"
+        "Includes/Renderer/**/*.h"
+        "3rdPartyLybraries/Includes/imgui/*.h"
+)
 
 # Add the source files
-add_executable(${CMAKE_PROJECT_NAME} ${SOURCES} ${HEADERS})
+add_executable(${CMAKE_PROJECT_NAME}
+        ${SOURCES}
+        ${HEADERS}
+        "3rdPartyLybraries/Includes/imgui/backends/imgui_impl_glfw.h"
+        "3rdPartyLybraries/Includes/imgui/backends/imgui_impl_glfw.cpp"
+        "3rdPartyLybraries/Includes/imgui/backends/imgui_impl_opengl3.h"
+        "3rdPartyLybraries/Includes/imgui/backends/imgui_impl_opengl3.cpp")
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
         CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}"
