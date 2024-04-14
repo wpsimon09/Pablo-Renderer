@@ -41,7 +41,7 @@ void PabloRenderer::render() {
         //DISPLAY THE RESULT OF FRAME BUFFER
         //----------------------------------
         debugFrameBuffer->setColorAttachment(renderGraph->getDebugTexture("ShadowMapPass"));
-        //debugFrameBuffer->dispalyOnScreen();
+        debugFrameBuffer->dispalyOnScreen();
 
         this->renderGraph->prepareForNextFrame();
         glfwSwapBuffers(this->window);

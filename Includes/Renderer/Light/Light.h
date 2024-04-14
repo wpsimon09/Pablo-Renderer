@@ -66,7 +66,7 @@ public:
     std::shared_ptr<Renderable> lightRenderable;
 
     float lightNearPlane = 1.0f;
-    float lightFarPlane = 10.0f;
+    float lightFarPlane = 20.0f;
 
 protected:
     void createLightMatrices();
