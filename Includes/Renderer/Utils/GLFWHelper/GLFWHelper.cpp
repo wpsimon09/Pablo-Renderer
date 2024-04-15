@@ -16,31 +16,31 @@ void GLFWHelper::scroll_callback(GLFWwindow *window, double xoffset, double yoff
 }
 
 void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if (instance->firstMouse) // initially set to true
-    {
+    if (instance->firstMouse) {
         instance->lastX = xpos;
         instance->lastY = ypos;
         instance->firstMouse = false;
     }
 
     float xOffset = xpos - instance->lastX;
-    float yOffset = ypos - instance->lastY; //calculate how much does mouse move
+    float yOffset = instance->lastY - ypos; // Invert the sign here
 
     instance->lastX = xpos;
-    instance->lastY = ypos; //update last mouse position
+    instance->lastY = ypos;
 
-    if(xOffset > 0 && isMousePressed){
+    xOffset *= 0.02;
+    yOffset *= 0.02;
+
+    if (xOffset != 0.0 && isMousePressed) { // Check if xOffset is not zero
         instance->getScene()->camera->rotateAzimutn(xOffset);
     }
 
-    if(yOffset > 0 && isMousePressed){
-        instance->getScene()->camera->rotatePolar(xOffset);
+    if (yOffset != 0.0 && isMousePressed) { // Check if yOffset is not zero
+        instance->getScene()->camera->rotatePolar(-yOffset);
     }
-
 
     GLFWHelper::pointerX = xpos;
     GLFWHelper::pointerY = ypos;
-
 }
 
 bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
@@ -116,12 +116,14 @@ glm::vec2 GLFWHelper::getDefaultFrameBufferDimentions() {
 }
 
 void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
-    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-        isMousePressed = true;
-        std::cout<<"pressed"<<std::endl;
-    }
-    else{
-        isMousePressed = false;
+    if (button == GLFW_MOUSE_BUTTON_LEFT) {
+        if (action == GLFW_PRESS) {
+            isMousePressed = true;
+            std::cout << "Mouse button pressed" << std::endl;
+        } else if (action == GLFW_RELEASE) {
+            isMousePressed = false;
+            std::cout << "Mouse button released" << std::endl;
+        }
     }
 }
 
