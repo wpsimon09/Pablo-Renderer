@@ -19,7 +19,7 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
     this->scene->update();
     if(Scene::root){
         renderSceneGraph(*Scene::root);
-        this->scene->light->render(this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
+        this->scene->light->render(this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
 
@@ -41,7 +41,7 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
 
         this->scene->camera->update(shader);
 
-        ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->GetViewMatrix(), this->scene->camera->getProjection());
+        ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
 
         this->scene->light->update(shader, renderable->castsShadwo);
 
