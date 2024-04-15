@@ -16,9 +16,16 @@ file(GLOB_RECURSE HEADERS "Includes/**/*.h"
 set(IMGUI_PATH  "3rdPartyLybraries/Includes/imgui")
 
 # Compile as static library
-file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp)
+file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_glfw.h
+        ${IMGUI_PATH}/backends/imgui_impl_glfw.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_opengl3.h
+        ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_opengl3_loader.cpp)
+
 add_library("ImGui" STATIC ${IMGUI_SOURCES})
 target_include_directories("ImGui" PUBLIC ${IMGUI_PATH})
+target_include_directories("ImGui" PUBLIC ${IMGUI_PATH}/backends)
 
 # Add the source files
 add_executable(${CMAKE_PROJECT_NAME}
@@ -47,6 +54,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glad)
 
 add_library(glad STATIC 3rdPartyLybraries/Includes/glad/glad.c)
 target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ImGui)
 
 # Find ASSIMP package and link against it
 set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
@@ -86,6 +95,6 @@ file(COPY ${3rdPARTY_LIBRARIES} DESTINATION ${OUT_3rdPARTY_LIBRARIES})
 set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
 find_package(assimp REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
-set(BUILD_ASSIMP_TOOLS OFF)
+set(BUILD_ASSIMP_TOOLS ON)
 
 #IAM GUI INTEGRATION
