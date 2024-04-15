@@ -31,6 +31,8 @@ target_include_directories("ImGui" PUBLIC ${IMGUI_PATH}/backends)
 add_executable(${CMAKE_PROJECT_NAME}
         ${SOURCES}
         ${HEADERS}
+        Includes/Renderer/UI/UI.cpp
+        Includes/Renderer/UI/UI.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
