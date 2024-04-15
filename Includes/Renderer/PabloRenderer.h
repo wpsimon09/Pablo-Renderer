@@ -4,6 +4,10 @@
 
 #ifndef PABLO_RENDERER_PABLORENDERER_H
 #define PABLO_RENDERER_PABLORENDERER_H
+
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_glfw.h"
 #include "map"
 #include <iterator>
 #include "Renderer/SceneGraph/Scene.h"
@@ -16,6 +20,8 @@
 #include "Renderer/RenderPass/ScenePass/ScenePass.h"
 #include "Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h"
 #include "Renderer/RenderPass/RenderGraph/RenderGraph.h"
+
+
 
 class PabloRenderer {
 public:
@@ -85,6 +91,8 @@ public:
 
     int windowHeight;
     int windowWidth;
+
+    ImGuiIO *imGuiIo;
 };
 
 

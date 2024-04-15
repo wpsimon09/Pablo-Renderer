@@ -11,6 +11,7 @@ RenderPass::RenderPass() {
 
 void RenderPass::addInput(std::shared_ptr<TextureBase> input) {
     this->inputs.push_back(input);
+
 }
 
 void RenderPass::prepareForNextFrame() {

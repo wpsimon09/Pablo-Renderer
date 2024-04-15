@@ -11,15 +11,32 @@ void PabloRenderer::init(unsigned int width, unsigned int height) {
     GLFWHelper::setInstance(PabloRenderer::instance);
     if(!GLFWHelper::glInit(width, height))
         std::cerr<<"OPENGL CONTEXT NOT INITIALIZED";
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    this->imGuiIo = &ImGui::GetIO();
+    (void)imGuiIo;
+    imGuiIo->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    imGuiIo->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
+    ImGui::StyleColorsDark();
+    const char* glsl_version = "#version 130";
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
 void PabloRenderer::render() {
+    bool shadow_demo_window = true;
 
     while (!glfwWindowShouldClose(window)){
         auto currentFrame = static_cast<float>(glfwGetTime());
         this->deltaTime = currentFrame - this->lastFrame;
         this->lastFrame = currentFrame;
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        ImGui::ShowDemoWindow(&shadow_demo_window);
 
         //-----------------
         // INPUT PROCESSING
@@ -42,6 +59,9 @@ void PabloRenderer::render() {
         //----------------------------------
         debugFrameBuffer->setColorAttachment(renderGraph->getDebugTexture("ShadowMapPass"));
         debugFrameBuffer->dispalyOnScreen();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         this->renderGraph->prepareForNextFrame();
         glfwSwapBuffers(this->window);

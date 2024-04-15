@@ -3,120 +3,34 @@ project(Pablo-Renderer)
 
 set(CMAKE_CXX_STANDARD 23)
 
+file(GLOB_RECURSE SOURCES "source/*.cpp"
+        "Includes/**/*.cpp"
+        "Includes/Renderer/**/*.cpp"
+)
+
+file(GLOB_RECURSE HEADERS "Includes/**/*.h"
+        "Includes/Renderer/**/*.h"
+)
+
+# Set where the ImGui files are stored
+set(IMGUI_PATH  "3rdPartyLybraries/Includes/imgui")
+
+# Compile as static library
+file(GLOB IMGUI_SOURCES ${IMGUI_PATH}/*.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_glfw.h
+        ${IMGUI_PATH}/backends/imgui_impl_glfw.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_opengl3.h
+        ${IMGUI_PATH}/backends/imgui_impl_opengl3.cpp
+        ${IMGUI_PATH}/backends/imgui_impl_opengl3_loader.cpp)
+
+add_library("ImGui" STATIC ${IMGUI_SOURCES})
+target_include_directories("ImGui" PUBLIC ${IMGUI_PATH})
+target_include_directories("ImGui" PUBLIC ${IMGUI_PATH}/backends)
 
 # Add the source files
-add_executable(${CMAKE_PROJECT_NAME} source/main.cpp
-        source/stb_image.cpp
-        Includes/Renderer/Utils/Vertex/Vertex.cpp
-        Includes/Renderer/Utils/Vertex/Vertex.h
-        Includes/Renderer/Renderable/Renderable.cpp
-        Includes/Renderer/Renderable/Renderable.h
-        Includes/Renderer/Utils/Transformations/Transformations.cpp
-        Includes/Renderer/Utils/Transformations/Transformations.h
-        Includes/Renderer/Geometry/Geometry.cpp
-        Includes/Renderer/Geometry/Geometry.h
-        Includes/Renderer/Material/Material.cpp
-        Includes/Renderer/Material/Material.h
-        Includes/Renderer/Geometry/Shapes/Cube/CubeGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/Cube/CubeGeometry.h
-        Includes/Renderer/Utils/VAO/VAO.cpp
-        Includes/Renderer/Utils/VAO/VAO.h
-        Includes/Renderer/Geometry/Shapes/Cube/cubeVertexData.h
-        Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/Plane/PlaneGeometry.h
-        Includes/Renderer/Geometry/Shapes/Plane/planeVertexData.h
-        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h
-        Includes/Renderer/Geometry/Shapes/ScreenSpaceQuad/screenSpaceQuadVertexData.h
-        Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/Custom/ModelGeometry.h
-        Includes/Renderer/Material/PBRColor/PBRColor.cpp
-        Includes/Renderer/Material/PBRColor/PBRColor.h
-        Includes/Renderer/Material/PBRTexture/PBRTextured.cpp
-        Includes/Renderer/Material/PBRTexture/PBRTextured.h
-        Includes/Renderer/Utils/Texture/Texture2D/Texture2D.cpp
-        Includes/Renderer/Utils/Texture/Texture2D/Texture2D.h
-        Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.cpp
-        Includes/Renderer/Material/BasicMaterialTexturd/BasicMaterialTextured.h
-        Includes/Renderer/SceneGraph/SceneNode/SceneNode.cpp
-        Includes/Renderer/SceneGraph/SceneNode/SceneNode.h
-        Includes/Renderer/SceneGraph/Scene.cpp
-        Includes/Renderer/SceneGraph/Scene.h
-        Includes/Renderer/Light/Light.cpp
-        Includes/Renderer/Light/Light.h
-        Includes/Renderer/Renderers/OGLRenderer/OGLRenderer.cpp
-        Includes/Renderer/Renderers/OGLRenderer/OGLRenderer.h
-        Includes/Renderer/Utils/ShaderHelper/ShaderHelper.cpp
-        Includes/Renderer/Utils/ShaderHelper/ShaderHelper.h
-        Includes/Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.cpp
-        Includes/Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h
-        Includes/Renderer/PabloRenderer.cpp
-        Includes/Renderer/PabloRenderer.h
-        Includes/Renderer/SceneGraph/Floor/Floor.h
-        Includes/Renderer/SceneGraph/Floor/Floor.cpp
-        Includes/Renderer/Utils/FrameBuffer/FrameBuffer.cpp
-        Includes/Renderer/Utils/FrameBuffer/FrameBuffer.h
-        Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.cpp
-        Includes/Renderer/Utils/FrameBuffer/RenderBuffer/RenderBuffer.h
-        Includes/Renderer/Utils/OGLObject/OGLObject.cpp
-        Includes/Renderer/Utils/OGLObject/OGLObject.h
-        Includes/Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.cpp
-        Includes/Renderer/Utils/FrameBuffer/FrameBufferDebug/FrameBufferDebug.h
-        Includes/Renderer/Geometry/Shapes/Debug/FrameBufferDebugGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/Debug/FrameBufferDebugGeometry.h
-        Includes/Renderer/Geometry/Shapes/Debug/debugFrameBufferPlaneData.h
-        Includes/Renderer/Renderable/Grid/Grid.cpp
-        Includes/Renderer/Renderable/Grid/Grid.h
-        Includes/Renderer/Renderable/Grid/Grid.h
-        Includes/Renderer/Geometry/Shapes/HugePlane/HugePlane.cpp
-        Includes/Renderer/Geometry/Shapes/HugePlane/HugePlane.h
-        Includes/Renderer/Geometry/Shapes/HugePlane/hugePlaneVertexData.h
-        Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/GridPlane/GridGeometry.h
-        Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.cpp
-        Includes/Renderer/Material/BasicMaterialColor/BasicMaterialColor.h
-        Includes/Renderer/Utils/Texture/TextureHDR/TextureHDRi.cpp
-        Includes/Renderer/Utils/Texture/TextureHDR/TextureHDRi.h
-        Includes/Renderer/Utils/Texture/Texture3D/Texture3D.cpp
-        Includes/Renderer/Utils/Texture/Texture3D/Texture3D.h
-        Includes/Renderer/Utils/Texture/TextureBase.cpp
-        Includes/Renderer/Utils/Texture/TextureBase.h
-        Includes/Renderer/Light/IBLPipeline/IBLPipeLine.cpp
-        Includes/Renderer/Light/IBLPipeline/IBLPipeLine.h
-        Includes/Renderer/Light/IBLPipeline/Stages/HDRToCubeMap/HDRToCubeMap.cpp
-        Includes/Renderer/Light/IBLPipeline/Stages/HDRToCubeMap/HDRToCubeMap.h
-        Includes/Renderer/Light/IBLPipeline/Stages/BRDF/BRDF.cpp
-        Includes/Renderer/Light/IBLPipeline/Stages/BRDF/BRDF.h
-        Includes/Renderer/Light/IBLPipeline/Stages/Irradiance/Irradiance.cpp
-        Includes/Renderer/Light/IBLPipeline/Stages/Irradiance/Irradiance.h
-        Includes/Renderer/Light/IBLPipeline/Stages/PrefilterMap/PrefilterMap.cpp
-        Includes/Renderer/Light/IBLPipeline/Stages/PrefilterMap/PrefilterMap.h
-        Includes/Renderer/Light/IBLPipeline/Stages/BaseStage.cpp
-        Includes/Renderer/Light/IBLPipeline/Stages/BaseStage.h
-        Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.cpp
-        Includes/Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.h
-        Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.cpp
-        Includes/Renderer/Material/SkyBoxMaterial/SkyBoxMaterial.h
-        Includes/Debug/DebugLogger.cpp
-        Includes/Renderer/Geometry/Shapes/Sphere/SphereGeometry.cpp
-        Includes/Renderer/Geometry/Shapes/Sphere/SphereGeometry.h
-        Includes/Renderer/Utils/GLFWHelper/GLFWHelper.cpp
-        Includes/Renderer/Utils/GLFWHelper/GLFWHelper.h
-        Includes/Renderer/RenderPass/RenderPass.cpp
-        Includes/Renderer/RenderPass/RenderPass.h
-        Includes/Renderer/RenderPass/ScenePass/ScenePass.cpp
-        Includes/Renderer/RenderPass/ScenePass/ScenePass.h
-        Includes/Renderer/Utils/RenderingConstrains/RenderingConstrains.h
-        Includes/Renderer/RenderPass/ShadowMapPass/ShadowMapPass.cpp
-        Includes/Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h
-        Includes/Renderer/Renderers/DepthRenderer/DepthRenderer.cpp
-        Includes/Renderer/Renderers/DepthRenderer/DepthRenderer.h
-        Includes/Renderer/Utils/RendererManager/RendererManager.cpp
-        Includes/Renderer/Utils/RendererManager/RendererManager.h
-        Includes/Renderer/Renderers/Renderer.cpp
-        Includes/Renderer/Renderers/Renderer.h
-        Includes/Renderer/RenderPass/RenderGraph/RenderGraph.cpp
-        Includes/Renderer/RenderPass/RenderGraph/RenderGraph.h
+add_executable(${CMAKE_PROJECT_NAME}
+        ${SOURCES}
+        ${HEADERS}
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
@@ -127,7 +41,11 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/Includes
         ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes
-        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/Renderer)
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/Renderer
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/imgui
+        ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/imgui/backends
+
+)
 
 
 # Include and link Glad
@@ -136,6 +54,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glad)
 
 add_library(glad STATIC 3rdPartyLybraries/Includes/glad/glad.c)
 target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ImGui)
 
 # Find ASSIMP package and link against it
 set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
@@ -175,6 +95,6 @@ file(COPY ${3rdPARTY_LIBRARIES} DESTINATION ${OUT_3rdPARTY_LIBRARIES})
 set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
 find_package(assimp REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
-set(BUILD_ASSIMP_TOOLS OFF)
+set(BUILD_ASSIMP_TOOLS ON)
 
-# Copy Assimp library files to the preProcessing directory
+#IAM GUI INTEGRATION
