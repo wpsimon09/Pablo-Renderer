@@ -9,18 +9,10 @@ void GLFWHelper::processInput(GLFWwindow *window, float deltaTime) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(RIGHT, deltaTime);
 }
 
 void GLFWHelper::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    instance->getScene()->camera->ProcessMouseScroll(static_cast<float>(yoffset));
+    instance->getScene()->camera->zoom((float) yoffset);
 }
 
 void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
@@ -37,7 +29,14 @@ void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
     instance->lastX = xpos;
     instance->lastY = ypos; //update last mouse position
 
-    instance->getScene()->camera->ProcessMouseMovement(xOffset, yOffset);
+    if(xOffset > 0 && isMousePressed){
+        instance->getScene()->camera->rotateAzimutn(xOffset);
+    }
+
+    if(yOffset > 0 && isMousePressed){
+        instance->getScene()->camera->rotatePolar(xOffset);
+    }
+
 
     GLFWHelper::pointerX = xpos;
     GLFWHelper::pointerY = ypos;
@@ -94,7 +93,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 
 void GLFWHelper::processResize(GLFWwindow *window) {
     glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
-    instance->getScene()->camera->handleResizing(GLFWHelper::screen_W, GLFWHelper::screen_H);
+    instance->getScene()->camera->processResize(GLFWHelper::screen_W, GLFWHelper::screen_H);
     std::cout<<GLFWHelper::screen_W<<std::endl;std::cout<<GLFWHelper::screen_H<<std::endl;
 
 }
