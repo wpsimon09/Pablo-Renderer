@@ -9,39 +9,38 @@ void GLFWHelper::processInput(GLFWwindow *window, float deltaTime) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        instance->getScene()->camera->ProcessKeyboard(RIGHT, deltaTime);
 }
 
 void GLFWHelper::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    instance->getScene()->camera->ProcessMouseScroll(static_cast<float>(yoffset));
+    instance->getScene()->camera->zoom((float) yoffset);
 }
 
 void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if (instance->firstMouse) // initially set to true
-    {
+    if (instance->firstMouse) {
         instance->lastX = xpos;
         instance->lastY = ypos;
         instance->firstMouse = false;
     }
 
     float xOffset = xpos - instance->lastX;
-    float yOffset = ypos - instance->lastY; //calculate how much does mouse move
+    float yOffset = instance->lastY - ypos; // Invert the sign here
 
     instance->lastX = xpos;
-    instance->lastY = ypos; //update last mouse position
+    instance->lastY = ypos;
 
-    instance->getScene()->camera->ProcessMouseMovement(xOffset, yOffset);
+    xOffset *= 0.02;
+    yOffset *= 0.02;
+
+    if (xOffset != 0.0 && isMousePressed) { // Check if xOffset is not zero
+        instance->getScene()->camera->rotateAzimutn(xOffset);
+    }
+
+    if (yOffset != 0.0 && isMousePressed) { // Check if yOffset is not zero
+        instance->getScene()->camera->rotatePolar(-yOffset);
+    }
 
     GLFWHelper::pointerX = xpos;
     GLFWHelper::pointerY = ypos;
-
 }
 
 bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
@@ -94,7 +93,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 
 void GLFWHelper::processResize(GLFWwindow *window) {
     glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
-    instance->getScene()->camera->handleResizing(GLFWHelper::screen_W, GLFWHelper::screen_H);
+    instance->getScene()->camera->processResize(GLFWHelper::screen_W, GLFWHelper::screen_H);
     std::cout<<GLFWHelper::screen_W<<std::endl;std::cout<<GLFWHelper::screen_H<<std::endl;
 
 }
@@ -117,12 +116,14 @@ glm::vec2 GLFWHelper::getDefaultFrameBufferDimentions() {
 }
 
 void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
-    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-        isMousePressed = true;
-        std::cout<<"pressed"<<std::endl;
-    }
-    else{
-        isMousePressed = false;
+    if (button == GLFW_MOUSE_BUTTON_LEFT) {
+        if (action == GLFW_PRESS) {
+            isMousePressed = true;
+            std::cout << "Mouse button pressed" << std::endl;
+        } else if (action == GLFW_RELEASE) {
+            isMousePressed = false;
+            std::cout << "Mouse button released" << std::endl;
+        }
     }
 }
 
