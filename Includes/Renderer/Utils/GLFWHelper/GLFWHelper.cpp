@@ -87,6 +87,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
     glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowRefreshCallback(instance->getWindow(), processResize);
+    glfwSetMouseButtonCallback(instance->getWindow(), mouse_button_callback);
 
     return true;
 }
@@ -113,6 +114,16 @@ glm::vec2 GLFWHelper::getDefaultFrameBufferDimentions() {
     glfwGetFramebufferSize(instance->getWindow(), &widht, &height);
 
     return {widht, height};
+}
+
+void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+        isMousePressed = true;
+        std::cout<<"pressed"<<std::endl;
+    }
+    else{
+        isMousePressed = false;
+    }
 }
 
 

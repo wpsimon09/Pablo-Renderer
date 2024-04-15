@@ -15,6 +15,7 @@ private:
     inline static float pointerY = 0;
     inline static int screen_W ;
     inline static int screen_H ;
+    inline static bool isMousePressed = false;
 public:
     inline static void setInstance(PabloRenderer* inst){
         instance = inst;
@@ -55,6 +56,16 @@ public:
      * @return true if the context was initialized otherwise false
      */
     static bool glInit(unsigned int width, unsigned int height);
+
+    /***
+     * Function that process when mouse button is pressed
+     * @param window window in which to process the event
+     * @param button which mouse button was pressed
+     * @param action what action happened (press, double click etc...)
+     * @param mods what mode was button pressed with (right alt...)
+     */
+    static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+
 
     /***
      * Gets mouse pointer position on the window
