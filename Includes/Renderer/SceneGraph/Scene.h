@@ -54,7 +54,7 @@ public:
      */
     void setup();
 
-    std::unique_ptr<Camera> camera;
+    std::unique_ptr<CameraBasic> camera;
     std::unique_ptr<Light> light;
 private:
     std::shared_ptr<IBLPipeLine> iblPipeLine;

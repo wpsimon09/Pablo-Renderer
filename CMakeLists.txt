@@ -33,6 +33,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         ${HEADERS}
         Includes/Renderer/UI/UI.cpp
         Includes/Renderer/UI/UI.h
+
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
