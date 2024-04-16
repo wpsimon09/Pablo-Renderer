@@ -18,6 +18,8 @@ public:
 
     static void render();
 
+    static void terminate();
+
     template<class T>
     static void setShaderValue(std::shared_ptr<Shader> shader,T value);
 private:

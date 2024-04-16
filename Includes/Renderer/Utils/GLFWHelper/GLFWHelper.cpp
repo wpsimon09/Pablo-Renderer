@@ -28,8 +28,8 @@ void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
     instance->lastX = xpos;
     instance->lastY = ypos;
 
-    xOffset *= 0.02;
-    yOffset *= 0.02;
+    xOffset *= 0.01;
+    yOffset *= 0.01;
 
     if (xOffset != 0.0 && isMousePressed) { // Check if xOffset is not zero
         instance->getScene()->camera->rotateAzimutn(xOffset);
@@ -84,7 +84,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 
     glfwSetCursorPosCallback(instance->getWindow(), mouse_callback);
     glfwSetScrollCallback(instance->getWindow(), scroll_callback);
-    glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(instance->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwSetWindowRefreshCallback(instance->getWindow(), processResize);
     glfwSetMouseButtonCallback(instance->getWindow(), mouse_button_callback);
 
@@ -116,12 +116,16 @@ glm::vec2 GLFWHelper::getDefaultFrameBufferDimentions() {
 }
 
 void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    GLFWcursor* hand = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+    GLFWcursor* cursor = glfwCreateStandardCursor(GLFW_CURSOR_NORMAL);
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         if (action == GLFW_PRESS) {
             isMousePressed = true;
+            glfwSetCursor(instance->getWindow(), hand);
             std::cout << "Mouse button pressed" << std::endl;
         } else if (action == GLFW_RELEASE) {
             isMousePressed = false;
+            glfwSetCursor(instance->getWindow(), cursor);
             std::cout << "Mouse button released" << std::endl;
         }
     }

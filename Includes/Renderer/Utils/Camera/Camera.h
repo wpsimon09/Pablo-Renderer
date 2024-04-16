@@ -24,7 +24,7 @@ public:
 
     virtual void processResize(int newWidht, int newHeight){};
 protected:
-    virtual glm::vec3 getEye(){};
+    virtual glm::vec3 getEye(){return glm::vec3(1.0f);};
 
     glm::vec3 position;
     glm::vec3 center;

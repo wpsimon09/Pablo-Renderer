@@ -45,6 +45,12 @@ void UI::init(GLFWwindow *window) {
     ImGui_ImplOpenGL3_Init(glsl_version);
 }
 
+void UI::terminate() {
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+}
+
 template<class T>
 void UI::setShaderValue(std::shared_ptr<Shader> shader, T value) {
 
