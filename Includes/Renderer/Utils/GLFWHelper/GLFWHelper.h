@@ -75,6 +75,8 @@ public:
      */
     static glm::vec2 getPointerPosition(bool normalize = false);
 
+    static glm::vec2 getScreenDimensions(){return {screen_W, screen_H};};
+
     static int getScreenWidth() {return GLFWHelper::screen_W;};
 
     static int getScreenHeight() {return GLFWHelper::screen_H;};

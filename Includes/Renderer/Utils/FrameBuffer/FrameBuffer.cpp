@@ -71,8 +71,8 @@ void FrameBuffer::dispalyOnScreen() {
 }
 
 void FrameBuffer::drawInsideSelf() {
-    glViewport(0, 0, width, height);
     this->bind();
+    glViewport(0, 0, width, height);
     glClearColor(0.03f, 0.03f, 0.03f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     this->objectMaterial->configureShader();
