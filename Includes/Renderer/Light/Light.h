@@ -9,7 +9,7 @@
 #include "glm/glm.hpp"
 #include "Shader.h"
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
-
+#include "imgui.h"
 /***
  * Struct representing light property
  * @tparam T type of the property vec3, int , float, etc...
@@ -59,6 +59,8 @@ public:
      * Renders the light icon in the currently bound frame buffer
      */
     virtual void render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
+
+    void renderUi();
 
     /***
      * Renderer which purpose is to visualize light position in the world

@@ -43,8 +43,9 @@ void UI::render() {
                 ImGui::TreePop(); // Close the folder
             };
 
+            GLFWHelper::getInstance()->getScene()->light->renderUi();
+
             if(ImGui::TreeNode("Debug texture")){
-                ImGui::BeginChild("DebugTexture");
                 ImVec2 imageSize((float)debugTexture->texWidth, (float)debugTexture->texHeight);
                 ImGui::GetWindowDrawList()->AddImage(
 

@@ -21,6 +21,8 @@ public:
         instance = inst;
     }
 
+    inline static PabloRenderer* getInstance(){return instance;}
+
     /***
      * Process resize event of the window
      * @param window window which triggers the event

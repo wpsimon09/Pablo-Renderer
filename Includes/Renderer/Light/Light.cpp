@@ -64,6 +64,8 @@ void Light::processInput(GLFWwindow* window) {
         this->position->property.y += lightSpeed;
 }
 
+
+
 void Light::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
     auto shader = lightRenderable->getShader();
     ShaderHelper::setTransfomrationMatrices(shader, lightRenderable->transformations->getModelMatrix(), viewMatrix, projectionMatrix );
@@ -82,6 +84,17 @@ void Light::createLightMatrices() {
 void Light::updateLightViewMatrix() {
     glm::mat4 lightView = glm::lookAt(this->position->property, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     this->lightViewMatrix = std::make_unique<LightProperty<glm::mat4>>(lightView, "lightViewMatrix");
+}
+
+void Light::renderUi() {
+    if(ImGui::TreeNode("Light position")){
+        ImGui::SliderFloat("X", &position->property.x,0.0f,300.0f);
+        ImGui::SliderFloat("Y", &position->property.y,0.0f,300.0f);
+        ImGui::SliderFloat("Z", &position->property.z,0.0f,300.0f);
+
+        ImGui::TreePop();
+    }
+
 }
 
 
