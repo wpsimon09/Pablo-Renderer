@@ -1,6 +1,6 @@
 # Pablo rendering engine
 
-As title suggests Pablo is a rendering engine that supports PBR materials and 3D models together with 
+As title suggests Pablo is a rendering engine and OpenGL abstraction framework that supports PBR materials and 3D models together with 
 **Image based lightning**
 
 It provides fast and convenient way of rendering various geometry with different materials 
@@ -15,6 +15,9 @@ This renderer is preProcessing using
 
 **[Assimp](https://assimp-docs.readthedocs.io/en/v5.3.0/)** for model loading
 
+**[Dear imgui](https://github.com/ocornut/imgui)** for UI
+
+
 # Features 
 
 - PBR shaders
@@ -28,40 +31,44 @@ This renderer is preProcessing using
 - Debug view for textures or frame buffer textures
 - Flexible class structure
 - SceneGraph design pattern
-
+- Orbit camera
+- Shadow mapping
 ----
 
 # Example
 To create sphere using IBL within the framework the code would look like this
 
 ```c++
-auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
+
+//create an instance of PabloRenderer
+auto pabloRenderer = PabloRenderer::getInstance();
+pabloRenderer->init();
+
+//create and ran IBL pipeline
+auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/hill.hdr");
 iblPipeLine->generateIBLTextures();
 
-//Create geometry
-auto sphereGeometry = std::make_shared<SphereGeometry>();
+//load model 
+auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
+pot->transformation->setScale(4.0f, 4.0f, 4.0f);
+pot->castsShadow(true);
 
-//Create material
-auto goldMaterial = std::make_shared<PBRTextured>(PBRTexutreShader, "Assets/Textures/PBR/Gold");
+//create scene
+std::shared_ptr<Scene> scene = std::make_shared<Scene>();
 
-//Create renderable
-auto sphereRenderable = std::make_unique<Renderable>(sphereGeometry, goldMaterial);
-
-//createScene
-auto scene = std::make_shared<Scene>();
+//attach IBL pipeline to have image based lightning
 scene->setIblPipeLine(iblPipeLine);
 
-scene->add(std::move(sphereRenderable));
+//attach scene to the PabloRenderer
+pabloRenderer->attachScene(scene);
 
-PabloRenderer pabloRenderer(scene, window);
-pabloRenderer.init();
-    
-pabloRenderer.render();
+//render the attached scene
+pabloRenderer->render();
 ```
 
 The result of the snippet will look like this 
 
-![img.png](Assets/ReadmeImages/resutl.png)
+![img.png](Assets/ReadmeImages/example-scene.png)
 
 As of now renderer's shader only support one directional light which is going to change in the near future
 

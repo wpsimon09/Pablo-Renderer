@@ -242,7 +242,7 @@ void main()
     vec3 kD = vec3(1.0) - kS;
     kD *= 1.0 - metallic;
 
-    float shadowBias = max(0.09 * (1.0 - dot(N, L)), 0.05);
+    float shadowBias = 0.02;
 
     float shadow;
 
