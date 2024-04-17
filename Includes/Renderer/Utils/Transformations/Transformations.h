@@ -6,6 +6,7 @@
 #define CLIONTEST_TRANSFORMATIONS_H
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include "imgui.h"
 
 class Transformations {
 private:
@@ -42,6 +43,9 @@ public:
     bool hasChanged() {return this->isDirty;}
 
     const glm::mat4 &getModelMatrix() const {return this->m_modelMatrix;}
+
+
+
 };
 
 

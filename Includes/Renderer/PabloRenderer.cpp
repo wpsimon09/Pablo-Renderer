@@ -44,7 +44,11 @@ void PabloRenderer::render() {
         //DISPLAY THE RESULT OF FRAME BUFFER
         //----------------------------------
         debugFrameBuffer->setColorAttachment(renderGraph->getDebugTexture("ShadowMapPass"));
-        //debugFrameBuffer->dispalyOnScreen();
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        UI::setRenderedSceneImage(renderGraph->getDebugTexture("FinalPass"));
+        UI::setDebugImage(debugFrameBuffer->getRenderedResult());
 
         UI::render();
 
