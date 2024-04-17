@@ -75,11 +75,11 @@ public:
      */
     static glm::vec2 getPointerPosition(bool normalize = false);
 
-    static glm::vec2 getScreenDimensions(){return {screen_W, screen_H};};
+    static glm::vec2 getScreenDimensions(int marginX = 0, int marginY = 0){return {screen_W- marginX, screen_H-marginY};};
 
-    static int getScreenWidth() {return GLFWHelper::screen_W;};
+    static int getScreenWidth(int margin = 0) {return GLFWHelper::screen_W - margin;};
 
-    static int getScreenHeight() {return GLFWHelper::screen_H;};
+    static int getScreenHeight(int margin = 0) {return GLFWHelper::screen_H- margin;};
 
     static glm::vec2 getDefaultFrameBufferDimentions();
 };

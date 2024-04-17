@@ -24,6 +24,7 @@ public:
     static void setShaderValue(std::shared_ptr<Shader> shader,T value);
 
     static void setRenderedSceneImage(std::shared_ptr<Texture2D> image){ renderedScene = image;}
+    static void setDebugImage(std::shared_ptr<Texture2D> image){debugTexture = image;}
 private:
     inline static ImGuiIO* imGuiIo;
 
@@ -31,6 +32,9 @@ private:
         return ImVec2(vector.x, vector.y);
     }
 
+    inline static bool show_debug_texture = false;
+
+    inline static std::shared_ptr<Texture2D> debugTexture;
     inline static std::shared_ptr<Texture2D> renderedScene;
 };
 
