@@ -36,18 +36,19 @@ void UI::render() {
         ImGui::Begin("Tools",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
             ImGui::SetWindowPos(ImVec2(0,0));
             ImGui::SetWindowSize(ImVec2(500,(float)GLFWHelper::getScreenHeight(200)));
-             ImGui::BeginChild("ScrollingRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
-            if(ImGui::TreeNode("Scene")){
+             ImGui::Text("Scene");
+                ImGui::BeginChild("Scene", ImVec2(480, (float)GLFWHelper::getScreenHeight()/2), true, ImGuiWindowFlags_HorizontalScrollbar);
+
                 for(auto &parent: GLFWHelper::getInstance()->getScene()->root->getChildren()){
                     parent->renderUI();
                     for(auto &child:parent->getChildren() ){
                         child->renderUI();
                     }
                 }
+                ImGui::EndChild();
 
-                ImGui::TreePop(); // Close the folder
-            };
-
+            ImGui::Text("Light");
+            ImGui::BeginChild("ScrollingRegion", ImVec2(500,0),true, ImGuiWindowFlags_HorizontalScrollbar);
             GLFWHelper::getInstance()->getScene()->light->renderUi();
 
             if(ImGui::TreeNode("Debug texture")){

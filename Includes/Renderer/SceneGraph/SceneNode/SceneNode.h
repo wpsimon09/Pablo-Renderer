@@ -73,6 +73,8 @@ public:
 protected:
     SceneNode *parent;
 
+    bool isVisible = true;
+
     bool isParent = false;
 
     glm::vec3 initialPosition;

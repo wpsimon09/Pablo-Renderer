@@ -67,12 +67,14 @@ const std::vector<std::unique_ptr<SceneNode>> & SceneNode::getChildren() const {
 }
 
 void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain,bool geometryOnly) {
-    if (renderable){
-        if(renderingConstrain == NONE){
-            renderable->render();
-        }
-        else if (renderingConstrain == SHADOW_ONLY && renderable->castsShadwo && geometryOnly){
-            renderable->renderGeomtry();
+    if(this->isVisible){
+        if (renderable){
+            if(renderingConstrain == NONE){
+                renderable->render();
+            }
+            else if (renderingConstrain == SHADOW_ONLY && renderable->castsShadwo && geometryOnly){
+                renderable->renderGeomtry();
+            }
         }
     }
 }
@@ -119,12 +121,13 @@ void SceneNode::renderUI() {
 
                 ImGui::TreePop();
             }
+            ImGui::Checkbox("Is visible", &this->isVisible);
+
             if(ImGui::Button("Reset all")){
                 this->transformation->setScale(this->initialScale);
                 this->transformation->setRotations(this->initialRotation);
                 this->transformation->setScale(this->initialScale);
             }
-
             ImGui::TreePop();
         }
     }
