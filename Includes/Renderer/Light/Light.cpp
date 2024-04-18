@@ -89,7 +89,7 @@ void Light::renderUi() {
         }
         if(ImGui::TreeNodeEx("Light Color")){
             ImGui::ColorPicker4("Light color", &this->color->property.x);
-            ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,10.0f);
+            ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
 
             ImGui::TreePop();
         }

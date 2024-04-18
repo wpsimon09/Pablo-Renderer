@@ -73,12 +73,6 @@ The result of the snippet will look like this
 As of now renderer's shader only support one directional light which is going to change in the near future
 
 # Images
-![Geralt's sword ](Assets/ReadmeImages/sword2.png)
+![Geralt's sword ](Assets/ReadmeImages/pablo-3.png)
 
-----
 
-![Simple spehere](Assets/ReadmeImages/sphere.png)
-
-----
-
-![Geralt's medailon](Assets/ReadmeImages/medailon_2.png)
