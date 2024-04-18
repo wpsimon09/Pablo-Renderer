@@ -12,7 +12,9 @@ void GLFWHelper::processInput(GLFWwindow *window, float deltaTime) {
 }
 
 void GLFWHelper::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    instance->getScene()->camera->zoom((float) yoffset);
+    if(UI::getIo()->WantCaptureMouse && canProcessMouse) {
+        instance->getScene()->camera->zoom((float) yoffset);
+    }
 }
 
 void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
@@ -124,11 +126,9 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
         if (action == GLFW_PRESS) {
             isMousePressed = true;
             glfwSetCursor(instance->getWindow(), hand);
-            std::cout << "Mouse button pressed" << std::endl;
         } else if (action == GLFW_RELEASE) {
             isMousePressed = false;
             glfwSetCursor(instance->getWindow(), cursor);
-            std::cout << "Mouse button released" << std::endl;
         }
     }
 }

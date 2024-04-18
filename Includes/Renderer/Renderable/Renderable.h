@@ -36,7 +36,7 @@ public:
 protected:
     glm::mat4 modelMatrix;
 public:
-    std::string name;
+    std::string name = "unnamed renderable";
 
     /***
      * Creates instance of the Renderable class

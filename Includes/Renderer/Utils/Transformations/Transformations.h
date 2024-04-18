@@ -40,11 +40,13 @@ public:
     void setScale(const glm::vec3 &scale);
     void setScale(float x, float y, float z);
 
+    glm::vec3 &getPosition_UI() { return position; }
+    glm::vec3 &getScale_UI() {return this->scale;}
+    glm::vec3 &getRotation_UI() {return this->rotations;}
+
     bool hasChanged() {return this->isDirty;}
 
     const glm::mat4 &getModelMatrix() const {return this->m_modelMatrix;}
-
-
 
 };
 

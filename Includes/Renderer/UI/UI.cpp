@@ -36,9 +36,14 @@ void UI::render() {
         ImGui::Begin("Tools",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
             ImGui::SetWindowPos(ImVec2(0,0));
             ImGui::SetWindowSize(ImVec2(500,(float)GLFWHelper::getScreenHeight(200)));
-
-            if(ImGui::TreeNode("Positions")){
-                ImGui::SliderAngle("Rotation", &f);
+             ImGui::BeginChild("ScrollingRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
+            if(ImGui::TreeNode("Scene")){
+                for(auto &parent: GLFWHelper::getInstance()->getScene()->root->getChildren()){
+                    parent->renderUI();
+                    for(auto &child:parent->getChildren() ){
+                        child->renderUI();
+                    }
+                }
 
                 ImGui::TreePop(); // Close the folder
             };
@@ -59,6 +64,7 @@ void UI::render() {
                 ImGui::TreePop(); // Close the folder
             };
 
+        ImGui::EndChild();
 
         ImGui::End();
 

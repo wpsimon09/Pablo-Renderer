@@ -38,6 +38,7 @@ private:
 
     inline static std::shared_ptr<Texture2D> debugTexture;
     inline static std::shared_ptr<Texture2D> renderedScene;
+
 };
 
 
