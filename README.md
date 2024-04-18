@@ -66,9 +66,9 @@ pabloRenderer->attachScene(scene);
 pabloRenderer->render();
 ```
 
-The result of the snippet will look like this 
+The result of the snippet will look like this (after small alterations using UI)
 
-![img.png](Assets/ReadmeImages/example-scene.png)
+![img.png](Assets/ReadmeImages/pablo-tutorial.png)
 
 As of now renderer's shader only support one directional light which is going to change in the near future
 

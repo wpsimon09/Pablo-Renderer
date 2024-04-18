@@ -83,7 +83,7 @@ int main() {
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));
-    //scene->add(std::move(gridSceneNode));
+    scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
     scene->add(std::move(skyboxCube));
     scene->add(std::move(pot));
