@@ -60,6 +60,9 @@ public:
      */
     virtual void render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
 
+    /***
+     * Renders the UI for the light properties
+     */
     void renderUi();
 
     /***
@@ -81,6 +84,10 @@ protected:
 
     std::unique_ptr<LightProperty<glm::vec3>> position;
     std::unique_ptr<LightProperty<glm::vec3>> color;
+
+    float lightStrength = 1.0f;
+
+    glm::vec3 calculateFinalLightColor(){return (this->color->property * lightStrength);}
 };
 
 

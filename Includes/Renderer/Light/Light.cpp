@@ -26,13 +26,16 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
 void Light::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
     shader->use();
     shader->setVec3(this->position->uniformName, this->position->property);
-    shader->setVec3(this->color->uniformName, this->color->property);
+    shader->setVec3(this->color->uniformName, this->calculateFinalLightColor());
 
 
     glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
     shader->setMat4("lightMatrix",lightSpaceMatrix);
 
+
     this->lightRenderable->transformations->setPosition(this->position->property);
+    this->lightRenderable->getObjectMaterial()->shader->use();
+    this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
     this->lightRenderable->update();
     this->updateLightViewMatrix();
 }
@@ -50,18 +53,7 @@ void Light::setZ(float pos) {
 }
 
 void Light::processInput(GLFWwindow* window) {
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-        this->position->property.z += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-        this->position->property.z -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-        this->position->property.x += lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-        this->position->property.x -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
-        this->position->property.y -= lightSpeed;
-    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-        this->position->property.y += lightSpeed;
+
 }
 
 
@@ -87,10 +79,20 @@ void Light::updateLightViewMatrix() {
 }
 
 void Light::renderUi() {
-    if(ImGui::TreeNode("Light position")){
-        ImGui::SliderFloat("X", &position->property.x,0.0f,300.0f);
-        ImGui::SliderFloat("Y", &position->property.y,0.0f,300.0f);
-        ImGui::SliderFloat("Z", &position->property.z,0.0f,300.0f);
+    if(ImGui::TreeNodeEx("LIGHT")){
+        if(ImGui::TreeNodeEx("Light position")){
+            ImGui::SliderFloat("X", &position->property.x,-50.0f,50.0f);
+            ImGui::SliderFloat("Y", &position->property.y,-50.0f,50.0f);
+            ImGui::SliderFloat("Z", &position->property.z,-50.0f,50.0f);
+
+            ImGui::TreePop();
+        }
+        if(ImGui::TreeNodeEx("Light Color")){
+            ImGui::ColorPicker4("Light color", &this->color->property.x);
+            ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,10.0f);
+
+            ImGui::TreePop();
+        }
 
         ImGui::TreePop();
     }
