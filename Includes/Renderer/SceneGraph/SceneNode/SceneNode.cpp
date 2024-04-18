@@ -95,9 +95,9 @@ void SceneNode::renderUI() {
 
             if(ImGui::TreeNodeEx("Rotation")){
 
-                ImGui::SliderAngle("X", &this->transformation->getRotation_UI().x);
-                ImGui::SliderAngle("Y", &this->transformation->getRotation_UI().y);
-                ImGui::SliderAngle("Z", &this->transformation->getRotation_UI().z);
+                ImGui::SliderFloat("X", &this->transformation->getRotation_UI().x, 0.0f, 360.0f);
+                ImGui::SliderFloat("Y", &this->transformation->getRotation_UI().y, 0.0f, 360.0f);
+                ImGui::SliderFloat("Z", &this->transformation->getRotation_UI().z, 0.0f, 360.0f);
 
                 if(ImGui::Button("Reset")){
                     this->transformation->setRotations(this->initialRotation);

@@ -24,20 +24,20 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
 }
 
 void Light::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
+    this->lightRenderable->getObjectMaterial()->shader->use();
+    this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
+
     shader->use();
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->calculateFinalLightColor());
 
+    this->updateLightViewMatrix();
 
     glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
-    shader->setMat4("lightMatrix",lightSpaceMatrix);
-
+    shader->setMat4("lightMatrix", lightSpaceMatrix);
 
     this->lightRenderable->transformations->setPosition(this->position->property);
-    this->lightRenderable->getObjectMaterial()->shader->use();
-    this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
     this->lightRenderable->update();
-    this->updateLightViewMatrix();
 }
 
 void Light::setX(float pos) {

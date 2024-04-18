@@ -8,6 +8,11 @@ void GLFWHelper::processInput(GLFWwindow *window, float deltaTime) {
     instance->getScene()->light->processInput(window);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
+        isCtrlPressed = true;
+    else
+        isCtrlPressed = false;
+
     const float lightSpeed = 2.5f * deltaTime; // adjust accordingly
 }
 
@@ -34,13 +39,14 @@ void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
         xOffset *= 0.01;
         yOffset *= 0.01;
 
-        if (xOffset != 0.0 && isMousePressed) { // Check if xOffset is not zero
+        if (xOffset != 0.0 && isMousePressed && !isCtrlPressed) {
             instance->getScene()->camera->rotateAzimutn(xOffset);
         }
 
-        if (yOffset != 0.0 && isMousePressed) { // Check if yOffset is not zero
+        if (yOffset != 0.0 && isMousePressed && !isCtrlPressed) {
             instance->getScene()->camera->rotatePolar(-yOffset);
         }
+
 
         GLFWHelper::pointerX = xpos;
         GLFWHelper::pointerY = ypos;

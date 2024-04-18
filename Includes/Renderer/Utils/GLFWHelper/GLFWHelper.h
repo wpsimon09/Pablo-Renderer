@@ -16,6 +16,7 @@ private:
     inline static int screen_W ;
     inline static int screen_H ;
     inline static bool isMousePressed = false;
+    inline static bool isCtrlPressed = false;
 public:
     inline static bool canProcessMouse = false;
 
