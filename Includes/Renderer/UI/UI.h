@@ -25,6 +25,8 @@ public:
 
     static void setRenderedSceneImage(std::shared_ptr<Texture2D> image){ renderedScene = image;}
     static void setDebugImage(std::shared_ptr<Texture2D> image){debugTexture = image;}
+
+    static ImGuiIO* getIo(){return imGuiIo;}
 private:
     inline static ImGuiIO* imGuiIo;
 

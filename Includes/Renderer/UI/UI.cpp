@@ -62,6 +62,12 @@ void UI::render() {
 
         ImGui::End();
 
+
+        ImGui::Begin("Application info",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
+            ImGui::SetWindowSize(ImVec2((float)GLFWHelper::getScreenWidth(), 200));
+            ImGui::SetWindowPos(ImVec2(0,(float)GLFWHelper::getScreenHeight()-190 ));
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / imGuiIo->Framerate, imGuiIo->Framerate);
+        ImGui::End();
         //------------
         // VIEW PORT
         //-----------
@@ -75,13 +81,10 @@ void UI::render() {
             ImVec2(0, 1),
             ImVec2(1, 0)
             );
-
-        ImGui::End();
-
-        ImGui::Begin("Application info",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
-            ImGui::SetWindowSize(ImVec2((float)GLFWHelper::getScreenWidth(), 200));
-            ImGui::SetWindowPos(ImVec2(0,(float)GLFWHelper::getScreenHeight()-190 ));
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / imGuiIo->Framerate, imGuiIo->Framerate);
+            if(ImGui::IsWindowHovered()){
+                GLFWHelper::canProcessMouse = true;
+            }else
+                GLFWHelper::canProcessMouse = false;
         ImGui::End();
 
 

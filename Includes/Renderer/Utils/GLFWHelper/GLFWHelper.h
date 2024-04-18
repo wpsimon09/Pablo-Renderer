@@ -17,6 +17,8 @@ private:
     inline static int screen_H ;
     inline static bool isMousePressed = false;
 public:
+    inline static bool canProcessMouse = false;
+
     inline static void setInstance(PabloRenderer* inst){
         instance = inst;
     }

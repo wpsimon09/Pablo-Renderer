@@ -16,31 +16,33 @@ void GLFWHelper::scroll_callback(GLFWwindow *window, double xoffset, double yoff
 }
 
 void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if (instance->firstMouse) {
+    if(UI::getIo()->WantCaptureMouse && canProcessMouse){
+        if (instance->firstMouse) {
+            instance->lastX = xpos;
+            instance->lastY = ypos;
+            instance->firstMouse = false;
+        }
+
+        float xOffset = xpos - instance->lastX;
+        float yOffset = instance->lastY - ypos; // Invert the sign here
+
         instance->lastX = xpos;
         instance->lastY = ypos;
-        instance->firstMouse = false;
+
+        xOffset *= 0.01;
+        yOffset *= 0.01;
+
+        if (xOffset != 0.0 && isMousePressed) { // Check if xOffset is not zero
+            instance->getScene()->camera->rotateAzimutn(xOffset);
+        }
+
+        if (yOffset != 0.0 && isMousePressed) { // Check if yOffset is not zero
+            instance->getScene()->camera->rotatePolar(-yOffset);
+        }
+
+        GLFWHelper::pointerX = xpos;
+        GLFWHelper::pointerY = ypos;
     }
-
-    float xOffset = xpos - instance->lastX;
-    float yOffset = instance->lastY - ypos; // Invert the sign here
-
-    instance->lastX = xpos;
-    instance->lastY = ypos;
-
-    xOffset *= 0.01;
-    yOffset *= 0.01;
-
-    if (xOffset != 0.0 && isMousePressed) { // Check if xOffset is not zero
-        instance->getScene()->camera->rotateAzimutn(xOffset);
-    }
-
-    if (yOffset != 0.0 && isMousePressed) { // Check if yOffset is not zero
-        instance->getScene()->camera->rotatePolar(-yOffset);
-    }
-
-    GLFWHelper::pointerX = xpos;
-    GLFWHelper::pointerY = ypos;
 }
 
 bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
