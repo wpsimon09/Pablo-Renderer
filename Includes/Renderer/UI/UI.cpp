@@ -3,8 +3,8 @@
 //
 
 #include "UI.h"
-
-
+#include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
+#include "Renderer/UI/Components/ViewPort/ViewPort.h"
 
 void UI::init(GLFWwindow *window) {
     IMGUI_CHECKVERSION();
@@ -30,70 +30,29 @@ void UI::render() {
     static int counter = 0;
 
 
-    //-------------------------
-    // MAIN APPLICATION WINDOW
-    //-------------------------
-        ImGui::Begin("Tools",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
-            ImGui::SetWindowPos(ImVec2(0,0));
-            ImGui::SetWindowSize(ImVec2(500,(float)GLFWHelper::getScreenHeight(200)));
-             ImGui::Text("Scene");
-                ImGui::BeginChild("Scene", ImVec2(480, (float)GLFWHelper::getScreenHeight()/2), true, ImGuiWindowFlags_HorizontalScrollbar);
-
-                for(auto &parent: GLFWHelper::getInstance()->getScene()->root->getChildren()){
-                    parent->renderUI();
-                    for(auto &child:parent->getChildren() ){
-                        child->renderUI();
-                    }
-                }
-                ImGui::EndChild();
-
-            ImGui::Text("Light");
-            ImGui::BeginChild("ScrollingRegion", ImVec2(500,0),true, ImGuiWindowFlags_HorizontalScrollbar);
-            GLFWHelper::getInstance()->getScene()->light->renderUi();
-
-            if(ImGui::TreeNode("Debug texture")){
-                ImVec2 imageSize((float)debugTexture->texWidth, (float)debugTexture->texHeight);
-                ImGui::GetWindowDrawList()->AddImage(
-
-                (void *)debugTexture->ID,
-                        ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-                        ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x/4, ImGui::GetCursorScreenPos().y + imageSize.y/4), // Use bottom-right corner
-                        ImVec2(0, 1), // Top-left UV coordinate
-                        ImVec2(1, 0)  // Bottom-right UV coordinate
-                );
-
-                ImGui::TreePop(); // Close the folder
-            };
-
-        ImGui::EndChild();
-
-        ImGui::End();
-
+        //-------------------------
+        // MAIN APPLICATION WINDOW
+        //-------------------------
+        SceneMenu::debugTexture = debugTexture;
+        SceneMenu::display(0,10,500);
+        //------------
+        // VIEW PORT
+        //-----------
+        ViewPort::renderedScene = renderedScene;
+        ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(200));
 
         ImGui::Begin("Application info",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
             ImGui::SetWindowSize(ImVec2((float)GLFWHelper::getScreenWidth(), 200));
             ImGui::SetWindowPos(ImVec2(0,(float)GLFWHelper::getScreenHeight()-190 ));
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / imGuiIo->Framerate, imGuiIo->Framerate);
+            if(ImGui::Button("Add")){
+                auto cube = std::make_shared<CubeGeometry>();
+                auto gold = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
+                auto renderable = std::make_unique<Renderable>(cube, gold);
+                renderable->recievesShadow = true;
+                PabloRenderer::getInstance()->getScene()->add(std::move(renderable));
+            }
         ImGui::End();
-        //------------
-        // VIEW PORT
-        //-----------
-        ImGui::Begin("ViewPort",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
-            ImGui::SetWindowPos(ImVec2(510,0));
-            ImGui::SetWindowSize(ImVec2((float)GLFWHelper::getScreenWidth(20) - 300,(float)GLFWHelper::getScreenHeight(200)));
-            ImGui::GetWindowDrawList()->AddImage(
-            (void *)renderedScene->ID,
-            ImVec2(300, 0),
-            ImVec2((float)renderedScene->texWidth, (float)renderedScene->texHeight),
-            ImVec2(0, 1),
-            ImVec2(1, 0)
-            );
-            if(ImGui::IsWindowHovered()){
-                GLFWHelper::canProcessMouse = true;
-            }else
-                GLFWHelper::canProcessMouse = false;
-        ImGui::End();
-
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

@@ -121,13 +121,14 @@ void SceneNode::renderUI() {
 
                 ImGui::TreePop();
             }
-            ImGui::Checkbox("Is visible", &this->isVisible);
 
             if(ImGui::Button("Reset all")){
                 this->transformation->setScale(this->initialScale);
                 this->transformation->setRotations(this->initialRotation);
                 this->transformation->setScale(this->initialScale);
             }
+            ImGui::SameLine();
+            ImGui::Checkbox("Is visible", &this->isVisible);
             ImGui::TreePop();
         }
     }

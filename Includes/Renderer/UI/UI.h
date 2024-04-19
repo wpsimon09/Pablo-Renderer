@@ -4,7 +4,6 @@
 
 #ifndef PABLO_RENDERER_UI_H
 #define PABLO_RENDERER_UI_H
-
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_glfw.h"

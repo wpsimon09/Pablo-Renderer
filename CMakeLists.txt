@@ -33,6 +33,12 @@ add_executable(${CMAKE_PROJECT_NAME}
         ${HEADERS}
         Includes/Renderer/UI/UI.cpp
         Includes/Renderer/UI/UI.h
+        Includes/Renderer/UI/Components/SceneMenu/SceneMenu.cpp
+        Includes/Renderer/UI/Components/SceneMenu/SceneMenu.h
+        Includes/Renderer/UI/Components/ViewPort/ViewPort.cpp
+        Includes/Renderer/UI/Components/ViewPort/ViewPort.h
+        Includes/Renderer/UI/Components/Component.cpp
+        Includes/Renderer/UI/Components/Component.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
