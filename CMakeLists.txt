@@ -39,6 +39,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/UI/Components/ViewPort/ViewPort.h
         Includes/Renderer/UI/Components/Component.cpp
         Includes/Renderer/UI/Components/Component.h
+        Includes/Renderer/UI/Components/BottomMenu/BottomMenu.cpp
+        Includes/Renderer/UI/Components/BottomMenu/BottomMenu.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

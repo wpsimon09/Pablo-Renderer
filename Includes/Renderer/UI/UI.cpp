@@ -5,6 +5,7 @@
 #include "UI.h"
 #include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
 #include "Renderer/UI/Components/ViewPort/ViewPort.h"
+#include "Renderer/UI/Components/BottomMenu/BottomMenu.h"
 
 void UI::init(GLFWwindow *window) {
     IMGUI_CHECKVERSION();
@@ -31,28 +32,20 @@ void UI::render() {
 
 
         //-------------------------
-        // MAIN APPLICATION WINDOW
+        // TOOLS
         //-------------------------
         SceneMenu::debugTexture = debugTexture;
         SceneMenu::display(0,10,500);
+
         //------------
         // VIEW PORT
         //-----------
         ViewPort::renderedScene = renderedScene;
         ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(200));
 
-        ImGui::Begin("Application info",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
-            ImGui::SetWindowSize(ImVec2((float)GLFWHelper::getScreenWidth(), 200));
-            ImGui::SetWindowPos(ImVec2(0,(float)GLFWHelper::getScreenHeight()-190 ));
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / imGuiIo->Framerate, imGuiIo->Framerate);
-            if(ImGui::Button("Add")){
-                auto cube = std::make_shared<CubeGeometry>();
-                auto gold = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
-                auto renderable = std::make_unique<Renderable>(cube, gold);
-                renderable->recievesShadow = true;
-                PabloRenderer::getInstance()->getScene()->add(std::move(renderable));
-            }
-        ImGui::End();
+        BottomMenu::imGuiIo = imGuiIo;
+        BottomMenu::display(0,GLFWHelper::getScreenHeight(190), GLFWHelper::getScreenWidth(), 200 );
+
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
