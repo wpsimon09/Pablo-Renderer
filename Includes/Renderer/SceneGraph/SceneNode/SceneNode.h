@@ -70,6 +70,11 @@ public:
 
     const unsigned long getNumberOfChildren() const { return this->children.size(); }
 
+    glm::vec3 getInitialPosition(){return initialPosition;}
+    glm::vec3 getInitialRotation(){return initialRotation;}
+    glm::vec3 getInitialScale(){return initialScale;}
+    bool &getVisibility(){return isVisible;}
+
 protected:
     SceneNode *parent;
 

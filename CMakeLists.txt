@@ -43,6 +43,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/UI/Components/BottomMenu/BottomMenu.h
         Includes/Renderer/UI/Components/MaterialUI/MaterialUI.cpp
         Includes/Renderer/UI/Components/MaterialUI/MaterialUI.h
+        Includes/Renderer/UI/Components/SceneNodeUI/SceneNodeUI.cpp
+        Includes/Renderer/UI/Components/SceneNodeUI/SceneNodeUI.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
