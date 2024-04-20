@@ -3,8 +3,13 @@
 //
 
 #include "SceneNodeUI.h"
+#include "Renderer/UI/Components/MaterialUI/MaterialUI.h"
 
 void SceneNodeUI::display(SceneNode &sceneNode) {
+    if(ImGui::IsItemClicked()){
+        MaterialUI::material = sceneNode.getRenderable()->getObjectMaterial();
+    }
+
     if(ImGui::TreeNodeEx(sceneNode.getRenderable()->name.c_str())){
         if(ImGui::TreeNodeEx("Position")){
 

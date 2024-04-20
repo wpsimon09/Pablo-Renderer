@@ -28,6 +28,8 @@ public:
      * */
     explicit PBRTextured(std::string pathToTheDirectory,bool supportsIBL = true,  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
 
+    std::shared_ptr<Texture2D> getAlbedoTexture() override;
+
     /***
      * Creates empty instance of the class
      * @param shader shader the material should use

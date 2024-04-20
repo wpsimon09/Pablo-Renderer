@@ -13,6 +13,7 @@
 
 class UI {
 public:
+
     static void init(GLFWwindow* window);
 
     static void render();

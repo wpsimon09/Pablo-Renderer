@@ -11,9 +11,7 @@ SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
     this->transformation = std::make_unique<Transformations>();
 
     if(this->renderable != nullptr && this->renderable->transformations != nullptr){
-        this->transformation->setPosition(this->renderable->transformations->getPosition());
-        this->transformation->setRotations(this->renderable->transformations->getRotations());
-        this->transformation->setScale(this->renderable->transformations->getScale());
+        this->transformation = std::move(this->renderable->transformations);
     }
 
 

@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "iostream"
 #include "memory"
+#include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 /***
  * Struct for storing information about material
  * @tparam T property of the material datatype eg.: color, texture, etc...
@@ -70,6 +71,9 @@ public:
      * Unbinds all of the textures bound during rendering
      */
     virtual void unbindTextures(){}
+
+    virtual std::shared_ptr<Texture2D> getAlbedoTexture(){};
+
 
     ~Material() = default;
 

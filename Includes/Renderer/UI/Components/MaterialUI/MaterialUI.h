@@ -11,7 +11,7 @@
 
 class MaterialUI:public Component {
 public:
-    inline static std::shared_ptr<Material> debugTexture;
+    inline static std::shared_ptr<Material> material;
     static void display(int posX, int posY, int width, int height = 0);
 
 };

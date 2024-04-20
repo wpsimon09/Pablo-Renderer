@@ -72,6 +72,10 @@ PBRTextured::PBRTextured(bool supportsIBL) : Material() {
     this->supportsIBL = supportsIBL;
 }
 
+std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
+    return this->textures[0]->type;
+}
+
 
 
 

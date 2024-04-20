@@ -12,7 +12,9 @@ void MaterialUI::display(int posX, int posY, int width, int height) {
 
     ImGui::Text("Material");
     ImGui::BeginChild("Material", ImVec2(width, height), true);
-
+    if(material!= nullptr){
+        ImGui::Text("Material Selecte: %d", material->shader->name.c_str());
+    }
     ImGui::EndChild();
 
 }
