@@ -10,6 +10,7 @@
 #include "imgui.h"
 
 class MaterialUI:public Component {
+public:
     inline static std::shared_ptr<Material> debugTexture;
     static void display(int posX, int posY, int width, int height = 0);
 

@@ -3,6 +3,7 @@
 //
 
 #include "BottomMenu.h"
+#include "Renderer/UI/Components/MaterialUI/MaterialUI.h"
 
 void BottomMenu::display(int posX, int posY, int width, int height) {
     Component::posX = posX;
@@ -10,16 +11,11 @@ void BottomMenu::display(int posX, int posY, int width, int height) {
     Component::width = width;
     Component::height = height;
 
-    ImGui::Begin("Application info",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
+    ImGui::Begin("Material",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
     ImGui::SetWindowSize(ImVec2((float)width, height));
     ImGui::SetWindowPos(ImVec2(posX,(float)posY ));
 
-    ImGui::NewLine();
-    ImGui::Text("Material");
-    ImGui::BeginChild("Material", ImVec2(width-10, height-10), true);
-
-
-    ImGui::EndChild();
+    MaterialUI::display(posX, posY, width, height-80);
 
     ImGui::End();
 }

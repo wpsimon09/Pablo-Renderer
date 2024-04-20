@@ -81,6 +81,7 @@ void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain,bool geometryOnly
 
 void SceneNode::renderUI() {
     if(this->renderable != nullptr){
+
         if(ImGui::TreeNodeEx(this->renderable->name.c_str())){
             if(ImGui::TreeNodeEx("Position")){
 

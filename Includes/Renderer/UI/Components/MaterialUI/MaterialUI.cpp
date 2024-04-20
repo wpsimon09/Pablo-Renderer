@@ -10,7 +10,9 @@ void MaterialUI::display(int posX, int posY, int width, int height) {
     MaterialUI::width = width;
     MaterialUI::height = height;
 
-    ImGui::BeginChild("Material");
+    ImGui::Text("Material");
+    ImGui::BeginChild("Material", ImVec2(width, height), true);
 
     ImGui::EndChild();
+
 }
