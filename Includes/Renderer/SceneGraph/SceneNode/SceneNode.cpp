@@ -6,12 +6,14 @@
 
 SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
     this->renderable = std::move(renderable);
+    this->transformation = std::make_unique<Transformations>();
+
     if(this->renderable != nullptr && this->renderable->transformations != nullptr){
-        this->transformation = std::move(this->renderable->transformations);
+        this->transformation->setPosition(this->renderable->transformations->getPosition());
+        this->transformation->setRotations(this->renderable->transformations->getRotations());
+        this->transformation->setScale(this->renderable->transformations->getScale());
     }
-    else{
-        this->transformation = std::make_unique<Transformations>();
-    }
+
 
     this->initialPosition = this->transformation->getPosition();
     this->initialRotation = this->transformation->getRotations();
@@ -52,9 +54,7 @@ void SceneNode::update() {
     else {
         this->transformation->computeModelMatrix();
     }
-    if (this->renderable){
-        this->renderable->setModelMatrix(this->transformation->getModelMatrix());
-    }
+
 
     //start recursion
     for (auto & i : children) {
@@ -80,7 +80,7 @@ void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain,bool geometryOnly
 }
 
 void SceneNode::renderUI() {
-    if(renderable != nullptr){
+    if(this->renderable != nullptr){
         if(ImGui::TreeNodeEx(this->renderable->name.c_str())){
             if(ImGui::TreeNodeEx("Position")){
 

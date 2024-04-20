@@ -27,10 +27,6 @@ void UI::render() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    static float f = 0.0f;
-    static int counter = 0;
-
-
         //-------------------------
         // TOOLS
         //-------------------------
@@ -43,9 +39,11 @@ void UI::render() {
         ViewPort::renderedScene = renderedScene;
         ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(200));
 
+        //-----------
+        //BOTTOM MENU
+        //-----------
         BottomMenu::imGuiIo = imGuiIo;
         BottomMenu::display(0,GLFWHelper::getScreenHeight(190), GLFWHelper::getScreenWidth(), 200 );
-
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

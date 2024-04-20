@@ -19,7 +19,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
                     for(auto &child:parent->getChildren() ){
                         child->renderUI();
                     }
-                    parent->renderUI();
+                    //parent->renderUI();
                 }
             ImGui::EndChild();
 

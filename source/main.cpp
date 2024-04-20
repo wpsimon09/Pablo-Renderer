@@ -42,11 +42,11 @@ int main() {
 
     auto gridRenderable = std::make_unique<Grid>();
 
-    auto goldCubeMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
+    auto goldMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
     auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false);
-    auto goldCubeRenderable = std::make_unique<Renderable>(sphereGeometry, goldCubeMaterial);
-    goldCubeRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
-    goldCubeRenderable->castsShadwo = true;
+    auto goldSphereRenderable = std::make_unique<Renderable>(sphereGeometry, goldMaterial,"Gold sphere");
+    goldSphereRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
+    goldSphereRenderable->castsShadwo = true;
 
     auto sunbro_helmet = std::make_unique<ModelSceneNode>("Assets/Model/sunbro_helmet/scene.gltf");
     sunbro_helmet->transformation->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
@@ -72,14 +72,14 @@ int main() {
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
-    auto floor = std::make_unique<Renderable>(planeGeometry, wall);
+    auto floor = std::make_unique<Renderable>(planeGeometry, wall,"Floor");
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
 
-    scene->add(std::move(goldCubeRenderable));
+    scene->add(std::move(goldSphereRenderable));
     scene->add(std::move(sunbro_helmet));
     scene->add(std::move(sword));
     scene->add(std::move(withcerMedailon));

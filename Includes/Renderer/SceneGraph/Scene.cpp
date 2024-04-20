@@ -20,7 +20,9 @@ void Scene::setup() {
 }
 
 void Scene::add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent) {
-    auto sceneNode = std::make_unique<SceneNode>(std::move(renderable));
+    auto sceneNode = std::make_unique<SceneNode>();
+    auto renderableNode = std::make_unique<SceneNode>(std::move(renderable));
+    sceneNode->addChild(std::move(renderableNode));
     parent->addChild(std::move(sceneNode));
 }
 
