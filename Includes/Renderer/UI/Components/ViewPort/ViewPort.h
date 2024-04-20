@@ -10,6 +10,7 @@
 #include "Renderer/UI/Components/Component.h"
 class ViewPort:public Component {
 public:
+    static inline ImGuiIO *imGuiIo;
     inline static std::shared_ptr<Texture2D> renderedScene;
     static void display(int posX, int posY, int width, int height);
 };

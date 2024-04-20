@@ -24,6 +24,7 @@ void ViewPort::display(int posX, int posY, int width, int height) {
         GLFWHelper::canProcessMouse = true;
     }else
         GLFWHelper::canProcessMouse = false;
+    ImGui::Text(" %.3f ms/frame (%.1f FPS)", 1000.0f / imGuiIo->Framerate, imGuiIo->Framerate);
     ImGui::End();
 
 }

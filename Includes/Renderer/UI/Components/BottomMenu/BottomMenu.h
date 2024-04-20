@@ -10,7 +10,6 @@
 
 class BottomMenu:public Component {
 public:
-    static inline ImGuiIO *imGuiIo;
     static void display(int posX, int posY, int width, int height);
 };
 

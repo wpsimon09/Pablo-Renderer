@@ -13,7 +13,13 @@ void BottomMenu::display(int posX, int posY, int width, int height) {
     ImGui::Begin("Application info",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
     ImGui::SetWindowSize(ImVec2((float)width, height));
     ImGui::SetWindowPos(ImVec2(posX,(float)posY ));
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / imGuiIo->Framerate, imGuiIo->Framerate);
+
+    ImGui::NewLine();
+    ImGui::Text("Material");
+    ImGui::BeginChild("Material", ImVec2(width-10, height-10), true);
+
+
+    ImGui::EndChild();
 
     ImGui::End();
 }
