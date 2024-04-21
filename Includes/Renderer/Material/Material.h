@@ -72,7 +72,7 @@ public:
      */
     virtual void unbindTextures(){}
 
-    virtual std::shared_ptr<Texture2D> getAlbedoTexture(){};
+    virtual std::shared_ptr<Texture2D> getAlbedoTexture(){return nullptr;};
 
 
     ~Material() = default;

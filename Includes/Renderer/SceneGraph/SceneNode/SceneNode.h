@@ -23,6 +23,7 @@ public:
     ~SceneNode();
 
 public:
+    bool isSelected = false;
 
     std::unique_ptr<Transformations> transformation;
 

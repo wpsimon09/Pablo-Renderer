@@ -13,18 +13,29 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     ImGui::Begin("Tools",NULL,ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse );
         ImGui::SetWindowPos(ImVec2((float )posX,(float)posY));
         ImGui::SetWindowSize(ImVec2((float)width,(float)GLFWHelper::getScreenHeight(200)));
-        ImGui::Text("Scene");
+            ImGui::Text("Scene");
             ImGui::BeginChild("Scene", ImVec2((float)width-20, (float)GLFWHelper::getScreenHeight()/3), true, ImGuiWindowFlags_HorizontalScrollbar);
+                int i = 0;
                 for(auto &parent: PabloRenderer::getInstance()->getScene()->root->getChildren()){
                     for(auto &child:parent->getChildren() ){
-                        child->renderUI();
+                        //child->renderUI();
+                        if(ImGui::Selectable(child->getRenderable()->name.c_str(), selectedSceneNode==i)){
+                            selectedSceneNode = i;
+                            child->isSelected = true;
+                        }
+                        else
+                            child->isSelected = false;
+
+                        i++;
+
                     }
                     //parent->renderUI();
                 }
             ImGui::EndChild();
+            if(ImGui::IsItemClicked())
+                selectedSceneNode = -1;
 
             ImGui::Text("Light");
-
             ImGui::BeginChild("Light section", ImVec2(width-20,0),true, ImGuiWindowFlags_HorizontalScrollbar);
                 GLFWHelper::getInstance()->getScene()->light->renderUi();
 
