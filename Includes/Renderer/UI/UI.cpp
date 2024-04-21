@@ -6,6 +6,7 @@
 #include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
 #include "Renderer/UI/Components/ViewPort/ViewPort.h"
 #include "Renderer/UI/Components/BottomMenu/BottomMenu.h"
+#include "Renderer/UI/Components/LightUI/LightUI.h"
 
 void UI::init(GLFWwindow *window) {
     IMGUI_CHECKVERSION();
@@ -30,20 +31,20 @@ void UI::render() {
         //-------------------------
         // TOOLS
         //-------------------------
-        SceneMenu::debugTexture = debugTexture;
-        SceneMenu::display(0,10,500);
+        LightUI::debugTexture = debugTexture;
+        SceneMenu::display(0,10,500, GLFWHelper::getScreenHeight(10));
 
         //------------
         // VIEW PORT
         //-----------
         ViewPort::renderedScene = renderedScene;
         ViewPort::imGuiIo = imGuiIo;
-        ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(200));
+        ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(10));
 
         //-----------
         //BOTTOM MENU
         //-----------
-        BottomMenu::display(0,GLFWHelper::getScreenHeight(190), GLFWHelper::getScreenWidth(), 200 );
+        //BottomMenu::display(0,GLFWHelper::getScreenHeight(190), GLFWHelper::getScreenWidth(), 200 );
 
 
     ImGui::Render();

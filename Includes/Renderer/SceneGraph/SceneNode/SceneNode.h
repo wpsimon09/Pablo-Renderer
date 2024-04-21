@@ -23,6 +23,7 @@ public:
     ~SceneNode();
 
 public:
+    bool isSelected = false;
 
     std::unique_ptr<Transformations> transformation;
 
@@ -36,8 +37,6 @@ public:
      */
     void addChild(std::unique_ptr<SceneNode> sceneNode);
 
-
-    void renderUI();
 
     /***
      * Updates self and child's positions and other parameters

@@ -10,8 +10,17 @@
 #include "Renderer/UI/Components/Component.h"
 
 class SceneMenu:public Component {
+private:
+    /***
+     * Selected scene node Index
+     * @def -1 means nothing is selected
+     */
+    inline static int selectedSceneNode = -1;
+
+    inline static bool showLight = false;
+    inline static bool showTransformation = false;
 public:
-    inline static std::shared_ptr<Texture2D> debugTexture;
+    inline static bool showRendererCreation = false;
     static void display(int posX, int posY, int width, int height = 0);
 };
 

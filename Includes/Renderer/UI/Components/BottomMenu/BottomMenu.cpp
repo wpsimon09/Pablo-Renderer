@@ -15,7 +15,6 @@ void BottomMenu::display(int posX, int posY, int width, int height) {
     ImGui::SetWindowSize(ImVec2((float)width, height));
     ImGui::SetWindowPos(ImVec2(posX,(float)posY ));
 
-    MaterialUI::display(posX, posY, width, height-80);
 
     ImGui::End();
 }
