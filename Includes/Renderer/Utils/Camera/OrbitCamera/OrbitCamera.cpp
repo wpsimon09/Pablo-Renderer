@@ -66,7 +66,7 @@ void OrbitCamera::moveVertical(float distance) {
 }
 
 void OrbitCamera::processResize(int newWidht, int newHeight) {
-    this->projection = glm::perspective(glm::radians(65.0f), (float)GLFWHelper::getScreenWidth() / (float)GLFWHelper::getScreenHeight(), 0.1f, 100.0f);
+    this->projection = glm::perspective(glm::radians(65.0f), (float)GLFWHelper::getScreenWidth() / (float)GLFWHelper::getScreenHeight(), 0.1f, 170.0f);
     this->position = getEye();
 }
 

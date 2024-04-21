@@ -9,6 +9,12 @@
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 #include "imgui.h"
+
+class ID{
+public:
+    static inline unsigned int id = 0;
+};
+
 /***
  * Scene graph pattern implementation
  */
@@ -74,7 +80,11 @@ public:
     glm::vec3 getInitialScale(){return initialScale;}
     bool &getVisibility(){return isVisible;}
 
+    unsigned int getID(){return this->id;}
+
 protected:
+    unsigned int id;
+
     SceneNode *parent;
 
     bool isVisible = true;

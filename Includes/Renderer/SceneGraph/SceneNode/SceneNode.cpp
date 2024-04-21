@@ -7,6 +7,9 @@
 
 
 SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
+    ID::id++;
+    this->id = ID::id;
+
     this->renderable = std::move(renderable);
     this->transformation = std::make_unique<Transformations>();
 
@@ -20,6 +23,9 @@ SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
     this->initialScale = this->transformation->getScale();
 
     this->parent = nullptr;
+
+    if(renderable != nullptr)
+        this->renderable->name = this->renderable->name + std::to_string(this->id);
 }
 
 SceneNode::~SceneNode()=default;

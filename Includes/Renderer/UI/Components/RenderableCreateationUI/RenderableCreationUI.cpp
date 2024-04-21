@@ -11,17 +11,39 @@ void RenderableCreationUI::display() {
     ImGui::SetNextWindowFocus();
 
     ImGui::Begin("Add renderable", nullptr);
-    ImGui::SetWindowSize(ImVec2(400,400));
+    ImGui::SetWindowSize(ImVec2(400, 400));
 
-    if(ImGui::Button("X")){
+    if (ImGui::Button("X")) {
         SceneMenu::showRendererCreation = false;
     }
-    if(ImGui::Button("Add")){
-        auto material = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
-        auto geometry = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
-        //auto renderable = std::make_unique<Renderable>(geometry, material);
-        PabloRenderer::getInstance()->getScene()->add(std::move(geometry));
+    if (ImGui::Button("Open File Dialog")) {
+        IGFD::FileDialogConfig config;
+        config.path = ".";
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".gltf,.obj,.glb", config);
     }
+    // display
+    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
+        if (ImGuiFileDialog::Instance()->IsOk()) {
+            ImGui::SetNextWindowFocus();
+            ImGui::SetNextWindowSize(ImVec2(600,600));
+            ImGui::SetNextWindowFocus();
+            std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
 
-    ImGui::End();
+
+            auto renderable = std::make_unique<ModelSceneNode>(filePathName);
+            PabloRenderer::getInstance()->getScene()->add(std::move(renderable));
+
+        }
+
+        ImGui::End();
+
+        // close
+        ImGuiFileDialog::Instance()->Close();
+    }
+    else
+        ImGui::End();
+
+
 }
+

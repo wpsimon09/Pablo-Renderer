@@ -31,24 +31,7 @@ target_include_directories("ImGui" PUBLIC ${IMGUI_PATH}/backends)
 add_executable(${CMAKE_PROJECT_NAME}
         ${SOURCES}
         ${HEADERS}
-        Includes/Renderer/UI/UI.cpp
-        Includes/Renderer/UI/UI.h
-        Includes/Renderer/UI/Components/SceneMenu/SceneMenu.cpp
-        Includes/Renderer/UI/Components/SceneMenu/SceneMenu.h
-        Includes/Renderer/UI/Components/ViewPort/ViewPort.cpp
-        Includes/Renderer/UI/Components/ViewPort/ViewPort.h
-        Includes/Renderer/UI/Components/Component.cpp
-        Includes/Renderer/UI/Components/Component.h
-        Includes/Renderer/UI/Components/BottomMenu/BottomMenu.cpp
-        Includes/Renderer/UI/Components/BottomMenu/BottomMenu.h
-        Includes/Renderer/UI/Components/MaterialUI/MaterialUI.cpp
-        Includes/Renderer/UI/Components/MaterialUI/MaterialUI.h
-        Includes/Renderer/UI/Components/SceneNodeUI/SceneNodeUI.cpp
-        Includes/Renderer/UI/Components/SceneNodeUI/SceneNodeUI.h
-        Includes/Renderer/UI/Components/LightUI/LightUI.cpp
-        Includes/Renderer/UI/Components/LightUI/LightUI.h
-        Includes/Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.cpp
-        Includes/Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h
+        3rdPartyLybraries/Includes/ImGuiFileDialog/ImGuiFileDialog.cpp
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

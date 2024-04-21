@@ -6,6 +6,7 @@
 #define PABLO_RENDERER_RENDERABLECREATIONUI_H
 
 #include "Renderer/UI/Components/Component.h"
+#include "ImGuiFileDialog/ImGuiFileDialog.h"
 
 
 class RenderableCreationUI:public Component {

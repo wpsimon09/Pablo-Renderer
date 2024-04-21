@@ -7,6 +7,7 @@
 #include "Renderer/UI/Components/SceneNodeUI/SceneNodeUI.h"
 #include "Renderer/UI/Components/LightUI/LightUI.h"
 #include "Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h"
+#include <algorithm>
 
 void SceneMenu::display(int posX, int posY, int width, int height) {
     Component::posX = posX;
@@ -28,6 +29,9 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
                 child->isSelected = true;
                 MaterialUI::material = child->getRenderable()->getObjectMaterial();
                 SceneNodeUI::sceneNode = child.get();
+                if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Delete))) {
+                    PabloRenderer::getInstance()->getScene()->removeSceneNode(child->getID());
+                }
             } else
                 child->isSelected = false;
             i++;
