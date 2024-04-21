@@ -9,7 +9,8 @@
 
 class SceneNodeUI {
 public:
-    static void display(SceneNode &sceneNode);
+    static inline SceneNode* sceneNode;
+    static void display();
 };
 
 

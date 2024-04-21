@@ -81,7 +81,7 @@ void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain,bool geometryOnly
 
 void SceneNode::renderUI() {
     if(this->renderable != nullptr){
-        SceneNodeUI::display(*this);
+        //SceneNodeUI::display(*this);
     }
 }
 
