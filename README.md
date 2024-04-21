@@ -33,6 +33,8 @@ This renderer is preProcessing using
 - SceneGraph design pattern
 - Orbit camera
 - Shadow mapping
+- UI editor
+- Model Loading from UI
 ----
 
 # Example
@@ -73,6 +75,6 @@ The result of the snippet will look like this (after small alterations using UI)
 As of now renderer's shader only support one directional light which is going to change in the near future
 
 # Images
-![Geralt's sword ](Assets/ReadmeImages/pablo-3.png)
+![Pablo](Assets/ReadmeImages/pablo-4.png)
 
 
