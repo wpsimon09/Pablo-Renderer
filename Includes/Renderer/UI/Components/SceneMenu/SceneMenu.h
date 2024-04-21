@@ -16,8 +16,10 @@ private:
      * @def -1 means nothing is selected
      */
     inline static int selectedSceneNode = -1;
+
+    inline static bool showLight = false;
+    inline static bool showTransformation = false;
 public:
-    inline static std::shared_ptr<Texture2D> debugTexture;
     static void display(int posX, int posY, int width, int height = 0);
 };
 

@@ -11,7 +11,7 @@ void MaterialUI::display(int posX, int posY, int width, int height) {
     MaterialUI::height = height;
 
     ImGui::Text("Material");
-    ImGui::BeginChild("Material", ImVec2(width, height), true);
+
     if(material!= nullptr && material->getAlbedoTexture()!= nullptr){
         ImVec2 imageSize((float)material->getAlbedoTexture()->texWidth/4, (float)material->getAlbedoTexture()->texHeight/4);
         ImGui::GetWindowDrawList()->AddImage(
@@ -23,6 +23,5 @@ void MaterialUI::display(int posX, int posY, int width, int height) {
                 ImVec2(1, 0)
         );
     }
-    ImGui::EndChild();
 
 }

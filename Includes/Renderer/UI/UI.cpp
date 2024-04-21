@@ -6,6 +6,7 @@
 #include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
 #include "Renderer/UI/Components/ViewPort/ViewPort.h"
 #include "Renderer/UI/Components/BottomMenu/BottomMenu.h"
+#include "Renderer/UI/Components/LightUI/LightUI.h"
 
 void UI::init(GLFWwindow *window) {
     IMGUI_CHECKVERSION();
@@ -30,7 +31,7 @@ void UI::render() {
         //-------------------------
         // TOOLS
         //-------------------------
-        SceneMenu::debugTexture = debugTexture;
+        LightUI::debugTexture = debugTexture;
         SceneMenu::display(0,10,500);
 
         //------------

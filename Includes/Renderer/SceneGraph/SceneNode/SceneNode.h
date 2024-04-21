@@ -38,8 +38,6 @@ public:
     void addChild(std::unique_ptr<SceneNode> sceneNode);
 
 
-    void renderUI();
-
     /***
      * Updates self and child's positions and other parameters
      */
