@@ -20,6 +20,7 @@ private:
     inline static bool showLight = false;
     inline static bool showTransformation = false;
 public:
+    inline static bool showRendererCreation = false;
     static void display(int posX, int posY, int width, int height = 0);
 };
 

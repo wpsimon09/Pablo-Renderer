@@ -79,22 +79,15 @@ void Light::updateLightViewMatrix() {
 }
 
 void Light::renderUi() {
-    if(ImGui::TreeNodeEx("LIGHT")){
-        if(ImGui::TreeNodeEx("Light position")){
+    ImGui::ColorPicker3("Light color", &this->color->property.x,ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
+    ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
+
+    if(ImGui::TreeNodeEx("Position")){
             ImGui::SliderFloat("X", &position->property.x,-50.0f,50.0f);
             ImGui::SliderFloat("Y", &position->property.y,-50.0f,50.0f);
             ImGui::SliderFloat("Z", &position->property.z,-50.0f,50.0f);
 
             ImGui::TreePop();
-        }
-        if(ImGui::TreeNodeEx("Light Color")){
-            ImGui::ColorPicker3("Light color", &this->color->property.x,ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
-            ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
-
-            ImGui::TreePop();
-        }
-
-        ImGui::TreePop();
     }
 
 }

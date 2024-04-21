@@ -7,7 +7,7 @@
 
 void LightUI::display(int posX, int posY, int width, int height) {
     ImGui::Text("Light");
-    ImGui::BeginChild("Light", ImVec2(width, height), true);
+
     PabloRenderer::getInstance()->getScene()->light->renderUi();
     if (ImGui::TreeNode("Debug texture")) {
         ImVec2 imageSize((float) debugTexture->texWidth, (float) debugTexture->texHeight);
@@ -22,5 +22,4 @@ void LightUI::display(int posX, int posY, int width, int height) {
         );
         ImGui::TreePop();
     };
-    ImGui::EndChild();
 }

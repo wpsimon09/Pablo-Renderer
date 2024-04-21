@@ -8,7 +8,7 @@
 void SceneNodeUI::display() {
 
     if(sceneNode!= nullptr){
-        if(ImGui::TreeNodeEx(sceneNode->getRenderable()->name.c_str())){
+            ImGui::Text("%s", sceneNode->getRenderable()->name.c_str());
             if(ImGui::TreeNodeEx("Position")){
 
                 ImGui::SliderFloat("X", &sceneNode->transformation->getPosition_UI().x, -10.0f, 10.0f);
@@ -56,8 +56,9 @@ void SceneNodeUI::display() {
             }
             ImGui::SameLine();
             ImGui::Checkbox("Is visible", &sceneNode->getVisibility());
-            ImGui::TreePop();
-        }
     }
+    else
+        ImGui::Text("No item selected please select one from the SceneStructure");
+
 }
 

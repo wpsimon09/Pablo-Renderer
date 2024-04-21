@@ -32,19 +32,19 @@ void UI::render() {
         // TOOLS
         //-------------------------
         LightUI::debugTexture = debugTexture;
-        SceneMenu::display(0,10,500);
+        SceneMenu::display(0,10,500, GLFWHelper::getScreenHeight(10));
 
         //------------
         // VIEW PORT
         //-----------
         ViewPort::renderedScene = renderedScene;
         ViewPort::imGuiIo = imGuiIo;
-        ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(200));
+        ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(10));
 
         //-----------
         //BOTTOM MENU
         //-----------
-        BottomMenu::display(0,GLFWHelper::getScreenHeight(190), GLFWHelper::getScreenWidth(), 200 );
+        //BottomMenu::display(0,GLFWHelper::getScreenHeight(190), GLFWHelper::getScreenWidth(), 200 );
 
 
     ImGui::Render();

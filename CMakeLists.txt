@@ -47,6 +47,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/UI/Components/SceneNodeUI/SceneNodeUI.h
         Includes/Renderer/UI/Components/LightUI/LightUI.cpp
         Includes/Renderer/UI/Components/LightUI/LightUI.h
+        Includes/Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.cpp
+        Includes/Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
