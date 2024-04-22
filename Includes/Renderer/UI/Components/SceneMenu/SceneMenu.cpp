@@ -29,9 +29,6 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
                 child->isSelected = true;
                 MaterialUI::material = child->getRenderable()->getObjectMaterial();
                 SceneNodeUI::sceneNode = child.get();
-                if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Delete))) {
-                    PabloRenderer::getInstance()->getScene()->removeSceneNode(child->getID());
-                }
             } else
                 child->isSelected = false;
             i++;
@@ -66,9 +63,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     if(ImGui::Button("Light")){
         showLight = true;
         showTransformation = false;
-
     }
-
 
     ImGui::BeginChild("Light section", ImVec2(width - 20, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
 
@@ -83,7 +78,6 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
         if(showTransformation && !showLight){
             SceneNodeUI::display();
         }
-
     ImGui::EndChild();
 
 

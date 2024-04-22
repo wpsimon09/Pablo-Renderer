@@ -7,15 +7,24 @@
 #include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 
+
 void RenderableCreationUI::display() {
-    ImGui::SetNextWindowFocus();
+    //ImGui::SetNextWindowFocus();
 
     ImGui::Begin("Add renderable", nullptr);
     ImGui::SetWindowSize(ImVec2(400, 400));
 
-    if (ImGui::Button("X")) {
-        SceneMenu::showRendererCreation = false;
+    ImGui::Text("Select properties of material");
+    ImGui::NewLine();
+    if(ImGui::BeginCombo("Geometry", geometry[selectedGeometry].c_str())){
+        for(int i = 0; i<4; i++){
+            if(ImGui::Selectable(geometry[i].c_str(), selectedGeometry==i)){
+                selectedGeometry= (GEOMETRY)i;
+            }
+        }
+        ImGui::EndCombo();
     }
+
     if (ImGui::Button("Open File Dialog")) {
         IGFD::FileDialogConfig config;
         config.path = ".";
@@ -24,7 +33,7 @@ void RenderableCreationUI::display() {
     // display
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
-            ImGui::SetNextWindowFocus();
+            //ImGui::SetNextWindowFocus();
             ImGui::SetNextWindowSize(ImVec2(600,600));
             ImGui::SetNextWindowFocus();
             std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();

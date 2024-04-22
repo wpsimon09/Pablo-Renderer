@@ -7,9 +7,35 @@
 
 #include "Renderer/UI/Components/Component.h"
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
+#include <map>
+#include "string"
+
+enum GEOMETRY{
+    CUBE = 0,
+    SPHERE = 1,
+    PLANE = 2,
+    MODEL = 3
+};
+
+enum MATERIAL {
+    TEXTURE = 0,
+    COLOR = 1
+};
 
 
 class RenderableCreationUI:public Component {
+private:
+    inline static GEOMETRY selectedGeometry = CUBE;
+    inline static MATERIAL selectedMateial = TEXTURE;
+
+    inline static std::string geometry [] = {
+            "CUBE", "SPHERE", "PLANE", "MODEL"
+    };
+
+    inline static  std::string material [] = {
+            "TEXTURE", "COLOR"
+    };
+
 public:
     static void display();
 };
