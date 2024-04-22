@@ -9,6 +9,7 @@
 #include "ImGuiFileDialog/ImGuiFileDialog.h"
 #include <map>
 #include "string"
+#include "glm/glm.hpp"
 
 enum GEOMETRY{
     CUBE = 0,
@@ -36,6 +37,10 @@ private:
             "TEXTURE", "COLOR"
     };
 
+    inline static std::string modelOath;
+
+    inline static glm::vec3 color;
+    inline static std::string directory;
 public:
     static void display();
 };

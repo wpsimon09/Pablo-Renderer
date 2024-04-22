@@ -4,14 +4,14 @@
 
 #include "RenderableCreationUI.h"
 #include "Renderer/PabloRenderer.h"
-#include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
-#include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
+#include "FIleWindowUI/FileWindowUI.h"
 
 
 void RenderableCreationUI::display() {
     //ImGui::SetNextWindowFocus();
 
     ImGui::Begin("Add renderable", nullptr);
+
     ImGui::SetWindowSize(ImVec2(400, 400));
 
     ImGui::Text("Select properties of material");
@@ -24,35 +24,26 @@ void RenderableCreationUI::display() {
         }
         ImGui::EndCombo();
     }
-
-    if (ImGui::Button("Open File Dialog")) {
-        IGFD::FileDialogConfig config;
-        config.path = ".";
-        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".gltf,.obj,.glb", config);
+    if(selectedGeometry == MODEL){
+        modelOath = FileWindowUI::display();
     }
-    // display
-    if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
-        if (ImGuiFileDialog::Instance()->IsOk()) {
-            //ImGui::SetNextWindowFocus();
-            ImGui::SetNextWindowSize(ImVec2(600,600));
-            ImGui::SetNextWindowFocus();
-            std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-            std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
 
-
-            auto renderable = std::make_unique<ModelSceneNode>(filePathName);
-            PabloRenderer::getInstance()->getScene()->add(std::move(renderable));
-
+    if(ImGui::BeginCombo("Material", geometry[selectedMateial].c_str())){
+        for(int i = 0; i<2; i++){
+            if(ImGui::Selectable(material[i].c_str(), selectedMateial==i)){
+                selectedMateial= (MATERIAL)i;
+            }
         }
 
-        ImGui::End();
-
-        // close
-        ImGuiFileDialog::Instance()->Close();
+        ImGui::EndCombo();
     }
-    else
-        ImGui::End();
 
-
+    if(selectedMateial == COLOR){
+        ImGui::ColorPicker3("Material color", &color.x);
+    }
+    else if (selectedMateial == TEXTURE){
+        directory = FileWindowUI::display(true);
+    }
+    ImGui::End();
 }
 
