@@ -56,6 +56,11 @@ void RenderableCreationUI::display() {
         ImGui::Checkbox("Supports IBL", &supportsIBL);
     ImGui::EndChild();
 
+    ImGui::NewLine();
+
+    ImGui::InputText("default",text, 32);
+    //ImGui::InputText("Material properties", name, 400);
+
     ImGui::End();
 }
 

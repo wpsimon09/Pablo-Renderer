@@ -39,46 +39,28 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     if(ImGui::Button("Add new")){
         showRendererCreation = true;
     }
-
     ImGui::NewLine();
-    if (ImGui::IsItemClicked()) {
-        selectedSceneNode = -1;
-        MaterialUI::material = nullptr;
-    }
 
-    if(ImGui::Button("Material")){
-        showLight = false;
-        showTransformation = false;
-    }
-
-    ImGui::SameLine();
-
-    if(ImGui::Button("Transformations")){
-        showLight = false;
-        showTransformation = true;
-    }
-
-    ImGui::SameLine();
-
-    if(ImGui::Button("Light")){
-        showLight = true;
-        showTransformation = false;
-    }
-
-    ImGui::BeginChild("Light section", ImVec2(width - 20, 0), true, ImGuiWindowFlags_HorizontalScrollbar);
-
-        if(!showLight && !showTransformation){
+;
+    if (ImGui::BeginTabBar("Renderable properties"))
+    {
+        if (ImGui::BeginTabItem("Material"))
+        {
             MaterialUI::display(width - 20, 0, width);
+            ImGui::EndTabItem();
         }
-
-        if(showLight && !showTransformation){
+        if (ImGui::BeginTabItem("Light"))
+        {
             LightUI::display(width - 20, 0, width);
+            ImGui::EndTabItem();
         }
-
-        if(showTransformation && !showLight){
+        if (ImGui::BeginTabItem("Transformation"))
+        {
             SceneNodeUI::display();
+            ImGui::EndTabItem();
         }
-    ImGui::EndChild();
+        ImGui::EndTabBar();
+    }
 
 
     ImGui::End();

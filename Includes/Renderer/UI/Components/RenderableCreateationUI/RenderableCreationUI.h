@@ -43,7 +43,7 @@ private:
     inline static std::string directory;
     inline static bool castsShadow;
     inline static bool supportsIBL;
-
+    inline static char text[32] = "";
 public:
     static void display();
 };
