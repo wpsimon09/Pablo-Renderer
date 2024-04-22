@@ -41,6 +41,9 @@ private:
 
     inline static glm::vec3 color;
     inline static std::string directory;
+    inline static bool castsShadow;
+    inline static bool supportsIBL;
+
 public:
     static void display();
 };

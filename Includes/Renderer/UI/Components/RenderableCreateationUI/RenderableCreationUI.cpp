@@ -14,8 +14,8 @@ void RenderableCreationUI::display() {
 
     ImGui::SetWindowSize(ImVec2(400, 400));
 
-    ImGui::Text("Select properties of material");
     ImGui::NewLine();
+    ImGui::Text("Select properties of material");
     if(ImGui::BeginCombo("Geometry", geometry[selectedGeometry].c_str())){
         for(int i = 0; i<4; i++){
             if(ImGui::Selectable(geometry[i].c_str(), selectedGeometry==i)){
@@ -28,7 +28,9 @@ void RenderableCreationUI::display() {
         modelOath = FileWindowUI::display();
     }
 
-    if(ImGui::BeginCombo("Material", geometry[selectedMateial].c_str())){
+    ImGui::NewLine();
+    ImGui::Text("Select material");
+    if(ImGui::BeginCombo("Material", material[selectedMateial].c_str())){
         for(int i = 0; i<2; i++){
             if(ImGui::Selectable(material[i].c_str(), selectedMateial==i)){
                 selectedMateial= (MATERIAL)i;
@@ -44,6 +46,16 @@ void RenderableCreationUI::display() {
     else if (selectedMateial == TEXTURE){
         directory = FileWindowUI::display(true);
     }
+
+    ImGui::NewLine();
+    ImGui::Text("Additional properties");
+
+    ImGui::BeginChild("Other properties");
+        ImGui::Checkbox("Casts shadow", &castsShadow);
+        ImGui::SameLine();
+        ImGui::Checkbox("Supports IBL", &supportsIBL);
+    ImGui::EndChild();
+
     ImGui::End();
 }
 
