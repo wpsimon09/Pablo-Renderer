@@ -14,6 +14,8 @@ void RenderableCreationUI::display() {
 
     ImGui::SetWindowSize(ImVec2(400, 400));
 
+    ImGui::InputText("Name",text, 32);
+
     ImGui::NewLine();
     ImGui::Text("Select properties of material");
     if(ImGui::BeginCombo("Geometry", geometry[selectedGeometry].c_str())){
@@ -25,27 +27,37 @@ void RenderableCreationUI::display() {
         ImGui::EndCombo();
     }
     if(selectedGeometry == MODEL){
+        // button that opens the dialog window is inside the class
         modelOath = FileWindowUI::display();
     }
 
+    if(selectedGeometry == MODEL){
+        ImGui::Checkbox("Keep model material", &keepModelMaterial);
+    }
+
     ImGui::NewLine();
-    ImGui::Text("Select material");
-    if(ImGui::BeginCombo("Material", material[selectedMateial].c_str())){
-        for(int i = 0; i<2; i++){
-            if(ImGui::Selectable(material[i].c_str(), selectedMateial==i)){
-                selectedMateial= (MATERIAL)i;
+
+    //display only if the material is selectable
+    if(!keepModelMaterial || selectedGeometry != MODEL) {
+        ImGui::Text("Select material");
+        if(ImGui::BeginCombo("Material", material[selectedMateial].c_str())){
+            for(int i = 0; i<2; i++){
+                if(ImGui::Selectable(material[i].c_str(), selectedMateial==i)){
+                    selectedMateial= (MATERIAL)i;
+                }
             }
+
+            ImGui::EndCombo();
         }
 
-        ImGui::EndCombo();
+        if(selectedMateial == COLOR){
+            ImGui::ColorPicker3("Material color", &color.x);
+        }
+        else if (selectedMateial == TEXTURE){
+            directory = FileWindowUI::display(true);
+        }
     }
 
-    if(selectedMateial == COLOR){
-        ImGui::ColorPicker3("Material color", &color.x);
-    }
-    else if (selectedMateial == TEXTURE){
-        directory = FileWindowUI::display(true);
-    }
 
     ImGui::NewLine();
     ImGui::Text("Additional properties");
@@ -56,9 +68,8 @@ void RenderableCreationUI::display() {
         ImGui::Checkbox("Supports IBL", &supportsIBL);
     ImGui::EndChild();
 
-    ImGui::NewLine();
 
-    ImGui::InputText("default",text, 32);
+
     //ImGui::InputText("Material properties", name, 400);
 
     ImGui::End();

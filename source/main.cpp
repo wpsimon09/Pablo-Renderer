@@ -44,45 +44,21 @@ int main() {
 
     auto goldMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
     auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false);
-    auto goldSphereRenderable = std::make_unique<Renderable>(sphereGeometry, goldMaterial,"Gold sphere");
-    goldSphereRenderable->transformations->setPosition(-3.0f, 1.0f, 0.0f);
-    goldSphereRenderable->castsShadwo = true;
-
-    auto sunbro_helmet = std::make_unique<ModelSceneNode>("Assets/Model/sunbro_helmet/scene.gltf");
-    sunbro_helmet->transformation->setRotations(glm::vec3(-90.0f, 0.0f, 00.0f));
-    sunbro_helmet->transformation->setPosition(glm::vec3(0.0F, 2.0F, 0.0f));
-    sunbro_helmet->transformation->setScale(glm::vec3(0.07f));
-    sunbro_helmet->castsShadow(true);
-
-    auto sword  = std::make_unique<ModelSceneNode>("Assets/Model/sword/scene.gltf");
-    sword->transformation->setScale(glm::vec3(0.09f));
-    sword->transformation->setPosition(glm::vec3(5.0f, 2.0f, 0.0f));
-    sword->castsShadow(true);
 
     auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
-    pot->transformation->setPosition(-5.0f, 0.0f, 0.0f);
     pot->transformation->setScale(4.0f, 4.0f, 4.0f);
     pot->castsShadow(true);
-
-    auto withcerMedailon = std::make_unique<ModelSceneNode>( "Assets/Model/witcher_medalion/scene.gltf");
-    withcerMedailon->transformation->setRotations(glm::vec3(-90.0f, -90.0f, 0.0f));
-    withcerMedailon->transformation->setPosition(glm::vec3(10.0f, 2.0f, 0.0f));
-    withcerMedailon->transformation->setScale(glm::vec3(0.3));
 
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
-    auto floor = std::make_unique<Renderable>(planeGeometry, wall,"Floor");
-    floor->transformations->setScale(10.0f, 1.0f, 10.0f);
+    auto floor = std::make_unique<Renderable>(planeGeometry, wall, "Floor");
+    floor->transformations->setScale(10.0f, -1.0f, 10.0f);
     floor->recievesShadow = true;
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
 
-    scene->add(std::move(goldSphereRenderable));
-    scene->add(std::move(sunbro_helmet));
-    scene->add(std::move(sword));
-    scene->add(std::move(withcerMedailon));
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
     //scene->add(std::move(skyboxCube));
