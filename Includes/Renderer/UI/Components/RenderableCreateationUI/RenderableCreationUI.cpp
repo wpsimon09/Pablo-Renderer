@@ -14,47 +14,47 @@ void RenderableCreationUI::display() {
 
     ImGui::SetWindowSize(ImVec2(400, 400));
 
-    ImGui::InputText("Name",text, 32);
+    ImGui::InputText("Name",RenderableBuilder::text, 32);
 
     ImGui::NewLine();
     ImGui::Text("Select properties of material");
-    if(ImGui::BeginCombo("Geometry", geometry[selectedGeometry].c_str())){
+    if(ImGui::BeginCombo("Geometry", geometry[RenderableBuilder::selectedGeometry].c_str())){
         for(int i = 0; i<4; i++){
-            if(ImGui::Selectable(geometry[i].c_str(), selectedGeometry==i)){
-                selectedGeometry= (GEOMETRY)i;
+            if(ImGui::Selectable(geometry[i].c_str(), RenderableBuilder::selectedGeometry==i)){
+                RenderableBuilder::selectedGeometry= (GEOMETRY)i;
             }
         }
         ImGui::EndCombo();
     }
-    if(selectedGeometry == MODEL){
+    if(RenderableBuilder::selectedGeometry == MODEL){
         // button that opens the dialog window is inside the class
-        modelOath = FileWindowUI::display();
+        RenderableBuilder::modelOath = FileWindowUI::display();
     }
 
-    if(selectedGeometry == MODEL){
-        ImGui::Checkbox("Keep model material", &keepModelMaterial);
+    if(RenderableBuilder::selectedGeometry == MODEL){
+        ImGui::Checkbox("Keep model material", &RenderableBuilder::keepModelMaterial);
     }
 
     ImGui::NewLine();
 
     //display only if the material is selectable
-    if(!keepModelMaterial || selectedGeometry != MODEL) {
+    if(!RenderableBuilder::keepModelMaterial || RenderableBuilder::selectedGeometry != MODEL) {
         ImGui::Text("Select material");
-        if(ImGui::BeginCombo("Material", material[selectedMateial].c_str())){
+        if(ImGui::BeginCombo("Material", material[RenderableBuilder::selectedMateial].c_str())){
             for(int i = 0; i<2; i++){
-                if(ImGui::Selectable(material[i].c_str(), selectedMateial==i)){
-                    selectedMateial= (MATERIAL)i;
+                if(ImGui::Selectable(material[i].c_str(), RenderableBuilder::selectedMateial==i)){
+                    RenderableBuilder::selectedMateial= (MATERIAL)i;
                 }
             }
 
             ImGui::EndCombo();
         }
 
-        if(selectedMateial == COLOR){
-            ImGui::ColorPicker3("Material color", &color.x);
+        if(RenderableBuilder::selectedMateial == COLOR){
+            ImGui::ColorPicker3("Material color", &RenderableBuilder::color.x);
         }
-        else if (selectedMateial == TEXTURE){
-            directory = FileWindowUI::display(true);
+        else if (RenderableBuilder::selectedMateial == TEXTURE){
+            RenderableBuilder::textureDirectory = FileWindowUI::display(true);
         }
     }
 
@@ -63,11 +63,10 @@ void RenderableCreationUI::display() {
     ImGui::Text("Additional properties");
 
     ImGui::BeginChild("Other properties");
-        ImGui::Checkbox("Casts shadow", &castsShadow);
+        ImGui::Checkbox("Casts shadow", &RenderableBuilder::castsShadow);
         ImGui::SameLine();
-        ImGui::Checkbox("Supports IBL", &supportsIBL);
+        ImGui::Checkbox("Supports IBL", &RenderableBuilder::supportsIBL);
     ImGui::EndChild();
-
 
 
     //ImGui::InputText("Material properties", name, 400);

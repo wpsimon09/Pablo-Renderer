@@ -9,7 +9,20 @@
 #include "Renderer/Enums/UIBuilderEnums.h"
 
 class RenderableBuilder {
-    static std::unique_ptr<Renderable> buildRenderable(GEOMETRY geomtry , MATERIAL material);
+public:
+    inline static GEOMETRY selectedGeometry = CUBE;
+    inline static MATERIAL selectedMateial = TEXTURE;
+
+    inline static std::string modelOath;
+
+    inline static glm::vec3 color;
+    inline static std::string textureDirectory;
+    inline static bool castsShadow;
+    inline static bool supportsIBL;
+    inline static bool keepModelMaterial = false;
+    inline static char text[32] = "";
+
+    static std::unique_ptr<Renderable> buildRenderable();
 };
 
 
