@@ -34,6 +34,9 @@ add_executable(${CMAKE_PROJECT_NAME}
         3rdPartyLybraries/Includes/ImGuiFileDialog/ImGuiFileDialog.cpp
         Includes/Renderer/UI/Components/RenderableCreateationUI/FIleWindowUI/FileWindowUI.cpp
         Includes/Renderer/UI/Components/RenderableCreateationUI/FIleWindowUI/FileWindowUI.h
+        Includes/Renderer/Utils/RenderableBuilder/RenderableBuilder.cpp
+        Includes/Renderer/Utils/RenderableBuilder/RenderableBuilder.h
+        Includes/Renderer/Enums/UIBuilderEnums.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

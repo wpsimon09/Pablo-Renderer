@@ -46,14 +46,15 @@ int main() {
     auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false);
 
     auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
-    pot->transformation->setScale(4.0f, 4.0f, 4.0f);
+    pot->transformation->setScale(9.0f, 5.0f, 9.0f);
     pot->castsShadow(true);
 
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
     auto floor = std::make_unique<Renderable>(planeGeometry, wall, "Floor");
-    floor->transformations->setScale(10.0f, -1.0f, 10.0f);
+    floor->transformations->setPosition(0.0f, -2.0f, 0.0f);
+    floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();

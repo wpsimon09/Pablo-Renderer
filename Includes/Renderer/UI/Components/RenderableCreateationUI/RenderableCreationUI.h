@@ -10,19 +10,7 @@
 #include <map>
 #include "string"
 #include "glm/glm.hpp"
-
-enum GEOMETRY{
-    CUBE = 0,
-    SPHERE = 1,
-    PLANE = 2,
-    MODEL = 3
-};
-
-enum MATERIAL {
-    TEXTURE = 0,
-    COLOR = 1
-};
-
+#include "Renderer/Utils/RenderableBuilder/RenderableBuilder.h"
 
 class RenderableCreationUI:public Component {
 private:
