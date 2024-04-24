@@ -23,7 +23,10 @@ public:
      * @param hasShadow bool is model an occluder @def false
      */
     void castsShadow(bool hasShadow = false);
+
+    bool checkStatus(){return this->wasFound;}
 private:
+    bool wasFound = false;
     std::shared_ptr<PBRTextured> material = nullptr;
     std::shared_ptr<Shader> shader;
     bool hasEmissionTexture = false;

@@ -18,6 +18,8 @@ ModelSceneNode::ModelSceneNode(std::string path, std::shared_ptr<PBRTextured> ma
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
         return;
     }
+
+    this->wasFound = true;
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
 }
@@ -170,5 +172,7 @@ void ModelSceneNode::castsShadow(bool hasShadow) {
         }
     }
 }
+
+
 
 

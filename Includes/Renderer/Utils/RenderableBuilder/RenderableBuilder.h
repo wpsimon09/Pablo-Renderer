@@ -7,6 +7,9 @@
 
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Enums/UIBuilderEnums.h"
+#include "Renderer/Geometry/Shapes/Sphere/SphereGeometry.h"
+#include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
+#include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
 
 class RenderableBuilder {
 public:

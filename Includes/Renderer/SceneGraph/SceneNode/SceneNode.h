@@ -75,6 +75,8 @@ public:
 
     const unsigned long getNumberOfChildren() const { return this->children.size(); }
 
+    void setMaterial(std::shared_ptr<Material> newMaterial);
+
     glm::vec3 getInitialPosition(){return initialPosition;}
     glm::vec3 getInitialRotation(){return initialRotation;}
     glm::vec3 getInitialScale(){return initialScale;}

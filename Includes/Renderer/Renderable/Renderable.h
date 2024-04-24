@@ -68,7 +68,9 @@ public:
 
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);
 
-    void setModelMatrix(glm::mat4 modelMatrix){this->modelMatrix = modelMatrix;}
+    void setModelMatrix(glm::mat4 modelMatrix)              {this->modelMatrix = modelMatrix;}
+
+    void setMaterial(std::shared_ptr<Material> material)    {this->objectMaterial = material;};
 
     std::shared_ptr<Shader> getShader();
 

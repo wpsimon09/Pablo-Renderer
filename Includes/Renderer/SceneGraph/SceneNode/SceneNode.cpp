@@ -34,6 +34,7 @@ const std::unique_ptr<Renderable> & SceneNode::getRenderable()const {
     return renderable;
 }
 
+
 void SceneNode::setRenderable(std::unique_ptr<Renderable> renderable) {
     this->renderable =std::move(renderable);
 }
@@ -81,6 +82,14 @@ void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain,bool geometryOnly
             else if (renderingConstrain == SHADOW_ONLY && renderable->castsShadwo && geometryOnly){
                 renderable->renderGeomtry();
             }
+        }
+    }
+}
+
+void SceneNode::setMaterial(std::shared_ptr<Material> newMaterial) {
+    for(auto &child: this->children){
+        if(child->getRenderable() != nullptr){
+            child->getRenderable()->setMaterial(newMaterial);
         }
     }
 }
