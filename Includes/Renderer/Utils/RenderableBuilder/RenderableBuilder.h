@@ -25,7 +25,7 @@ public:
     inline static bool keepModelMaterial = false;
     inline static char text[32] = "";
 
-    static std::unique_ptr<Renderable> buildRenderable();
+    static std::unique_ptr<SceneNode> buildRenderable();
 };
 
 

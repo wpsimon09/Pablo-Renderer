@@ -6,7 +6,7 @@
 
 #include <utility>
 
-ModelSceneNode::ModelSceneNode(std::string path, std::shared_ptr<PBRTextured> mat, std::string name): SceneNode() {
+ModelSceneNode::ModelSceneNode(std::string path, std::shared_ptr<Material> mat, std::string name): SceneNode() {
     Assimp::Importer importer;
 
     this->material = std::move(mat);
@@ -103,7 +103,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 
     std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(name == "" ? std::string(mesh->mName.C_Str()) : name,vertecies, indecies);
 
-    std::shared_ptr<PBRTextured> renderableMaterial;
+    std::shared_ptr<Material> renderableMaterial;
     bool hasModelTextures;
     if(this->material == nullptr){
         renderableMaterial = this->processRenderableMaterial(meshMaterial);

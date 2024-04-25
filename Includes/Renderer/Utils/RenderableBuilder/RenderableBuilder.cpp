@@ -4,22 +4,21 @@
 
 #include "RenderableBuilder.h"
 
-std::unique_ptr<Renderable> RenderableBuilder::buildRenderable() {
+std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
     try{
 
         std::shared_ptr<Geometry> geometry = nullptr;
-        std::shared_ptr<PBRColor> materialColor = nullptr;
-        std::shared_ptr<PBRTextured> materialTextured = nullptr;
+        std::shared_ptr<Material> material = nullptr;
 
         std::string name = text;
 
         switch(selectedMateial){
             case TEXTURE:{
-                materialTextured = std::make_shared<PBRTextured>(textureDirectory);
+                 material = std::make_shared<PBRTextured>(textureDirectory);
                 break;
             }
             case COLOR:{
-                materialColor = std::make_shared<PBRColor>(color);
+                material = std::make_shared<PBRColor>(color);
                 break;
             }
             default:{
@@ -27,6 +26,7 @@ std::unique_ptr<Renderable> RenderableBuilder::buildRenderable() {
             }
 
         }
+
 
         if(selectedGeometry != MODEL){
             /***
@@ -49,15 +49,21 @@ std::unique_ptr<Renderable> RenderableBuilder::buildRenderable() {
                     return nullptr;
                 }
             }
+
+            auto renderable = std::make_unique<Renderable>(geometry, material);
+
         }
         else{
-            auto model = std::make_unique<ModelSceneNode>(modelOath, keepModelMaterial == false ? materialTextured : nullptr );
+            auto model = std::make_unique<ModelSceneNode>(modelOath, keepModelMaterial == false ? material : nullptr );
             model->castsShadow(castsShadow);
             if(model->checkStatus()){
-                return model;
+                return std::move(model);
             }else{
                 return nullptr;
             }
         }
+    }
+    catch(std::exception e){
+        return nullptr;
     }
 }

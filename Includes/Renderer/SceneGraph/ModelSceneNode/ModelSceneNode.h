@@ -15,7 +15,7 @@
 
 class ModelSceneNode:public SceneNode  {
 public:
-    explicit ModelSceneNode(std::string path, std::shared_ptr<PBRTextured> mat = nullptr, std::string name = "");
+    explicit ModelSceneNode(std::string path, std::shared_ptr<Material> mat = nullptr, std::string name = "");
     std::string directory;
     std::string name;
     /***
@@ -27,7 +27,7 @@ public:
     bool checkStatus(){return this->wasFound;}
 private:
     bool wasFound = false;
-    std::shared_ptr<PBRTextured> material = nullptr;
+    std::shared_ptr<Material> material = nullptr;
     std::shared_ptr<Shader> shader;
     bool hasEmissionTexture = false;
     std::vector<std::shared_ptr<Texture2D>>loadedTextures;
