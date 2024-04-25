@@ -15,9 +15,9 @@
 
 class ModelSceneNode:public SceneNode  {
 public:
-    explicit ModelSceneNode( std::string path, std::shared_ptr<PBRTextured> mat = nullptr);
+    explicit ModelSceneNode(std::string path, std::shared_ptr<PBRTextured> mat = nullptr, std::string name = "");
     std::string directory;
-
+    std::string name;
     /***
      * Sets if the model is casting shadow
      * @param hasShadow bool is model an occluder @def false

@@ -6,11 +6,11 @@
 
 #include <utility>
 
-ModelSceneNode::ModelSceneNode(std::string path, std::shared_ptr<PBRTextured> mat): SceneNode() {
+ModelSceneNode::ModelSceneNode(std::string path, std::shared_ptr<PBRTextured> mat, std::string name): SceneNode() {
     Assimp::Importer importer;
 
     this->material = std::move(mat);
-
+    this->name = name;
     const aiScene *scene = importer.ReadFile(path.c_str(),
                                              aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace );
 
@@ -101,7 +101,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
-    std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(std::string(mesh->mName.C_Str()),vertecies, indecies);
+    std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(name == "" ? std::string(mesh->mName.C_Str()) : name,vertecies, indecies);
 
     std::shared_ptr<PBRTextured> renderableMaterial;
     bool hasModelTextures;
