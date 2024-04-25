@@ -51,6 +51,8 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
             }
 
             auto renderable = std::make_unique<Renderable>(geometry, material);
+            auto sceneNode = std::make_unique<SceneNode>(std::move(renderable));
+            return sceneNode;
 
         }
         else{

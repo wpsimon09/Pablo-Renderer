@@ -5,6 +5,8 @@
 #include "RenderableCreationUI.h"
 #include "Renderer/PabloRenderer.h"
 #include "FIleWindowUI/FileWindowUI.h"
+#include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
+
 
 
 void RenderableCreationUI::display() {
@@ -29,6 +31,8 @@ void RenderableCreationUI::display() {
     if(RenderableBuilder::selectedGeometry == MODEL){
         // button that opens the dialog window is inside the class
         RenderableBuilder::modelOath = FileWindowUI::display();
+        ImGui::Text("Selected model path:");
+        ImGui::Text("%s", RenderableBuilder::modelOath.c_str());
     }
 
     if(RenderableBuilder::selectedGeometry == MODEL){
@@ -55,6 +59,8 @@ void RenderableCreationUI::display() {
         }
         else if (RenderableBuilder::selectedMateial == TEXTURE){
             RenderableBuilder::textureDirectory = FileWindowUI::display(true);
+            ImGui::Text("Selected model path:");
+            ImGui::Text("%s", RenderableBuilder::modelOath.c_str());
         }
     }
 
@@ -68,6 +74,14 @@ void RenderableCreationUI::display() {
         ImGui::Checkbox("Supports IBL", &RenderableBuilder::supportsIBL);
     ImGui::EndChild();
 
+    if(ImGui::Button("Add")){
+        auto createdSceneNode = RenderableBuilder::buildRenderable();
+        if(createdSceneNode != nullptr){
+            PabloRenderer::getInstance()->getScene()->add(std::move(createdSceneNode));
+            SceneMenu::showRendererCreation = false;
+        }
+
+    }
 
     //ImGui::InputText("Material properties", name, 400);
 
