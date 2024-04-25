@@ -3,6 +3,7 @@
 //
 
 #include "FileWindowUI.h"
+#include "Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h"
 
 std::string FileWindowUI::display(bool getDirectory ,int widht, int heigh) {
     std::string filePathName;
@@ -17,9 +18,13 @@ std::string FileWindowUI::display(bool getDirectory ,int widht, int heigh) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
             //ImGui::SetNextWindowFocus();
             ImGui::SetNextWindowFocus();
+            RenderableCreationUI::hasFocus = true;
             ImGui::SetNextWindowSize(ImVec2((float)widht,(float) heigh));
-            filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
-            directory = ImGuiFileDialog::Instance()->GetCurrentPath();
+            if(getDirectory){
+                RenderableBuilder::textureDirectory = ImGuiFileDialog::Instance()->GetCurrentPath();
+            }
+            else
+                RenderableBuilder::modelOath = ImGuiFileDialog::Instance()->GetFilePathName();
         }
         // close
         ImGuiFileDialog::Instance()->Close();

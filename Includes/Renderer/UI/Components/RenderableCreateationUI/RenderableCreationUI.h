@@ -23,6 +23,7 @@ private:
     };
 
 public:
+    static inline bool hasFocus = false;
     static void display();
 };
 

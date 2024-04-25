@@ -12,7 +12,11 @@
 void RenderableCreationUI::display() {
     //ImGui::SetNextWindowFocus();
 
+
     ImGui::Begin("Add renderable", nullptr);
+
+    hasFocus = ImGui::IsWindowFocused();
+
 
     ImGui::SetWindowSize(ImVec2(400, 400));
 
@@ -32,7 +36,7 @@ void RenderableCreationUI::display() {
         // button that opens the dialog window is inside the class
         RenderableBuilder::modelOath = FileWindowUI::display();
         ImGui::Text("Selected model path:");
-        ImGui::Text("%s", RenderableBuilder::modelOath.c_str());
+        ImGui::Text(RenderableBuilder::modelOath.c_str());
     }
 
     if(RenderableBuilder::selectedGeometry == MODEL){
@@ -58,9 +62,9 @@ void RenderableCreationUI::display() {
             ImGui::ColorPicker3("Material color", &RenderableBuilder::color.x);
         }
         else if (RenderableBuilder::selectedMateial == TEXTURE){
-            RenderableBuilder::textureDirectory = FileWindowUI::display(true);
-            ImGui::Text("Selected model path:");
-            ImGui::Text("%s", RenderableBuilder::modelOath.c_str());
+            FileWindowUI::display(true);
+            ImGui::Text("Selected texture directory:");
+            ImGui::Text(RenderableBuilder::textureDirectory.c_str());
         }
     }
 
@@ -72,16 +76,21 @@ void RenderableCreationUI::display() {
         ImGui::Checkbox("Casts shadow", &RenderableBuilder::castsShadow);
         ImGui::SameLine();
         ImGui::Checkbox("Supports IBL", &RenderableBuilder::supportsIBL);
-    ImGui::EndChild();
+        ImGui::NewLine();
+        if(ImGui::Button("Add")){
+            auto createdSceneNode = RenderableBuilder::buildRenderable();
+            if(createdSceneNode != nullptr){
+                PabloRenderer::getInstance()->getScene()->add(std::move(createdSceneNode));
+                SceneMenu::showRendererCreation = false;
+            }
+            else{
+                ImGui::Text("Failed to load renderable please change parameters and try again");
+            }
 
-    if(ImGui::Button("Add")){
-        auto createdSceneNode = RenderableBuilder::buildRenderable();
-        if(createdSceneNode != nullptr){
-            PabloRenderer::getInstance()->getScene()->add(std::move(createdSceneNode));
-            SceneMenu::showRendererCreation = false;
         }
 
-    }
+    ImGui::EndChild();
+
 
     //ImGui::InputText("Material properties", name, 400);
 
