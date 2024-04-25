@@ -59,7 +59,7 @@ void RenderableCreationUI::display() {
         }
 
         if(RenderableBuilder::selectedMateial == COLOR){
-            ImGui::ColorPicker3("Material color", &RenderableBuilder::color.x);
+            ImGui::ColorPicker3("Material color", &RenderableBuilder::color.x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
         }
         else if (RenderableBuilder::selectedMateial == TEXTURE){
             FileWindowUI::display(true);
@@ -86,9 +86,11 @@ void RenderableCreationUI::display() {
             else{
                 ImGui::Text("Failed to load renderable please change parameters and try again");
             }
-
         }
-
+        ImGui::SameLine();
+    if(ImGui::Button("Cancel")){
+            SceneMenu::showRendererCreation = false;
+    }
     ImGui::EndChild();
 
 
