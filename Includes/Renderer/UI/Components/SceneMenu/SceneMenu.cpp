@@ -8,8 +8,11 @@
 #include "Renderer/UI/Components/LightUI/LightUI.h"
 #include "Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h"
 #include <algorithm>
+int i = 0;
 
 void SceneMenu::display(int posX, int posY, int width, int height) {
+    i = 0;
+
     Component::posX = posX;
     Component::poxY = posY;
     Component::width = width;
@@ -75,7 +78,6 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 
 void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
-    int i = 0;
     if(renderalbe != nullptr){
         if (ImGui::Selectable(sceneNode.getRenderable()->name.c_str(), selectedSceneNode == i)) {
             selectedSceneNode = i;
