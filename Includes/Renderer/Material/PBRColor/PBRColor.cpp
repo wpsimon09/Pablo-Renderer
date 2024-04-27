@@ -36,3 +36,15 @@ void PBRColor::configureShader() {
     this->shader->setFloat(this->ao->shaderName, *this->ao->type);
 }
 
+void PBRColor::renderUI() {
+    ImGui::ColorPicker3("Color", &this->albedo->type->x);
+
+    if(ImGui::TreeNodeEx("Material properties")){
+           ImGui::SliderFloat("Roughens", this->rougness->type.get(), 0.0f, 1.0f);
+           ImGui::SliderFloat("Mealness", this->metalness->type.get(), 0.0f, 1.0f);
+           ImGui::SliderFloat("AO", this->ao->type.get(), 0.0f, 1.0f);
+
+           ImGui::TreePop();
+    }
+}
+

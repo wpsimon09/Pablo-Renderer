@@ -57,7 +57,7 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
 
         }
         else{
-            auto model = std::make_unique<ModelSceneNode>(modelOath, keepModelMaterial == false ? material : nullptr );
+            auto model = std::make_unique<ModelSceneNode>(modelOath, keepModelMaterial == false ? material : nullptr ,name);
             model->castsShadow(castsShadow);
             model->supportsIbl(supportsIBL);
             if(model->checkStatus()){

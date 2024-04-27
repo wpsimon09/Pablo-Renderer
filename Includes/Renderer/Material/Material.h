@@ -72,6 +72,8 @@ public:
      */
     virtual void unbindTextures(){}
 
+    virtual void renderUI(){};
+
     virtual std::shared_ptr<Texture2D> getAlbedoTexture(){return nullptr;};
 
 

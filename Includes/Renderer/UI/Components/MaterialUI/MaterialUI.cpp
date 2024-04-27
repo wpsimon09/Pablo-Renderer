@@ -23,6 +23,9 @@ void MaterialUI::display(int posX, int posY, int width, int height) {
                 ImVec2(1, 0)
         );
     }
+    else if(material != nullptr){
+        material->renderUI();
+    }
     else
         ImGui::Text("No item selected please select one from the SceneStructure");
 

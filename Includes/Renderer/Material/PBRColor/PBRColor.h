@@ -7,6 +7,7 @@
 
 #include "Renderer/Material/Material.h"
 #include "memory"
+#include "imgui.h"
 
 /***
  * Class representing material that has no textures apply to it
@@ -28,6 +29,9 @@ private:
     std::unique_ptr<PBRMaterial<float>> metalness;
     std::unique_ptr<PBRMaterial<float>> rougness ;
     std::unique_ptr<PBRMaterial<float>> ao;
+public:
+    void renderUI() override;
+
 public:
     friend std::ostream& operator<<(std::ostream& os, const PBRColor& mat);
 
