@@ -8,9 +8,11 @@
 #include "Renderer/UI/Components/LightUI/LightUI.h"
 #include "Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h"
 #include <algorithm>
+// recursion counting mechanism for selecting right renderables
 int i = 0;
 
 void SceneMenu::display(int posX, int posY, int width, int height) {
+    //reset recursion counting each frame
     i = 0;
 
     Component::posX = posX;
@@ -25,18 +27,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     ImGui::BeginChild("Scene", ImVec2((float) width - 20, (float) GLFWHelper::getScreenHeight() / 3), true,
                       ImGuiWindowFlags_HorizontalScrollbar);
 
-    /*for (auto &parent: PabloRenderer::getInstance()->getScene()->root->getChildren()) {
-        for (auto &child: parent->getChildren()) {
-            if (ImGui::Selectable(child->getRenderable()->name.c_str(), selectedSceneNode == i)) {
-                selectedSceneNode = i;
-                child->isSelected = true;
-                MaterialUI::material = child->getRenderable()->getObjectMaterial();
-                SceneNodeUI::sceneNode = child.get();
-            } else
-                child->isSelected = false;
-            i++;
-        }
-    }*/
+    //display sthe entire scene graph structure
     displaySceneNodeMenu(*PabloRenderer::getInstance()->getScene()->root);
 
     ImGui::EndChild();
@@ -87,6 +78,7 @@ void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
         } else
             sceneNode.isSelected = false;
     }
+
     i++;
 
     for(auto &childNode: sceneNode.getChildren()){

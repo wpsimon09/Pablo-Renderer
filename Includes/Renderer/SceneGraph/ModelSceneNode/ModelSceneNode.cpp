@@ -173,6 +173,14 @@ void ModelSceneNode::castsShadow(bool hasShadow) {
     }
 }
 
+void ModelSceneNode::supportsIbl(bool supportsIBL) {
+    for(auto &child: this->children){
+        if(child->getRenderable() != nullptr){
+            child->getRenderable()->getObjectMaterial()->supportsIBL = supportsIBL;
+        }
+    }
+}
+
 
 
 

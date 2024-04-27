@@ -24,6 +24,14 @@ public:
      */
     void castsShadow(bool hasShadow = false);
 
+    /***
+     * Sets if the model is supporting image based lighting
+     * @param supportsIBL true if model should support IBL
+     * @note working IBL pipline has to be attached to the scene
+     * @def ture
+     */
+    void supportsIbl(bool supportsIBL = true);
+
     bool checkStatus(){return this->wasFound;}
 private:
     bool wasFound = false;
