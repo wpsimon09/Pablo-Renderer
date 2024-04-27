@@ -21,8 +21,8 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     ImGui::Text("Scene");
     ImGui::BeginChild("Scene", ImVec2((float) width - 20, (float) GLFWHelper::getScreenHeight() / 3), true,
                       ImGuiWindowFlags_HorizontalScrollbar);
-    int i = 0;
-    for (auto &parent: PabloRenderer::getInstance()->getScene()->root->getChildren()) {
+
+    /*for (auto &parent: PabloRenderer::getInstance()->getScene()->root->getChildren()) {
         for (auto &child: parent->getChildren()) {
             if (ImGui::Selectable(child->getRenderable()->name.c_str(), selectedSceneNode == i)) {
                 selectedSceneNode = i;
@@ -33,7 +33,9 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
                 child->isSelected = false;
             i++;
         }
-    }
+    }*/
+    displaySceneNodeMenu(*PabloRenderer::getInstance()->getScene()->root);
+
     ImGui::EndChild();
 
     if(ImGui::Button("Add new")){
@@ -69,4 +71,23 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
         RenderableCreationUI::display();
     }
 
+}
+
+void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
+    auto& renderalbe = sceneNode.getRenderable();
+    int i = 0;
+    if(renderalbe != nullptr){
+        if (ImGui::Selectable(sceneNode.getRenderable()->name.c_str(), selectedSceneNode == i)) {
+            selectedSceneNode = i;
+            sceneNode.isSelected = true;
+            MaterialUI::material = sceneNode.getRenderable()->getObjectMaterial();
+            SceneNodeUI::sceneNode = &sceneNode;
+        } else
+            sceneNode.isSelected = false;
+    }
+    i++;
+
+    for(auto &childNode: sceneNode.getChildren()){
+        SceneMenu::displaySceneNodeMenu(*childNode);
+    }
 }
