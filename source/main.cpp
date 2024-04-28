@@ -57,7 +57,7 @@ int main() {
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
 
-    auto colorGeometry = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f));
+    auto colorGeometry = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true);
 
     auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(colorGeometry), "Color cube");
 

@@ -18,7 +18,7 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
                 break;
             }
             case COLOR:{
-                material = std::make_shared<PBRColor>(color);
+                material = std::make_shared<PBRColor>(color, supportsIBL);
                 break;
             }
             default:{

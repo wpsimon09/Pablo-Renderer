@@ -4,8 +4,14 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
-    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader color");
+PBRColor::PBRColor(glm::vec3 albedo,bool supportsIBL, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
+    this->supportsIBL = supportsIBL;
+    if(!this->supportsIBL)
+        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader color");
+    else
+        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment-IBL-Color.glsl", "PBR shader color");
+
+    this->shader->supportsIBL = this->supportsIBL;
 
     this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(albedo, shaderNamingConvention + "Albedo");
     this->rougness = std::make_unique<PBRMaterial<float>>(rougness, shaderNamingConvention + "Rougness");
