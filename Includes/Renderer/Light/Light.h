@@ -43,12 +43,6 @@ public:
     void setZ(float pos);
 
     /***
-     * Process input for the light
-     * @param window window in which to check the input in
-     */
-    void processInput(GLFWwindow* window);
-
-    /***
      * Updates the shader that contains the light
      * @param shader shader in which the light should be updated
      * @param isCastingShadows is object which is processing light casting shadow @def false
@@ -63,7 +57,7 @@ public:
     /***
      * Renders the UI for the light properties
      */
-    void renderUi();
+    virtual void renderUi();
 
     /***
      * Renderer which purpose is to visualize light position in the world

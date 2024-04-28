@@ -36,6 +36,16 @@ public:
      * @param foramt format for texture to use @def GL_RGB
      */
     explicit Texture2D(int width, int height, GLenum foramt = GL_RGB);
+
+    /***
+     * Creates texture with passed data
+     * @param widht width of the texture
+     * @param height height of the texture
+     * @param data data passed to the texture
+     * @param format format of the texture @def GL_FLOAT
+     */
+    explicit Texture2D(int width, int height, float* data  ,GLenum format = GL_FLOAT);
+
     ~Texture2D() = default;
 };
 

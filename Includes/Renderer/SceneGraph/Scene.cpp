@@ -5,10 +5,11 @@
 #include "Scene.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
+
 Scene::Scene() {
     Scene::root = std::make_shared<SceneNode>();
     this->camera = std::make_unique<OrbitCamera>();
-    this->light = std::make_unique<Light>(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(20.0f, 20.0f, 20.2f));
+    this->light = std::make_unique<DirectionalLight>(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(20.0f, 20.0f, 20.2f));
 }
 
 

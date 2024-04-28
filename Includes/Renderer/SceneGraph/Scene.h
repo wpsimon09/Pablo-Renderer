@@ -14,6 +14,7 @@
 #include "Renderer/Light/IBLPipeline/IBLPipeLine.h"
 #include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 #include "Renderer/Utils/Camera/OrbitCamera/OrbitCamera.h"
+#include "Renderer/Light/DirectionLight/DirectionalLight.h"
 
 /***
  * Class that holds every information about what should be render and where in the world space
