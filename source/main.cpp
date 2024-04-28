@@ -57,6 +57,10 @@ int main() {
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
 
+    auto colorGeometry = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f));
+
+    auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(colorGeometry), "Color cube");
+
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
 
@@ -64,6 +68,7 @@ int main() {
     scene->add(std::move(floor));
     //scene->add(std::move(skyboxCube));
     scene->add(std::move(pot));
+    scene->add(std::move(cubeColor));
 
     pabloRenderer->attachScene(scene);
 

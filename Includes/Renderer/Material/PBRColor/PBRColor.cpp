@@ -4,10 +4,10 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material(std::move(shader)) {
+PBRColor::PBRColor(glm::vec3 albedo, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
     this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader color");
 
-    this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(albedo, "Albedo");
+    this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(albedo, shaderNamingConvention + "Albedo");
     this->rougness = std::make_unique<PBRMaterial<float>>(rougness, shaderNamingConvention + "Rougness");
     this->metalness = std::make_unique<PBRMaterial<float>>(metallic, shaderNamingConvention + "Metalness");
     this->ao = std::make_unique<PBRMaterial<float>>(ao, shaderNamingConvention + "Ao");
@@ -36,7 +36,7 @@ void PBRColor::configureShader() {
     this->shader->setFloat(this->ao->shaderName, *this->ao->type);
 }
 
-void PBRColor::renderUI() {
+void PBRColor::renderUI(){
     ImGui::ColorPicker3("Color", &this->albedo->type->x);
 
     if(ImGui::TreeNodeEx("Material properties")){
