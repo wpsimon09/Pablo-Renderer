@@ -12,6 +12,7 @@
 #include "vector"
 #include "ostream"
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
+#include "imgui.h"
 
 /***
  * Class representing PBR material with textures
@@ -46,6 +47,8 @@ public:
      * @param texture texture representing material proerty
      */
     void addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture);
+
+    void renderUI() override;
 
     bool hasEmissionTexture = false;
 

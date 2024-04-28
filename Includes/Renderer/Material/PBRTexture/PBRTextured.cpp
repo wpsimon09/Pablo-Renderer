@@ -7,10 +7,8 @@
 PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::string shaderNamingConvention, std::string fileFormat): Material() {
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
-    if(supportsIBL){
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
-    }else
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-Textured-Fragment.glsl", "PBR-Shader");
+    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+
     this->shader->supportsIBL = supportsIBL;
     this->supportsIBL = supportsIBL;
 
@@ -49,6 +47,7 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::s
 
 void PBRTextured::configureShader() {
     this->shader->use();
+    this->shader->setFloat("supportsIBL", this->supportsIBL);
     this->shader->setFloat("hasEmission", this->hasEmissionTexture);
     for (auto &texture : this->textures) {
         if(texture != nullptr){
@@ -75,6 +74,20 @@ PBRTextured::PBRTextured(bool supportsIBL) : Material() {
 std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
     return this->textures[0]->type;
 }
+
+void PBRTextured::renderUI() {
+    ImVec2 imageSize((float)this->getAlbedoTexture()->texWidth/4, (float)this->getAlbedoTexture()->texHeight/4);
+    ImGui::GetWindowDrawList()->AddImage(
+
+            (void *)this->getAlbedoTexture()->ID,
+            ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
+            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x/4, ImGui::GetCursorScreenPos().y + imageSize.y/4), // Use bottom-right corner
+            ImVec2(0, 1),
+            ImVec2(1, 0)
+    );
+
+}
+
 
 
 

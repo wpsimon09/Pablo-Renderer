@@ -3,6 +3,7 @@
 //
 
 #include "AreaLight.h"
+#include "ltc_matrix.h"
 
 AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, color) {
     this->LTC = std::make_unique<Texture2D>(64,64,LTC1, GL_FLOAT);
