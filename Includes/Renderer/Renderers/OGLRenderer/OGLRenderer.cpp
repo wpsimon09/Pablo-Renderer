@@ -20,6 +20,7 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
     if(Scene::root){
         renderSceneGraph(*Scene::root);
         this->scene->light->render(this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
+        this->scene->lights.find(AREA)->second->render(this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
 

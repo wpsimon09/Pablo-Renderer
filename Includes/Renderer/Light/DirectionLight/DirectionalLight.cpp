@@ -20,6 +20,10 @@ DirectionalLight::DirectionalLight(glm::vec3 color, glm::vec3 position) : Light(
 }
 
 void DirectionalLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
+    /***
+     * @note this updates the shader which this light is contributing to
+     */
+
     this->lightRenderable->getObjectMaterial()->shader->use();
     this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
 

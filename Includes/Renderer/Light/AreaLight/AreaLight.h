@@ -16,6 +16,8 @@ public:
 
     void update(std::shared_ptr<Shader> shader, bool isCastingShadows) override;
 
+    void renderUi() override;
+
     void render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) override;
 
 protected:
@@ -24,6 +26,8 @@ protected:
 private:
     std::unique_ptr<Texture2D> LTC;
     std::unique_ptr<Texture2D> LTCInverse;
+
+    std::unique_ptr<LightProperty<glm::vec3>>scale;
 };
 
 
