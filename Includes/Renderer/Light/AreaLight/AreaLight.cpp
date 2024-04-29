@@ -12,14 +12,20 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
     this->scale = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(1.0f, 2.0f, 1.0f), "scale");
     auto geometry = std::make_unique<PlaneGeometry>();
     auto material = std::make_unique<BasicMaterialColor>(color);
+    material->shader->use();
+    material->shader->setVec3("lightColor", this->color->property);
+
     this->lightRenderable = std::make_unique<Renderable>(std::move(geometry),std::move(material));
     lightRenderable->transformations->setPosition(this->position->property);
-    lightRenderable->transformations->setScale(0.2f, 0.2f, 0.2f);
+    lightRenderable->transformations->setScale(4.2f, 1.0f, 4.2f);
 
     this->createLightMatrices();
 }
 
 void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
+    this->lightRenderable->getObjectMaterial()->shader->use();
+    this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
+
     this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->transformations->setScale(this->scale->property);
     this->lightRenderable->update();
@@ -28,6 +34,7 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
 void AreaLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
     auto shader = lightRenderable->getShader();
     ShaderHelper::setTransfomrationMatrices(shader, lightRenderable->transformations->getModelMatrix(), viewMatrix, projectionMatrix );
+
     this->lightRenderable->render();
 }
 
@@ -36,5 +43,4 @@ void AreaLight::updateLightViewMatrix() {
 }
 
 void AreaLight::renderUi() {
-
 }
