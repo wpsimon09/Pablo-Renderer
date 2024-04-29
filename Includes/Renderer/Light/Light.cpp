@@ -10,29 +10,6 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
     this->color = std::make_unique<LightProperty<glm::vec3>>(color, "lightColors[0]");
 }
 
-void Light::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
-
-}
-
-void Light::setX(float pos) {
-    this->position->property.x = pos;
-}
-
-void Light::setY(float pos) {
-    this->position->property.y = pos;
-}
-
-void Light::setZ(float pos) {
-    this->position->property.z= pos;
-}
-
-
-
-
-void Light::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
-
-}
-
 void Light::createLightMatrices() {
     glm::mat4 lightView = glm::lookAt(this->position->property, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     this->lightViewMatrix = std::make_unique<LightProperty<glm::mat4>>(lightView, "lightViewMatrix");
@@ -47,16 +24,30 @@ void Light::updateLightViewMatrix() {
     this->lightViewMatrix = std::make_unique<LightProperty<glm::mat4>>(lightView, "lightViewMatrix");
 }
 
-void Light::renderUi() {
-
-}
-
 void Light::updateInternal() {
     this->lightRenderable->getObjectMaterial()->shader->use();
     this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
     this->updateLightViewMatrix();
     this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->update();
+
+}
+
+void Light::renderUi() {
+    if(ImGui::TreeNodeEx(this->type.c_str())){
+        ImGui::ColorPicker3("Light color", &this->color->property.x,ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
+        ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
+
+        if(ImGui::TreeNodeEx("Position")){
+            ImGui::SliderFloat("X", &position->property.x,-50.0f,50.0f);
+            ImGui::SliderFloat("Y", &position->property.y,-50.0f,50.0f);
+            ImGui::SliderFloat("Z", &position->property.z,-50.0f,50.0f);
+
+            ImGui::TreePop();
+        }
+
+        ImGui::TreePop();
+    }
 
 }
 

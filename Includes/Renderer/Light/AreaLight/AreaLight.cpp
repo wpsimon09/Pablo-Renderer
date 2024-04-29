@@ -6,6 +6,8 @@
 #include "ltc_matrix.h"
 
 AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, color) {
+    this->type = "Area";
+
     this->LTC = std::make_unique<Texture2D>(64,64,LTC1, GL_FLOAT);
     this->LTCInverse = std::make_unique<Texture2D>(64,64, LTC2, GL_FLOAT);
 
@@ -39,4 +41,5 @@ void AreaLight::updateLightViewMatrix() {
 }
 
 void AreaLight::renderUi() {
+    Light::renderUi();
 }

@@ -7,6 +7,7 @@
 #include "Renderer/Geometry/Shapes/ScreenSpaceQuad/ScreenSpaceQuadGeometry.h"
 
 DirectionalLight::DirectionalLight(glm::vec3 color, glm::vec3 position) : Light(color, position) {
+    this->type = "Directional";
     auto geometry = std::make_unique<ScreenSpaceQuadGeometry>();
     auto material = std::make_unique<BasicMaterialTextured>(std::make_shared<Shader>("VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "light sourece"), "Assets/Textures/AdvancedLightning/sun.png", "lightTexture");
     material->shader->use();
@@ -40,17 +41,8 @@ void DirectionalLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) 
 }
 
 void DirectionalLight::renderUi() {
-    ImGui::ColorPicker3("Light color", &this->color->property.x,ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
-    ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
-
-    if(ImGui::TreeNodeEx("Position")){
-        ImGui::SliderFloat("X", &position->property.x,-50.0f,50.0f);
-        ImGui::SliderFloat("Y", &position->property.y,-50.0f,50.0f);
-        ImGui::SliderFloat("Z", &position->property.z,-50.0f,50.0f);
-
-        ImGui::TreePop();
-    }
-
+    //render light specific for each light
+    Light::renderUi();
 }
 
 void DirectionalLight::updateLightViewMatrix() {

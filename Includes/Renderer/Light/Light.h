@@ -38,21 +38,17 @@ public:
      */
     Light(glm::vec3 position, glm::vec3 color);
 
-    void setX(float pos);
-    void setY(float pos);
-    void setZ(float pos);
-
     /***
      * Updates the shader that contains the light
      * @param shader shader in which the light should be updated
      * @param isCastingShadows is object which is processing light casting shadow @def false
      */
-    virtual void update(std::shared_ptr<Shader> shader, bool isCastingShadows = false);
+    virtual void update(std::shared_ptr<Shader> shader, bool isCastingShadows = false){};
 
     /***
      * Renders the light icon in the currently bound frame buffer
      */
-    virtual void render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
+    virtual void render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix){};
 
     /***
      * Renders the UI for the light properties
@@ -68,12 +64,15 @@ public:
     float lightFarPlane = 20.0f;
 
 protected:
+    std::string type;
+
     void createLightMatrices();
 
     /***
      * Updates shader responsible for showing light on scene
      */
     void updateInternal();
+
 
     virtual void updateLightViewMatrix();
 
