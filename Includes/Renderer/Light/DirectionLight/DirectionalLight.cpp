@@ -23,21 +23,14 @@ void DirectionalLight::update(std::shared_ptr<Shader> shader, bool isCastingShad
     /***
      * @note this updates the shader which this light is contributing to
      */
-
-    this->lightRenderable->getObjectMaterial()->shader->use();
-    this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
+    this->updateInternal();
 
     shader->use();
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->calculateFinalLightColor());
 
-    this->updateLightViewMatrix();
-
     glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
     shader->setMat4("lightMatrix", lightSpaceMatrix);
-
-    this->lightRenderable->transformations->setPosition(this->position->property);
-    this->lightRenderable->update();
 }
 
 void DirectionalLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {

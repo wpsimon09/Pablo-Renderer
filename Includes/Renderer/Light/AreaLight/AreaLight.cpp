@@ -23,12 +23,8 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
 }
 
 void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
-    this->lightRenderable->getObjectMaterial()->shader->use();
-    this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
-
-    this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->transformations->setScale(this->scale->property);
-    this->lightRenderable->update();
+    this->updateInternal();
 }
 
 void AreaLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {

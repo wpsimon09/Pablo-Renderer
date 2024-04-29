@@ -69,6 +69,12 @@ public:
 
 protected:
     void createLightMatrices();
+
+    /***
+     * Updates shader responsible for showing light on scene
+     */
+    void updateInternal();
+
     virtual void updateLightViewMatrix();
 
     const float lightSpeed = 0.05f;

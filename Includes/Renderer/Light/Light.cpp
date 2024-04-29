@@ -51,4 +51,13 @@ void Light::renderUi() {
 
 }
 
+void Light::updateInternal() {
+    this->lightRenderable->getObjectMaterial()->shader->use();
+    this->lightRenderable->getObjectMaterial()->shader->setVec3("lightColor", this->color->property);
+    this->updateLightViewMatrix();
+    this->lightRenderable->transformations->setPosition(this->position->property);
+    this->lightRenderable->update();
+
+}
+
 
