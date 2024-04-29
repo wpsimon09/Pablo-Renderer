@@ -15,6 +15,7 @@ uniform float hasNormalMap;
 uniform float isModel;
 uniform float hasEmission;
 uniform float reciviesShadow;
+uniform float supportsIBL;
 
 out VS_OUT {
     vec3 FragPos;
@@ -23,6 +24,7 @@ out VS_OUT {
     vec4 FragPosLight;
     mat3 TBN;
     float hasNormalMap;
+    float supportIBL;
 }vs_out;
 
 void main()
@@ -44,6 +46,7 @@ void main()
     vs_out.FragPosLight = lightMatrix * vec4(vs_out.FragPos ,1.0);
     vs_out.hasNormalMap = hasNormalMap;
     vs_out.TBN = TBN;
+    vs_out.supportIBL = supportsIBL;
 
     gl_Position = projection * view * vec4(vs_out.FragPos, 1.0);
 }

@@ -173,7 +173,9 @@ void main()
         roughness = texture(_roughnessMap, fs_in.TexCoords).r;
         metallic = texture(_metallicMap, fs_in.TexCoords).r;
     }
-    emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
+    if(fs_in.hasEmission == 1){
+        emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
+    }
     ao = texture(_aoMap, fs_in.TexCoords).r;
     vec3 N = getNormalFromMap();
 
@@ -272,7 +274,6 @@ void main()
         ambient = (albedo * ao) *(1-shadow);
     }
 
-
     if(fs_in.hasEmission == 1.0){
         ambient += ( 4.0 * emmisive);
     }
@@ -282,5 +283,5 @@ void main()
     //HDR
     color = color / (color + vec3(1.0));
 
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(ambient, 1.0);
 }

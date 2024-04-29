@@ -43,13 +43,5 @@ void Scene::setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine) {
 }
 
 void Scene::removeSceneNode(int id) {
-    int index = 0;
-    for (auto &i: root->getChildren()){
-        for(auto &j: i->getChildren()){
-            if(j->getID() == id){
 
-            }
-            index++;
-        }
-    }
 }

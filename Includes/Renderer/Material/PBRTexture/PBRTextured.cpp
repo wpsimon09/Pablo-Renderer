@@ -8,9 +8,10 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::s
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
     this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
-
-    this->shader->supportsIBL = supportsIBL;
     this->supportsIBL = supportsIBL;
+    this->shader->supportsIBL = this->supportsIBL;
+    this->hasEmissionTexture = false;
+
 
     // Albedo map
     fullPath = pathToTheDirectory + "/albedo" + fileFormat;
@@ -42,13 +43,12 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::s
     texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
     this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "displacementMap", 5));
 
-    this->hasEmissionTexture = false;
 }
 
 void PBRTextured::configureShader() {
     this->shader->use();
-    this->shader->setFloat("supportsIBL", this->supportsIBL);
     this->shader->setFloat("hasEmission", this->hasEmissionTexture);
+    this->shader->setFloat("supportsIBL", this->supportsIBL);
     for (auto &texture : this->textures) {
         if(texture != nullptr){
             ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);
@@ -67,8 +67,8 @@ void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {
 
 PBRTextured::PBRTextured(bool supportsIBL) : Material() {
     this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
-    this->shader->supportsIBL = supportsIBL;
     this->supportsIBL = supportsIBL;
+    this->shader->supportsIBL = this->supportsIBL;
 }
 
 std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
@@ -77,15 +77,23 @@ std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
 
 void PBRTextured::renderUI() {
     ImVec2 imageSize((float)this->getAlbedoTexture()->texWidth/4, (float)this->getAlbedoTexture()->texHeight/4);
-    ImGui::GetWindowDrawList()->AddImage(
 
-            (void *)this->getAlbedoTexture()->ID,
-            ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x/4, ImGui::GetCursorScreenPos().y + imageSize.y/4), // Use bottom-right corner
-            ImVec2(0, 1),
-            ImVec2(1, 0)
-    );
+    if(ImGui::TreeNodeEx("Textures")){
+        ImGui::Text("Albedo");
+        ImGui::GetWindowDrawList()->AddImage(
 
+                (void *)this->getAlbedoTexture()->ID,
+                ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
+                ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x/4, ImGui::GetCursorScreenPos().y + imageSize.y/4), // Use bottom-right corner
+                ImVec2(0, 1),
+                ImVec2(1, 0)
+        );
+
+        ImGui::TreePop();
+    }
+
+    ImGui::NewLine();
+    ImGui::Checkbox("SupportsIBL",&this->supportsIBL);
 }
 
 

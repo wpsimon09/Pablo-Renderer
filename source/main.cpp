@@ -43,7 +43,7 @@ int main() {
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
-    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false);
+    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", true);
 
     auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
     pot->transformation->setScale(9.0f, 5.0f, 9.0f);

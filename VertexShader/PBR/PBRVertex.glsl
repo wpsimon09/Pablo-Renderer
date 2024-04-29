@@ -52,9 +52,9 @@ void main()
     vs_out.TBN = TBN;
 
     vs_out.hasEmission= hasEmission;
+    vs_out.supportIBL = supportsIBL;
     vs_out.isModel = isModel;
     vs_out.reciviesShadow = reciviesShadow;
-    vs_out.supportIBL = supportsIBL;
 
 
     gl_Position = projection * view * vec4(vs_out.FragPos, 1.0);

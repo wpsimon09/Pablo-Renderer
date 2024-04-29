@@ -6,11 +6,7 @@
 
 PBRColor::PBRColor(glm::vec3 albedo,bool supportsIBL, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
     this->supportsIBL = supportsIBL;
-    if(!this->supportsIBL)
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader color");
-    else
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment-IBL-Color.glsl", "PBR shader color");
-
+    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment-IBL-Color.glsl", "PBR shader color");
     this->shader->supportsIBL = this->supportsIBL;
 
     this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(albedo, shaderNamingConvention + "Albedo");
@@ -35,7 +31,7 @@ void PBRColor::printLog() const {
 
 void PBRColor::configureShader() {
     this->shader->use();
-
+    this->shader->setFloat("supportsIBL", this->supportsIBL);
     this->shader->setVec3(this->albedo->shaderName, *this->albedo->type);
     this->shader->setFloat(this->metalness->shaderName, *this->metalness->type);
     this->shader->setFloat(this->rougness->shaderName, *this->rougness->type);
@@ -52,5 +48,7 @@ void PBRColor::renderUI(){
 
            ImGui::TreePop();
     }
+
+    ImGui::Checkbox("Supports IBL", &this->supportsIBL);
 }
 
