@@ -8,7 +8,14 @@
 void LightUI::display(int posX, int posY, int width, int height) {
     ImGui::Text("Light");
 
-    PabloRenderer::getInstance()->getScene()->light->renderUi();
+    auto lights = PabloRenderer::getInstance()->getScene()->lights.begin();
+
+    while(lights!= PabloRenderer::getInstance()->getScene()->lights.end()){
+        lights->second->renderUi();
+        lights++;
+    }
+
+    //nderer::getInstance()->getScene()->light->renderUi();
     if (ImGui::TreeNode("Debug texture")) {
         ImVec2 imageSize((float) debugTexture->texWidth, (float) debugTexture->texHeight);
         ImGui::GetWindowDrawList()->AddImage(

@@ -30,8 +30,10 @@ void DirectionalLight::update(std::shared_ptr<Shader> shader, bool isCastingShad
     shader->setVec3(this->position->uniformName, this->position->property);
     shader->setVec3(this->color->uniformName, this->calculateFinalLightColor());
 
-    glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
-    shader->setMat4("lightMatrix", lightSpaceMatrix);
+    if(isCastingShadows){
+        glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
+        shader->setMat4("lightMatrix", lightSpaceMatrix);
+    }
 }
 
 void DirectionalLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
