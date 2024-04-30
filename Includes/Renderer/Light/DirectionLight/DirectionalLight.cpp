@@ -44,7 +44,10 @@ void DirectionalLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) 
 
 void DirectionalLight::renderUi() {
     //render light specific for each light
-    Light::renderUi();
+    if (ImGui::TreeNodeEx(this->type.c_str())) {
+        Light::renderUi();
+        ImGui::TreePop();
+    }
 }
 
 void DirectionalLight::updateLightViewMatrix() {

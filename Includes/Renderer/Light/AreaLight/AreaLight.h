@@ -28,6 +28,7 @@ private:
     std::unique_ptr<Texture2D> LTCInverse;
 
     std::unique_ptr<LightProperty<glm::vec3>>scale;
+    std::unique_ptr<LightProperty<glm::vec3>>rotation;
 };
 
 

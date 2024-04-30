@@ -34,10 +34,9 @@ void Light::updateInternal() {
 }
 
 void Light::renderUi() {
-    if(ImGui::TreeNodeEx(this->type.c_str())){
+        ImGui::PushItemWidth(200);
         ImGui::ColorPicker3("Light color", &this->color->property.x,ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
         ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
-
         if(ImGui::TreeNodeEx("Position")){
             ImGui::SliderFloat("X", &position->property.x,-50.0f,50.0f);
             ImGui::SliderFloat("Y", &position->property.y,-50.0f,50.0f);
@@ -45,9 +44,6 @@ void Light::renderUi() {
 
             ImGui::TreePop();
         }
-
-        ImGui::TreePop();
-    }
 
 }
 

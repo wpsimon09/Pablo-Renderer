@@ -39,6 +39,7 @@ void PBRColor::configureShader() {
 }
 
 void PBRColor::renderUI(){
+    ImGui::PushItemWidth(270);
     ImGui::ColorPicker3("Color", &this->albedo->type->x);
 
     if(ImGui::TreeNodeEx("Material properties")){
