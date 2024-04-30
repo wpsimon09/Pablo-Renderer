@@ -7,6 +7,7 @@
 
 #include "Renderer/RenderPass/ScenePass/ScenePass.h"
 #include "Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h"
+#include "Renderer/Enums/RenderPassTypes.h"
 #include "map"
 
 
@@ -26,10 +27,10 @@ public:
 
     void prepareForNextFrame();
 
-    std::shared_ptr<Texture2D> getDebugTexture(std::string renderPassResult);
+    std::shared_ptr<Texture2D> getDebugTexture(RENDER_PASS renderPass);
 private:
     std::unique_ptr<RendererManager> rendererManager;
-    std::map<std::string, std::shared_ptr<Texture2D>> renderResults;
+    std::map<RENDER_PASS, std::shared_ptr<Texture2D>> renderResults;
 
     //hardcoded for now later will be refactored (hopefully)
     std::unique_ptr<ScenePass> scenePass;

@@ -43,6 +43,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Light/DirectionLight/DirectionalLight.cpp
         Includes/Renderer/Light/DirectionLight/DirectionalLight.h
         Includes/Renderer/Enums/LightTypes.h
+        Includes/Renderer/Enums/RenderPassTypes.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
