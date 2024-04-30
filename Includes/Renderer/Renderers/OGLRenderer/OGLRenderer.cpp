@@ -16,10 +16,17 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
 
     glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
+
     this->scene->update();
     if(Scene::root){
         renderSceneGraph(*Scene::root);
-        this->scene->light->render(this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
+
+        auto lights = this->scene->lights.begin();
+        while(lights!= this->scene->lights.end()){
+            lights->second->render(this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
+            lights++;
+        }
+
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";
 
@@ -43,18 +50,24 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
 
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
 
-        this->scene->light->update(shader, renderable->castsShadwo);
 
-        if(shader->supportsIBL){
+        // update the renderable that contains light and lights themselfs
+        auto lights = this->scene->lights.begin();
+        while (lights != this->scene->lights.end()){
+            lights->second->update(shader, renderable->castsShadwo);
+            lights++;
+        }
+
+        if(renderable->getObjectMaterial()->supportsIBL){
             scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);
             textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
         }
 
         if(!this->renderPassInputs.empty()){
             for(auto& input: this->renderPassInputs){
-                input->setSamplerID(textureSamplerCount);
-                ShaderHelper::setTextureToShader(shader, *input,input->shaderName);
                 textureSamplerCount ++;
+                input->setSamplerID(textureSamplerCount);
+                ShaderHelper::setTextureToShader(shader, *input, input->shaderName);
             }
         }
 

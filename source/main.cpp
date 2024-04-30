@@ -25,9 +25,6 @@ int main() {
     auto pabloRenderer = PabloRenderer::getInstance();
     pabloRenderer->init();
 
-    auto PBRShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragmentTextures.glsl", "PBR shader");
-    auto PBRColorShader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment.glsl", "PBR shader2");
-
     auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/hill.hdr");
     iblPipeLine->generateIBLTextures();
 
@@ -46,6 +43,7 @@ int main() {
     auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false);
 
     auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
+    pot->transformation->setPosition(-3.0, 1.0f, 0.0f);
     pot->transformation->setScale(9.0f, 5.0f, 9.0f);
     pot->castsShadow(true);
 

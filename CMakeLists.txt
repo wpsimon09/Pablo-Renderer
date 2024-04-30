@@ -37,6 +37,13 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Utils/RenderableBuilder/RenderableBuilder.cpp
         Includes/Renderer/Utils/RenderableBuilder/RenderableBuilder.h
         Includes/Renderer/Enums/UIBuilderEnums.h
+        Includes/Renderer/Light/AreaLight/AreaLight.cpp
+        Includes/Renderer/Light/AreaLight/AreaLight.h
+        Includes/Renderer/Light/AreaLight/ltc_matrix.h
+        Includes/Renderer/Light/DirectionLight/DirectionalLight.cpp
+        Includes/Renderer/Light/DirectionLight/DirectionalLight.h
+        Includes/Renderer/Enums/LightTypes.h
+        Includes/Renderer/Enums/RenderPassTypes.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

@@ -9,6 +9,7 @@ in VS_OUT {
     vec4 FragPosLight;
     mat3 TBN;
     float hasNormalMap;
+    float supportIBL;
 }fs_in;
 
 
@@ -194,23 +195,28 @@ void main()
         float NdotL = max(dot(N,L), 0.0);
         Lo += (kD * _valAlbedo /PI + specular) * radiance * NdotL;
     }
+    vec3 ambient;
 
-    vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, _valRougness);
+    if(fs_in.supportIBL == 1){
+        vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, _valRougness);
 
-    vec3 kS = F;
-    vec3 kD = vec3(1.0) - kS;
-    kD *= 1.0 - _valMetallic;
+        vec3 kS = F;
+        vec3 kD = vec3(1.0) - kS;
+        kD *= 1.0 - _valMetallic;
 
-    vec3 irradiance = texture(irradianceMap, N).rgb;
-    vec3 diffuse = irradiance * _valAlbedo ;
+        vec3 irradiance = texture(irradianceMap, N).rgb;
+        vec3 diffuse = irradiance * _valAlbedo ;
 
-    const float MAX_REFLECTION_LOD = 4.0;
-    vec3 prefilterColor = textureLod(prefilterMap, R, _valRougness * MAX_REFLECTION_LOD).rgb;
+        const float MAX_REFLECTION_LOD = 4.0;
+        vec3 prefilterColor = textureLod(prefilterMap, R, _valRougness * MAX_REFLECTION_LOD).rgb;
 
-    vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), _valRougness)).rg;
-    vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
+        vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), _valRougness)).rg;
+        vec3 specular = prefilterColor * (kS * brdf.x +  brdf.y);
 
-    vec3 ambient = (kD * diffuse + specular ) * 0.3 ;
+        ambient = (kD * diffuse + specular ) * 0.3 ;
+    }else{
+        ambient = (_valAlbedo * _valAo)*0.5;
+    }
 
     vec3 color = ambient + Lo;
 

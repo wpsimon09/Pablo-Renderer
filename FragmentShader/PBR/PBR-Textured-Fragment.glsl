@@ -12,6 +12,7 @@ in VS_OUT {
     float hasEmission;
     float reciviesShadow;
     float hasNormalMap;
+    float supportIBL;
 }fs_in;
 
 uniform vec3 lightPositions[5];

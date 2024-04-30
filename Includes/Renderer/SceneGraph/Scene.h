@@ -14,6 +14,10 @@
 #include "Renderer/Light/IBLPipeline/IBLPipeLine.h"
 #include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 #include "Renderer/Utils/Camera/OrbitCamera/OrbitCamera.h"
+#include "Renderer/Light/DirectionLight/DirectionalLight.h"
+#include "Renderer/Light/AreaLight/AreaLight.h"
+#include "map"
+#include "Renderer/Enums/LightTypes.h"
 
 /***
  * Class that holds every information about what should be render and where in the world space
@@ -56,6 +60,8 @@ public:
      * Setups all of the properties of the scene
      */
     void setup();
+
+    std::map<LIGHT_TYPE, std::unique_ptr<Light>> lights;
 
     std::unique_ptr<OrbitCamera> camera;
     std::unique_ptr<Light> light;

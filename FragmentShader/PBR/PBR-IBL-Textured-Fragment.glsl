@@ -12,6 +12,7 @@ in VS_OUT {
     float hasEmission;
     float reciviesShadow;
     float hasNormalMap;
+    float supportIBL;
 }fs_in;
 
 uniform samplerCube irradianceMap;
@@ -172,7 +173,9 @@ void main()
         roughness = texture(_roughnessMap, fs_in.TexCoords).r;
         metallic = texture(_metallicMap, fs_in.TexCoords).r;
     }
-    emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
+    if(fs_in.hasEmission == 1){
+        emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
+    }
     ao = texture(_aoMap, fs_in.TexCoords).r;
     vec3 N = getNormalFromMap();
 
@@ -236,12 +239,7 @@ void main()
     //----------------------
     // IMAGE BASED LIGHTING
     //----------------------
-    vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);
-
-    vec3 kS = F;
-    vec3 kD = vec3(1.0) - kS;
-    kD *= 1.0 - metallic;
-
+    vec3 ambient;
     float shadowBias = 0.02;
 
     float shadow;
@@ -251,20 +249,35 @@ void main()
     }else{
         shadow = 0.6;
     }
-    vec3 irradiance = texture(irradianceMap, N).rgb;
 
-    vec3 diffuse = (irradiance * albedo)*(1-shadow);
+    if(fs_in.supportIBL == 1){
 
-    const float MAX_REFLECTION_LOD = 4.0;
-    vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
+        vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);
 
-    vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
-    vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
+        vec3 kS = F;
+        vec3 kD = vec3(1.0) - kS;
+        kD *= 1.0 - metallic;
 
-    vec3 ambient = (kD * diffuse + specular ) *(1-shadow);
+        vec3 irradiance = texture(irradianceMap, N).rgb;
+
+        vec3 diffuse = (irradiance * albedo)*(1-shadow);
+
+        const float MAX_REFLECTION_LOD = 4.0;
+        vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
+
+        vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
+        vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
+
+        ambient = (kD * diffuse + specular ) *(1-shadow);
+    }
+    else{
+        ambient = (albedo * ao) *(1-shadow);
+    }
+
     if(fs_in.hasEmission == 1.0){
         ambient += ( 4.0 * emmisive);
     }
+
     vec3 color = ambient + Lo;
 
     //HDR

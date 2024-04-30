@@ -29,7 +29,7 @@ void DepthRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBu
 void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
     if(renderalbe != nullptr){
-        this->scene->light->update(shader);
+        this->scene->lights.find(DIRECTIONAL)->second->update(shader, renderalbe->castsShadwo);
         this->shader->setMat4("model",sceneNode.getModelMatrix());
         sceneNode.render(scene->renderingConstrains, true);
     }

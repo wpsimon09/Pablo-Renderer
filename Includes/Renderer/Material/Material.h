@@ -50,7 +50,7 @@ class Material {
 public:
     std::shared_ptr<Shader> shader;
 
-    bool supportsIBL;
+    bool supportsIBL = false;
 
     Material() = default;
 

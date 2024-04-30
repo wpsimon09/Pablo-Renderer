@@ -5,10 +5,13 @@
 #include "Scene.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
+
 Scene::Scene() {
     Scene::root = std::make_shared<SceneNode>();
     this->camera = std::make_unique<OrbitCamera>();
-    this->light = std::make_unique<Light>(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(20.0f, 20.0f, 20.2f));
+
+    this->lights.insert(std::make_pair(DIRECTIONAL,std::make_unique<DirectionalLight>(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(20.0f, 20.0f, 20.2f))));
+    this->lights.insert(std::make_pair(AREA, std::make_unique<AreaLight>(glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(1.0f, 1.0f, 1.0f))));
 }
 
 
@@ -39,13 +42,5 @@ void Scene::setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine) {
 }
 
 void Scene::removeSceneNode(int id) {
-    int index = 0;
-    for (auto &i: root->getChildren()){
-        for(auto &j: i->getChildren()){
-            if(j->getID() == id){
 
-            }
-            index++;
-        }
-    }
 }

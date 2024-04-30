@@ -18,24 +18,24 @@ void RenderGraph::init() {
 void RenderGraph::preProcessing() {
     auto renderer = this->rendererManager->requestRenderer(shadowMapPass->rendererType);
     this->shadowMapPass->render(this->scene, renderer);
-    this->renderResults.insert({"ShadowMapPass", shadowMapPass->getRenderedResult()});
+    this->renderResults.insert(std::make_pair(SHADOW_MAP_PASS, shadowMapPass->getRenderedResult()));
 }
 
 void RenderGraph::render() {
     this->scenePass->addInput(shadowMapPass->getRenderedResult());
     auto renderer = this->rendererManager->requestRenderer(scenePass->rendererType);
     this->scenePass->render(scene, renderer);
-    this->renderResults.insert({"ScenePass", scenePass->getRenderedResult()});
+    this->renderResults.insert(std::make_pair(SCENE_PASS, scenePass->getRenderedResult()));
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
     frameBuffer.setColorAttachment(this->scenePass->getRenderedResult());
     frameBuffer.drawInsideSelf();
-    this->renderResults.insert({"FinalPass", frameBuffer.getRenderedResult()});
+    this->renderResults.insert(std::make_pair(FINAL_PASS, frameBuffer.getRenderedResult()));
 }
 
-std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(std::string renderPassResult) {
-    return renderResults.find(renderPassResult)->second;
+std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) {
+    return renderResults.find(renderPass)->second;
 }
 
 void RenderGraph::postProcessing() {
