@@ -11,3 +11,4 @@ PlaneGeometry::PlaneGeometry(std::string name): Geometry() {
     this->shapes = GL_TRIANGLES;
     this->numVerticies = 6;
 }
+

@@ -12,7 +12,7 @@ Light::Light(glm::vec3 position, glm::vec3 color) {
 
 void Light::createLightMatrices() {
     glm::mat4 lightView = glm::lookAt(this->position->property, glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    this->lightViewMatrix = std::make_unique<LightProperty<glm::mat4>>(lightView, "lightViewMatrix");
+    this->lightViewMatrix = std::make_unique<LightProperty< glm::mat4>>(lightView, "lightViewMatrix");
 
     glm::mat4 lightPojection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, this->lightNearPlane, this->lightFarPlane);
     this->lightProjectionMatrix = std::make_unique<LightProperty<glm::mat4>>(lightPojection, "lightProjectionMatrix");

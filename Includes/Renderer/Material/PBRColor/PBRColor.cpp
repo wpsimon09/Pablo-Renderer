@@ -6,6 +6,7 @@
 
 PBRColor::PBRColor(glm::vec3 albedo,bool supportsIBL, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
     this->supportsIBL = supportsIBL;
+
     this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment-IBL-Color.glsl", "PBR shader color");
     this->shader->supportsIBL = this->supportsIBL;
 

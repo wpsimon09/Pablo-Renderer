@@ -1,9 +1,10 @@
 #version 460 core
 
-in vec3 areaLightColor;
 
 out vec4 FragColor;
 
+in vec3 areaLightColor;
+
 void main(){
-    FragColor = vec4(areaLightColor, 1.0);
+    FragColor = vec4(areaLightColor.rgb, 1.0);
 }

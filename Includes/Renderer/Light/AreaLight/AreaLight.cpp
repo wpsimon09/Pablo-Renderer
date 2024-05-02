@@ -59,8 +59,8 @@ void AreaLight::renderUi() {
 
         if (ImGui::TreeNodeEx("Dimensions")) {
 
-            ImGui::SliderFloat("Width", &this->scale->property.x, 0.0f, 100.0f);
-            ImGui::SliderFloat("Height", &this->scale->property.z, 0.0f, 100.0f);
+            ImGui::SliderFloat("Width", &this->scale->property.x, 0.0f, 10.0f);
+            ImGui::SliderFloat("Height", &this->scale->property.z, 0.0f, 10.0f);
 
             ImGui::TreePop();
         }
