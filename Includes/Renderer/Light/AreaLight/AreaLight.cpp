@@ -30,6 +30,10 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
     this->updateInternal();
     this->lightRenderable->transformations->setScale(this->scale->property);
     this->lightRenderable->transformations->setRotations(this->rotation->property);
+
+    auto m = this->lightRenderable->transformations->getModelMatrix();
+    this->sendCornersToShader(this->transformCorners(m), shader);
+
 }
 
 void AreaLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
@@ -66,6 +70,32 @@ void AreaLight::renderUi() {
         }
 
         ImGui::TreePop();
+    }
+}
+
+std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
+    std::vector<glm::vec3> transformeCorner;
+    glm::mat3 m = glm::mat3(modelMatrix);
+    auto corners = this->lightRenderable->getRenderableGeometry()->getAreaLightCornerPoints();
+
+    for (int i = 0; i < corners.size(); ++i) {
+        //transform the edge of the area light
+        transformeCorner.push_back(corners[i] * m);
+    }
+
+    /***
+     * Check if transformation was successful
+     */
+    if(transformeCorner.size() == corners.size()){
+        return transformeCorner;
+    }
+    else
+        throw std::logic_error("Not every corner was transformed");
+}
+
+void AreaLight::sendCornersToShader(std::vector<glm::vec3> corners, std::shared_ptr<Shader> shader) {
+    for (int cornerIndex = 0; cornerIndex < corners.size(); ++cornerIndex) {
+        shader->setVec3("",corners[cornerIndex]);
     }
 }
 

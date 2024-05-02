@@ -64,6 +64,8 @@ public:
      */
     virtual void renderGeomtry();
 
+    std::shared_ptr<Geometry> getRenderableGeometry() {return this->objectGeometry;};
+
     void update();
 
     friend std::ostream &operator <<(std::ostream &os, Renderable& obj);

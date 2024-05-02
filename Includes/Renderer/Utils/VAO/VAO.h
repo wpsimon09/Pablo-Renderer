@@ -36,8 +36,6 @@ private:
 
     GLuint VBO;
     GLuint EBO;
-
-
 };
 
 
