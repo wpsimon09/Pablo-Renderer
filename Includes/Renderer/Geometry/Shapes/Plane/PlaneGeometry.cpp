@@ -25,3 +25,13 @@ void PlaneGeometry::generateVerticies() {
     planeVertices.push_back(Vertex(glm::vec3(1.0f, -0.5f, -1.0f), glm::vec2(1.0f, 1.0f), glm::vec3(0.0f, 1.0f, 0.0f)));
 }
 
+std::vector<glm::vec3> PlaneGeometry::getAreaLightEdgePoints() {
+    std::vector<glm::vec3> areaLightVerticies;
+    areaLightVerticies.push_back(planeVertices[0].position);
+    areaLightVerticies.push_back(planeVertices[1].position);
+    areaLightVerticies.push_back(planeVertices[2].position);
+    areaLightVerticies.push_back(planeVertices[5].position);
+
+    return areaLightVerticies;
+}
+
