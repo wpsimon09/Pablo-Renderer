@@ -27,3 +27,7 @@ void Geometry::render() const {
     glGetError();
 }
 
+std::vector<glm::vec3> Geometry::getAreaLightCornerPoints() {
+    return std::vector<glm::vec3>();
+}
+

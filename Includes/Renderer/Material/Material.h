@@ -52,6 +52,8 @@ public:
 
     bool supportsIBL = false;
 
+    bool supportsAreaLight = false;
+
     Material() = default;
 
     /***

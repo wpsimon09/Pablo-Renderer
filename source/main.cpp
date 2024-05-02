@@ -40,7 +40,7 @@ int main() {
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
-    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false);
+    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false, false);
 
     auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
     pot->transformation->setPosition(-3.0, 1.0f, 0.0f);
@@ -55,7 +55,7 @@ int main() {
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
 
-    auto colorGeometry = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true);
+    auto colorGeometry = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true, false);
 
     auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(colorGeometry), "Color cube");
 

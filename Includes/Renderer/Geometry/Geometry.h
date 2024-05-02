@@ -41,7 +41,7 @@ public:
      * Gets the edges of the shape for area light
      * @return edges of the geometry as vector of glm::vec3 positions
      */
-    virtual std::vector<glm::vec3>getAreaLightCornerPoints(){};
+    virtual std::vector<glm::vec3>getAreaLightCornerPoints();
 
     std::string getName() const;
 

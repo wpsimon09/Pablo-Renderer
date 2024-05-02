@@ -4,11 +4,12 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::string shaderNamingConvention, std::string fileFormat): Material() {
+PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL,bool supportsAreaLight, std::string shaderNamingConvention, std::string fileFormat): Material() {
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
     this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
     this->supportsIBL = supportsIBL;
+    this->supportsAreaLight = supportsAreaLight;
     this->shader->supportsIBL = this->supportsIBL;
     this->hasEmissionTexture = false;
 
@@ -45,6 +46,13 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL, std::s
 
 }
 
+PBRTextured::PBRTextured(bool supportsIBL, bool supportsAreaLight) : Material() {
+    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+    this->supportsIBL = supportsIBL;
+    this->supportsAreaLight = supportsAreaLight;
+    this->shader->supportsIBL = this->supportsIBL;
+}
+
 void PBRTextured::configureShader() {
     this->shader->use();
     this->shader->setFloat("hasEmission", this->hasEmissionTexture);
@@ -65,11 +73,6 @@ void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {
 }
 
 
-PBRTextured::PBRTextured(bool supportsIBL) : Material() {
-    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
-    this->supportsIBL = supportsIBL;
-    this->shader->supportsIBL = this->supportsIBL;
-}
 
 std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
     return this->textures[0]->type;

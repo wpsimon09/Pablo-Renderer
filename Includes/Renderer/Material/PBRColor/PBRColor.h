@@ -23,7 +23,7 @@ public:
      * @param ao ambient occulsion value
      * @param shaderNamingConvention naming convention of the shader defualt is _val eg: _valAlbedo, _valMetallic
      */
-    explicit PBRColor(glm::vec3 albedo = glm::vec3(0.4f, 0.4f, 0.4f),bool supportsIBL = false, float metallic = 0.7f , float rougness = 0.2f, float ao= 0.6f, std::string shaderNamingConvention = "_val");
+    explicit PBRColor(glm::vec3 albedo = glm::vec3(0.4f, 0.4f, 0.4f),bool supportsIBL = false,bool supportsAreaLight = false, float metallic = 0.7f , float rougness = 0.2f, float ao= 0.6f, std::string shaderNamingConvention = "_val");
 private:
     std::unique_ptr<PBRMaterial<glm::vec3>> albedo;
     std::unique_ptr<PBRMaterial<float>> metalness;
