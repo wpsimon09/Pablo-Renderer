@@ -20,6 +20,9 @@ public:
     explicit PlaneGeometry(std::string name = "plane");
 
     std::vector<glm::vec3>getAreaLightEdgePoints();
+private:
+    void generateVerticies();
+    std::vector<Vertex> planeVertices;
 
 };
 
