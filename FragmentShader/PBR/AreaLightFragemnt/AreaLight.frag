@@ -19,12 +19,12 @@ uniform float _valMetallic;
 uniform float _valRougness;
 uniform float _valAo;
 
-uniform float lightColor;
+uniform vec3 lightColor;
 
 uniform sampler2D LTC;
 uniform sampler2D LTC_Inverse;
 
-vec3 areaLightCorners[4];
+uniform vec3 areaLightCorners[4];
 
 const float LUT_SIZE  = 64.0; // ltc_texture size
 const float LUT_SCALE = (LUT_SIZE - 1.0)/LUT_SIZE;
@@ -126,7 +126,7 @@ void main() {
 
     vec3 result = vec3(1.0);
 
-    result = lightColor* (specular + _valAlbedo * diffuse);
+    result = lightColor * ((specular + _valAlbedo) * (diffuse+_valAlbedo));
 
     FragColor = vec4(result, 1.0);
 }

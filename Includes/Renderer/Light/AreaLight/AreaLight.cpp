@@ -9,7 +9,12 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
     this->type = "Area";
 
     this->ltc = std::make_unique<Texture2D>(64, 64, LTC, GL_FLOAT);
+    this->ltc->shaderName = "LTC";
+    this->ltc->setSamplerID(0);
+
     this->ltcInverse = std::make_unique<Texture2D>(64, 64, LTC_Inverse, GL_FLOAT);
+    this->ltcInverse->shaderName = "LTC_Inverse";
+    this->ltcInverse->setSamplerID(1);
 
     this->scale = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(1.2f, 1.0f, 2.2f), "scale");
     this->rotation = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(0.0f, 0.0f, 0.0f), "rotation");
@@ -35,6 +40,11 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
 
     auto m = this->lightRenderable->transformations->getModelMatrix();
     this->sendCornersToShader(this->transformCorners(m), shader);
+
+    shader->use();
+    shader->setVec3("lightColor", this->calculateFinalLightColor());
+    ShaderHelper::setTextureToShader(shader, *this->ltc, this->ltc->shaderName);
+    ShaderHelper::setTextureToShader(shader, *this->ltcInverse, this->ltcInverse->shaderName);
 
 }
 
@@ -96,8 +106,9 @@ std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
 }
 
 void AreaLight::sendCornersToShader(std::vector<glm::vec3> corners, std::shared_ptr<Shader> shader) {
-    for (auto corner : corners) {
-        shader->setVec3("",corner);
+    for (int corner = 0; corner < corners.size(); ++corner) {
+        shader->use();
+        shader->setVec3("areaLightCorners["+std::to_string(corner)+"]",corners[corner]);
     }
 }
 
