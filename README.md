@@ -5,7 +5,7 @@ As title suggests Pablo is a rendering engine and OpenGL abstraction framework t
 
 It provides fast and convenient way of rendering various geometry with different materials 
 
-This renderer is preProcessing using 
+This renderer is build using 
 
 **[GLFW](https://www.glfw.org)** for window management
 
@@ -35,6 +35,7 @@ This renderer is preProcessing using
 - Shadow mapping
 - UI editor
 - Model Loading from UI
+- Area lights with LTCs (Linearly transform cosines)
 ----
 
 # Example
@@ -70,11 +71,19 @@ pabloRenderer->render();
 
 The result of the snippet will look like this (after small alterations using UI)
 
+Or we can simply do it via UI by clicking `Add new` button and following instructions on the screen
+
 ![img.png](Assets/ReadmeImages/pablo-tutorial.png)
 
-As of now renderer's shader only support one directional light which is going to change in the near future
+As of now renderer's shader only support one directional light and 1 area light if selected which is going to change in the near future
 
 # Images
 ![Pablo](Assets/ReadmeImages/pablo-4.png)
+
+
+
+![Area light](Assets/ReadmeImages/area-light.png)
+
+
 
 
