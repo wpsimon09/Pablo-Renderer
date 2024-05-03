@@ -38,8 +38,8 @@ private:
      */
     void sendCornersToShader(std::vector<glm::vec3> corners, std::shared_ptr<Shader> shader);
 
-    std::unique_ptr<Texture2D> LTC;
-    std::unique_ptr<Texture2D> LTCInverse;
+    std::unique_ptr<Texture2D> ltc;
+    std::unique_ptr<Texture2D> ltcInverse;
 
     std::unique_ptr<LightProperty<glm::vec3>>scale;
     std::unique_ptr<LightProperty<glm::vec3>>rotation;

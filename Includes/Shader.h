@@ -14,6 +14,7 @@ class Shader
 public:
     unsigned int ID;
     bool supportsIBL = false;
+    bool supportsAreaLight = false;
     std::string name;
     Shader(const char* vertexPath, const char* fragmentPath, std::string name = "undefined")
     {
@@ -44,7 +45,7 @@ public:
         }
         catch (std::ifstream::failure& e)
         {
-            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
+            std::cerr << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
         }
         const char* vShaderCode = vertexCode.c_str();
         const char* fShaderCode = fragmentCode.c_str();
@@ -149,7 +150,7 @@ private:
             if (!success)
             {
                 glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                std::cerr << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
             }
         }
         else
@@ -158,10 +159,10 @@ private:
             if (!success)
             {
                 glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::PROGRAM_LINKING_ERROR at shader" << this->ID << " of type : " << type << "\n" << infoLog << "\n-- -------------------------------------------------- - -- " << std::endl;
+                std::cerr << "ERROR::PROGRAM_LINKING_ERROR at shader" << this->ID << " of type : " << type << "\n" << infoLog << "\n-- -------------------------------------------------- - -- " << std::endl;
             }
             else
-                std::cout << "Shaders linked successfull \n SHADER NAME: " << this->name << " \xE2\x9C\x93 " << std::endl;
+                std::cerr << "Shaders linked successfull \n SHADER NAME: " << this->name << " \xE2\x9C\x93 " << std::endl;
         }
     }
 };

@@ -8,13 +8,15 @@
 AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, color) {
     this->type = "Area";
 
-    this->LTC = std::make_unique<Texture2D>(64, 64, LTC1, GL_FLOAT);
-    this->LTCInverse = std::make_unique<Texture2D>(64, 64, LTC2, GL_FLOAT);
+    this->ltc = std::make_unique<Texture2D>(64, 64, LTC, GL_FLOAT);
+    this->ltcInverse = std::make_unique<Texture2D>(64, 64, LTC_Inverse, GL_FLOAT);
 
-    this->scale = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(4.2f, 1.0f, 4.2f), "scale");
+    this->scale = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(1.2f, 1.0f, 2.2f), "scale");
     this->rotation = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(0.0f, 0.0f, 0.0f), "rotation");
+
     auto geometry = std::make_unique<PlaneGeometry>();
     auto material = std::make_unique<BasicMaterialColor>(color);
+
     material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
 
@@ -75,12 +77,12 @@ void AreaLight::renderUi() {
 
 std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
     std::vector<glm::vec3> transformeCorner;
-    glm::mat3 m = glm::mat3(modelMatrix);
+    auto m = glm::mat3(modelMatrix);
     auto corners = this->lightRenderable->getRenderableGeometry()->getAreaLightCornerPoints();
 
-    for (int i = 0; i < corners.size(); ++i) {
+    for (auto corner : corners) {
         //transform the edge of the area light
-        transformeCorner.push_back(corners[i] * m);
+        transformeCorner.push_back(corner * m);
     }
 
     /***
@@ -94,8 +96,8 @@ std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
 }
 
 void AreaLight::sendCornersToShader(std::vector<glm::vec3> corners, std::shared_ptr<Shader> shader) {
-    for (int cornerIndex = 0; cornerIndex < corners.size(); ++cornerIndex) {
-        shader->setVec3("",corners[cornerIndex]);
+    for (auto corner : corners) {
+        shader->setVec3("",corner);
     }
 }
 
