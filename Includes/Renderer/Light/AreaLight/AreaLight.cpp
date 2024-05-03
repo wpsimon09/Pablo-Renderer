@@ -34,10 +34,11 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
 }
 
 void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
-    this->updateInternal();
     this->lightRenderable->transformations->setScale(this->scale->property);
     this->lightRenderable->transformations->setRotations(this->rotation->property);
+    this->updateInternal();
 
+    this->lightRenderable->transformations->computeModelMatrix();
     auto m = this->lightRenderable->transformations->getModelMatrix();
     this->sendCornersToShader(this->transformCorners(m), shader);
 
@@ -63,7 +64,17 @@ void AreaLight::updateLightViewMatrix() {
 void AreaLight::renderUi() {
     if (ImGui::TreeNodeEx(this->type.c_str())) {
 
-        Light::renderUi();
+        ImGui::PushItemWidth(200);
+        ImGui::ColorPicker3("Light color", &this->color->property.x,ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
+        ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
+
+        if(ImGui::TreeNodeEx("Position")){
+            ImGui::SliderFloat("X", &this->position->property.x,-50.0f,50.0f);
+            ImGui::SliderFloat("Y", &this->position->property.y,-50.0f,50.0f);
+            ImGui::SliderFloat("Z", &this->position->property.z,-50.0f,50.0f);
+
+            ImGui::TreePop();
+        }
         if (ImGui::TreeNodeEx("Rotation")) {
 
             ImGui::SliderFloat("X", &this->rotation->property.x, 0.0f, 360.0f);
@@ -87,12 +98,12 @@ void AreaLight::renderUi() {
 
 std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
     std::vector<glm::vec3> transformeCorner;
-    auto m = glm::mat3(modelMatrix);
+
     auto corners = this->lightRenderable->getRenderableGeometry()->getAreaLightCornerPoints();
 
     for (auto corner : corners) {
         //transform the edge of the area light
-        transformeCorner.push_back(corner * m);
+        transformeCorner.push_back(glm::vec3(glm::vec4(corner,1.0f) * modelMatrix));
     }
 
     /***

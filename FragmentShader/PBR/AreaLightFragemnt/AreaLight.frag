@@ -126,7 +126,9 @@ void main() {
 
     vec3 result = vec3(1.0);
 
-    result = lightColor * ((specular + _valAlbedo) * (diffuse+_valAlbedo));
+    result = lightColor * ((specular + _valAlbedo) * (diffuse+ _valAlbedo));
+
+    result *= _valAo;
 
     FragColor = vec4(result, 1.0);
 }
