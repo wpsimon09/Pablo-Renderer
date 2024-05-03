@@ -162,7 +162,7 @@ private:
                 std::cerr << "ERROR::PROGRAM_LINKING_ERROR at shader" << this->ID << " of type : " << type << "\n" << infoLog << "\n-- -------------------------------------------------- - -- " << std::endl;
             }
             else
-                std::cerr << "Shaders linked successfull \n SHADER NAME: " << this->name << " \xE2\x9C\x93 " << std::endl;
+                std::cout << "Shaders linked successfull \n SHADER NAME: " << this->name << " \xE2\x9C\x93 " << std::endl;
         }
     }
 };

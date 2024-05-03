@@ -50,14 +50,16 @@ int main() {
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
-    auto floor = std::make_unique<Renderable>(planeGeometry, wall, "Floor");
+
+    auto color1 = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true, false);
+    auto color2 = std::make_unique<PBRColor>(glm::vec3(0.8f, 1.0f, 1.0f), true, false);
+
+    auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(color1), "Color cube");
+
+    auto floor = std::make_unique<Renderable>(planeGeometry, std::move(color2), "Floor");
     floor->transformations->setPosition(0.0f, -2.0f, 0.0f);
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
-
-    auto colorGeometry = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true, false);
-
-    auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(colorGeometry), "Color cube");
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
