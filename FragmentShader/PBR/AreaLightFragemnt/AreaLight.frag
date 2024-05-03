@@ -14,10 +14,12 @@ in VS_OUT {
 
 uniform vec3 camPos;
 
-uniform vec3 _valAlbedo;
+uniform vec3  _valAlbedo;
 uniform float _valMetallic;
 uniform float _valRougness;
 uniform float _valAo;
+
+uniform float lightColor;
 
 uniform sampler2D LTC;
 uniform sampler2D LTC_Inverse;
@@ -105,7 +107,7 @@ void main() {
 
     //use roughness and cosine of view direction around normal vector to sample the precomputed matrices
     vec2 uv = vec2(_valRougness, sqrt(1.0f - NdotV));
-    uv = ub*LUT_SCALE + LUT_BIAS;
+    uv = uv*LUT_SCALE + LUT_BIAS;
 
     vec4 t1 = texture(LTC_Inverse, uv);
 
@@ -116,4 +118,15 @@ void main() {
         vec3(   0, 1,    0),
         vec3(t1.z, 0, t1.w)
     );
+
+    vec3 diffuse = CalculateAreaLightLo(N,V,P,mat3(1.0),areaLightCorners,false);
+    vec3 specular = CalculateAreaLightLo(N,V,P, Minv, areaLightCorners, false);
+
+    specular *= _valAlbedo*t2.x + (1.0 - _valAlbedo)*t2.y;
+
+    vec3 result = vec3(1.0);
+
+    result = lightColor* (specular + _valAlbedo * diffuse);
+
+    FragColor = vec4(result, 1.0);
 }
