@@ -12,6 +12,8 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
     this->ltc->shaderName = "LTC";
     this->ltc->setSamplerID(0);
 
+    this->color->uniformName = "lightColor";
+
     this->ltcInverse = std::make_unique<Texture2D>(64, 64, LTC_Inverse, GL_FLOAT);
     this->ltcInverse->shaderName = "LTC_Inverse";
     this->ltcInverse->setSamplerID(1);
@@ -27,18 +29,22 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
 
     this->lightRenderable = std::make_unique<Renderable>(std::move(geometry), std::move(material));
     lightRenderable->transformations->setPosition(this->position->property);
-    lightRenderable->transformations->setScale(this->rotation->property);
+    lightRenderable->transformations->setScale(this->scale->property);
     lightRenderable->transformations->setRotations(this->rotation->property);
 
     this->createLightMatrices();
 }
 
 void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
-    this->lightRenderable->transformations->setScale(this->scale->property);
+    this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->transformations->setRotations(this->rotation->property);
+    this->lightRenderable->transformations->setScale(this->scale->property);
+
     this->updateInternal();
 
-    this->lightRenderable->transformations->computeModelMatrix();
+    this->lightRenderable->getShader()->use();
+    this->lightRenderable->getShader()->setVec3("lightColor", this->color->property);
+
     auto m = this->lightRenderable->transformations->getModelMatrix();
     this->sendCornersToShader(this->transformCorners(m), shader);
 

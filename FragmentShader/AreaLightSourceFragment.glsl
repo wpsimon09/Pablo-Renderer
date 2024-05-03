@@ -3,8 +3,8 @@
 
 out vec4 FragColor;
 
-in vec3 areaLightColor;
+uniform vec3 lightColor;
 
 void main(){
-    FragColor = vec4(areaLightColor.rgb, 1.0);
+    FragColor = vec4(lightColor, 1.0);
 }
