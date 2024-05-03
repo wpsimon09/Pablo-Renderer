@@ -78,14 +78,17 @@ glm::mat4 Transformations::computeLocalModelMatrix() {
 
 void Transformations::setPosition(float x, float y, float z) {
     this->position = glm::vec3(x, y, z);
+    this->isDirty = true;
 }
 
 void Transformations::setRotations(float x, float y, float z) {
     this->rotations = glm::vec3(x, y, z);
+    this->isDirty = true;
 }
 
 void Transformations::setScale(float x, float y, float z) {
     this->scale = glm::vec3(x, y, z);
+    this->isDirty = true;
 }
 
 

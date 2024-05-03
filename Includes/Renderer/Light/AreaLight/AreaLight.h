@@ -24,8 +24,22 @@ protected:
     void updateLightViewMatrix() override;
 
 private:
-    std::unique_ptr<Texture2D> LTC;
-    std::unique_ptr<Texture2D> LTCInverse;
+    /***
+     * Transforms the edges of the area light so that it can be moved and scaled
+     * @param modelMatrix model matrix of the renderable that represents area light e.g. plane
+     * @returns transformed set of area light corners to the shader
+     */
+    std::vector<glm::vec3> transformCorners(glm::mat4 modelMatrix);
+
+    /***
+     * Sends set of transformed corners to the shader that can process area light
+     * @param corners corners that form area light
+     * @param shader shader that is capable of processing the area light
+     */
+    void sendCornersToShader(std::vector<glm::vec3> corners, std::shared_ptr<Shader> shader);
+
+    std::unique_ptr<Texture2D> ltc;
+    std::unique_ptr<Texture2D> ltcInverse;
 
     std::unique_ptr<LightProperty<glm::vec3>>scale;
     std::unique_ptr<LightProperty<glm::vec3>>rotation;

@@ -19,6 +19,11 @@ public:
      */
     explicit PlaneGeometry(std::string name = "plane");
 
+    std::vector<glm::vec3>getAreaLightCornerPoints() override;
+private:
+    void generateVerticies();
+    std::vector<Vertex> planeVertices;
+
 };
 
 

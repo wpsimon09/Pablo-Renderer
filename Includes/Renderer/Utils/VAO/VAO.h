@@ -20,7 +20,7 @@ public:
     bool hasTangents;
     bool hasBitangents;
     bool hasEBO;
-    VAO(std::vector<Vertex> vertecies, std::vector<unsigned  int> indecies);
+    VAO(std::vector<Vertex> vertecies, std::vector<unsigned  int> indecies = {});
     VAO(float vertecies[], float numberOfComponents, bool hasNormals = true, bool hasTexCoords = true);
 
     void bind() override;
@@ -36,8 +36,6 @@ private:
 
     GLuint VBO;
     GLuint EBO;
-
-
 };
 
 

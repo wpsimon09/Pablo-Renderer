@@ -58,10 +58,8 @@ const std::shared_ptr<Material> &Renderable::getObjectMaterial() const {
 }
 
 void Renderable::update() {
-    if(!isPartOfSceneNode){
         transformations->computeModelMatrix();
         this->modelMatrix = transformations->getModelMatrix();
-    }
 }
 
 void Renderable::renderGeomtry() {

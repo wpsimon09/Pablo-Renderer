@@ -40,7 +40,7 @@ int main() {
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
-    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false);
+    auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false, false);
 
     auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
     pot->transformation->setPosition(-3.0, 1.0f, 0.0f);
@@ -50,14 +50,16 @@ int main() {
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
-    auto floor = std::make_unique<Renderable>(planeGeometry, wall, "Floor");
+
+    auto color1 = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true, true);
+    auto color2 = std::make_unique<PBRColor>(glm::vec3(0.8f, 1.0f, 1.0f), true, true);
+
+    auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(color1), "Color cube");
+
+    auto floor = std::make_unique<Renderable>(planeGeometry, std::move(color2), "Floor");
     floor->transformations->setPosition(0.0f, -2.0f, 0.0f);
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
-
-    auto colorGeometry = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true);
-
-    auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(colorGeometry), "Color cube");
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
