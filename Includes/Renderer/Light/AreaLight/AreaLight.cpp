@@ -36,7 +36,6 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
 }
 
 void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
-    this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->transformations->setRotations(this->rotation->property);
     this->lightRenderable->transformations->setScale(this->scale->property);
 
@@ -45,6 +44,7 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
     this->lightRenderable->getShader()->use();
     this->lightRenderable->getShader()->setVec3("lightColor", this->color->property);
 
+    this->lightRenderable->transformations->computeModelMatrix();
     auto m = this->lightRenderable->transformations->getModelMatrix();
     this->sendCornersToShader(this->transformCorners(m), shader);
 
@@ -70,19 +70,8 @@ void AreaLight::updateLightViewMatrix() {
 void AreaLight::renderUi() {
     if (ImGui::TreeNodeEx(this->type.c_str())) {
 
-        ImGui::PushItemWidth(200);
-        ImGui::ColorPicker3("Light color", &this->color->property.x,ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
-        ImGui::SliderFloat("Light intensity", &this->lightStrength,0.0f,50.0f);
-
-        if(ImGui::TreeNodeEx("Position")){
-            ImGui::SliderFloat("X", &this->position->property.x,-50.0f,50.0f);
-            ImGui::SliderFloat("Y", &this->position->property.y,-50.0f,50.0f);
-            ImGui::SliderFloat("Z", &this->position->property.z,-50.0f,50.0f);
-
-            ImGui::TreePop();
-        }
+        Light::renderUi();
         if (ImGui::TreeNodeEx("Rotation")) {
-
             ImGui::SliderFloat("X", &this->rotation->property.x, 0.0f, 360.0f);
             ImGui::SliderFloat("Y", &this->rotation->property.y, 0.0f, 360.0f);
             ImGui::SliderFloat("Z", &this->rotation->property.z, 0.0f, 360.0f);
@@ -106,19 +95,18 @@ std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
     std::vector<glm::vec3> transformeCorner;
 
     auto corners = this->lightRenderable->getRenderableGeometry()->getAreaLightCornerPoints();
-
-    for (auto corner : corners) {
+    //TODO try to send the matrix to the shader and preform transformation there and send points to the vertex shader of the material instad of the fragment shader
+    for (auto corner: corners) {
         //transform the edge of the area light
-        transformeCorner.push_back(glm::vec3(glm::vec4(corner,1.0f) * modelMatrix));
+        transformeCorner.emplace_back(glm::vec4(corner, 1.0f) * modelMatrix);
     }
 
     /***
      * Check if transformation was successful
      */
-    if(transformeCorner.size() == corners.size()){
+    if (transformeCorner.size() == corners.size()) {
         return transformeCorner;
-    }
-    else
+    } else
         throw std::logic_error("Not every corner was transformed");
 }
 
@@ -128,4 +116,3 @@ void AreaLight::sendCornersToShader(std::vector<glm::vec3> corners, std::shared_
         shader->setVec3("areaLightCorners["+std::to_string(corner)+"]",corners[corner]);
     }
 }
-
