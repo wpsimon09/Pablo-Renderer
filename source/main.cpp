@@ -56,7 +56,7 @@ int main() {
 
     auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(color1), "Color cube");
 
-    auto floor = std::make_unique<Renderable>(planeGeometry, std::move(color2), "Floor");
+    auto floor = std::make_unique<Renderable>(sphereGeometry, std::move(color2), "Floor");
     floor->transformations->setPosition(0.0f, -2.0f, 0.0f);
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
