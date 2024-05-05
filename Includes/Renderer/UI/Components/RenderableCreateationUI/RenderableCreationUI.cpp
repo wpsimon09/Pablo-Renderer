@@ -77,6 +77,8 @@ void RenderableCreationUI::display() {
         ImGui::SameLine();
         ImGui::Checkbox("Supports IBL", &RenderableBuilder::supportsIBL);
         ImGui::NewLine();
+        ImGui::Checkbox("Supports AreaLight", &RenderableBuilder::supportsAreaLight);
+        ImGui::NewLine();
         if(ImGui::Button("Add")){
             auto createdSceneNode = RenderableBuilder::buildRenderable();
             if(createdSceneNode != nullptr){

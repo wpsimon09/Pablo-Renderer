@@ -22,6 +22,7 @@ public:
     inline static std::string textureDirectory;
     inline static bool castsShadow;
     inline static bool supportsIBL;
+    inline static bool supportsAreaLight;
     inline static bool keepModelMaterial = false;
     inline static char text[32] = "";
 

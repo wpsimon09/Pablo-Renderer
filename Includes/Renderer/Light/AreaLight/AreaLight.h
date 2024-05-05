@@ -20,6 +20,9 @@ public:
 
     void render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) override;
 
+    Texture2D& getLTC() {return *this->ltc;}
+    Texture2D& getInverseLTC() {return *this->ltcInverse;}
+
 protected:
     void updateLightViewMatrix() override;
 
