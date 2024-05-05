@@ -41,10 +41,6 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
 
     this->updateInternal();
 
-    this->lightRenderable->getShader()->use();
-    this->lightRenderable->getShader()->setVec3("lightColor", this->color->property);
-
-    this->lightRenderable->transformations->computeModelMatrix();
     auto m = this->lightRenderable->transformations->getModelMatrix();
     this->sendCornersToShader(this->transformCorners(m), shader);
 
@@ -92,20 +88,20 @@ void AreaLight::renderUi() {
 }
 
 std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
-    std::vector<glm::vec3> transformeCorner;
+    std::vector<glm::vec3> transformedCorner;
 
     auto corners = this->lightRenderable->getRenderableGeometry()->getAreaLightCornerPoints();
     //TODO try to send the matrix to the shader and preform transformation there and send points to the vertex shader of the material instad of the fragment shader
     for (auto corner: corners) {
         //transform the edge of the area light
-        transformeCorner.emplace_back(glm::vec4(corner, 1.0f) * modelMatrix);
+        transformedCorner.emplace_back(glm::vec4(corner, 1.0f) * modelMatrix);
     }
 
     /***
      * Check if transformation was successful
      */
-    if (transformeCorner.size() == corners.size()) {
-        return transformeCorner;
+    if (transformedCorner.size() == corners.size()) {
+        return transformedCorner;
     } else
         throw std::logic_error("Not every corner was transformed");
 }
