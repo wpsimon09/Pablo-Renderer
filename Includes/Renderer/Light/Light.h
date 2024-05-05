@@ -60,11 +60,18 @@ public:
      */
     std::shared_ptr<Renderable> lightRenderable;
 
+    void prepareForNextFrame();
+
+    unsigned int getUpdatedSampler() {return this->currentSampler;}
+    void setCurrentSampler(int sampler) {this->currentSampler = sampler;}
+
     float lightNearPlane = 1.0f;
     float lightFarPlane = 20.0f;
 
 protected:
     std::string type;
+
+    unsigned int currentSampler = 0;
 
     void createLightMatrices();
 

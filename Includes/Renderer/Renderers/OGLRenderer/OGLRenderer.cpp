@@ -50,13 +50,20 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
 
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
 
-
         // update the renderable that contains light and lights themselfs
+
+        if(shader->supportsAreaLight){
+            this->scene->lights.find(AREA)->second->setCurrentSampler(textureSamplerCount);
+        }
+
+
         auto lights = this->scene->lights.begin();
         while (lights != this->scene->lights.end()){
             lights->second->update(shader, renderable->castsShadwo);
             lights++;
         }
+
+
 
         if(renderable->getObjectMaterial()->supportsIBL){
             scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);

@@ -47,4 +47,9 @@ void Light::renderUi() {
 
 }
 
+void Light::prepareForNextFrame() {
+    this->numbersOfSamplerUsed = 0;
+    this->currentSampler = 0;
+}
+
 

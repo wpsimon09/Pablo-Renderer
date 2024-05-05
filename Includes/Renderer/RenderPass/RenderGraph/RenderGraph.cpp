@@ -46,4 +46,9 @@ void RenderGraph::prepareForNextFrame() {
     this->renderResults.clear();
     this->scenePass->prepareForNextFrame();
     this->shadowMapPass->prepareForNextFrame();
+    auto lightStart = scene->lights.begin();
+    while(lightStart != scene->lights.end()){
+        lightStart->second->prepareForNextFrame();
+        lightStart++;
+    }
 }
