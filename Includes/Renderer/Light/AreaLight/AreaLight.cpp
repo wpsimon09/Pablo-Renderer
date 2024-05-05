@@ -94,7 +94,7 @@ std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
     //TODO try to send the matrix to the shader and preform transformation there and send points to the vertex shader of the material instad of the fragment shader
     for (auto corner: corners) {
         //transform the edge of the area light
-        transformedCorner.emplace_back(glm::vec4(corner, 1.0f) * modelMatrix);
+        transformedCorner.emplace_back(modelMatrix* glm::vec4(corner, 1.0f) );
     }
 
     /***
