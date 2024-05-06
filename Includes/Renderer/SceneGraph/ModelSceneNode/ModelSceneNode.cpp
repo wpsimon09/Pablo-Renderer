@@ -123,7 +123,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 }
 
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>();
+    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(true,false);
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 

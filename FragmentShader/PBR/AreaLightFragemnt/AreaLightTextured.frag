@@ -40,8 +40,6 @@ uniform sampler2D LTC;
 uniform sampler2D LTC_Inverse;
 uniform vec3 areaLightCorners[4];
 
-
-
 const float LUT_SIZE = 64.0; // ltc_texture size
 const float LUT_SCALE = (LUT_SIZE - 1.0) / LUT_SIZE;
 const float LUT_BIAS = 0.5 / LUT_SIZE;
@@ -61,6 +59,11 @@ vec3 getNormalFromMap()
     mat3 TBN = mat3(T, B, N);
 
     return normalize(TBN * tangentNormal);
+}
+
+vec3 FresnelShlickRoughness(float cosTheta, vec3 F0, float roughness)
+{
+    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 
 vec3 IntegrateEdgeVec(vec3 v1, vec3 v2) {
@@ -155,6 +158,9 @@ void main() {
     //---------------------
     vec3 V = normalize(camPos - fs_in.FragPos);
     vec3 P = fs_in.FragPos;
+    vec3 F0 = vec3(0.04);
+    F0 = mix(F0, albedo, metallic);
+
     float NdotV = clamp(dot(N, V), 0.0, 1.0);
 
     //----------------
@@ -189,8 +195,7 @@ void main() {
     //-----------
     vec3 ambient = vec3(0.0f);
     if(fs_in.supportIBL == 1){
-
-        vec3 F = vec3(t1.y);
+        vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);;
 
         vec3 kS = F;
         vec3 kD = vec3(1.0) - kS;
@@ -199,7 +204,7 @@ void main() {
         vec3 irradiance = texture(irradianceMap, N).rgb;
 
         const float MAX_REFLECTION_LOD = 4.0;
-        vec3 prefilterColor = textureLod(prefilterMap, NdotV, roughness * MAX_REFLECTION_LOD).rgb;
+        vec3 prefilterColor = textureLod(prefilterMap, vec3(NdotV), roughness * MAX_REFLECTION_LOD).rgb;
 
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
         vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
@@ -214,7 +219,7 @@ void main() {
         ambient += ( 4.0 * emmisive);
     }
 
-    vec3 result = ambient + LO;
+    vec3 result = ambient + Lo;
 
 
     FragColor = vec4(result, 1.0);

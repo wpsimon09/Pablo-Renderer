@@ -56,13 +56,11 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
             this->scene->lights.find(AREA)->second->setCurrentSampler(textureSamplerCount);
         }
 
-
         auto lights = this->scene->lights.begin();
         while (lights != this->scene->lights.end()){
             lights->second->update(shader, renderable->castsShadwo);
             lights++;
         }
-
 
 
         if(renderable->getObjectMaterial()->supportsIBL){
