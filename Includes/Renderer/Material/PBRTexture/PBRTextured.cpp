@@ -52,9 +52,9 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL,bool su
 
 PBRTextured::PBRTextured(bool supportsIBL, bool supportsAreaLight) : Material() {
     if(supportsAreaLight){
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
-    }else{
         this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/AreaLightFragemnt/AreaLightTextured.frag", "PBR-IBL-AreaLightr");
+    }else{
+        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
     }
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;

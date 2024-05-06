@@ -68,8 +68,8 @@ int main() {
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
     //scene->add(std::move(skyboxCube));
-    scene->add(std::move(pot));
-    scene->add(std::move(cubeColor));
+    //scene->add(std::move(pot));
+    //scene->add(std::move(cubeColor));
 
     pabloRenderer->attachScene(scene);
 

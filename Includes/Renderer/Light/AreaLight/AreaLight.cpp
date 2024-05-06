@@ -45,14 +45,12 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
     this->sendCornersToShader(this->transformCorners(m), shader);
 
     this->ltc->setSamplerID(this->currentSampler);
-    currentSampler+=1;
-    this->ltcInverse->setSamplerID(this->currentSampler);
+    this->ltcInverse->setSamplerID(this->currentSampler++);
 
     shader->use();
     shader->setVec3("lightColor", this->calculateFinalLightColor());
     ShaderHelper::setTextureToShader(shader, *this->ltc, this->ltc->shaderName);
     ShaderHelper::setTextureToShader(shader, *this->ltcInverse, this->ltcInverse->shaderName);
-
 }
 
 void AreaLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
@@ -95,7 +93,6 @@ std::vector<glm::vec3> AreaLight::transformCorners(glm::mat4 modelMatrix) {
     std::vector<glm::vec3> transformedCorner;
 
     auto corners = this->lightRenderable->getRenderableGeometry()->getAreaLightCornerPoints();
-    //TODO try to send the matrix to the shader and preform transformation there and send points to the vertex shader of the material instad of the fragment shader
     for (auto corner: corners) {
         //transform the edge of the area light
         transformedCorner.emplace_back(modelMatrix* glm::vec4(corner, 1.0f) );

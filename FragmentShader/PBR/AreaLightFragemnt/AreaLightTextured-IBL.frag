@@ -24,6 +24,10 @@ vec3 emmisive;
 uniform vec3 camPos;
 uniform vec3 lightColor;
 
+uniform samplerCube irradianceMap;
+uniform samplerCube prefilterMap;
+uniform sampler2D BRDFtexture;
+
 uniform sampler2D _albedoMap;
 uniform sampler2D _roughnessMap;
 uniform sampler2D _metallicMap;
@@ -146,7 +150,7 @@ void main() {
         emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
     }
     ao = texture(_aoMap, fs_in.TexCoords).r;
-    vec3 N = fs_in.Normal;
+    vec3 N = getNormalFromMap();
 
 
     //---------------------
@@ -190,7 +194,27 @@ void main() {
     // IBL PART
     //-----------
     vec3 ambient = vec3(0.0f);
-    ambient = albedo * 0.3;
+    vec3 testF;
+    if(fs_in.supportIBL == 1){
+        vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);;
+        testF = F;
+        vec3 kS = F;
+        vec3 kD = vec3(1.0) - kS;
+        kD *= 1.0 - metallic;
+
+        vec3 irradiance = texture(irradianceMap, N).rgb;
+
+        const float MAX_REFLECTION_LOD = 4.0;
+        vec3 prefilterColor = textureLod(prefilterMap, vec3(NdotV), roughness * MAX_REFLECTION_LOD).rgb;
+
+        vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
+        vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
+
+        ambient = (kD * diffuse + specular ) *(0.5);
+    }
+    else{
+        ambient = albedo * 0.3;
+    }
 
     if(fs_in.hasEmission == 1.0){
         ambient += ( 4.0 * emmisive);
