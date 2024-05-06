@@ -127,7 +127,7 @@ void main() {
 
     vec3 result = vec3(1.0);
 
-    result = lightColor * ((specular * _valAlbedo) * (diffuse+ _valAlbedo));
+    result = lightColor * ((specular) + (diffuse * _valAlbedo));
 
     vec3 color = (_valAlbedo * _valAo)*0.6;
     color += result;
