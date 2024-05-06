@@ -7,7 +7,11 @@
 PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL,bool supportsAreaLight, std::string shaderNamingConvention, std::string fileFormat): Material() {
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
-    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+    if(supportsAreaLight){
+        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/AreaLightFragemnt/AreaLightTextured.frag", "PBR-IBL-AreaLightr");
+    }else{
+        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+    }
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
     this->shader->supportsIBL = this->supportsIBL;
@@ -47,7 +51,11 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL,bool su
 }
 
 PBRTextured::PBRTextured(bool supportsIBL, bool supportsAreaLight) : Material() {
-    this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+    if(supportsAreaLight){
+        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/AreaLightFragemnt/AreaLightTextured.frag", "PBR-IBL-AreaLightr");
+    }else{
+        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+    }
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
     this->shader->supportsIBL = this->supportsIBL;

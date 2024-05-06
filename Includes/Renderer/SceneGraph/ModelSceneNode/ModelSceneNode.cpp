@@ -6,11 +6,13 @@
 
 #include <utility>
 
-ModelSceneNode::ModelSceneNode(std::string path, std::shared_ptr<Material> mat, std::string name): SceneNode() {
+ModelSceneNode::ModelSceneNode(std::string path,bool supportsIBL, bool supportsAreaLight, std::shared_ptr<Material> mat, std::string name): SceneNode() {
     Assimp::Importer importer;
 
     this->material = std::move(mat);
     this->name = name;
+    this->supportsIBL = supportsIBL;
+    this->supportsAreaLight = supportsAreaLight;
     const aiScene *scene = importer.ReadFile(path.c_str(),
                                              aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace );
 
@@ -123,7 +125,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 }
 
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>();
+    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(true,true);
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 

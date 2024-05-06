@@ -119,6 +119,7 @@ void main() {
         vec3(t1.z, 0, t1.w)
     );
 
+
     vec3 diffuse = CalculateAreaLightLo(N,V,P,mat3(1.0),areaLightCorners,false);
     vec3 specular = CalculateAreaLightLo(N,V,P, Minv, areaLightCorners, false);
 
@@ -126,9 +127,10 @@ void main() {
 
     vec3 result = vec3(1.0);
 
-    result = lightColor * ((specular + _valAlbedo) * (diffuse+ _valAlbedo));
+    result = lightColor * ((specular) + (diffuse * _valAlbedo));
 
-    result *= _valAo;
+    vec3 color = (_valAlbedo * _valAo)*0.6;
+    color += result;
 
-    FragColor = vec4(result, 1.0);
+    FragColor = vec4(color, 1.0);
 }

@@ -38,7 +38,6 @@ uniform sampler2D _aoMap;
 uniform sampler2D _rougnessMetalnessMap;
 uniform sampler2D _emmisionMap;
 
-
 const float PI = 3.14159265359;
 
 float caclualteShadow(vec4 FragPosLight, float bias)

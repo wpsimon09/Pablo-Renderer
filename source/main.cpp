@@ -39,7 +39,7 @@ int main() {
 
     auto gridRenderable = std::make_unique<Grid>();
 
-    auto goldMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true);
+    auto goldMaterial = std::make_shared<PBRTextured>("Assets/Textures/PBR/Gold", true, true);
     auto wall = std::make_shared<PBRTextured>("Assets/Textures/PBR/Wall", false, false);
 
     auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf");
@@ -54,7 +54,8 @@ int main() {
     auto color1 = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true, true);
     auto color2 = std::make_unique<PBRColor>(glm::vec3(0.8f, 1.0f, 1.0f), true, true);
 
-    auto cubeColor = std::make_unique<Renderable>(cubeGeometry, std::move(color1), "Color cube");
+
+    auto cubeColor = std::make_unique<Renderable>(sphereGeometry, std::move(goldMaterial), "Sphere");
 
     auto floor = std::make_unique<Renderable>(sphereGeometry, std::move(color2), "Floor");
     floor->transformations->setPosition(0.0f, -2.0f, 0.0f);
@@ -67,8 +68,8 @@ int main() {
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
     //scene->add(std::move(skyboxCube));
-    scene->add(std::move(pot));
-    scene->add(std::move(cubeColor));
+    //scene->add(std::move(pot));
+    //scene->add(std::move(cubeColor));
 
     pabloRenderer->attachScene(scene);
 
