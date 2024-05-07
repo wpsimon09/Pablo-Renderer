@@ -45,7 +45,8 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
     this->sendCornersToShader(this->transformCorners(m), shader);
 
     this->ltc->setSamplerID(this->currentSampler);
-    this->ltcInverse->setSamplerID(this->currentSampler++);
+    this->currentSampler +=1;
+    this->ltcInverse->setSamplerID(this->currentSampler);
 
     shader->use();
     shader->setVec3("lightColor", this->calculateFinalLightColor());

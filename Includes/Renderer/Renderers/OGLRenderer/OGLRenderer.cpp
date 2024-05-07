@@ -53,6 +53,15 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         // update the renderable that contains light and lights themselfs
 
         if(shader->supportsAreaLight){
+            textureSamplerCount += 2;
+        }
+
+        if(renderable->getObjectMaterial()->supportsIBL){
+            scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);
+            textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
+        }
+
+        if(shader->supportsAreaLight){
             this->scene->lights.find(AREA)->second->setCurrentSampler(textureSamplerCount+1);
         }
 
@@ -62,14 +71,7 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
             lights++;
         }
 
-        if(shader->supportsAreaLight){
-            textureSamplerCount += 2;
-        }
-
-        if(renderable->getObjectMaterial()->supportsIBL){
-            scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);
-            textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
-        }
+        textureSamplerCount += 2;
 
         if(!this->renderPassInputs.empty()){
             for(auto& input: this->renderPassInputs){

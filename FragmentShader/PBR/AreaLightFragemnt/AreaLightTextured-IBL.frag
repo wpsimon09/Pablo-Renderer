@@ -194,10 +194,8 @@ void main() {
     // IBL PART
     //-----------
     vec3 ambient = vec3(0.0f);
-    vec3 testF;
     if(fs_in.supportIBL == 1){
-        vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);;
-        testF = F;
+        vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);
         vec3 kS = F;
         vec3 kD = vec3(1.0) - kS;
         kD *= 1.0 - metallic;
