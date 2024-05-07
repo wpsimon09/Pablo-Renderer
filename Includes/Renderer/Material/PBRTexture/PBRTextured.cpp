@@ -15,6 +15,7 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL,bool su
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
     this->shader->supportsIBL = this->supportsIBL;
+    this->shader->supportsAreaLight = supportsAreaLight;
     this->hasEmissionTexture = false;
 
 
@@ -59,6 +60,7 @@ PBRTextured::PBRTextured(bool supportsIBL, bool supportsAreaLight) : Material() 
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
     this->shader->supportsIBL = this->supportsIBL;
+    this->shader->supportsAreaLight = supportsAreaLight;
 }
 
 void PBRTextured::configureShader() {
