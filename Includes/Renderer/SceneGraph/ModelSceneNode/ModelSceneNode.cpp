@@ -103,7 +103,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
-    std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(name == "" ? std::string(mesh->mName.C_Str()) : name,vertecies, indecies);
+    std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(name.empty() ? std::string(mesh->mName.C_Str()) : name,vertecies, indecies);
 
     std::shared_ptr<Material> renderableMaterial;
     bool hasModelTextures;

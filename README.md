@@ -82,7 +82,7 @@ As of now renderer's shader only support one directional light and 1 area light 
 
 
 
-![Area light](Assets/ReadmeImages/area-light-2.png)
+![Area light](Assets/ReadmeImages/area-light-3.png)
 
 
 

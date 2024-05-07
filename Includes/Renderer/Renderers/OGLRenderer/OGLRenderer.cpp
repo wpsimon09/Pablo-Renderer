@@ -62,7 +62,7 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         }
 
         if(shader->supportsAreaLight){
-            this->scene->lights.find(AREA)->second->setCurrentSampler(textureSamplerCount+1);
+            this->scene->lights.find(AREA)->second->setCurrentSampler(textureSamplerCount);
         }
 
         auto lights = this->scene->lights.begin();
