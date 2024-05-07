@@ -146,7 +146,7 @@ void main() {
         emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
     }
     ao = texture(_aoMap, fs_in.TexCoords).r;
-    vec3 N = fs_in.Normal;
+    vec3 N = getNormalFromMap();
 
 
     //---------------------
