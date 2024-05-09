@@ -59,7 +59,8 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Inc
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ImGui)
 
 # Find ASSIMP package and link against it
-set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
+set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.3")
+set(BUILD_SHARED_LIBS ON)
 find_package(assimp REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
 set(BUILD_ASSIMP_TOOLS OFF)
@@ -92,10 +93,5 @@ file(COPY ${SOURCE} DESTINATION ${OUT_SOURCE})
 file(COPY ${INCLUDES} DESTINATION ${OUT_INCLUDES})
 file(COPY ${3rdPARTY_LIBRARIES} DESTINATION ${OUT_3rdPARTY_LIBRARIES})
 
-# Find ASSIMP package and link against it
-set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.0")
-find_package(assimp REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
-set(BUILD_ASSIMP_TOOLS ON)
 
 #IAM GUI INTEGRATION
