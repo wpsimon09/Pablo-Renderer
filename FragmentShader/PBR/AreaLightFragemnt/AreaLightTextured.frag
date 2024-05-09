@@ -162,8 +162,10 @@ void main() {
     F0 = mix(F0, albedo, metallic);
 
     float NdotV = clamp(dot(N, V), 0.0, 1.0);
+    vec3 R = reflect(-V, N);
 
-    //----------------
+
+//----------------
     // SAMPLE FORM LTC
     //----------------
     vec2 uv = vec2(roughness, sqrt(1.0f - NdotV));
@@ -194,7 +196,6 @@ void main() {
     // IBL PART
     //-----------
     vec3 ambient = vec3(0.0f);
-    ambient = albedo * 0.3;
 
     if(fs_in.supportIBL == 1){
         vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);;
@@ -205,12 +206,12 @@ void main() {
         vec3 irradiance = texture(irradianceMap, N).rgb;
 
         const float MAX_REFLECTION_LOD = 4.0;
-        vec3 prefilterColor = textureLod(prefilterMap, vec3(NdotV), roughness * MAX_REFLECTION_LOD).rgb;
+        vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
 
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
         vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
 
-        ambient = (kD * diffuse + specular ) *(0.5);
+        ambient = (kD * diffuse + specular ) *(0.3);
     }
     else{
         ambient = albedo * 0.3;

@@ -55,7 +55,7 @@ int main() {
     auto color2 = std::make_unique<PBRColor>(glm::vec3(0.8f, 1.0f, 1.0f), true, true);
 
 
-    auto cubeColor = std::make_unique<Renderable>(sphereGeometry, std::move(goldMaterial), "Sphere");
+    auto cubeColor = std::make_unique<Renderable>(sphereGeometry, std::move(wall), "Sphere");
 
     auto floor = std::make_unique<Renderable>(sphereGeometry, std::move(color2), "Floor");
     floor->transformations->setPosition(0.0f, -2.0f, 0.0f);
