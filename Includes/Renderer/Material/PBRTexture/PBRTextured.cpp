@@ -4,7 +4,7 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(bool supportsIBL,bool supportsAreaLight,std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material() {
+PBRTextured::PBRTextured(bool supportsAreaLight,std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material() {
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
     if(supportsAreaLight){
@@ -12,7 +12,7 @@ PBRTextured::PBRTextured(bool supportsIBL,bool supportsAreaLight,std::string pat
     }else{
         this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
     }
-    this->supportsIBL = supportsIBL;
+    this->supportsIBL = true;
     this->supportsAreaLight = supportsAreaLight;
     this->shader->supportsIBL = this->supportsIBL;
     this->shader->supportsAreaLight = this->supportsAreaLight;

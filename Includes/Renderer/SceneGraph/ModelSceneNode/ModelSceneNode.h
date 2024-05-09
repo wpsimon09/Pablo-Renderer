@@ -15,7 +15,7 @@
 
 class ModelSceneNode:public SceneNode  {
 public:
-    explicit ModelSceneNode(std::string path,bool supportsIBL = true, bool supportsAreaLight = false,  std::shared_ptr<Material> mat = nullptr, std::string name = "");
+    explicit ModelSceneNode(std::string path, bool supportsAreaLight = false,  std::shared_ptr<Material> mat = nullptr, std::string name = "");
     std::string directory;
     std::string name;
     /***

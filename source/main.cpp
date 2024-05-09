@@ -39,10 +39,10 @@ int main() {
 
     auto gridRenderable = std::make_unique<Grid>();
 
-    auto goldMaterial = std::make_shared<PBRTextured>(true, true, "Assets/Textures/PBR/Gold");
-    auto wall = std::make_shared<PBRTextured>(false, false, "Assets/Textures/PBR/Wall");
+    auto goldMaterial = std::make_shared<PBRTextured>(true, "Assets/Textures/PBR/Gold");
+    auto wall = std::make_shared<PBRTextured>(true, "Assets/Textures/PBR/Wall");
 
-    auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf", true, false);
+    auto pot = std::make_unique<ModelSceneNode>("Assets/Model/pot/brass_pot_01_2k.gltf", true);
     pot->transformation->setPosition(-3.0, 1.0f, 0.0f);
     pot->transformation->setScale(9.0f, 5.0f, 9.0f);
     pot->castsShadow(true);

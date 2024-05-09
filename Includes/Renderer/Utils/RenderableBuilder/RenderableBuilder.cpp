@@ -14,7 +14,7 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
 
         switch(selectedMateial){
             case TEXTURE:{
-                 material = std::make_shared<PBRTextured>(supportsIBL, supportsAreaLight,textureDirectory);
+                 material = std::make_shared<PBRTextured>(supportsAreaLight,textureDirectory);
                 break;
             }
             case COLOR:{
@@ -57,7 +57,7 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
 
         }
         else{
-            auto model = std::make_unique<ModelSceneNode>(modelOath, supportsIBL,supportsAreaLight,keepModelMaterial == false ? material : nullptr ,name);
+            auto model = std::make_unique<ModelSceneNode>(modelOath,supportsAreaLight,keepModelMaterial == false ? material : nullptr ,name);
             model->castsShadow(castsShadow);
             if(model->checkStatus()){
                 return std::move(model);
