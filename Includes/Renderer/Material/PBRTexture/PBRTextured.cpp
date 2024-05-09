@@ -4,7 +4,7 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL,bool supportsAreaLight, std::string shaderNamingConvention, std::string fileFormat): Material() {
+PBRTextured::PBRTextured(bool supportsIBL,bool supportsAreaLight,std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat): Material() {
     std::string fullPath;
     std::unique_ptr<Texture2D> texture;
     if(supportsAreaLight){
@@ -15,52 +15,41 @@ PBRTextured::PBRTextured(std::string pathToTheDirectory,bool supportsIBL,bool su
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
     this->shader->supportsIBL = this->supportsIBL;
-    this->shader->supportsAreaLight = supportsAreaLight;
+    this->shader->supportsAreaLight = this->supportsAreaLight;
     this->hasEmissionTexture = false;
 
+    if(!pathToTheDirectory.empty()){
+        // Albedo map
+        fullPath = pathToTheDirectory + "/albedo" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "albedoMap", 0));
 
-    // Albedo map
-    fullPath = pathToTheDirectory + "/albedo" + fileFormat;
-    texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
-    this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "albedoMap", 0));
+        // Roughness map
+        fullPath = pathToTheDirectory + "/roughness" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "roughnessMap", 1));
 
-    // Roughness map
-    fullPath = pathToTheDirectory + "/roughness" + fileFormat;
-    texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
-    this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "roughnessMap", 1));
+        // Metallic map
+        fullPath = pathToTheDirectory + "/metallic" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "metallicMap", 2));
 
-    // Metallic map
-    fullPath = pathToTheDirectory + "/metallic" + fileFormat;
-    texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
-    this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "metallicMap", 2));
+        // Normal map
+        fullPath = pathToTheDirectory + "/normal" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "normalMap", 3));
 
-    // Normal map
-    fullPath = pathToTheDirectory + "/normal" + fileFormat;
-    texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
-    this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "normalMap", 3));
+        // Ambient Occlusion map
+        fullPath = pathToTheDirectory + "/ao" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "aoMap", 4));
 
-    // Ambient Occlusion map
-    fullPath = pathToTheDirectory + "/ao" + fileFormat;
-    texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
-    this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "aoMap", 4));
-
-    // Depth map
-    fullPath = pathToTheDirectory + "/displacement" + fileFormat;
-    texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
-    this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "displacementMap", 5));
-
-}
-
-PBRTextured::PBRTextured(bool supportsIBL, bool supportsAreaLight) : Material() {
-    if(supportsAreaLight){
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/AreaLightFragemnt/AreaLightTextured.frag", "PBR-IBL-AreaLightr");
-    }else{
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex.glsl","FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl", "PBR-IBL-Shader");
+        // Depth map
+        fullPath = pathToTheDirectory + "/displacement" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        this->addTexture(std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "displacementMap", 5));
     }
-    this->supportsIBL = supportsIBL;
-    this->supportsAreaLight = supportsAreaLight;
-    this->shader->supportsIBL = this->supportsIBL;
-    this->shader->supportsAreaLight = supportsAreaLight;
+
 }
 
 void PBRTextured::configureShader() {
@@ -81,8 +70,6 @@ void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {
         this->samplerCount ++;
     }
 }
-
-
 
 std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
     return this->textures[0]->type;

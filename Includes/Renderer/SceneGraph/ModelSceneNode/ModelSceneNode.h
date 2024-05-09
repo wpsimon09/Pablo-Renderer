@@ -34,8 +34,8 @@ public:
 
     bool checkStatus(){return this->wasFound;}
 private:
-    bool supportsIBL;
-    bool supportsAreaLight;
+    bool supportsIBL = false;
+    bool supportsAreaLight = false;
     bool wasFound = false;
     std::shared_ptr<Material> material = nullptr;
     std::shared_ptr<Shader> shader;

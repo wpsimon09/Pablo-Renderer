@@ -31,8 +31,8 @@ public:
     unsigned int getNumberOfIndecies();
     unsigned int getNumberOfVerticies();
 private:
-    unsigned int numOfIndecies;
-    unsigned int numOfVerticies;
+    unsigned int numOfIndecies = 0;
+    unsigned int numOfVerticies = 0;
 
     GLuint VBO;
     GLuint EBO;

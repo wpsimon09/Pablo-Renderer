@@ -51,7 +51,6 @@ public:
     std::shared_ptr<Shader> shader;
 
     bool supportsIBL = false;
-
     bool supportsAreaLight = false;
 
     Material() = default;

@@ -71,7 +71,7 @@ public:
 protected:
     std::string type;
 
-    unsigned int currentSampler = 0;
+    unsigned int currentSampler;
 
     void createLightMatrices();
 

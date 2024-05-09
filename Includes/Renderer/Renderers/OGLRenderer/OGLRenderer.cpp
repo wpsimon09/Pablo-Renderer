@@ -52,13 +52,9 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
 
         // update the renderable that contains light and lights themselfs
 
-        if(shader->supportsAreaLight){
-            textureSamplerCount += 2;
-        }
-
         if(renderable->getObjectMaterial()->supportsIBL){
             scene->getIblPipeLine()->configureShader(shader, textureSamplerCount);
-            textureSamplerCount += scene->getIblPipeLine()->getSamplersCount();
+            textureSamplerCount += scene->getIblPipeLine()->getSamplersCount()+1;
         }
 
         if(shader->supportsAreaLight){

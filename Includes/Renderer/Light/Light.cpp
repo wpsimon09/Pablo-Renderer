@@ -8,6 +8,7 @@
 Light::Light(glm::vec3 position, glm::vec3 color) {
     this->position = std::make_unique<LightProperty<glm::vec3>>(position, "lightPositions[0]");
     this->color = std::make_unique<LightProperty<glm::vec3>>(color, "lightColors[0]");
+    this->currentSampler = 0;
 }
 
 void Light::createLightMatrices() {
