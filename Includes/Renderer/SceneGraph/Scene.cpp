@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
+static int iterator = 0;
 
 Scene::Scene() {
     Scene::root = std::make_shared<SceneNode>();
@@ -42,5 +43,7 @@ void Scene::setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine) {
 }
 
 void Scene::removeSceneNode(int id) {
+    if(Scene::root){
 
+    }
 }

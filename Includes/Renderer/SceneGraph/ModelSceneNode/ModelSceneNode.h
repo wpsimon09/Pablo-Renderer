@@ -40,6 +40,7 @@ private:
     std::shared_ptr<Material> material = nullptr;
     std::shared_ptr<Shader> shader;
     bool hasEmissionTexture = false;
+    int processedRenderableCount = 0;
     std::vector<std::shared_ptr<Texture2D>>loadedTextures;
 
     /***

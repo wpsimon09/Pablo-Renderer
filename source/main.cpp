@@ -61,6 +61,7 @@ int main() {
     floor->transformations->setPosition(0.0f, -2.0f, 0.0f);
     floor->transformations->setScale(10.0f, 1.0f, 10.0f);
     floor->recievesShadow = true;
+    floor->setBackFaceCull(false);
 
     std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);

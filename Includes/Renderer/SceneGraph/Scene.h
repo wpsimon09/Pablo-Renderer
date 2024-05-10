@@ -49,6 +49,7 @@ public:
      */
     void add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent = root);
 
+
     void removeSceneNode(int id);
 
     /***

@@ -26,6 +26,7 @@ class Renderable {
 protected:
     std::shared_ptr<Geometry> objectGeometry;
     std::shared_ptr<Material> objectMaterial;
+    glm::mat4 modelMatrix;
 public:
     std::unique_ptr<Transformations> transformations;
     bool castsShadwo = false;
@@ -33,8 +34,8 @@ public:
     bool isModel = false;
     const std::shared_ptr<Material> &getObjectMaterial() const;
     bool isPartOfSceneNode = false;
-protected:
-    glm::mat4 modelMatrix;
+private:
+    bool backFaceCulled = true;
 public:
     std::string name = "unnamed renderable";
 
@@ -73,6 +74,10 @@ public:
     void setModelMatrix(glm::mat4 modelMatrix)              {this->modelMatrix = modelMatrix;}
 
     void setMaterial(std::shared_ptr<Material> material)    {this->objectMaterial = material;};
+
+    bool getBackFaceCull()                                  {return this->backFaceCulled;}
+
+    void setBackFaceCull(bool isCulled)                     {this->backFaceCulled = isCulled;}
 
     std::shared_ptr<Shader> getShader();
 
