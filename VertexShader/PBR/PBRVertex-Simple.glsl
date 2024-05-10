@@ -25,6 +25,7 @@ out VS_OUT {
     mat3 TBN;
     float hasNormalMap;
     float supportIBL;
+    float reciviesShadow;
 }vs_out;
 
 void main()
@@ -47,6 +48,7 @@ void main()
     vs_out.hasNormalMap = hasNormalMap;
     vs_out.TBN = TBN;
     vs_out.supportIBL = supportsIBL;
+    vs_out.reciviesShadow = reciviesShadow;
 
     gl_Position = projection * view * vec4(vs_out.FragPos, 1.0);
 }
