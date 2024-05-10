@@ -10,6 +10,7 @@ in VS_OUT {
     mat3 TBN;
     float hasNormalMap;
     float supportIBL;
+    float reciviesShadow;
 }fs_in;
 
 

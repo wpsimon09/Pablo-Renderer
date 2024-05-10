@@ -2,17 +2,15 @@
 
 out vec4 FragColor;
 
-out VS_OUT {
+in VS_OUT {
     vec3 FragPos;
     vec3 Normal;
     vec2 TexCoords;
     vec4 FragPosLight;
     mat3 TBN;
-    float isModel;
-    float hasEmission;
-    float reciviesShadow;
     float hasNormalMap;
     float supportIBL;
+    float reciviesShadow;
 }fs_in;
 
 uniform samplerCube irradianceMap;
@@ -191,11 +189,12 @@ void main() {
     // IBL and SHADOW PART
     //----------------------
     vec3 ambient = vec3(0.0f);
-    float shadow = 0.6;
+    float shadow = 0.3;
     float shadowBias = 0.02;
     if(fs_in.reciviesShadow == 1){
         shadow = caclualteShadow(fs_in.FragPosLight, shadowBias);
     }
+
     if(fs_in.supportIBL == 1){
         vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, _valRougness);;
         vec3 kS = F;
@@ -203,6 +202,7 @@ void main() {
         kD *= 1.0 - _valMetallic;
 
         vec3 irradiance = texture(irradianceMap, N).rgb;
+        vec3 diff = irradiance * _valAlbedo;
 
         const float MAX_REFLECTION_LOD = 4.0;
         vec3 prefilterColor = textureLod(prefilterMap, R, _valRougness * MAX_REFLECTION_LOD).rgb;
@@ -210,10 +210,10 @@ void main() {
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), _valRougness)).rg;
         vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
 
-        ambient = (kD * diffuse + specular ) *(0.7);
+        ambient = (kD * diff + specular ) *(1-shadow);
     }
     else{
-        ambient = (_valAlbedo * _valAo)*0.6;
+        ambient = (_valAlbedo * _valAo)*(1-shadow);
     }
 
     vec3 finalColor = ambient + Lo;
