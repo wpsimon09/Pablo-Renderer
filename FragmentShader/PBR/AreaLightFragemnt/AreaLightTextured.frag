@@ -13,7 +13,7 @@ in VS_OUT {
     float reciviesShadow;
     float hasNormalMap;
     float supportIBL;
-} fs_in;
+}fs_in;
 
 vec3 albedo;
 float metallic;
@@ -204,14 +204,14 @@ void main() {
         kD *= 1.0 - metallic;
 
         vec3 irradiance = texture(irradianceMap, N).rgb;
-
+        vec3 diff = irradiance * albedo;
         const float MAX_REFLECTION_LOD = 4.0;
         vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
 
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
         vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
 
-        ambient = (kD * diffuse + specular ) *(0.7);
+        ambient = (kD * diff + specular ) *(0.7);
     }
     else{
         ambient = albedo * 0.3;

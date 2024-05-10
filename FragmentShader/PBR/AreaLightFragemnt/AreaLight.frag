@@ -10,10 +10,15 @@ in VS_OUT {
     mat3 TBN;
     float hasNormalMap;
     float supportIBL;
+    float reciviesShadow;
 }fs_in;
 
-uniform vec3 camPos;
+uniform samplerCube irradianceMap;
+uniform samplerCube prefilterMap;
+uniform sampler2D BRDFtexture;
+uniform sampler2D shadowMap;
 
+uniform vec3 camPos;
 uniform vec3  _valAlbedo;
 uniform float _valMetallic;
 uniform float _valRougness;
@@ -29,6 +34,53 @@ uniform vec3 areaLightCorners[4];
 const float LUT_SIZE  = 64.0; // ltc_texture size
 const float LUT_SCALE = (LUT_SIZE - 1.0)/LUT_SIZE;
 const float LUT_BIAS  = 0.5/LUT_SIZE;
+
+vec3 FresnelShlickRoughness(float cosTheta, vec3 F0, float roughness)
+{
+    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+}
+
+float caclualteShadow(vec4 FragPosLight, float bias)
+{
+    //tranfsforms fragment position in ragne from [0, 1]
+    vec3 projCoords = FragPosLight.xyz / FragPosLight.w;
+    projCoords = projCoords * 0.5 + 0.5;
+
+    //get the closest depth value from the shadow map
+    //closest object to the light
+    float closestDepth = texture(shadowMap, projCoords.xy).w;
+
+    //get the depth value of the current fragment
+    float currentDepth = projCoords.z;
+
+    //compare if current depth value is bigger than the closest depth value
+    // is true object is not in the shadow (1.0)
+    // if false object is in the shadow (0.0)
+    float shadow = 0;
+
+    //this will be used for sampling neiborough texels in mipmap level 0
+    vec2 texelSize = 1.0 / textureSize(shadowMap, 0);
+
+    // creates 3x3 grid around the sampled texel
+    for(int x = -1; x <= 1; ++x)
+    {
+        for(int y = -1; y <= 1; ++y)
+        {
+            //sample the surounding texel
+            //the multiplication by texelSize is necesary since the shadow map is in different resolution
+            float pcfDepth = texture(shadowMap, projCoords.xy + vec2(x, y) * texelSize).r;
+            shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
+        }
+    }
+    //calculate the average
+    shadow /= 9.0;
+
+    if(projCoords.z > 1.0)
+    shadow = 0.0;
+
+    return shadow;
+
+}
 
 vec3 IntegrateEdgeVec(vec3 v1, vec3 v2){
     float x = dot(v1, v2);
@@ -101,8 +153,13 @@ void main() {
     vec3 N = normalize(fs_in.Normal);
     vec3 V = normalize(camPos - fs_in.FragPos);
     vec3 P = fs_in.FragPos;
+    vec3 R = reflect(-V, N);
 
-    //reflected view direction around normal vector
+    vec3 F0 = vec3(0.04);
+    F0 = mix(F0, _valAlbedo, _valMetallic);
+
+
+//reflected view direction around normal vector
     float NdotV = clamp(dot(N,V), 0.0, 1.0);
 
     //use roughness and cosine of view direction around normal vector to sample the precomputed matrices
@@ -125,12 +182,41 @@ void main() {
 
     specular *= _valAlbedo*t2.x + (1.0 - _valAlbedo)*t2.y;
 
-    vec3 result = vec3(1.0);
+    vec3 Lo = vec3(1.0);
+    Lo = lightColor * ((specular) + (diffuse * _valAlbedo));
 
-    result = lightColor * ((specular) + (diffuse * _valAlbedo));
+    //----------------------
+    // IBL and SHADOW PART
+    //----------------------
+    vec3 ambient = vec3(0.0f);
+    float shadow = 0.3;
+    float shadowBias = 0.02;
+    if(fs_in.reciviesShadow == 1){
+        shadow = caclualteShadow(fs_in.FragPosLight, shadowBias);
+    }
 
-    vec3 color = (_valAlbedo * _valAo)*0.6;
-    color += result;
+    if(fs_in.supportIBL == 1){
+        vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, _valRougness);;
+        vec3 kS = F;
+        vec3 kD = vec3(1.0) - kS;
+        kD *= 1.0 - _valMetallic;
 
-    FragColor = vec4(color, 1.0);
+        vec3 irradiance = texture(irradianceMap, N).rgb;
+        vec3 diff = irradiance * _valAlbedo;
+
+        const float MAX_REFLECTION_LOD = 4.0;
+        vec3 prefilterColor = textureLod(prefilterMap, R, _valRougness * MAX_REFLECTION_LOD).rgb;
+
+        vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), _valRougness)).rg;
+        vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
+
+        ambient = (kD * diff + specular ) *(1-shadow);
+    }
+    else{
+        ambient = (_valAlbedo * _valAo)*(1-shadow);
+    }
+
+    vec3 finalColor = ambient + Lo;
+
+    FragColor = vec4(finalColor, 1.0);
 }
