@@ -82,7 +82,6 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glEnable(GL_FRAMEBUFFER_SRGB);
     glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
     glEnable(GL_BLEND);
-    glDisable(GL_CULL_FACE);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))

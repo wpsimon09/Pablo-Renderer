@@ -14,7 +14,7 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
     this->supportsIBL = true;
     this->supportsAreaLight = supportsAreaLight;
     const aiScene *scene = importer.ReadFile(path.c_str(),
-                                             aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace );
+                                             aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_OptimizeGraph );
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
