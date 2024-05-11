@@ -81,9 +81,10 @@ As of now renderer's shader only support one directional light and 1 area light 
 ![Pablo](Assets/ReadmeImages/pablo-4.png)
 
 
-
 ![Area light](Assets/ReadmeImages/area-light-3.png)
 
+# Video
 
+[pablo-showcase.webm](https://github.com/wpsimon09/Pablo-Renderer/assets/95319163/856c0591-6892-4c1b-8b06-fc91c60da89c)
 
 
