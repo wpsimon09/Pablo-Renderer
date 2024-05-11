@@ -31,7 +31,6 @@ void Light::updateInternal() {
     this->lightRenderable->transformations->setPosition(this->position->property);
     this->lightRenderable->update();
     this->updateLightViewMatrix();
-
 }
 
 void Light::renderUi() {

@@ -23,6 +23,7 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
 
     auto geometry = std::make_unique<PlaneGeometry>();
     auto material = std::make_unique<BasicMaterialColor>(color);
+    material->setShader(std::make_shared<Shader>("VertexShader/AreaLightSourceVertex.glsl","FragmentShader/AreaLightSourceFragment.glsl", "Area light color "));
 
     material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
@@ -59,7 +60,7 @@ void AreaLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
     ShaderHelper::setTransfomrationMatrices(shader, lightRenderable->transformations->getModelMatrix(), viewMatrix,
                                             projectionMatrix);
 
-    this->lightRenderable->render();
+    this->lightRenderable->renderGeomtry();
 }
 
 void AreaLight::updateLightViewMatrix() {

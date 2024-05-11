@@ -44,6 +44,9 @@ public:
      * Sends all of the relevant information to the shader
      */
     void configureShader() override;
+
+    void setShader(std::shared_ptr<Shader> shader) {this->shader = shader;};
+
 private:
     std::unique_ptr<ColorUnifrom> color;
 };

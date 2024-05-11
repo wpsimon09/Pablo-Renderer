@@ -24,6 +24,7 @@ void DirectionalLight::update(std::shared_ptr<Shader> shader, bool isCastingShad
     /***
      * @note this updates the shader which this light is contributing to
      */
+
     this->updateInternal();
 
     shader->use();
