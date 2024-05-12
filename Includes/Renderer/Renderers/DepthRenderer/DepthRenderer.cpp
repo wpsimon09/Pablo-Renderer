@@ -29,12 +29,17 @@ void DepthRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBu
 void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
     if(renderalbe != nullptr){
-        this->scene->lights.find(DIRECTIONAL)->second->update(shader, renderalbe->castsShadwo);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_FRONT);
+
+        this->scene->lights.find(AREA)->second->update(shader, renderalbe->castsShadwo);
         this->shader->setMat4("model",sceneNode.getModelMatrix());
         sceneNode.render(scene->renderingConstrains, true);
+
     }
 
     for (auto &childNode : sceneNode.getChildren()) {
         this->renderSceneGraph(*childNode);
     }
+    glDisable(GL_CULL_FACE);
 }

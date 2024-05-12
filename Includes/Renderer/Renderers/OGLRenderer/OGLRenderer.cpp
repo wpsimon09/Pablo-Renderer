@@ -42,8 +42,10 @@ void OGLRenderer::renderSceneGraph(SceneNode& sceneNode) {
         // reference ot unique_ptr of renderable inside scene node
         auto& renderable = sceneNode.getRenderable();
 
-        if(renderable->getBackFaceCull())
+        if(renderable->getBackFaceCull()){
             glEnable(GL_CULL_FACE);
+            glCullFace(GL_BACK);
+        }
 
         textureSamplerCount = renderable->getObjectMaterial()->getSamplerCount();
 

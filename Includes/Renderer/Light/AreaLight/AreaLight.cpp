@@ -53,6 +53,9 @@ void AreaLight::update(std::shared_ptr<Shader> shader, bool isCastingShadows) {
     shader->setVec3("lightColor", this->calculateFinalLightColor());
     ShaderHelper::setTextureToShader(shader, *this->ltc, this->ltc->shaderName);
     ShaderHelper::setTextureToShader(shader, *this->ltcInverse, this->ltcInverse->shaderName);
+
+    glm::mat4 lightSpaceMatrix = this->lightProjectionMatrix->property * lightViewMatrix->property;
+    shader->setMat4("lightMatrix", lightSpaceMatrix);
 }
 
 void AreaLight::render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
