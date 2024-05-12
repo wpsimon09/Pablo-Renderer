@@ -116,7 +116,11 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
         hasModelTextures = false;
     }
 
-    std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial,this->processedRenderableCount + mesh->mName.C_Str() );
+    std::string renderableName = mesh->mName.C_Str() + std::to_string(this->processedRenderableCount);
+
+    std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial, renderableName);
+
+    //TODO: this is a bit off as the renderable is model however texture should not be sample as if it was model
     processedRenderable->isModel = hasModelTextures;
 
     std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));

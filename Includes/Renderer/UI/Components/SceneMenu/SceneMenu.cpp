@@ -70,7 +70,11 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
     if(renderalbe != nullptr){
-        if (ImGui::Selectable(sceneNode.getRenderable()->name.c_str(), selectedSceneNode == i)) {
+        auto name  = sceneNode.getRenderable()->name;
+        if(name.empty()){
+            name = "##";
+        }
+        if (ImGui::Selectable(name.c_str(), selectedSceneNode == i)) {
             selectedSceneNode = i;
             sceneNode.isSelected = true;
             MaterialUI::material = sceneNode.getRenderable()->getObjectMaterial();
