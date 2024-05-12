@@ -8,6 +8,7 @@
 void SceneNodeUI::display() {
 
     if(sceneNode!= nullptr){
+            
             ImGui::Text("%s", sceneNode->getRenderable()->name.c_str());
             if(ImGui::TreeNodeEx("Position")){
 

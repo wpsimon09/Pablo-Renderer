@@ -17,9 +17,6 @@ private:
      */
     inline static int selectedSceneNode = -1;
 
-    inline static bool showLight = false;
-    inline static bool showTransformation = false;
-
     static void displaySceneNodeMenu(SceneNode& sceneNode);
 public:
     inline static bool showRendererCreation = false;

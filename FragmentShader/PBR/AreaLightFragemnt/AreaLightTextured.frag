@@ -217,7 +217,12 @@ void main() {
         ambient = albedo * 0.3;
     }
 
+
     vec3 result = ambient + Lo;
+
+    if(fs_in.hasEmission == 1){
+        result += emmisive;
+    }
 
     result = result / (result + vec3(1.0));
 

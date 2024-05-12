@@ -60,7 +60,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ImGui)
 
 # Find ASSIMP package and link against it
 set(CMAKE_PREFIX_PATH "/usr/lib64/cmake/assimp-5.3")
-set(BUILD_SHARED_LIBS ON)
+set(BUILD_SHARED_LIBS OFF)
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INJECT_DEBUG_POSTFIX OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
 find_package(assimp REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE assimp)
 set(BUILD_ASSIMP_TOOLS OFF)
