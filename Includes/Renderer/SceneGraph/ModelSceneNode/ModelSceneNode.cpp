@@ -24,11 +24,13 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
     this->wasFound = true;
     this->directory = path.substr(0, path.find_last_of('/'));
     processNode(scene->mRootNode, scene);
+
 }
 
 void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
     for (unsigned int i = 0; i < node->mNumMeshes; i++) {
         aiMesh *mesh = scene->mMeshes[node->mMeshes[i]];
+        //this->threads.emplace_back(&ModelSceneNode::processRenderable,this, mesh, scene);
         this->processRenderable(mesh, scene);
     }
 
@@ -41,65 +43,12 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     std::vector<Vertex> vertecies;
     std::vector<unsigned int> indecies;
 
-    for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
-        Vertex vertex;
-        //proccess vertex positions
-        glm::vec3 tempVertex;
-        tempVertex.x = mesh->mVertices[i].x;
-        tempVertex.y = mesh->mVertices[i].y;
-        tempVertex.z = mesh->mVertices[i].z;
-        vertex.position = tempVertex;
+    std::thread verteciesProcessor(ModelLoaderHelper::processVertecies, std::ref(vertecies), mesh, scene);
 
-        if (mesh->HasNormals()) {
+    std::thread indeciesProcessor(ModelLoaderHelper::processIndecies, std::ref(indecies), mesh);
 
-            //process texture coordinates
-            tempVertex.x = mesh->mNormals[i].x;
-            tempVertex.y = mesh->mNormals[i].y;
-            tempVertex.z = mesh->mNormals[i].z;
-
-            vertex.normals = tempVertex;
-
-        }
-
-        //process normal vectors
-        glm::vec2 tempTexCoords;
-
-        if (mesh->mTextureCoords[0]) {
-            //asimp allows for 8 different texture coorinates per verex
-            //but we are only interted in the first one
-            tempTexCoords.x = mesh->mTextureCoords[0][i].x;
-            tempTexCoords.y = mesh->mTextureCoords[0][i].y;
-            vertex.uv = tempTexCoords;
-
-            glm::vec3 tempTangent, tempBitanget;
-            if(mesh->mTangents){
-                tempTangent.x = mesh->mTangents[i].x;
-                tempTangent.y = mesh->mTangents[i].y;
-                tempTangent.z = mesh->mTangents[i].z;
-            }
-
-            vertex.tangent = tempTangent;
-
-            if(mesh->mBitangents){
-                tempBitanget.x = mesh->mBitangents[i].x;
-                tempBitanget.y = mesh->mBitangents[i].y;
-                tempBitanget.z = mesh->mBitangents[i].z;
-            }
-            vertex.bitangent = tempBitanget;
-        } else
-            vertex.uv = glm::vec2(0.0f, 0.0f);
-        vertecies.push_back(vertex);
-    }
-
-    for (unsigned int i = 0; i < mesh->mNumFaces; i++)
-    {
-        aiFace face = mesh->mFaces[i];
-
-        for (unsigned int j = 0; j < face.mNumIndices; j++)
-        {
-            indecies.push_back(face.mIndices[j]);
-        }
-    }
+    verteciesProcessor.join();
+    indeciesProcessor.join();
 
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
 
@@ -120,7 +69,6 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 
     std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial, renderableName);
 
-    //TODO: this is a bit off as the renderable is model however texture should not be sample as if it was model
     processedRenderable->isModel = hasModelTextures;
 
     std::unique_ptr<SceneNode> processedNode = std::make_unique<SceneNode>(std::move(processedRenderable));

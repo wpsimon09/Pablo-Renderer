@@ -11,13 +11,16 @@
 #include <assimp/ai_assert.h>
 #include <assimp/scene.h>
 #include <vector>
+#include "thread"
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
+#include "Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h"
 
 class ModelSceneNode:public SceneNode  {
 public:
     explicit ModelSceneNode(std::string path, bool supportsAreaLight = false,  std::shared_ptr<Material> mat = nullptr, std::string name = "");
     std::string directory;
     std::string name;
+
     /***
      * Sets if the model is casting shadow
      * @param hasShadow bool is model an occluder @def false
@@ -42,6 +45,8 @@ private:
     bool hasEmissionTexture = false;
     int processedRenderableCount = 0;
     std::vector<std::shared_ptr<Texture2D>>loadedTextures;
+
+    std::vector<std::thread> threads;
 
     /***
      * Process node of the model from the assets
