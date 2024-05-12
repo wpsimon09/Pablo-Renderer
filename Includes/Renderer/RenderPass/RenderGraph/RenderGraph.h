@@ -7,6 +7,7 @@
 
 #include "Renderer/RenderPass/ScenePass/ScenePass.h"
 #include "Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h"
+#include "Renderer/RenderPass/PostProcessingPasses/ChromaticAberration/ChromaticAberration.h"
 #include "Renderer/Enums/RenderPassTypes.h"
 #include "map"
 
@@ -35,6 +36,8 @@ private:
     //hardcoded for now later will be refactored (hopefully)
     std::unique_ptr<ScenePass> scenePass;
     std::unique_ptr<ShadowMapPass> shadowMapPass;
+
+    std::unique_ptr<ChromaticAberration> chromaticAerrationPass;
 
     std::shared_ptr<Scene> scene;
 };

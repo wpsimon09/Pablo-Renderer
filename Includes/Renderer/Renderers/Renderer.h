@@ -11,7 +11,8 @@
 
 enum RENDERER_TYPE{
     COLOR_DEPTH_STENCIL = 1,
-    DEPTH_ONLY = 2
+    DEPTH_ONLY = 2,
+    POST_PROCESSING = 3
 };
 
 

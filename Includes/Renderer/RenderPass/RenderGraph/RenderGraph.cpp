@@ -29,23 +29,28 @@ void RenderGraph::render() {
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
-    frameBuffer.setColorAttachment(this->scenePass->getRenderedResult());
+    frameBuffer.setColorAttachment(this->chromaticAerrationPass->getRenderedResult());
     frameBuffer.drawInsideSelf();
     this->renderResults.insert(std::make_pair(FINAL_PASS, frameBuffer.getRenderedResult()));
+}
+
+void RenderGraph::postProcessing() {
+    auto renderer = this->rendererManager->requestRenderer(chromaticAerrationPass->rendererType);
+    chromaticAerrationPass->render(this->scenePass->getRenderedResult(), renderer);
+    this->renderResults.insert(std::make_pair(POST_PROCESSING_CHROMATIC_ABERRATION, chromaticAerrationPass->getRenderedResult()));
 }
 
 std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) {
     return renderResults.find(renderPass)->second;
 }
 
-void RenderGraph::postProcessing() {
-
-}
 
 void RenderGraph::prepareForNextFrame() {
     this->renderResults.clear();
     this->scenePass->prepareForNextFrame();
     this->shadowMapPass->prepareForNextFrame();
+    this->chromaticAerrationPass->prepareForNextFrame();
+
     auto lightStart = scene->lights.begin();
     while(lightStart != scene->lights.end()){
         lightStart->second->prepareForNextFrame();
