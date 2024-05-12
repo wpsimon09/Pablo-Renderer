@@ -32,6 +32,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         ${SOURCES}
         ${HEADERS}
         3rdPartyLybraries/Includes/ImGuiFileDialog/ImGuiFileDialog.cpp
+        Includes/Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.cpp
+        Includes/Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
