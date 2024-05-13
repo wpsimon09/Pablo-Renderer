@@ -16,7 +16,7 @@ float blueOffset  = -0.006;
 void main(){
     //vec3 color = texture(FragmentColor, TexCoords).rgb;
 
-    vec2 direction =  TexCoords - vec2(200);
+    vec2 direction =  TexCoords - vec2(0.5, 0.5);
 
     int pixelSize = 8;
 

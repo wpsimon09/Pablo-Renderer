@@ -20,5 +20,6 @@ ChromaticAberration::render(std::shared_ptr<Texture2D> renderedScene, std::share
     this->inputs.emplace_back(renderedScene);
     renderer->setInputsForRenderPass(this->inputs);
     renderer->render(this->frameBuffer);
+    this->renderPassResult = this->frameBuffer->getRenderedResult();
+    return this->renderPassResult;
 }
-

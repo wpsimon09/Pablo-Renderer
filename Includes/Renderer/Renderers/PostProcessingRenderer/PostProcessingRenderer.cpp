@@ -9,7 +9,7 @@ void PostProcessingRenderer::setInputsForRenderPass(std::vector<std::shared_ptr<
 }
 
 void PostProcessingRenderer::renderSceneGraph(SceneNode &sceneNode) {
-    Renderer::renderSceneGraph(sceneNode);
+    //Renderer::renderSceneGraph(sceneNode);
 }
 
 void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
@@ -18,7 +18,6 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
-    //TODO: feed textures to the shade
     auto shader = frameBuffer->getShader();
     shader->use();
     int textureCount = 0;
@@ -27,5 +26,5 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
         ShaderHelper::setTextureToShader(shader, *input, input->shaderName);
         textureCount++;
     }
-    frameBuffer->render();
+    frameBuffer->renderGeomtry();
 }
