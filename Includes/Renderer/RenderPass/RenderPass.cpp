@@ -20,15 +20,15 @@ void RenderPass::prepareForNextFrame() {
 
 void RenderPass::renderUI() {
     ImGui::Text("Result of render pass");
-    ImVec2 imageSize((float) this->renderPassResult->texWidth, (float) this->renderPassResult->texHeight);
+    ImVec2 imageSize((float) this->renderPassResult->texWidth/4, (float) this->renderPassResult->texHeight/4);
+    ImGui::BeginChild("##", imageSize);
     ImGui::GetWindowDrawList()->AddImage(
-
             (void *) this->renderPassResult->ID,
             ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x / 4,
-                   ImGui::GetCursorScreenPos().y + imageSize.y / 4), // Use bottom-right corner
+            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
+                   ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
             ImVec2(0, 1),
             ImVec2(1, 0)
     );
-
+    ImGui::EndChild();
 }

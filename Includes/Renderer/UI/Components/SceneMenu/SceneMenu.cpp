@@ -21,11 +21,11 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     Component::width = width;
     Component::height = height;
 
-    ImGui::Begin("Tools", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin("Scene", NULL, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
     ImGui::SetWindowPos(ImVec2((float) posX, (float) posY));
-    ImGui::SetWindowSize(ImVec2((float) width, (float) height));
+    ImGui::SetWindowSize(ImVec2((float) width, (float) height/2));
     ImGui::Text("Scene");
-    ImGui::BeginChild("Scene", ImVec2((float) width - 20, (float) GLFWHelper::getScreenHeight() / 3), true,
+    ImGui::BeginChild("Scene", ImVec2((float) width - 20, (float) GLFWHelper::getScreenHeight() / 2 - 100), true,
                       ImGuiWindowFlags_HorizontalScrollbar);
 
     //display sthe entire scene graph structure
@@ -37,8 +37,10 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
         showRendererCreation = true;
     }
     ImGui::NewLine();
-
-;
+    ImGui::End();
+    ImGui::Begin("Tools", NULL,  ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
+    ImGui::SetWindowPos(ImVec2((float) posX, (float) posY + (height/2)));
+    ImGui::SetWindowSize(ImVec2((float) width, (float) height/2));
     if (ImGui::BeginTabBar("Renderable properties"))
     {
         if (ImGui::BeginTabItem("Material"))
