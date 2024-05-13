@@ -17,3 +17,18 @@ void RenderPass::addInput(std::shared_ptr<TextureBase> input) {
 void RenderPass::prepareForNextFrame() {
     this->inputs.clear();
 }
+
+void RenderPass::renderUI() {
+    ImGui::Text("Result of render pass");
+    ImVec2 imageSize((float) this->renderPassResult->texWidth, (float) this->renderPassResult->texHeight);
+    ImGui::GetWindowDrawList()->AddImage(
+
+            (void *) this->renderPassResult->ID,
+            ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
+            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x / 4,
+                   ImGui::GetCursorScreenPos().y + imageSize.y / 4), // Use bottom-right corner
+            ImVec2(0, 1),
+            ImVec2(1, 0)
+    );
+
+}

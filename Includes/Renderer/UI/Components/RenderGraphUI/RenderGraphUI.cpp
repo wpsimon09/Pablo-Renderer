@@ -15,7 +15,7 @@ void RenderGraphUI::display(int posX, int posY, int width, int height) {
 
     for(auto &renderPass: renderGraph){
         if(ImGui::TreeNode(renderPass.get().getName().c_str())){
-
+            renderPass.get().renderUI();
             ImGui::TreePop();
         }
     }

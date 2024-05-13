@@ -43,6 +43,8 @@ public:
      */
     void addInput(std::shared_ptr<TextureBase> input);
 
+    virtual void renderUI();
+
     void prepareForNextFrame();
 
     std::string getName() {return this->name;}

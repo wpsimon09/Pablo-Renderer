@@ -56,7 +56,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
             SceneNodeUI::display();
             ImGui::EndTabItem();
         }
-        if(ImGui::BeginTabItem("Post processing")){
+        if(ImGui::BeginTabItem("Render graph")){
             RenderGraphUI::display(width - 20, 0, width, 0);
             ImGui::EndTabItem();
         }
