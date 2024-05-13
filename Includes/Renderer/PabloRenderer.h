@@ -58,6 +58,8 @@ public:
 
     std::shared_ptr<Scene> getScene(){return this->scene;}
 
+    RenderGraph &getRenderGraph() {return *this->renderGraph;}
+
     GLFWwindow * getWindow() {return this->window;}
 
     /***

@@ -10,8 +10,9 @@ ChromaticAberration::ChromaticAberration() {
     auto shader = std::make_shared<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/Postprocessing/ChromaticAbriviationFragment.glsl", "ChromaticAbbriviationShader");
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
     this->rendererType = POST_PROCESSING;
-
     this->isPostProcessingPass = true;
+
+    this->name = "Chromatic aberration";
 }
 
 std::shared_ptr<Texture2D>

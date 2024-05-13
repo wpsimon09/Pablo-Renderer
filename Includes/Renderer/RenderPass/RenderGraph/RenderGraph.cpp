@@ -29,16 +29,16 @@ void RenderGraph::render() {
     this->renderResults.insert(std::make_pair(SCENE_PASS, scenePass->getRenderedResult()));
 }
 
-void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
-    frameBuffer.setColorAttachment(this->chromaticAerrationPass->getRenderedResult());
-    frameBuffer.drawInsideSelf();
-    this->renderResults.insert(std::make_pair(FINAL_PASS, frameBuffer.getRenderedResult()));
-}
-
 void RenderGraph::postProcessing() {
     auto renderer = this->rendererManager->requestRenderer(chromaticAerrationPass->rendererType);
     chromaticAerrationPass->render(this->scenePass->getRenderedResult(), renderer);
     this->renderResults.insert(std::make_pair(POST_PROCESSING_CHROMATIC_ABERRATION, chromaticAerrationPass->getRenderedResult()));
+}
+
+void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
+    frameBuffer.setColorAttachment(this->chromaticAerrationPass->getRenderedResult());
+    frameBuffer.drawInsideSelf();
+    this->renderResults.insert(std::make_pair(FINAL_PASS, frameBuffer.getRenderedResult()));
 }
 
 std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) {
@@ -57,4 +57,12 @@ void RenderGraph::prepareForNextFrame() {
         lightStart->second->prepareForNextFrame();
         lightStart++;
     }
+}
+
+std::vector<std::reference_wrapper<RenderPass>> RenderGraph::getRenderPasses() {
+    std::vector<std::reference_wrapper<RenderPass>> renderPasses;
+    renderPasses.emplace_back(*scenePass);
+    renderPasses.emplace_back(*shadowMapPass);
+    renderPasses.emplace_back(*chromaticAerrationPass);
+    return renderPasses;
 }

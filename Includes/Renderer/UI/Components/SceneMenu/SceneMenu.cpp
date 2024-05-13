@@ -7,6 +7,7 @@
 #include "Renderer/UI/Components/SceneNodeUI/SceneNodeUI.h"
 #include "Renderer/UI/Components/LightUI/LightUI.h"
 #include "Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h"
+#include "Renderer/UI/Components/RenderGraphUI/RenderGraphUI.h"
 #include <algorithm>
 // recursion counting mechanism for selecting right renderables
 int i = 0;
@@ -53,6 +54,10 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
         if (ImGui::BeginTabItem("Transformation"))
         {
             SceneNodeUI::display();
+            ImGui::EndTabItem();
+        }
+        if(ImGui::BeginTabItem("Post processing")){
+            RenderGraphUI::display(width - 20, 0, width, 0);
             ImGui::EndTabItem();
         }
         ImGui::EndTabBar();

@@ -8,6 +8,7 @@
 ScenePass::ScenePass():RenderPass() {
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
     this->rendererType = COLOR_DEPTH_STENCIL;
+    this->name = "Scene pass";
 }
 
 std::shared_ptr<Texture2D> ScenePass::render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) {

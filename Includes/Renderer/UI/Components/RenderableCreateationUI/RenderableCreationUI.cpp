@@ -12,7 +12,6 @@
 void RenderableCreationUI::display() {
     //ImGui::SetNextWindowFocus();
 
-
     ImGui::Begin("Add renderable", nullptr);
 
     hasFocus = ImGui::IsWindowFocused();
@@ -75,8 +74,6 @@ void RenderableCreationUI::display() {
     ImGui::BeginChild("Other properties");
         ImGui::Checkbox("Casts shadow", &RenderableBuilder::castsShadow);
         ImGui::SameLine();
-        ImGui::Checkbox("Supports IBL", &RenderableBuilder::supportsIBL);
-        ImGui::NewLine();
         ImGui::Checkbox("Supports AreaLight", &RenderableBuilder::supportsAreaLight);
         ImGui::NewLine();
         if(ImGui::Button("Add")){

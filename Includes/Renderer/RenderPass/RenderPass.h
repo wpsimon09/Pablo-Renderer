@@ -45,8 +45,11 @@ public:
 
     void prepareForNextFrame();
 
+    std::string getName() {return this->name;}
+
     RENDERER_TYPE rendererType;
 protected:
+    std::string name;
     bool isPostProcessingPass = false;
     std::vector<std::shared_ptr<TextureBase>> inputs;
     std::unique_ptr<FrameBuffer> frameBuffer;

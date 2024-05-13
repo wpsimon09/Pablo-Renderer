@@ -16,29 +16,57 @@ class RenderGraph {
 public:
     explicit RenderGraph(std::shared_ptr<Scene> scene);
 
+    /***
+     * Initialize render graph
+     */
     void init();
 
+    /***
+     * Execture preprocessing like shadow generation
+     */
     void preProcessing();
 
+    /***
+     * Execute acctual rendering of the scene
+     */
     void render();
 
+    /***
+     * Executre post processing effects
+     */
     void postProcessing();
 
+    /***
+     * Display results to the frame buffer
+     * @param frameBuffer frame buffer into which the results should be copied
+     */
     void displayResult(FrameBuffer &frameBuffer);
 
+    /***
+     * Reset texture counters etc...
+     */
     void prepareForNextFrame();
 
+    /***
+     * Get the texture from the specified render pass
+     * @param renderPass render pass from which to extract the texture (can be found in RenderPassTypes.h)
+     * @return result of the render pass stored in the texture
+     */
     std::shared_ptr<Texture2D> getDebugTexture(RENDER_PASS renderPass);
+
+    /***
+     * Returns vector of all render passes
+     * @return vector of all render passes in renderer
+     */
+    std::vector<std::reference_wrapper<RenderPass>> getRenderPasses();
 private:
     std::unique_ptr<RendererManager> rendererManager;
     std::map<RENDER_PASS, std::shared_ptr<Texture2D>> renderResults;
 
     //hardcoded for now later will be refactored (hopefully)
-    std::unique_ptr<ScenePass> scenePass;
-    std::unique_ptr<ShadowMapPass> shadowMapPass;
-
-    std::unique_ptr<ChromaticAberration> chromaticAerrationPass;
-
+    std::unique_ptr<RenderPass> scenePass;
+    std::unique_ptr<RenderPass> shadowMapPass;
+    std::unique_ptr<RenderPass> chromaticAerrationPass;
     std::shared_ptr<Scene> scene;
 };
 
