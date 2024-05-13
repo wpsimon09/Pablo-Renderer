@@ -4,7 +4,15 @@
 
 #include "PostProcessingRenderer.h"
 
-void PostProcessingRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer> &frameBuffer) {
+void PostProcessingRenderer::setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) {
+    this->renderPassInputs = std::move(inputs);
+}
+
+void PostProcessingRenderer::renderSceneGraph(SceneNode &sceneNode) {
+    Renderer::renderSceneGraph(sceneNode);
+}
+
+void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
     frameBuffer->bind();
     glViewport(0,0, frameBuffer->getWidht(), frameBuffer->getHeihgt());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -20,13 +28,4 @@ void PostProcessingRenderer::render(std::shared_ptr<Scene> scene, std::unique_pt
         textureCount++;
     }
     frameBuffer->render();
-}
-
-void PostProcessingRenderer::setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) {
-
-    this->renderPassInputs = std::move(inputs);
-}
-
-void PostProcessingRenderer::renderSceneGraph(SceneNode &sceneNode) {
-    Renderer::renderSceneGraph(sceneNode);
 }

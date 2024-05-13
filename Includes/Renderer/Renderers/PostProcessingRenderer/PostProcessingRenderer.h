@@ -11,9 +11,9 @@ class PostProcessingRenderer: public Renderer{
 public:
     PostProcessingRenderer():Renderer() {this->type = POST_PROCESSING;}
 
-    void render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer> &frameBuffer) override;
-
     void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) override;
+
+    void render(std::unique_ptr<FrameBuffer> &frameBuffer) override;
 
 protected:
     void renderSceneGraph(SceneNode &sceneNode) override;

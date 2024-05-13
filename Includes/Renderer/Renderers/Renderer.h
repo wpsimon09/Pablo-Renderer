@@ -27,6 +27,8 @@ public:
     */
     virtual void render(std::shared_ptr<Scene>scene, std::unique_ptr<FrameBuffer>& frameBuffer){};
 
+    virtual void render(std::unique_ptr<FrameBuffer>& frameBuffer){};
+
     virtual void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs){};
 protected:
     std::shared_ptr<Scene> scene;

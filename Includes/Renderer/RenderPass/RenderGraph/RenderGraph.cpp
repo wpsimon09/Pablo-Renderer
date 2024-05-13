@@ -13,6 +13,7 @@ RenderGraph::RenderGraph(std::shared_ptr<Scene> scene) {
 void RenderGraph::init() {
     this->scenePass = std::make_unique<ScenePass>();
     this->shadowMapPass = std::make_unique<ShadowMapPass>();
+    this->chromaticAerrationPass = std::make_unique<ChromaticAberration>();
 }
 
 void RenderGraph::preProcessing() {
