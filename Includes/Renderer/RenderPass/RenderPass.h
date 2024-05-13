@@ -43,15 +43,21 @@ public:
      */
     void addInput(std::shared_ptr<TextureBase> input);
 
-    virtual void renderUI();
-
+    /***
+     * Prepares the render pass for the next frame by clearing frame buffer input and allocated resources
+     */
     void prepareForNextFrame();
 
+    virtual void renderUI();
+
     std::string getName() {return this->name;}
+
+    bool canBeRendered() {return this->isActive;}
 
     RENDERER_TYPE rendererType;
 protected:
     std::string name;
+    bool isActive = true;
     bool isPostProcessingPass = false;
     std::vector<std::shared_ptr<TextureBase>> inputs;
     std::unique_ptr<FrameBuffer> frameBuffer;

@@ -18,26 +18,41 @@ void RenderGraph::init() {
 
 void RenderGraph::preProcessing() {
     auto renderer = this->rendererManager->requestRenderer(shadowMapPass->rendererType);
-    this->shadowMapPass->render(this->scene, renderer);
+    if(shadowMapPass->canBeRendered()){
+        this->shadowMapPass->render(this->scene, renderer);
+    }
     this->renderResults.insert(std::make_pair(SHADOW_MAP_PASS, shadowMapPass->getRenderedResult()));
 }
 
 void RenderGraph::render() {
     this->scenePass->addInput(shadowMapPass->getRenderedResult());
     auto renderer = this->rendererManager->requestRenderer(scenePass->rendererType);
-    this->scenePass->render(scene, renderer);
+    if(scenePass->canBeRendered()){
+        this->scenePass->render(scene, renderer);
+    }
     this->renderResults.insert(std::make_pair(SCENE_PASS, scenePass->getRenderedResult()));
 }
 
 void RenderGraph::postProcessing() {
     auto renderer = this->rendererManager->requestRenderer(chromaticAerrationPass->rendererType);
-    chromaticAerrationPass->render(this->scenePass->getRenderedResult(), renderer);
+    if(chromaticAerrationPass->canBeRendered()){
+        chromaticAerrationPass->render(this->scenePass->getRenderedResult(), renderer);
+    }
     this->renderResults.insert(std::make_pair(POST_PROCESSING_CHROMATIC_ABERRATION, chromaticAerrationPass->getRenderedResult()));
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
-    frameBuffer.setColorAttachment(this->chromaticAerrationPass->getRenderedResult());
+
+    RenderPass* finalPass;
+    auto allPasses =  this->getRenderPasses();
+    for(auto &pass: allPasses){
+        if(pass.get().canBeRendered()){
+            finalPass = &pass.get();
+        }
+    }
+    frameBuffer.setColorAttachment(finalPass->getRenderedResult());
     frameBuffer.drawInsideSelf();
+
     this->renderResults.insert(std::make_pair(FINAL_PASS, frameBuffer.getRenderedResult()));
 }
 
