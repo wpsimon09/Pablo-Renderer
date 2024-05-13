@@ -11,7 +11,11 @@
 enum RENDER_PASS {
         SHADOW_MAP_PASS = 0,
         SCENE_PASS =1,
-        FINAL_PASS = 2
+
+        POST_PROCESSING_CHROMATIC_ABERRATION = 3,
+
+        FINAL_PASS = 2,
+
 };
 
 #endif //PABLO_RENDERER_RENDERPASSTYPES_H

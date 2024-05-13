@@ -45,7 +45,7 @@ void PabloRenderer::render() {
         //----------------------------------
 
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        UI::setRenderedSceneImage(renderGraph->getDebugTexture(SCENE_PASS));
+        UI::setRenderedSceneImage(renderGraph->getDebugTexture(FINAL_PASS));
         UI::setDebugImage(renderGraph->getDebugTexture(SHADOW_MAP_PASS));
 
         UI::render();

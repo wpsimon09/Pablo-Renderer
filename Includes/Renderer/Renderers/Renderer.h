@@ -11,7 +11,8 @@
 
 enum RENDERER_TYPE{
     COLOR_DEPTH_STENCIL = 1,
-    DEPTH_ONLY = 2
+    DEPTH_ONLY = 2,
+    POST_PROCESSING = 3
 };
 
 
@@ -25,6 +26,8 @@ public:
     * @param frameBuffer frame buffer where to render the scene
     */
     virtual void render(std::shared_ptr<Scene>scene, std::unique_ptr<FrameBuffer>& frameBuffer){};
+
+    virtual void render(std::unique_ptr<FrameBuffer>& frameBuffer){};
 
     virtual void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs){};
 protected:
