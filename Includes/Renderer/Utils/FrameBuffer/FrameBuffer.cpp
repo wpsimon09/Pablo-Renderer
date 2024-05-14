@@ -159,6 +159,7 @@ void FrameBuffer::checkFrameBufferCompleteness() {
 
 void FrameBuffer::saveAsPNG(std::string path) {
     this->bind();
+    stbi_flip_vertically_on_write(true);
 
     auto *pixels = new unsigned char[colorAttachment->texWidth * colorAttachment->texHeight * 4 * sizeof(char)];
     glReadPixels(0, 0, this->colorAttachment->texWidth, this->colorAttachment->texHeight, GL_RGBA, GL_UNSIGNED_BYTE,pixels);
