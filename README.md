@@ -36,6 +36,7 @@ This renderer is build using
 - UI editor
 - Model Loading from UI
 - Area lights with LTCs (Linearly transform cosines)
+- Screenshots of different render passes 
 ----
 
 # Example
