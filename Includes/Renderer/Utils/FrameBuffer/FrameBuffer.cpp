@@ -159,14 +159,14 @@ void FrameBuffer::checkFrameBufferCompleteness() {
 
 void FrameBuffer::saveAsPNG(std::string path) {
     this->bind();
-    char *pixels = new char[colorAttachment->texWidth * colorAttachment->texHeight * 4 * sizeof(char)];
-    glReadPixels(0, 0, this->colorAttachment->texWidth, this->colorAttachment->texHeight, this->colorAttachment->type, GL_UNSIGNED_BYTE,pixels);
+
+    auto *pixels = new unsigned char[colorAttachment->texWidth * colorAttachment->texHeight * 4 * sizeof(char)];
+    glReadPixels(0, 0, this->colorAttachment->texWidth, this->colorAttachment->texHeight, GL_RGBA, GL_UNSIGNED_BYTE,pixels);
     glCheckError();
-    int result = stbi_write_png(path.c_str(), this->colorAttachment->texWidth, this->colorAttachment->texHeight, 4, pixels, this->colorAttachment->texWidth * this->colorAttachment->texHeight * 4 * sizeof(float));
-    if(result == 1)
+    int result = stbi_write_png(path.c_str(), this->colorAttachment->texWidth, this->colorAttachment->texHeight, 4, pixels, 0);
+    if(result == 0)
         std::cerr<<"Failed to save frame buffer texture"<<std::endl;
     else
         std::cout<<"Frame buffer saved to the path" + path <<std::endl;
-    delete[] pixels;
 }
 
