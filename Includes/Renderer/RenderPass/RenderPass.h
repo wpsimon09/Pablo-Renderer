@@ -58,7 +58,9 @@ public:
 protected:
     std::string name;
     bool isActive = true;
+
     bool isPostProcessingPass = false;
+
     std::vector<std::shared_ptr<TextureBase>> inputs;
     std::unique_ptr<FrameBuffer> frameBuffer;
     std::shared_ptr<Texture2D> renderPassResult;

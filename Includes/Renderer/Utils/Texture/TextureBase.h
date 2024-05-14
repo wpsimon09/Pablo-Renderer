@@ -8,6 +8,7 @@
 #include "Renderer/Utils/OGLObject/OGLObject.h"
 #include "iostream"
 #include "stb_image.h"
+#include "stb_image_write.h"
 #include "Debug/DebugLogger.h"
 
 /***
@@ -80,6 +81,7 @@ public:
      * Generate mipmaps for the texture
      */
     void generateMipMaps();
+
 
     /***
      * Sets unpacking alignment

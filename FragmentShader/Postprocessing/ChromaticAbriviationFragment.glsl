@@ -8,10 +8,9 @@ uniform sampler2D sceneResult;
 
 uniform vec2 mouseFocusPoint;
 
-float redOffset   =  0.009;
-float greenOffset =  0.006;
-float blueOffset  = -0.006;
-
+uniform float redOffset   =  0.009;
+uniform float greenOffset =  0.006;
+uniform float blueOffset  = -0.006;
 
 void main(){
     //vec3 color = texture(FragmentColor, TexCoords).rgb;
@@ -25,7 +24,6 @@ void main(){
     color.r  = texture(sceneResult, TexCoords + (direction * vec2(redOffset  ))).r;
     color.g  = texture(sceneResult, TexCoords + (direction * vec2(greenOffset))).g;
     color.ba = texture(sceneResult, TexCoords + (direction * vec2(blueOffset ))).ba;
-
 
     FragColor = color;
 }

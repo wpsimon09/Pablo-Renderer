@@ -92,6 +92,12 @@ public:
      */
     void makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture = nullptr);
 
+    /***
+     * Saves the frame buffer collor buffer to the PNG inside the specified path
+     * @param path path into which the png will be stored
+     */
+    void saveAsPNG(std::string path);
+
     int getWidht() {return this->width;}
     int getHeihgt() {return this->height;}
 protected:

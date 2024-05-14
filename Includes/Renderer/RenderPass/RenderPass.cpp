@@ -31,5 +31,10 @@ void RenderPass::renderUI() {
             ImVec2(0, 1),
             ImVec2(1, 0)
     );
+
+    if(ImGui::Button("Take a photo")){
+        this->frameBuffer->saveAsPNG("image.png");
+    }
+
     ImGui::EndChild();
 }
