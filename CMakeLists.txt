@@ -41,6 +41,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/UI/Components/RenderGraphUI/RenderGraphUI.cpp
         Includes/Renderer/UI/Components/RenderGraphUI/RenderGraphUI.h
         source/stb_image_write.cpp
+        Includes/Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.cpp
+        Includes/Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

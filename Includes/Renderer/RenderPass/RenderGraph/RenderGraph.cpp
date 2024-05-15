@@ -14,6 +14,7 @@ void RenderGraph::init() {
     this->scenePass = std::make_unique<ScenePass>();
     this->shadowMapPass = std::make_unique<ShadowMapPass>();
     this->chromaticAerrationPass = std::make_unique<ChromaticAberration>();
+    this->pixelationPass = std::make_unique<Pixelation>();
 }
 
 void RenderGraph::preProcessing() {
@@ -34,11 +35,12 @@ void RenderGraph::render() {
 }
 
 void RenderGraph::postProcessing() {
-    auto renderer = this->rendererManager->requestRenderer(chromaticAerrationPass->rendererType);
-    if(chromaticAerrationPass->canBeRendered()){
-        chromaticAerrationPass->render(this->scenePass->getRenderedResult(), renderer);
+    auto renderer = this->rendererManager->requestRenderer(pixelationPass->rendererType);
+
+    if(pixelationPass->canBeRendered()){
+        pixelationPass->render( this->scenePass->getRenderedResult(), renderer);
     }
-    this->renderResults.insert(std::make_pair(POST_PROCESSING_CHROMATIC_ABERRATION, chromaticAerrationPass->getRenderedResult()));
+    this->renderResults.insert(std::make_pair(POST_PROCESSING_PIXELATION, pixelationPass->getRenderedResult()));
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
@@ -66,6 +68,7 @@ void RenderGraph::prepareForNextFrame() {
     this->scenePass->prepareForNextFrame();
     this->shadowMapPass->prepareForNextFrame();
     this->chromaticAerrationPass->prepareForNextFrame();
+    this->pixelationPass->prepareForNextFrame();
 
     auto lightStart = scene->lights.begin();
     while(lightStart != scene->lights.end()){
@@ -79,5 +82,6 @@ std::vector<std::reference_wrapper<RenderPass>> RenderGraph::getRenderPasses() {
     renderPasses.emplace_back(*shadowMapPass);
     renderPasses.emplace_back(*scenePass);
     renderPasses.emplace_back(*chromaticAerrationPass);
+    renderPasses.emplace_back(*pixelationPass);
     return renderPasses;
 }

@@ -4,6 +4,7 @@
 
 #include "RenderPass.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
+#include "Renderer/UI/Components/RenderableCreateationUI/FIleWindowUI/FileWindowUI.h"
 
 RenderPass::RenderPass() {
     this->renderPassResult = std::make_shared<Texture2D>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight(), GL_RGBA16F);
@@ -31,10 +32,9 @@ void RenderPass::renderUI() {
             ImVec2(0, 1),
             ImVec2(1, 0)
     );
+    ImGui::EndChild();
 
     if(ImGui::Button("Take a photo")){
         this->frameBuffer->saveAsPNG("image.png");
     }
-
-    ImGui::EndChild();
 }
