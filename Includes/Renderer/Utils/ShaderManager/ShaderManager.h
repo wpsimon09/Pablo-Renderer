@@ -5,18 +5,22 @@
 #ifndef PABLO_RENDERER_SHADERMANAGER_H
 #define PABLO_RENDERER_SHADERMANAGER_H
 
+#include <utility>
+
+#include "iostream"
+#include "UncompiledShaders.h"
+#include "vector"
 #include "map"
-#include "Renderer/Enums/ShaderTypes.h"
-#include "Shader.h"
 #include "memory"
+#include "Shader.h"
 
 class ShaderManager {
 public:
     static ShaderManager* getInstance();
 
 private:
-    std::map<ShaderType,std::shared_ptr<Shader>> shaders;
-
+    ShaderManager();
+    std::map<ShaderType,std::shared_ptr<Shader>> compiledShaders;
     inline static ShaderManager* instance = nullptr;
 };
 

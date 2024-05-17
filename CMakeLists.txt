@@ -46,6 +46,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Enums/ShaderTypes.h
         Includes/Renderer/Utils/ShaderManager/ShaderManager.cpp
         Includes/Renderer/Utils/ShaderManager/ShaderManager.h
+        Includes/Renderer/Utils/ShaderManager/UncompiledShaders.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

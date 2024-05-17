@@ -4,6 +4,10 @@
 
 #include "ShaderManager.h"
 
+ShaderManager::ShaderManager() {
+
+}
+
 ShaderManager *ShaderManager::getInstance() {
     if(ShaderManager::instance == nullptr){
         return new ShaderManager();
@@ -11,3 +15,6 @@ ShaderManager *ShaderManager::getInstance() {
         return ShaderManager::instance;
     }
 }
+
+
+
