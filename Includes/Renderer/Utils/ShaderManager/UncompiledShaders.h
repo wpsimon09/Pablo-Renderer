@@ -25,8 +25,8 @@ struct UncompiledShader{
 std::vector<UncompiledShader> __uncompiledShaders = {
         UncompiledShader(SHADER_HDR_2_CUBE_MAP, "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "HDR TO CUBE MAP"),
         UncompiledShader(SHADER_GENERATE_IRRADIANCE, "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl", "CUBE MAP TO IRRADIANCE"),
-        UncompiledShader(SHADER_GENERATE_PREFILTER, )
-
+        UncompiledShader(SHADER_GENERATE_PREFILTER, "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "CUBE MAP TO PREFILTER"),
+        UncompiledShader(SHADER_GENERATE_BRDF_LUT, "VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map"),
 };
 
 #endif //PABLO_RENDERER_UNCOMPILEDSHADERS_H
