@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 #include "imgui.h"
+#include "Renderer/Utils/ShaderManager/ShaderManager.h"
 /***
  * Struct representing light property
  * @tparam T type of the property vec3, int , float, etc...

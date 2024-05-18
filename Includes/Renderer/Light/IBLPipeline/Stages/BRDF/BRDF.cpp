@@ -5,7 +5,7 @@
 #include "BRDF.h"
 
 BRDF::BRDF():BaseStage() {
-    this->shader = std::make_shared<Shader>("VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map");
+    this->shader = ShaderManager::getShader(SHADER_GENERATE_BRDF_LUT);
     this->shaderName = "BRDFtexture";
 }
 

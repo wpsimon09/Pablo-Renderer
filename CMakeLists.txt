@@ -43,6 +43,10 @@ add_executable(${CMAKE_PROJECT_NAME}
         source/stb_image_write.cpp
         Includes/Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.cpp
         Includes/Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.h
+        Includes/Renderer/Enums/ShaderTypes.h
+        Includes/Renderer/Utils/ShaderManager/ShaderManager.cpp
+        Includes/Renderer/Utils/ShaderManager/ShaderManager.h
+        Includes/Renderer/Utils/ShaderManager/UncompiledShaders.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

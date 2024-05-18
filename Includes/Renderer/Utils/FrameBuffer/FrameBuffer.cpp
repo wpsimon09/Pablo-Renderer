@@ -7,7 +7,7 @@
 
 FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement):Renderable() {
     if(customShader == nullptr){
-        this->shader = std::make_unique<Shader>("VertexShader/FrameBufferDebugVertex.glsl" , "FragmentShader/FrameBufferDebugFragment.glsl", "Texturedebug shader");
+        this->shader = ShaderManager::getShader(SHADER_FRAME_BUFFER);
     }
     else{
         this->shader = customShader;

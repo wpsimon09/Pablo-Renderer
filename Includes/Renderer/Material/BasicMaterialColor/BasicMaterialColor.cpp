@@ -10,7 +10,7 @@ void BasicMaterialColor::configureShader() {
 }
 
 BasicMaterialColor::BasicMaterialColor(glm::vec3 color, std::string shaderName):Material() {
-    this->shader = std::make_shared<Shader>("VertexShader/AreaLightSourceVertex.glsl","FragmentShader/AreaLightSourceFragment.glsl", "Area light color ");
+    this->shader = ShaderManager::getShader(SHADER_AREA_LIGHT_SOURCE);
     this->color = std::make_unique<ColorUnifrom>(shaderName, color);
     this->supportsIBL = false;
     this->supportsAreaLight = false;
