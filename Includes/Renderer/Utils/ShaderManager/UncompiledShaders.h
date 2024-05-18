@@ -23,10 +23,25 @@ struct UncompiledShader{
 };
 
 std::vector<UncompiledShader> __uncompiledShaders = {
-        UncompiledShader(SHADER_HDR_2_CUBE_MAP, "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl", "HDR TO CUBE MAP"),
-        UncompiledShader(SHADER_GENERATE_IRRADIANCE, "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl", "CUBE MAP TO IRRADIANCE"),
-        UncompiledShader(SHADER_GENERATE_PREFILTER, "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl", "CUBE MAP TO PREFILTER"),
-        UncompiledShader(SHADER_GENERATE_BRDF_LUT, "VertexShader/PBR/LutTextureVertex.glsl", "FragmentShader/PBR/BRDFLutFragment.glsl", "LUT_Textue map"),
-};
+        UncompiledShader(SHADER_HDR_2_CUBE_MAP,         "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/HDRtoCubeMapFragment.glsl",             "HDR TO CUBE MAP"),
+        UncompiledShader(SHADER_GENERATE_IRRADIANCE,    "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/EnviromentToIrradianceFragment.glsl",   "CUBE MAP TO IRRADIANCE"),
+        UncompiledShader(SHADER_GENERATE_PREFILTER,     "VertexShader/PBR/HDRtoCubeMapVertex.glsl", "FragmentShader/PBR/PrefilteringHDRFragment.glsl",          "CUBE MAP TO PREFILTER"),
+        UncompiledShader(SHADER_GENERATE_BRDF_LUT,      "VertexShader/PBR/LutTextureVertex.glsl",   "FragmentShader/PBR/BRDFLutFragment.glsl",                  "LUT_Textue map"),
+
+        UncompiledShader(SHADER_SKY_BOX,                "VertexShader/PBR/SkyBoxVertex.glsl",       "FragmentShader/PBR/SkyBoxFragment.glsl",                   "SKY BOX SHADER"),
+
+        UncompiledShader(SHADER_AREA_LIGHT_COLOUR,      "VertexShader/PBR/PBRVertex-Simple.glsl",   "FragmentShader/PBR/AreaLightFragemnt/AreaLight.frag",      "AREA LIGHT COLOUR"),
+        UncompiledShader(SHADER_AREA_LIGHT_TEXTURES,    "VertexShader/PBR/PBRVertex.glsl",          "FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl",        "AREA LIGHT TEXTURED"),
+
+        UncompiledShader(SHADER_PBR_COLOUR,             "VertexShader/PBR/PBRVertex-Simple.glsl",   "FragmentShader/PBR/PBRFragment-IBL-Color.glsl",            "PBR COLOUR"),
+        UncompiledShader(SHADER_PBR_TEXTURED,           "VertexShader/PBR/PBRVertex.glsl",          "FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl",        "PBR TEXTURED" ),
+
+        UncompiledShader(SHADER_SHADOW_MAP,             "VertexShader/ShadowMap/ShadowMapVertex.glsl", "FragmentShader/ShadowMap/ShadowMapFragment.glsl",       "SHADOW MAP PASS" ),
+
+        UncompiledShader(SHADER_SHOW_FRAME_BUFFER,      "VertexShader/FrameBufferDebugVertex.glsl" ,    "FragmentShader/FrameBufferDebugFragment.glsl",         "DRAW TO FRAME BUFFER SHADER"),
+
+        UncompiledShader(SHADER_CHROMATIC_ABBERATION,   "VertexShader/FrameBufferDebugVertex.glsl" ,       "FragmentShader/Postprocessing/ChromaticAbriviationFragment.glsl", "ChromaticAbbriviationShader"),
+        UncompiledShader(SHADER_PIXELATION,             "VertexShader/FrameBufferDebugVertex.glsl" ,       "FragmentShader/Postprocessing/PixelationAndChromaticAbriviationFragment.glsl", "PixelationShader")
+        };
 
 #endif //PABLO_RENDERER_UNCOMPILEDSHADERS_H
