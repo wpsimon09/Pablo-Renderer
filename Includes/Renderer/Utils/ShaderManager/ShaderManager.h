@@ -11,6 +11,7 @@
 #include "UncompiledShaders.h"
 #include "vector"
 #include "map"
+#include "algorithm"
 #include "memory"
 #include "Shader.h"
 
@@ -21,6 +22,7 @@ public:
 private:
     ShaderManager();
     std::map<ShaderType,std::shared_ptr<Shader>> compiledShaders;
+    std::shared_ptr<Shader> getShader(ShaderType type);
     inline static ShaderManager* instance = nullptr;
 };
 
