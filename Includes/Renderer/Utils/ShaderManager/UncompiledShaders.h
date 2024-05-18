@@ -36,6 +36,7 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
 
         UncompiledShader(SHADER_PBR_COLOUR,             "VertexShader/PBR/PBRVertex-Simple.glsl",   "FragmentShader/PBR/PBRFragment-IBL-Color.glsl",            "PBR COLOUR"),
         UncompiledShader(SHADER_PBR_TEXTURED,           "VertexShader/PBR/PBRVertex.glsl",          "FragmentShader/PBR/PBR-IBL-Textured-Fragment.glsl",        "PBR TEXTURED" ),
+
         UncompiledShader(SHADER_DIRECTIONAL_LIGHT_SOURCE,"VertexShader/AdvancedLightning/LightSourceVertex.glsl", "FragmentShader/AdvancedLightning/LightSourceFragment.glsl", "DIRECTIONAL LIGHT SOURCE SHADER"),
 
         UncompiledShader(SHADER_SHADOW_MAP,             "VertexShader/ShadowMap/ShadowMapVertex.glsl", "FragmentShader/ShadowMap/ShadowMapFragment.glsl",       "SHADOW MAP PASS" ),
