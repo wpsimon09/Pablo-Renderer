@@ -16,7 +16,7 @@ public:
 
 private:
     void renderSceneGraph(SceneNode &sceneNode) override;
-    std::shared_ptr<Shader> shader = std::make_shared<Shader>("VertexShader/ShadowMap/ShadowMapVertex.glsl", "FragmentShader/ShadowMap/ShadowMapFragment.glsl", "ShadowMapShader");
+    std::shared_ptr<Shader> shader = ShaderManager::getShader(SHADER_SHADOW_MAP);
 };
 
 

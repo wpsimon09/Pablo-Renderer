@@ -27,8 +27,8 @@ std::shared_ptr<Shader> ShaderManager::getShader(ShaderType type) {
                 compiledShaders.insert(std::make_pair(type,std::move(newShader)));
                 break;
             }
-        return compiledShaders.find(type)->second;
         }
+        return compiledShaders.find(type)->second;
     }
 }
 

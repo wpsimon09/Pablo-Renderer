@@ -7,6 +7,7 @@
 
 #include "Renderer/Utils/FrameBuffer/FrameBufferCube/FrameBufferCube.h"
 #include "Renderer/Utils/Texture/TextureBase.h"
+#include "Renderer/Utils/ShaderManager/ShaderManager.h"
 
 /***
  * Stage of the IBL pipeline that is meant to be inherited by concrete steps

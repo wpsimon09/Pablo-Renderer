@@ -6,10 +6,9 @@
 
 PBRColor::PBRColor(glm::vec3 albedo,bool supportsIBL,bool supportsAreaLight, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
     if(supportsAreaLight){
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/AreaLightFragemnt/AreaLight.frag", "Area light fragment");
+        this->shader = ShaderManager::getShader(SHADER_AREA_LIGHT_COLOUR);
     }else
-        this->shader = std::make_shared<Shader>("VertexShader/PBR/PBRVertex-Simple.glsl", "FragmentShader/PBR/PBRFragment-IBL-Color.glsl", "PBR shader color");
-
+        this->shader = ShaderManager::getShader(SHADER_PBR_COLOUR);
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
 

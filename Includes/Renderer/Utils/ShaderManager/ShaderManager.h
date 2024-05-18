@@ -18,11 +18,11 @@
 class ShaderManager {
 public:
     static ShaderManager* getInstance();
+    static std::shared_ptr<Shader> getShader(ShaderType type);
 
 private:
     ShaderManager();
-    std::map<ShaderType,std::shared_ptr<Shader>> compiledShaders;
-    std::shared_ptr<Shader> getShader(ShaderType type);
+    inline static std::map<ShaderType,std::shared_ptr<Shader>> compiledShaders;
     inline static ShaderManager* instance = nullptr;
 };
 

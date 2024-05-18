@@ -11,6 +11,7 @@
 #include "iostream"
 #include "memory"
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
+#include "Renderer/Utils/ShaderManager/ShaderManager.h"
 /***
  * Struct for storing information about material
  * @tparam T property of the material datatype eg.: color, texture, etc...
