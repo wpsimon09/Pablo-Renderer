@@ -14,8 +14,6 @@ PBRTextured::PBRTextured(bool supportsAreaLight,std::string pathToTheDirectory, 
     }
     this->supportsIBL = true;
     this->supportsAreaLight = supportsAreaLight;
-    this->shader->supportsIBL = this->supportsIBL;
-    this->shader->supportsAreaLight = this->supportsAreaLight;
     this->hasEmissionTexture = false;
 
     if(!pathToTheDirectory.empty()){

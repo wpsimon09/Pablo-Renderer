@@ -12,9 +12,6 @@ PBRColor::PBRColor(glm::vec3 albedo,bool supportsIBL,bool supportsAreaLight, flo
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
 
-    this->shader->supportsAreaLight = this->supportsAreaLight;
-    this->shader->supportsIBL = this->supportsIBL;
-
     this->albedo = std::make_unique<PBRMaterial<glm::vec3>>(albedo, shaderNamingConvention + "Albedo");
     this->rougness = std::make_unique<PBRMaterial<float>>(rougness, shaderNamingConvention + "Rougness");
     this->metalness = std::make_unique<PBRMaterial<float>>(metallic, shaderNamingConvention + "Metalness");
