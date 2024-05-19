@@ -66,16 +66,17 @@ void FrameBuffer::dispalyOnScreen() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glViewport(0, 0,GLFWHelper::getDefaultFrameBufferDimentions().x, GLFWHelper::getDefaultFrameBufferDimentions().y);
     this->objectMaterial->configureShader();
-    this->objectMaterial->shader->setVec2("mouseFocusPoint",GLFWHelper::getPointerPosition(true));
     this->objectGeometry->render();
 }
 
-void FrameBuffer::drawInsideSelf() {
+void FrameBuffer::drawInsideSelf(bool useColourAttachemntAsTexture) {
     this->bind();
     glViewport(0, 0, width, height);
     glClearColor(0.03f, 0.03f, 0.03f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-    this->objectMaterial->configureShader();
+    if(useColourAttachemntAsTexture){
+        this->objectMaterial->configureShader();
+    }
     this->objectGeometry->render();
 }
 
