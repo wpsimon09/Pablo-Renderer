@@ -62,3 +62,9 @@ void PostProcessingPass::mergePasses(std::shared_ptr<Texture2D> passToMerge) {
     }
 }
 
+void PostProcessingPass::prepareForNextFrame() {
+    for(auto &postProcessPaas: this->postProcessingPasses){
+        postProcessPaas->prepareForNextFrame();
+    }
+}
+
