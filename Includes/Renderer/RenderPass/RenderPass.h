@@ -54,6 +54,8 @@ public:
 
     bool canBeRendered() {return this->isActive;}
 
+    bool isPostProcess() {return this->isPostProcessingPass;}
+
     RENDERER_TYPE rendererType;
 protected:
     std::string name;
