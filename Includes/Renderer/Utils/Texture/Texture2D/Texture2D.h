@@ -48,6 +48,8 @@ public:
 
     GLenum getInternalFormat(){return this->internalFormat;};
 
+    std::unique_ptr<float[]> getData();
+
     ~Texture2D() = default;
 private:
     GLenum internalFormat;
