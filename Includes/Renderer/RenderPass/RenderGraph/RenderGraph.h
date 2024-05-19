@@ -9,6 +9,7 @@
 #include "Renderer/RenderPass/ShadowMapPass/ShadowMapPass.h"
 #include "Renderer/RenderPass/PostProcessingPasses/ChromaticAberration/ChromaticAberration.h"
 #include "Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.h"
+#include "Renderer/RenderPass/PostProcessingPasses/PostProcessingPass.h"
 #include "Renderer/Enums/RenderPassTypes.h"
 #include "map"
 
@@ -69,6 +70,8 @@ private:
     std::unique_ptr<RenderPass> shadowMapPass;
     std::unique_ptr<RenderPass> chromaticAerrationPass;
     std::unique_ptr<RenderPass> pixelationPass;
+
+    std::unique_ptr<PostProcessingPass> postProcessingPass;
 
     std::shared_ptr<Scene> scene;
 };

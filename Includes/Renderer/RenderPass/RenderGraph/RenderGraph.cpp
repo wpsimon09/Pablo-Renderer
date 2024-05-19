@@ -13,8 +13,10 @@ RenderGraph::RenderGraph(std::shared_ptr<Scene> scene) {
 void RenderGraph::init() {
     this->scenePass = std::make_unique<ScenePass>();
     this->shadowMapPass = std::make_unique<ShadowMapPass>();
-    this->chromaticAerrationPass = std::make_unique<ChromaticAberration>();
-    this->pixelationPass = std::make_unique<Pixelation>();
+
+    this->postProcessingPass = std::make_unique<PostProcessingPass>();
+    this->postProcessingPass->addPostProcessingPass(std::make_unique<ChromaticAberration>());
+    this->postProcessingPass->addPostProcessingPass(std::make_unique<Pixelation>());
 }
 
 void RenderGraph::preProcessing() {
@@ -35,12 +37,12 @@ void RenderGraph::render() {
 }
 
 void RenderGraph::postProcessing() {
-    auto renderer = this->rendererManager->requestRenderer(pixelationPass->rendererType);
+    auto renderer = this->rendererManager->requestRenderer(postProcessingPass->rendererType);
 
-    if(pixelationPass->canBeRendered()){
-        pixelationPass->render( this->scenePass->getRenderedResult(), renderer);
+    if(postProcessingPass->canBeRendered()){
+        postProcessingPass->render(scenePass->getRenderedResult(), renderer);
     }
-    this->renderResults.insert(std::make_pair(POST_PROCESSING_PIXELATION, pixelationPass->getRenderedResult()));
+    this->renderResults.insert(std::make_pair(POST_PROCESSING_PASS, pixelationPass->getRenderedResult()));
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
