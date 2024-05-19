@@ -117,6 +117,8 @@ std::unique_ptr<float[]> Texture2D::getData() {
 
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     glDeleteBuffers(1, &pbo);
+
+    return data;
 }
 
 
