@@ -57,7 +57,7 @@ void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
     frameBuffer.setColorAttachment(finalPass->getRenderedResult());
     frameBuffer.drawInsideSelf();
 
-    this->renderResults.insert(std::make_pair(FINAL_PASS, frameBuffer.getRenderedResult()));
+    this->renderResults.insert(std::make_pair(FINAL_PASS,finalPass->getRenderedResult()));
 }
 
 std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) {

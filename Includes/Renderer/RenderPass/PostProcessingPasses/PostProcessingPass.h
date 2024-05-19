@@ -20,8 +20,6 @@ public:
     void prepareForNextFrame();
 private:
     std::vector<std::unique_ptr<RenderPass>> postProcessingPasses;
-    void mergePasses(std::shared_ptr<Texture2D> passToMerge);
-
 };
 
 
