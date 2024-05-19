@@ -62,7 +62,7 @@ int main() {
     floor->recievesShadow = true;
     floor->setBackFaceCull(false);
 
-    std::shared_ptr<Scene> scene = std::make_shared<Scene>();
+    const std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);
 
     scene->add(std::move(gridSceneNode));
@@ -76,7 +76,6 @@ int main() {
     pabloRenderer->setDebugTexture(iblPipeLine->iblTextures[3]->type);
 
     pabloRenderer->render();
-
 
     return 0;
 }
