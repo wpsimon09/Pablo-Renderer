@@ -1,12 +1,14 @@
 #version 460
 
+#define MAX_POST_PROCESING_TEXTURES 10
+
 out vec4 FragColor;
 
 in vec2 TexCoords;
 
-uniform sampler2D previousResult;
+uniform int postProcessCount;
 
-uniform sampler2D newResult;
+uniform sampler2D postProcessingEffect[MAX_POST_PROCESING_TEXTURES];
 
 void main() {
 
