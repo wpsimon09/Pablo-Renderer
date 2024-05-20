@@ -105,6 +105,7 @@ protected:
      */
     void loadHRI(const char*path);
 
+
 private:
     void release() {
         if (ID != 0) {

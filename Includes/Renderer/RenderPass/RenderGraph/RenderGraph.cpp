@@ -13,8 +13,10 @@ RenderGraph::RenderGraph(std::shared_ptr<Scene> scene) {
 void RenderGraph::init() {
     this->scenePass = std::make_unique<ScenePass>();
     this->shadowMapPass = std::make_unique<ShadowMapPass>();
-    this->chromaticAerrationPass = std::make_unique<ChromaticAberration>();
-    this->pixelationPass = std::make_unique<Pixelation>();
+
+    this->postProcessingPass = std::make_unique<PostProcessingPass>();
+    this->postProcessingPass->addPostProcessingPass(std::make_unique<ChromaticAberration>());
+    this->postProcessingPass->addPostProcessingPass(std::make_unique<Pixelation>());
 }
 
 void RenderGraph::preProcessing() {
@@ -35,12 +37,12 @@ void RenderGraph::render() {
 }
 
 void RenderGraph::postProcessing() {
-    auto renderer = this->rendererManager->requestRenderer(pixelationPass->rendererType);
+    auto renderer = this->rendererManager->requestRenderer(postProcessingPass->rendererType);
 
-    if(pixelationPass->canBeRendered()){
-        pixelationPass->render( this->scenePass->getRenderedResult(), renderer);
+    if(postProcessingPass->canBeRendered()){
+        postProcessingPass->render(scenePass->getRenderedResult(), renderer);
     }
-    this->renderResults.insert(std::make_pair(POST_PROCESSING_PIXELATION, pixelationPass->getRenderedResult()));
+    this->renderResults.insert(std::make_pair(POST_PROCESSING_PASS, postProcessingPass->getRenderedResult()));
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
@@ -55,7 +57,7 @@ void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
     frameBuffer.setColorAttachment(finalPass->getRenderedResult());
     frameBuffer.drawInsideSelf();
 
-    this->renderResults.insert(std::make_pair(FINAL_PASS, frameBuffer.getRenderedResult()));
+    this->renderResults.insert(std::make_pair(FINAL_PASS,finalPass->getRenderedResult()));
 }
 
 std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) {
@@ -67,9 +69,9 @@ void RenderGraph::prepareForNextFrame() {
     this->renderResults.clear();
     this->scenePass->prepareForNextFrame();
     this->shadowMapPass->prepareForNextFrame();
-    this->chromaticAerrationPass->prepareForNextFrame();
-    this->pixelationPass->prepareForNextFrame();
+    this->postProcessingPass->prepareForNextFrame();
 
+    //this is not supposed to be here as light is not part of the render graph but this is the only method that is preparing scene for next frame so it is what it is
     auto lightStart = scene->lights.begin();
     while(lightStart != scene->lights.end()){
         lightStart->second->prepareForNextFrame();
@@ -81,7 +83,10 @@ std::vector<std::reference_wrapper<RenderPass>> RenderGraph::getRenderPasses() {
     std::vector<std::reference_wrapper<RenderPass>> renderPasses;
     renderPasses.emplace_back(*shadowMapPass);
     renderPasses.emplace_back(*scenePass);
-    renderPasses.emplace_back(*chromaticAerrationPass);
-    renderPasses.emplace_back(*pixelationPass);
+    for (auto &postProcessPass: this->postProcessingPass->getChilder()) {
+        renderPasses.emplace_back(postProcessPass);
+    }
+    //renderPasses.emplace_back(*postProcessingPass);
+
     return renderPasses;
 }

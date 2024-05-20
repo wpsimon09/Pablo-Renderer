@@ -72,7 +72,7 @@ public:
     /***
      * Preforms rendering to itself and stores rendered result to the texture
      */
-    virtual void drawInsideSelf();
+    void drawInsideSelf(bool useColourAttachemntAsTexture =true);
 
     /***
      * Sets the color attachment of frame buffer that is supposed to be rendered

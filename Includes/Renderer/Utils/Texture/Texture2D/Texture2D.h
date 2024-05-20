@@ -46,7 +46,17 @@ public:
      */
     explicit Texture2D(int width, int height, float* data  ,GLenum format = GL_FLOAT);
 
+    GLenum getInternalFormat(){return this->internalFormat;};
+
+    /***
+     * @brief Return the pixels of the texture image as an array of loating point numbers
+     * @return pixel data of the texture e.g. the texture image
+     */
+    std::unique_ptr<float[]> getData();
+
     ~Texture2D() = default;
+private:
+    GLenum internalFormat;
 };
 
 

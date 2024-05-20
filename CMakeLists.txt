@@ -47,6 +47,10 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Utils/ShaderManager/ShaderManager.cpp
         Includes/Renderer/Utils/ShaderManager/ShaderManager.h
         Includes/Renderer/Utils/ShaderManager/UncompiledShaders.h
+        Includes/Renderer/RenderPass/PostProcessingPasses/PostProcessingPass.cpp
+        Includes/Renderer/RenderPass/PostProcessingPasses/PostProcessingPass.h
+        Includes/Renderer/Utils/Texture/Texture2D/Texture2DArray.cpp
+        Includes/Renderer/Utils/Texture/Texture2D/Texture2DArray.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
