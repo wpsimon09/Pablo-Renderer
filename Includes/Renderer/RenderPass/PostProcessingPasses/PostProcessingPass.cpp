@@ -17,18 +17,12 @@ PostProcessingPass::PostProcessingPass() {
 
 std::shared_ptr<Texture2D>
 PostProcessingPass::render(std::shared_ptr<Texture2D> renderedScene, std::shared_ptr<Renderer> renderer) {
-    int i = 0;
+    this->renderPassResult = renderedScene;
     for(auto &postProcessPass: this->postProcessingPasses){
         if(postProcessPass->canBeRendered()){
-            auto outcome = postProcessPass->render(renderedScene, renderer);
-            outcome->shaderName = "postProcessingEffect["+std::to_string(i) +"]";
-            this->addInput(outcome);
+            this->renderPassResult = postProcessPass->render(this->renderPassResult, renderer);
         }
-        i++;
     }
-    renderer->setInputsForRenderPass(this->inputs);
-    renderer->render(this->frameBuffer);
-
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
     return this->renderPassResult;
@@ -51,5 +45,13 @@ void PostProcessingPass::prepareForNextFrame() {
     for(auto &postProcess: this->postProcessingPasses){
         postProcess->prepareForNextFrame();
     }
+}
+
+std::vector<std::reference_wrapper<RenderPass>> PostProcessingPass::getChilder() {
+    std::vector<std::reference_wrapper<RenderPass>> children;
+    for(auto &postProcess: this->postProcessingPasses){
+        children.emplace_back(*postProcess);
+    }
+    return children;
 }
 

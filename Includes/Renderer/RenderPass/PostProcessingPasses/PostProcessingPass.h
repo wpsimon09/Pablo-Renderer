@@ -17,6 +17,8 @@ public:
 
     void addPostProcessingPass(std::unique_ptr<RenderPass> renderPass);
 
+    std::vector<std::reference_wrapper<RenderPass>> getChilder();
+
     void prepareForNextFrame();
 private:
     std::vector<std::unique_ptr<RenderPass>> postProcessingPasses;
