@@ -23,8 +23,6 @@ PostProcessingPass::render(std::shared_ptr<Texture2D> renderedScene, std::shared
             this->renderPassResult = postProcessPass->render(this->renderPassResult, renderer);
         }
     }
-    this->renderPassResult = this->frameBuffer->getRenderedResult();
-
     return this->renderPassResult;
 }
 
