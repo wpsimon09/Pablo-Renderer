@@ -70,6 +70,12 @@ public:
     virtual void configureShader() {};
 
     /***
+     * @brief Gets all of the of textures if material has any
+     * @return vector of shared pointer to the textures
+     */
+    virtual std::vector<std::reference_wrapper<Texture2D>> getTextures() {std::vector<std::reference_wrapper<Texture2D>> tex; return tex;};
+
+    /***
      * Unbinds all of the textures bound during rendering
      */
     virtual void unbindTextures(){}

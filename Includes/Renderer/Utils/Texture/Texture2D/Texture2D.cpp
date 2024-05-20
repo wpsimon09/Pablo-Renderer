@@ -91,7 +91,7 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
     glCheckError();
 }
 
-std::unique_ptr<float[]> Texture2D::getData() {
+float* Texture2D::getData() {
     int dataSize = this->texWidth * this->texHeight * 4;
 
     auto data = std::make_unique<float[]>(dataSize);
@@ -112,13 +112,14 @@ std::unique_ptr<float[]> Texture2D::getData() {
     float *imageData = (float*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
     if(imageData){
         std::copy(imageData,imageData + dataSize,data.get());
+        delete imageData;
         glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
     }
 
     glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
     glDeleteBuffers(1, &pbo);
 
-    return data;
+    return data.get();
 }
 
 

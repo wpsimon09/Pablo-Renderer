@@ -32,6 +32,7 @@ public:
 
     std::shared_ptr<Texture2D> getAlbedoTexture() override;
 
+    std::vector<std::reference_wrapper<Texture2D>> getTextures() override;
 
     /***
      * Passes all information to the shader unifroms

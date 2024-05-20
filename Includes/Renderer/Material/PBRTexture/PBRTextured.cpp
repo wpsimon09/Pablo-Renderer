@@ -94,6 +94,13 @@ void PBRTextured::renderUI() {
     ImGui::Checkbox("SupportsIBL",&this->supportsIBL);
 }
 
+std::vector<std::reference_wrapper<Texture2D>> PBRTextured::getTextures() {
+    std::vector<std::reference_wrapper<Texture2D>> textures;
+    for(auto &texture : this->textures ){
+        textures.emplace_back(std::ref(texture.get()));
+    }
+}
+
 
 
 

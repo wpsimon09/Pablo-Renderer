@@ -52,7 +52,7 @@ public:
      * @brief Return the pixels of the texture image as an array of loating point numbers
      * @return pixel data of the texture e.g. the texture image
      */
-    std::unique_ptr<float[]> getData();
+    float* getData();
 
     ~Texture2D() = default;
 private:
