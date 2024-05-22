@@ -52,6 +52,7 @@ void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
     for(auto &pass: allPasses){
         if(pass.get().canBeRendered()){
             finalPass = &pass.get();
+            break;
         }
     }
     frameBuffer.setColorAttachment(finalPass->getRenderedResult());

@@ -95,10 +95,11 @@ void PBRTextured::renderUI() {
 }
 
 std::vector<std::reference_wrapper<Texture2D>> PBRTextured::getTextures() {
-    std::vector<std::reference_wrapper<Texture2D>> textures;
+    std::vector<std::reference_wrapper<Texture2D>> fetchedTextures;
     for(auto &texture : this->textures ){
-        textures.emplace_back(std::ref(texture.get()));
+        fetchedTextures.push_back(std::ref(*texture->type));
     }
+    return fetchedTextures;
 }
 
 
