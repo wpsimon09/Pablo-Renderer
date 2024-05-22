@@ -87,7 +87,6 @@ std::vector<std::reference_wrapper<RenderPass>> RenderGraph::getRenderPasses() {
     for (auto &postProcessPass: this->postProcessingPass->getChilder()) {
         renderPasses.emplace_back(postProcessPass);
     }
-    //renderPasses.emplace_back(*postProcessingPass);
 
     return renderPasses;
 }
