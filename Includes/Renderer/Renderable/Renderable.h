@@ -30,7 +30,7 @@ protected:
 public:
     std::unique_ptr<Transformations> transformations;
     bool castsShadwo = false;
-    bool recievesShadow = false;
+    bool recievesShadow = true;
     bool isModel = false;
     bool isLineOnly = false;
     const std::shared_ptr<Material> &getObjectMaterial() const;

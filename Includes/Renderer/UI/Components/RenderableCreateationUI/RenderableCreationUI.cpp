@@ -92,9 +92,6 @@ void RenderableCreationUI::display() {
     }
     ImGui::EndChild();
 
-
-    //ImGui::InputText("Material properties", name, 400);
-
     ImGui::End();
 }
 

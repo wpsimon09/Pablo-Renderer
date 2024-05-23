@@ -20,6 +20,7 @@ private:
     static void displaySceneNodeMenu(SceneNode& sceneNode);
 public:
     inline static bool showRendererCreation = false;
+    inline static bool showEnviromentMenu = false;
     static void display(int posX, int posY, int width, int height = 0);
 };
 

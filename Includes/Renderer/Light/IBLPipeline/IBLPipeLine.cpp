@@ -40,3 +40,9 @@ void IBLPipeLine::configureShader(std::shared_ptr<Shader> shader, int maximalSam
     }
     this->samplersCount = i;
 }
+
+void IBLPipeLine::recalculateIBL(const char *path) {
+    this->inputHDRI.reset(new TextureHDRi(path));
+    this->iblTextures.clear();
+    this->generateIBLTextures();
+}

@@ -11,7 +11,8 @@
 
 class FileWindowUI {
 public:
-    static std::string display(bool getDirectory = false , int widht = 600, int heigh = 600);
+    static inline std::string supportedFiles = ".gltf,.obj,.glb,.fbx";
+    static std::string display(bool getDirectory = false, int widht = 600, int heigh = 600);
 };
 
 

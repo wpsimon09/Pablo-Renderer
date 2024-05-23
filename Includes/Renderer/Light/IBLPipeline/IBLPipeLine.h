@@ -23,6 +23,12 @@ public:
     explicit IBLPipeLine(const char* path);
 
     /***
+     * @brief Regenerates the IBL
+     * @param path
+     */
+    void recalculateIBL(const char* path);
+
+    /***
      * Generates and stores the generated textures inside vector
      */
     void generateIBLTextures();

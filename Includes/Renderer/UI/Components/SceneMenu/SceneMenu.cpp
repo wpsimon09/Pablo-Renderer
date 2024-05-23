@@ -36,6 +36,15 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     if(ImGui::Button("Add new")){
         showRendererCreation = true;
     }
+
+    ImGui::SameLine();
+
+    if(ImGui::Button("Change environment")){
+        showEnviromentMenu = true;
+    }
+
+
+
     ImGui::NewLine();
     ImGui::End();
     ImGui::Begin("Tools", NULL,  ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
@@ -70,6 +79,10 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 
     if(showRendererCreation){
         RenderableCreationUI::display();
+    }
+
+    if (showEnviromentMenu){
+
     }
 
 }

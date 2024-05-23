@@ -51,6 +51,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/RenderPass/PostProcessingPasses/PostProcessingPass.h
         Includes/Renderer/Utils/Texture/Texture2D/Texture2DArray.cpp
         Includes/Renderer/Utils/Texture/Texture2D/Texture2DArray.h
+        Includes/Renderer/UI/Components/EnviromentUI/EnviromentUI.cpp
+        Includes/Renderer/UI/Components/EnviromentUI/EnviromentUI.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
