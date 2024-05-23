@@ -11,7 +11,7 @@ std::string FileWindowUI::display(bool getDirectory ,int widht, int heigh) {
     if (ImGui::Button(getDirectory?"Choose a directory" : "Choose a model file")) {
         IGFD::FileDialogConfig config;
         config.path = ".";
-        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", getDirectory?"Choose a directory" : "Choose a model file", getDirectory ? nullptr :".gltf,.obj,.glb", config);
+        ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", getDirectory?"Choose a directory" : "Choose a model file", getDirectory ? nullptr :".gltf,.obj,.glb,.fbx", config);
     }
     // display
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {

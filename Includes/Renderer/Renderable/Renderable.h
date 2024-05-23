@@ -32,6 +32,7 @@ public:
     bool castsShadwo = false;
     bool recievesShadow = false;
     bool isModel = false;
+    bool isLineOnly = false;
     const std::shared_ptr<Material> &getObjectMaterial() const;
     bool isPartOfSceneNode = false;
 private:

@@ -38,10 +38,15 @@ Renderable::Renderable(std::shared_ptr<Shader> shader) {
 }
 
 void Renderable::render() {
-    this->objectMaterial->shader->use();
-    this->objectMaterial->shader->setFloat("isModel", this->isModel);
-    this->objectMaterial->shader->setFloat("reciviesShadow", this->recievesShadow);
-    this->objectMaterial->configureShader();
+    if(isLineOnly){
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    }else{
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        this->objectMaterial->shader->use();
+        this->objectMaterial->shader->setFloat("isModel", this->isModel);
+        this->objectMaterial->shader->setFloat("reciviesShadow", this->recievesShadow);
+        this->objectMaterial->configureShader();
+    }
     this->objectGeometry->render();
 }
 
