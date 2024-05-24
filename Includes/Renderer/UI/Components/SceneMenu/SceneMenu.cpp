@@ -8,6 +8,7 @@
 #include "Renderer/UI/Components/LightUI/LightUI.h"
 #include "Renderer/UI/Components/RenderableCreateationUI/RenderableCreationUI.h"
 #include "Renderer/UI/Components/RenderGraphUI/RenderGraphUI.h"
+#include "Renderer/UI/Components/EnviromentUI/EnviromentUI.h"
 #include <algorithm>
 // recursion counting mechanism for selecting right renderables
 int i = 0;
@@ -82,7 +83,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     }
 
     if (showEnviromentMenu){
-
+        EnviromentUI::display();
     }
 
 }

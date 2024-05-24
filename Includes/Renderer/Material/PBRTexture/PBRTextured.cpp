@@ -84,19 +84,18 @@ std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
 }
 
 void PBRTextured::renderUI() {
-    ImVec2 imageSize((float) this->getAlbedoTexture()->texWidth / 4, (float) this->getAlbedoTexture()->texHeight / 4);
 
     if (ImGui::TreeNodeEx("Textures")) {
         for (auto &texture: this->textures) {
-
+            ImVec2 imageSize((float) texture->type->texWidth / 4, (float) texture->type->texHeight / 4);
             if (ImGui::TreeNodeEx(texture->shaderName.c_str())) {
                 ImGui::BeginChild("##", imageSize);
                 ImGui::GetWindowDrawList()->AddImage(
 
                         (void *) texture->type->ID,
                         ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-                        ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x / 4,
-                               ImGui::GetCursorScreenPos().y + imageSize.y / 4), // Use bottom-right corner
+                        ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
+                               ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
                         ImVec2(0, 1),
                         ImVec2(1, 0)
                 );

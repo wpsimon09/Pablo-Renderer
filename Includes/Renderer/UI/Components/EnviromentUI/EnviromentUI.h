@@ -8,6 +8,7 @@
 #include "Renderer/UI/Components/Component.h"
 
 class EnviromentUI:public Component {
+public:
     static void display();
 };
 
