@@ -42,7 +42,21 @@ void IBLPipeLine::configureShader(std::shared_ptr<Shader> shader, int maximalSam
 }
 
 void IBLPipeLine::recalculateIBL(const char *path) {
-    this->inputHDRI.reset(new TextureHDRi(path));
-    this->iblTextures.clear();
-    this->generateIBLTextures();
+    auto newHDR = std::make_shared<TextureHDRi>(path);
+    if(newHDR->wasFound){
+        this->inputHDRI = std::move(newHDR);
+        this->iblTextures.clear();
+        this->generateIBLTextures();
+    }else{
+        throw std::invalid_argument("Path provided to the texture was not found");
+    }
+}
+
+void IBLPipeLine::calculatePreview(const char *path) {
+    auto newHDR = std::make_shared<TextureHDRi>(path);
+    if(newHDR->wasFound){
+        this->inputHDRI = std::move(newHDR);
+    }else{
+        throw std::invalid_argument("Path provided to the texture was not found");
+    }
 }

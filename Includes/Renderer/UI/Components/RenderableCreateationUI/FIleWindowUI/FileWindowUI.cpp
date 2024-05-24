@@ -17,19 +17,25 @@ std::string FileWindowUI::display(bool getDirectory ,int widht, int heigh) {
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
             //ImGui::SetNextWindowFocus();
-            ImGui::SetNextWindowFocus();
+            //ImGui::SetNextWindowFocus();
             RenderableCreationUI::hasFocus = true;
-            ImGui::SetNextWindowSize(ImVec2((float)widht,(float) heigh));
+            //ImGui::SetNextWindowSize(ImVec2((float)widht,(float) heigh));
             if(getDirectory){
-                RenderableBuilder::textureDirectory = ImGuiFileDialog::Instance()->GetCurrentPath();
+                directory = ImGuiFileDialog::Instance()->GetCurrentPath();
+                RenderableBuilder::textureDirectory = directory;
             }
-            else
-                RenderableBuilder::modelOath = ImGuiFileDialog::Instance()->GetFilePathName();
+            else{
+                filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                RenderableBuilder::modelOath = filePathName;
+            }
         }
         // close
         ImGuiFileDialog::Instance()->Close();
+        if(getDirectory){
+            return directory;
+        }else
+            return filePathName;
 
-        return getDirectory ? directory : filePathName;
     }
     return "";
 }

@@ -17,10 +17,10 @@ void EnviromentUI::display() {
 
     ImGui::Text("Environment preview");
 
-    ImVec2 imageSize((float) iblPiplineInstance->iblTextures[0]->type->texWidth / 4, (float) iblPiplineInstance->iblTextures[0]->type->texHeight / 4);
-        ImGui::BeginChild("##", imageSize);
+    ImVec2 imageSize((float) iblPiplineInstance->getHDR()->texWidth / 12, (float) iblPiplineInstance->getHDR()->texHeight / 12);
+        ImGui::BeginChild("HDRPreview", imageSize, true);
         ImGui::GetWindowDrawList()->AddImage(
-                (void *) iblPiplineInstance->iblTextures[0]->type->ID,
+                (void *) iblPiplineInstance->getHDR()->ID,
                 ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
                 ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
                        ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
@@ -32,10 +32,19 @@ void EnviromentUI::display() {
     //--------------------------
     // LOADING NEW IBL PIPELINE
     //--------------------------
-    EnviromentUI::hdrTexturePath = FileWindowUI::supportedFiles = ".hdr";
-    FileWindowUI::display();
+    FileWindowUI::supportedFiles = ".hdr";
+    EnviromentUI::hdrTexturePath = FileWindowUI::display();
+    if(!hdrTexturePath.empty()){
+        try{
+            iblPiplineInstance->calculatePreview(hdrTexturePath.c_str());
+        }catch (std::exception &e){
+            ImGui::Text(e.what());
+        }
+    }
 
+    if(ImGui::Button("Apply")){
 
+    }
 
     if(ImGui::Button("Close")){
         SceneMenu::showEnviromentMenu = false;

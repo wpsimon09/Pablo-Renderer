@@ -41,6 +41,12 @@ public:
     void configureShader(std::shared_ptr<Shader> shader, int maximalSamplerCount);
 
     /***
+     * @brief Loads just the HDR texture without recalculating every texture of IBL pipeline
+     * @param path path to the texture
+     */
+    void calculatePreview(const char *path);
+
+    /***
      * Cube map texture of the equirectangualr map
      */
     std::shared_ptr<TextureBase> envMap;
@@ -51,6 +57,8 @@ public:
     std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> iblTextures;
 
     int getSamplersCount() {return this->samplersCount; }
+
+    std::shared_ptr<TextureHDRi> getHDR() {return this->inputHDRI;}
 private:
     std::shared_ptr<TextureHDRi> inputHDRI;
     int samplersCount;
