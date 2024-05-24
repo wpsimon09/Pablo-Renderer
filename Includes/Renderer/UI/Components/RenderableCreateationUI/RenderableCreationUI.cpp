@@ -33,7 +33,9 @@ void RenderableCreationUI::display() {
     }
     if(RenderableBuilder::selectedGeometry == MODEL){
         // button that opens the dialog window is inside the class
+        FileWindowUI::supportedFiles = ".gltf,.obj,.glb,.fbx";
         FileWindowUI::display();
+
         ImGui::Text("Selected model path:");
         ImGui::Text(RenderableBuilder::modelOath.c_str());
     }
