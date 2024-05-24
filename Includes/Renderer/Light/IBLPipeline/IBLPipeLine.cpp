@@ -17,6 +17,7 @@ void IBLPipeLine::generateIBLTextures() {
     //----------------------
     // CONFIGURE HRI TEXTURE
     //----------------------
+    this->iblTextures.clear();
     this->inputHDRI->setSamplerID(0);
 
     bool firstIteration = true;
@@ -41,11 +42,8 @@ void IBLPipeLine::configureShader(std::shared_ptr<Shader> shader, int maximalSam
     this->samplersCount = i;
 }
 
-void IBLPipeLine::recalculateIBL(const char *path) {
-    auto newHDR = std::make_shared<TextureHDRi>(path);
-    if(newHDR->wasFound){
-        this->inputHDRI = std::move(newHDR);
-        this->iblTextures.clear();
+void IBLPipeLine::recalculateIBL() {
+    if(inputHDRI->wasFound){
         this->generateIBLTextures();
     }else{
         throw std::invalid_argument("Path provided to the texture was not found");

@@ -43,7 +43,11 @@ void EnviromentUI::display() {
     }
 
     if(ImGui::Button("Apply")){
-
+        try{
+            iblPiplineInstance->recalculateIBL();
+        }catch (std::exception &e){
+            ImGui::Text(e.what());
+        }
     }
 
     if(ImGui::Button("Close")){

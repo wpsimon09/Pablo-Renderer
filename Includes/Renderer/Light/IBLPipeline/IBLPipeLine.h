@@ -26,7 +26,7 @@ public:
      * @brief Regenerates the IBL
      * @param path
      */
-    void recalculateIBL(const char* path);
+    void recalculateIBL();
 
     /***
      * Generates and stores the generated textures inside vector
