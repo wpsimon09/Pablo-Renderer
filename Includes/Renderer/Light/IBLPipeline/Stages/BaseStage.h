@@ -14,6 +14,8 @@
  */
 class BaseStage {
 protected:
+    bool fistExecution = true;
+
     BaseStage() =default ;
 
     /***
@@ -41,6 +43,8 @@ public:
      * Name of the shader uniform where the texture will be uploaded
      */
     std::string shaderName;
+
+    bool isExecutingFirstTime() {return fistExecution;}
 };
 
 

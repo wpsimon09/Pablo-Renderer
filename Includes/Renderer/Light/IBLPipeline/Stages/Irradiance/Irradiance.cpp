@@ -11,8 +11,10 @@ Irradiance::Irradiance():BaseStage() {
 }
 
 void Irradiance::execute(TextureBase input) {
-    this->frameBufferCube = std::make_unique<FrameBufferCube>(32,32, this->shader);
+    if(fistExecution){
+        this->frameBufferCube = std::make_unique<FrameBufferCube>(32,32, this->shader);
+        this->fistExecution = false;
+    }
     this->result = this->frameBufferCube->renderToSelf(input);
-    this->frameBufferCube.reset();
 }
 
