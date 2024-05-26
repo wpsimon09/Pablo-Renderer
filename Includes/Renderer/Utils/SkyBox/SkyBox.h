@@ -19,7 +19,14 @@ public:
 
     void render() override;
 
+    void setViewMatrix(glm::mat4 viewMatrix);
+
+    void setProjectionMatrix(glm::mat4 projectionMatrix);
 private:
+
+private:
+    glm::mat4 viewMatrix;
+    glm::mat4 projectionMatrix;
     std::string skyBoxUniformName;
     std::shared_ptr<Texture3D> skyBoxTexture;
 };

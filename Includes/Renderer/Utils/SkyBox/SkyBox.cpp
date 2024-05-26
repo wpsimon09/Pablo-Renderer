@@ -20,9 +20,18 @@ void SkyBox::renderUI() {
 
 void SkyBox::render() {
     if(isVisible){
+        ShaderHelper::setTransfomrationMatrices(this->getShader(), glm::mat4(1.0f), this->viewMatrix, this->projectionMatrix);
         this->objectMaterial->configureShader();
         this->objectGeometry->render();
     }
+}
+
+void SkyBox::setViewMatrix(glm::mat4 viewMatrix) {
+    SkyBox::viewMatrix = viewMatrix;
+}
+
+void SkyBox::setProjectionMatrix( glm::mat4 projectionMatrix) {
+    SkyBox::projectionMatrix = projectionMatrix;
 }
 
 
