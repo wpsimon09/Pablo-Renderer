@@ -58,6 +58,7 @@ void SceneNodeUI::display() {
             ImGui::SameLine();
             ImGui::Checkbox("Is visible", &sceneNode->getVisibility());
             ImGui::Checkbox("Mesh view", &sceneNode->getRenderable()->isLineOnly);
+            ImGui::Text(sceneNode->getRenderable()->isModel ? "Model": "Not a model");
     }
     else
         ImGui::Text("No item selected please select one from the SceneStructure");

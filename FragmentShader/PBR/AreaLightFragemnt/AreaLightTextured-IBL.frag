@@ -146,7 +146,7 @@ void main() {
         roughness = texture(_roughnessMap, fs_in.TexCoords).r;
         metallic = texture(_metallicMap, fs_in.TexCoords).r;
     }
-    if (fs_in.hasEmission == 1) {
+    if (fs_in.hasEmission == 1.0) {
         emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
     }
     ao = texture(_aoMap, fs_in.TexCoords).r;
@@ -206,9 +206,10 @@ void main() {
         vec3 prefilterColor = textureLod(prefilterMap, vec3(NdotV), roughness * MAX_REFLECTION_LOD).rgb;
 
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
-        vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
+        vec3 spec = (prefilterColor * (kS * brdf.x +  brdf.y));
 
-        ambient = (kD * diffuse + specular ) *(0.5);
+        ambient = (kD * diffuse + spec
+        ) *(0.5);
     }
     else{
         ambient = albedo * 0.3;
