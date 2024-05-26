@@ -54,6 +54,8 @@ void EnviromentUI::display() {
         }
     }
 
+    ImGui::SameLine();
+
     if(ImGui::Button("Close")){
         SceneMenu::showEnviromentMenu = false;
     }

@@ -40,7 +40,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 
     ImGui::SameLine();
 
-    if(ImGui::Button("Change environment")){
+    if(ImGui::Button("Enviroment settings")){
         showEnviromentMenu = true;
     }
 
