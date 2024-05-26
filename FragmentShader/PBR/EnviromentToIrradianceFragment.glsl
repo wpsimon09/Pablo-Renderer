@@ -19,7 +19,7 @@ void main()
 	up = cross(normal, right);
 
 	//hemisphere specs
-	float sampleDelta = 0.021;
+	float sampleDelta = 0.06;
 	float nrSamples = 0;
 
 	for(float phi = 0.0; phi< 2* PI; phi += sampleDelta)
@@ -30,7 +30,7 @@ void main()
 
 			vec3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * normal;
 
-			irradiance += texture(envMap, sampleVec).rgb * cos(theta) * sin(theta);
+			irradiance += texture(envMap, sampleVec).rgb * (cos(theta) * sin(theta));
 
 			nrSamples ++;
 		}

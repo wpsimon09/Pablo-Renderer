@@ -37,7 +37,7 @@ const float LUT_BIAS  = 0.5/LUT_SIZE;
 
 vec3 FresnelShlickRoughness(float cosTheta, vec3 F0, float roughness)
 {
-    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+    return F0 + (max(vec3(1.0 - (roughness*roughness)), F0) - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
 }
 
 float caclualteShadow(vec4 FragPosLight, float bias)
@@ -208,9 +208,9 @@ void main() {
         vec3 prefilterColor = textureLod(prefilterMap, R, _valRougness * MAX_REFLECTION_LOD).rgb;
 
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), _valRougness)).rg;
-        vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
+        vec3 spec = prefilterColor * (kS * brdf.x +  brdf.y);
 
-        ambient = (kD * diff + specular ) *(1-shadow);
+        ambient = (kD * diff + spec ) *(1-shadow);
     }
     else{
         ambient = (_valAlbedo * _valAo)*(1-shadow);
