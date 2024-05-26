@@ -16,8 +16,10 @@
 #include "Renderer/Utils/Camera/OrbitCamera/OrbitCamera.h"
 #include "Renderer/Light/DirectionLight/DirectionalLight.h"
 #include "Renderer/Light/AreaLight/AreaLight.h"
-#include "map"
 #include "Renderer/Enums/LightTypes.h"
+#include "Renderer/Utils/SkyBox/SkyBox.h"
+#include "map"
+
 
 /***
  * Class that holds every information about what should be render and where in the world space
@@ -49,6 +51,7 @@ public:
      */
     void add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent = root);
 
+    SkyBox& getSkyBox() {return *this->skyBox;}
 
     void removeSceneNode(int id);
 
@@ -68,6 +71,7 @@ public:
     std::unique_ptr<Light> light;
 private:
     std::shared_ptr<IBLPipeLine> iblPipeLine;
+    std::unique_ptr<SkyBox> skyBox;
 public:
     const std::shared_ptr<IBLPipeLine> &getIblPipeLine() const;
     RENDERING_CONSTRAINS renderingConstrains = NONE;

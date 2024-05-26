@@ -62,6 +62,5 @@ void SceneNodeUI::display() {
     }
     else
         ImGui::Text("No item selected please select one from the SceneStructure");
-
 }
 

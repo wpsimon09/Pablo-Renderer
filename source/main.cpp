@@ -32,11 +32,6 @@ int main() {
     auto planeGeometry = std::make_shared<PlaneGeometry>();
     auto sphereGeometry = std::make_shared<SphereGeometry>();
 
-    auto skyBox = std::make_unique<SkyBoxMaterial>(*iblPipeLine->envMap, "enviromentMap");
-
-    //create renderable object
-    auto skyboxCube = std::make_unique<Renderable>(cubeGeometry, std::move(skyBox));
-
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldMaterial = std::make_shared<PBRTextured>(true, "Assets/Textures/PBR/Gold");
@@ -67,7 +62,6 @@ int main() {
 
     scene->add(std::move(gridSceneNode));
     scene->add(std::move(floor));
-    //scene->add(std::move(skyboxCube));
     scene->add(std::move(pot));
     scene->add(std::move(cubeColor));
 

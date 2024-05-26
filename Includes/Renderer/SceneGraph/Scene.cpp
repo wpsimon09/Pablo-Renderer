@@ -40,6 +40,7 @@ const std::shared_ptr<IBLPipeLine> &Scene::getIblPipeLine() const {
 
 void Scene::setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine) {
     Scene::iblPipeLine = iblPipeLine;
+    this->skyBox = std::make_unique<SkyBox>(iblPipeLine->envMap, "enviromentMap");
 }
 
 void Scene::removeSceneNode(int id) {

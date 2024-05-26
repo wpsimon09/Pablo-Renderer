@@ -26,6 +26,7 @@ void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuff
             lights->second->render(this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
             lights++;
         }
+        this->scene->getSkyBox().render();
 
     }else
         std::cerr<<"ROOT NODE OF SCENE GRAPH NOT CREATED";

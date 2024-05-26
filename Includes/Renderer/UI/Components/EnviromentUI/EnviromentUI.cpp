@@ -29,6 +29,7 @@ void EnviromentUI::display() {
         );
         ImGui::EndChild();
 
+    instance->getScene()->getSkyBox().renderUI();
     //--------------------------
     // LOADING NEW IBL PIPELINE
     //--------------------------
@@ -45,7 +46,10 @@ void EnviromentUI::display() {
     if(ImGui::Button("Apply")){
         try{
             iblPiplineInstance->recalculateIBL();
+            SceneMenu::showEnviromentMenu = false;
+            instance->getScene()->getSkyBox().setSkyBoxTexture(iblPiplineInstance->iblTextures[0]->type);
         }catch (std::exception &e){
+
             ImGui::Text(e.what());
         }
     }

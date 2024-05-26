@@ -53,6 +53,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Utils/Texture/Texture2D/Texture2DArray.h
         Includes/Renderer/UI/Components/EnviromentUI/EnviromentUI.cpp
         Includes/Renderer/UI/Components/EnviromentUI/EnviromentUI.h
+        Includes/Renderer/Utils/SkyBox/SkyBox.cpp
+        Includes/Renderer/Utils/SkyBox/SkyBox.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
