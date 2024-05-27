@@ -16,10 +16,13 @@ public:
 
     bool isValidArray(std::vector<std::shared_ptr<Texture2D>> texutres);
 
+    void add(std::shared_ptr<Texture2D> texture);
+
     void bind() override;
 
     void unbind() override;
 private:
+    int textureCount = 0;
     std::vector<std::shared_ptr<Texture2D>> textures;
 };
 

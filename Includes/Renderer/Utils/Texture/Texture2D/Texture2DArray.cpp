@@ -27,6 +27,7 @@ Texture2DArray::Texture2DArray(std::vector<std::shared_ptr<Texture2D>> texs) {
 
         for (int i = 0; i < this->textures.size(); ++i) {
             glTextureSubImage3D(this->ID, 0, 0,0, i,textures[0]->texWidth, textures[0]->texWidth, 1, GL_RGBA, GL_UNSIGNED_BYTE, textures[i]->getData());
+            this->textureCount ++;
         }
 
     }catch (std::invalid_argument &e){
@@ -46,6 +47,10 @@ bool Texture2DArray::isValidArray(std::vector<std::shared_ptr<Texture2D>> texutr
         return true;
     }
     throw std::invalid_argument("The vector is empty");
+}
+
+void Texture2DArray::add(std::shared_ptr<Texture2D> texture) {
+    this->textures.push_back(texture);
 }
 
 
