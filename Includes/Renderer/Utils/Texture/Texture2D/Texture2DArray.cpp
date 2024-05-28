@@ -14,25 +14,8 @@ void Texture2DArray::unbind() {
 }
 
 Texture2DArray::Texture2DArray(std::vector<std::shared_ptr<Texture2D>> texs) {
-    try {
-        this->isValidArray(texs);
-
-        this->textures = texs;
-
-        glCreateTextures(GL_TEXTURE_2D_ARRAY,1, &this->ID);
-        glCheckError();
-
-        glTextureStorage3D(this->ID, 1, textures[0]->getInternalFormat(), textures[0]->texWidth, textures[0]->texHeight, textures.size());
-        glCheckError();
-
-        for (int i = 0; i < this->textures.size(); ++i) {
-            glTextureSubImage3D(this->ID, 0, 0,0, i,textures[0]->texWidth, textures[0]->texWidth, 1, GL_RGBA, GL_UNSIGNED_BYTE, textures[i]->getData());
-            this->textureCount ++;
-        }
-
-    }catch (std::invalid_argument &e){
-        std::cerr<<e.what();
-    }
+    this->textures = texs;
+    this->loadToGL();
 }
 
 bool Texture2DArray::isValidArray(std::vector<std::shared_ptr<Texture2D>> texutres) {
@@ -51,6 +34,27 @@ bool Texture2DArray::isValidArray(std::vector<std::shared_ptr<Texture2D>> texutr
 
 void Texture2DArray::add(std::shared_ptr<Texture2D> texture) {
     this->textures.push_back(texture);
+
+}
+
+void Texture2DArray::loadToGL() {
+    try {
+        this->isValidArray(this->textures);
+
+        glCreateTextures(GL_TEXTURE_2D_ARRAY,1, &this->ID);
+        glCheckError();
+
+        glTextureStorage3D(this->ID, 1, textures[0]->getInternalFormat(), textures[0]->texWidth, textures[0]->texHeight, textures.size());
+        glCheckError();
+
+        for (int i = 0; i < this->textures.size(); ++i) {
+            glTextureSubImage3D(this->ID, 0, 0,0, i,textures[0]->texWidth, textures[0]->texWidth, 1, GL_RGBA, GL_UNSIGNED_BYTE, textures[i]->getData());
+            this->textureCount ++;
+        }
+
+    }catch (std::invalid_argument &e){
+        std::cerr<<e.what();
+    }
 }
 
 

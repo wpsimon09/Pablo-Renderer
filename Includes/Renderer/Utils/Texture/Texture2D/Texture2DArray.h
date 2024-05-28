@@ -23,6 +23,7 @@ public:
     void unbind() override;
 private:
     int textureCount = 0;
+    void loadToGL();
     std::vector<std::shared_ptr<Texture2D>> textures;
 };
 
