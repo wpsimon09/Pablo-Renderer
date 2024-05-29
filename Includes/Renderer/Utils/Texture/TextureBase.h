@@ -55,6 +55,12 @@ public:
     std::string fullPath;
     int texWidth, texHeight;
 
+    /***
+     * @brief Loads texture data that are stored to the opengl texture object
+     * @param numberOfChanels number of the colour chanes defualt is: GL_RGB
+     * @note only applies to the the texture data expressed in unsigned char
+     */
+    void loadToGL(GLenum numberOfChanels= GL_RGBA);
 
     /***
      * Changes minifaction and magnification filtering method

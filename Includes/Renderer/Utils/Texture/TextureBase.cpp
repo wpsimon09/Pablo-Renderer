@@ -66,8 +66,8 @@ void TextureBase::loadPNG(const char *path,bool loadToGl, bool flip) {
 
             glBindTexture(GL_TEXTURE_2D, this->ID);
             glCheckError();
-            //OpenGL throwing error at forestRock/displacement map
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->texWidth, this->texHeight, 0, format, GL_UNSIGNED_BYTE, data);
             glCheckError();
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -75,9 +75,11 @@ void TextureBase::loadPNG(const char *path,bool loadToGl, bool flip) {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-
             stbi_image_free(data);
+        }else{
+            this->textureData = data;
         }
+
     } else {
         this->wasFound = false;
         std::cerr << "Texture failed to load at path: " << path << std::endl;
@@ -94,7 +96,6 @@ void TextureBase::loadHRI(const char *path) {
         this->texWidth = width;
         this->texHeight = height;
         this->wasFound = true;
-
 
         GLenum format;
         if (nrComponents == 1)
@@ -135,4 +136,24 @@ void TextureBase::setUnpackAlignment(int alignment) {
     this->bind();
     glPixelStorei(GL_UNPACK_ALIGNMENT, alignment);
     this->unbind();
+}
+
+void TextureBase::loadToGL(GLenum numberOfChanels) {
+    if(this->textureData != nullptr) {
+        glBindTexture(GL_TEXTURE_2D, this->ID);
+        glCheckError();
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->texWidth, this->texHeight, 0, numberOfChanels, GL_UNSIGNED_BYTE,
+                     this->textureData);
+        glCheckError();
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+        stbi_image_free(this->textureData);
+    }else
+        throw std::domain_error("Data of the texture are empty or texture was not found");
 }
