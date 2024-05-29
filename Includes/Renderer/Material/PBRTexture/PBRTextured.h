@@ -13,6 +13,7 @@
 #include "ostream"
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 #include "imgui.h"
+#include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
 
 /***
  * Class representing PBR material with textures
@@ -50,6 +51,7 @@ public:
     bool hasEmissionTexture = false;
 
 private:
+    std::unique_ptr<Texture2DArray> material;
     /***
      * All the textures the material possess
      */

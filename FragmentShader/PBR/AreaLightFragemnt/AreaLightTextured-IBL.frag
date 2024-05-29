@@ -36,6 +36,8 @@ uniform sampler2D _aoMap;
 uniform sampler2D _rougnessMetalnessMap;
 uniform sampler2D _emmisionMap;
 
+uniform sampler2DArray _materialTextures;
+
 uniform sampler2D LTC;
 uniform sampler2D LTC_Inverse;
 uniform vec3 areaLightCorners[4];

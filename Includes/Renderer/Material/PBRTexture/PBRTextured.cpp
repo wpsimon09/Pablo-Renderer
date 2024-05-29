@@ -18,6 +18,12 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
     this->hasEmissionTexture = false;
 
     if (!pathToTheDirectory.empty()) {
+
+        //Texture array test
+        fullPath = pathToTheDirectory + "/albedo" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true, false);
+        this->material->add(std::move(texture));
+
         // Albedo map
         fullPath = pathToTheDirectory + "/albedo" + fileFormat;
         texture = std::make_unique<Texture2D>(fullPath.c_str(), true);

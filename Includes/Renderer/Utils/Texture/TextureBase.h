@@ -96,6 +96,8 @@ public:
     void setUnpackAlignment(int alignment);
 
     const std::string &getFullPath() const { return this->fullPath; };
+
+    unsigned char* getData() {return this->textureData;}
 protected:
 
     /***

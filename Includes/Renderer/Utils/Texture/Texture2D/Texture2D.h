@@ -27,7 +27,7 @@ public:
      * @param isPBRMaterial is the loaded texture part of the PBR material workflow ?
      * @note texture should end with .png
      */
-    explicit Texture2D(const char *path, bool isPBRMaterial = false);
+    explicit Texture2D(const char *path, bool isPBRMaterial = false, bool loadToGl=true);
 
     /***
      * Creates texture with no color data but just with allocated memory
@@ -47,12 +47,6 @@ public:
     explicit Texture2D(int width, int height, float* data  ,GLenum format = GL_FLOAT);
 
     GLenum getInternalFormat(){return this->internalFormat;};
-
-    /***
-     * @brief Return the pixels of the texture image as an array of loating point numbers
-     * @return pixel data of the texture e.g. the texture image
-     */
-    float* getData();
 
     ~Texture2D() = default;
 private:
