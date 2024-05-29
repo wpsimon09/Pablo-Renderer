@@ -5,7 +5,6 @@
 #include "Texture2DArray.h"
 
 void Texture2DArray::bind() {
-
     TextureBase::bind();
 }
 
@@ -34,7 +33,6 @@ bool Texture2DArray::isValidArray(std::vector<std::shared_ptr<Texture2D>> texutr
 
 void Texture2DArray::add(std::shared_ptr<Texture2D> texture) {
     this->textures.push_back(texture);
-
 }
 
 void Texture2DArray::loadToGL() {

@@ -97,7 +97,7 @@ protected:
      * @param path path to the texture that needs to be loaded with file extension .png
      * @param flip should the loader flip the image texture @def false
      */
-    void loadPNG(const char*path, bool flip = false);
+    void loadPNG(const char*path,bool loadToGl = true ,bool flip = false);
 
     /***
      * Loads equirectangular HDR texture
@@ -105,11 +105,15 @@ protected:
      */
     void loadHRI(const char*path);
 
+    /***
+     * @brief Here should actual texture data be stored but they should be removed when loaded to the GPU
+     */
+    unsigned char *textureData = nullptr;
 
 private:
     void release() {
         if (ID != 0) {
-            // Reset ID to indicate that the texture has been released
+            stbi_image_free(this->textureData);
         }
     };
 
