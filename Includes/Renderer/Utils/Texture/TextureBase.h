@@ -50,9 +50,24 @@ public:
      */
     unsigned int samplerID;
 
+    /***
+     * @brief Boolean flag that marks if texture was found or not
+     */
     bool wasFound;
+
+    /***
+     * @brief Boolean flag that marks if the texture represents PBR material
+     */
     bool isPBRMaterial;
+
+    /***
+     * @brief Full path to the texture
+     */
     std::string fullPath;
+
+    /***
+     * @brief Dimensions of the texture
+     */
     int texWidth, texHeight;
 
     /***
@@ -69,10 +84,6 @@ public:
      */
     void changeFilteringMethod(GLenum mag, GLenum min);
 
-    unsigned int getSamplerID() const { return this->samplerID; }
-
-    void setSamplerID(unsigned int ID) { this->samplerID = ID; }
-
     /**
      * Binds the ID to the GL_TEXTURE_TARGET specified as a target property
      */
@@ -88,12 +99,18 @@ public:
      */
     void generateMipMaps();
 
-
     /***
      * Sets unpacking alignment
      * @param alignment valid values are 0,2,4,6,8
      */
     void setUnpackAlignment(int alignment);
+
+    void clearTextureData() { stbi_image_free(this->textureData);}
+
+
+    unsigned int getSamplerID() const { return this->samplerID; }
+
+    void setSamplerID(unsigned int ID) { this->samplerID = ID; }
 
     const std::string &getFullPath() const { return this->fullPath; };
 

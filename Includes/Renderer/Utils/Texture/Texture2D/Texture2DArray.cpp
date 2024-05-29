@@ -34,6 +34,7 @@ void Texture2DArray::loadToGL() {
 
         for (int i = 0; i < this->textures.size(); ++i) {
             glTextureSubImage3D(this->ID, 0, 0,0, i,textures[0]->texWidth, textures[0]->texWidth, 1, GL_RGBA, GL_UNSIGNED_BYTE, textures[i]->getData());
+            textures[i]->clearTextureData();
             this->textureCount ++;
         }
 

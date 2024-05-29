@@ -17,6 +17,8 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
     this->supportsAreaLight = supportsAreaLight;
     this->hasEmissionTexture = false;
 
+    this->material = std::make_unique<Texture2DArray>();
+
     if (!pathToTheDirectory.empty()) {
 
         //Texture array test

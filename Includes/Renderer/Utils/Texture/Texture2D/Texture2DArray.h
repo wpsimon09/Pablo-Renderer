@@ -12,7 +12,7 @@
 
 class Texture2DArray:public TextureBase {
 public:
-    Texture2DArray();
+    Texture2DArray() = default;
 
     Texture2DArray(std::vector<std::unique_ptr<Texture2D>> textures);
 
