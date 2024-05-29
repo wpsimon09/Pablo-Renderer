@@ -25,6 +25,7 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
         fullPath = pathToTheDirectory + "/albedo" + fileFormat;
         texture = std::make_unique<Texture2D>(fullPath.c_str(), true, false);
         this->material->add(std::move(texture));
+        this->samplerCount++;
 
         // Albedo map
         fullPath = pathToTheDirectory + "/albedo" + fileFormat;
@@ -74,9 +75,11 @@ void PBRTextured::configureShader() {
     this->shader->setFloat("supportsIBL", this->supportsIBL);
     for (auto &texture: this->textures) {
         if (texture != nullptr) {
+            int lastSampler = texture->samplerID;
             ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);
         }
     }
+    ShaderHelper::setTextureToShader(shader, *material, "_materialTextures", this->samplerCount);
 }
 
 void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {

@@ -4,8 +4,16 @@
 
 #include "Texture2DArray.h"
 
+Texture2DArray::Texture2DArray():TextureBase() {
+    this->isPBRMaterial = false;
+    this->type = GL_TEXTURE_2D_ARRAY;
+    this->type_string = "GL_TEXTURE_2D_ARRAY";
+}
 
-Texture2DArray::Texture2DArray(std::vector<std::unique_ptr<Texture2D>> texs) {
+Texture2DArray::Texture2DArray(std::vector<std::unique_ptr<Texture2D>> texs):TextureBase() {
+    this->isPBRMaterial = false;
+    this->type = GL_TEXTURE_2D_ARRAY;
+    this->type_string = "GL_TEXTURE_2D_ARRAY";
     this->textures = std::move(texs);
     this->loadToGL();
 }
@@ -58,6 +66,7 @@ bool Texture2DArray::areTexturesValid() {
     throw std::domain_error("The vector is empty");
 
 }
+
 
 
 
