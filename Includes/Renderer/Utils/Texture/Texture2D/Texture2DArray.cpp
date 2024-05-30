@@ -37,14 +37,24 @@ void Texture2DArray::loadToGL() {
         glCreateTextures(GL_TEXTURE_2D_ARRAY,1, &this->ID);
         glCheckError();
 
-        glTextureStorage3D(this->ID, 1, textures[0]->getInternalFormat(), textures[0]->texWidth, textures[0]->texHeight, textures.size());
+        glBindTexture(GL_TEXTURE_2D_ARRAY, this->ID);
         glCheckError();
 
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA, textures[0]->texWidth, textures[0]->texHeight, textures.size());
+        glCheckError(); //GL_INVALID_OPERATION
+
         for (int i = 0; i < this->textures.size(); ++i) {
-            glTextureSubImage3D(this->ID, 0, 0,0, i,textures[0]->texWidth, textures[0]->texWidth, 1, GL_RGBA, GL_UNSIGNED_BYTE, textures[i]->getData());
+
+            glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i,textures[0]->texWidth, textures[0]->texWidth, 1, GL_RGBA, GL_UNSIGNED_BYTE, textures[i]->getData());
+            glCheckError(); //GL_INVALID_OPERATION
             textures[i]->clearTextureData();
             this->textureCount ++;
         }
+
+        glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D_ARRAY,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
 
     }catch (std::domain_error &e){
         std::cerr<<e.what();

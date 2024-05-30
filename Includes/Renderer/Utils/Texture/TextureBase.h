@@ -75,7 +75,7 @@ public:
      * @param numberOfChanels number of the colour chanes defualt is: GL_RGB
      * @note only applies to the the texture data expressed in unsigned char
      */
-    void loadToGL(GLenum numberOfChanels= GL_RGBA);
+    void processToOpenGL(GLenum numberOfChanels= GL_RGBA);
 
     /***
      * Changes minifaction and magnification filtering method

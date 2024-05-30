@@ -25,6 +25,7 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
         fullPath = pathToTheDirectory + "/albedo" + fileFormat;
         texture = std::make_unique<Texture2D>(fullPath.c_str(), true, false);
         this->material->add(std::move(texture));
+        this->material->loadToGL();
         this->samplerCount++;
 
         // Albedo map
@@ -66,6 +67,8 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
                 std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "displacementMap",
                                                          5));
     }
+
+
 
 }
 

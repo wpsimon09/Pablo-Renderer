@@ -138,7 +138,7 @@ void TextureBase::setUnpackAlignment(int alignment) {
     this->unbind();
 }
 
-void TextureBase::loadToGL(GLenum numberOfChanels) {
+void TextureBase::processToOpenGL(GLenum numberOfChanels) {
     if(this->textureData != nullptr) {
         glBindTexture(GL_TEXTURE_2D, this->ID);
         glCheckError();

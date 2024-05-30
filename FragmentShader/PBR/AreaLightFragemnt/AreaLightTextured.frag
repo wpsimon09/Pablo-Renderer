@@ -36,6 +36,8 @@ uniform sampler2D _aoMap;
 uniform sampler2D _rougnessMetalnessMap;
 uniform sampler2D _emmisionMap;
 
+uniform sampler2DArray _materialTextures;
+
 uniform sampler2D LTC;
 uniform sampler2D LTC_Inverse;
 uniform vec3 areaLightCorners[4];
@@ -138,7 +140,8 @@ void main() {
     //-------------------------
     // GET VALUES FROM TEXTURES
     //-------------------------
-    albedo = texture(_albedoMap, fs_in.TexCoords).rgb;
+    albedo = texture(_materialTextures, vec3(fs_in.TexCoords, 0.0)).rgb;
+    //texture(_albedoMap, fs_in.TexCoords).rgb;
     if (fs_in.isModel == 1.0) {
         roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
         metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
