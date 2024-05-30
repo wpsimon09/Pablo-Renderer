@@ -40,7 +40,7 @@ void Texture2DArray::loadToGL() {
         glBindTexture(GL_TEXTURE_2D_ARRAY, this->ID);
         glCheckError();
 
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA, textures[0]->texWidth, textures[0]->texHeight, textures.size());
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, textures[0]->texWidth, textures[0]->texHeight, textures.size());
         glCheckError(); //GL_INVALID_OPERATION
 
         for (int i = 0; i < this->textures.size(); ++i) {
