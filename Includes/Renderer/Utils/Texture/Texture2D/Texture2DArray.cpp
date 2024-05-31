@@ -13,13 +13,13 @@ Texture2DArray::Texture2DArray():TextureBase() {
     glCheckError();
 }
 
-Texture2DArray::Texture2DArray(std::vector<std::unique_ptr<Texture2D>> texs):TextureBase() {
+Texture2DArray::Texture2DArray(std::vector<std::shared_ptr<Texture2D>> texs):TextureBase() {
 
 
     this->isPBRMaterial = false;
     this->type = GL_TEXTURE_2D_ARRAY;
     this->type_string = "GL_TEXTURE_2D_ARRAY";
-    this->textures = std::move(texs);
+    this->textures = texs;
 
     glCreateTextures(GL_TEXTURE_2D_ARRAY,1, &this->ID);
     glCheckError();
@@ -35,7 +35,7 @@ void Texture2DArray::unbind() {
     TextureBase::unbind();
 }
 
-void Texture2DArray::add(std::unique_ptr<Texture2D> texture) {
+void Texture2DArray::add(std::shared_ptr<Texture2D> texture) {
     this->textures.push_back(std::move(texture));
 }
 

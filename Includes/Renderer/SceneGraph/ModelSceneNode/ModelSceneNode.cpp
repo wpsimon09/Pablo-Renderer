@@ -96,6 +96,8 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
 
     mat->hasEmissionTexture = this->hasEmissionTexture;
 
+    mat->hasEmissionTexture = this->hasEmissionTexture;
+
     return std::move(mat);
 }
 
@@ -135,6 +137,29 @@ void ModelSceneNode::supportsIbl(bool supportsIBL) {
             child->getRenderable()->getObjectMaterial()->supportsIBL = supportsIBL;
         }
     }
+}
+
+std::shared_ptr<Texture2D>
+ModelSceneNode::processMaterialPropertyMultythreaded(aiMaterial *material, aiTextureType type) {
+    aiString path;
+
+    if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
+        if(type == aiTextureType_EMISSIVE){
+            this->hasEmissionTexture = true;
+        }
+        for(auto &loaded_texture : this->loadedTextures ){
+            if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
+                return loaded_texture;
+            }
+        }
+
+        auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), false);
+        this->loadedTextures.push_back(std::move(newTexture));
+        return loadedTextures.back();
+    }
+
+    return nullptr;
+
 }
 
 

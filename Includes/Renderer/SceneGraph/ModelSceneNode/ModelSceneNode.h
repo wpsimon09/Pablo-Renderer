@@ -46,6 +46,7 @@ private:
     bool hasEmissionTexture = false;
     int processedRenderableCount = 0;
     std::vector<std::shared_ptr<Texture2D>>loadedTextures;
+
     std::unique_ptr<Texture2DArray>loadedTextureArrays;
 
     std::vector<std::thread> threads;
@@ -64,8 +65,12 @@ private:
      */
     void processRenderable(aiMesh* mesh, const aiScene* scene);
 
+
     std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial* meshMaterial);
+
     std::unique_ptr<PBRMaterial<Texture2D>> processMaterialProperty(aiMaterial* material, aiTextureType type, const std::string& shaderName, const int samplerID);
+
+    std::shared_ptr<Texture2D> processMaterialPropertyMultythreaded(aiMaterial* material, aiTextureType type);
 };
 
 

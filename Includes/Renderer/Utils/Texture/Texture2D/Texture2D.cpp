@@ -10,8 +10,10 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial, bool loadToGl):Textur
     this->type = GL_TEXTURE_2D;
     this->type_string = "GL_TEXTURE_2D";
     this->internalFormat = GL_RGBA;
-    glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
-    glCheckError();
+    if(loadToGl){
+        glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
+        glCheckError();
+    }
 
     this->loadPNG(path,loadToGl);
 }
