@@ -16,9 +16,11 @@
 #include "Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
 
-class ModelSceneNode:public SceneNode  {
+class ModelSceneNode : public SceneNode {
 public:
-    explicit ModelSceneNode(std::string path, bool supportsAreaLight = false,  std::shared_ptr<Material> mat = nullptr, std::string name = "");
+    explicit ModelSceneNode(std::string path, bool supportsAreaLight = false, std::shared_ptr<Material> mat = nullptr,
+                            std::string name = "");
+
     std::string directory;
     std::string name;
 
@@ -36,41 +38,53 @@ public:
      */
     void supportsIbl(bool supportsIBL = true);
 
-    bool checkStatus(){return this->wasFound;}
+    bool checkStatus() { return this->wasFound; }
+
 private:
     bool supportsIBL = false;
-    bool supportsAreaLight = false;
-    bool wasFound = false;
-    std::shared_ptr<Material> material = nullptr;
-    std::shared_ptr<Shader> shader;
-    bool hasEmissionTexture = false;
-    int processedRenderableCount = 0;
-    std::vector<std::shared_ptr<Texture2D>>loadedTextures;
 
-    std::unique_ptr<Texture2DArray>loadedTextureArrays;
+    bool supportsAreaLight = false;
+
+    bool wasFound = false;
+
+    bool hasEmissionTexture = false;
+
+    int processedRenderableCount = 0;
+
+    std::shared_ptr<Material> material = nullptr;
+
+    std::shared_ptr<Shader> shader;
+
+    std::vector<std::shared_ptr<Texture2D>> loadedTextures;
+
+    std::unique_ptr<Texture2DArray> loadedTextureArrays;
 
     std::vector<std::thread> threads;
+
+    std::mutex textureGuard;
 
     /***
      * Process node of the model from the assets
      * @param node node to process
      * @param scene scene in which the scene node is located
      */
-    void processNode(aiNode* node, const aiScene* scene);
+    void processNode(aiNode *node, const aiScene *scene);
 
     /***
      * Process renderable of the mesh
      * @param mesh mesh to be processed
      * @param scene scene in which the model is located
      */
-    void processRenderable(aiMesh* mesh, const aiScene* scene);
+    void processRenderable(aiMesh *mesh, const aiScene *scene);
 
 
-    std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial* meshMaterial);
+    std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial *meshMaterial);
 
-    std::unique_ptr<PBRMaterial<Texture2D>> processMaterialProperty(aiMaterial* material, aiTextureType type, const std::string& shaderName, const int samplerID);
+    std::unique_ptr<PBRMaterial<Texture2D>>
+    processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string &shaderName,
+                            const int samplerID);
 
-    std::shared_ptr<Texture2D> processMaterialPropertyMultythreaded(aiMaterial* material, aiTextureType type);
+    std::shared_ptr<Texture2D> processMaterialPropertyMultythreaded(aiMaterial *material, aiTextureType type);
 };
 
 

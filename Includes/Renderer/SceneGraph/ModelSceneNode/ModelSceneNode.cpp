@@ -142,6 +142,7 @@ void ModelSceneNode::supportsIbl(bool supportsIBL) {
 std::shared_ptr<Texture2D>
 ModelSceneNode::processMaterialPropertyMultythreaded(aiMaterial *material, aiTextureType type) {
     aiString path;
+    std::lock_guard<std::mutex> lock(this->textureGuard);
 
     if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
         if(type == aiTextureType_EMISSIVE){
