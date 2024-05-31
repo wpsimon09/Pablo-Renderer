@@ -14,6 +14,7 @@
 #include "thread"
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 #include "Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h"
+#include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
 
 class ModelSceneNode:public SceneNode  {
 public:
@@ -45,6 +46,7 @@ private:
     bool hasEmissionTexture = false;
     int processedRenderableCount = 0;
     std::vector<std::shared_ptr<Texture2D>>loadedTextures;
+    std::unique_ptr<Texture2DArray>loadedTextureArrays;
 
     std::vector<std::thread> threads;
 

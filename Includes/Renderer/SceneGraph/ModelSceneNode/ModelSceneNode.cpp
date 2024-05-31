@@ -95,6 +95,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6));
 
     mat->hasEmissionTexture = this->hasEmissionTexture;
+
     return std::move(mat);
 }
 
