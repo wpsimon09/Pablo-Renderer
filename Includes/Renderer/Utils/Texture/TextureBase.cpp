@@ -56,7 +56,6 @@ void TextureBase::loadPNG(const char *path,bool loadToGl, bool flip) {
         this->wasFound = true;
 
         if(loadToGl){
-            GLenum format;
             if (nrComponents == 1)
                 format = GL_RED;
             else if (nrComponents == 3)

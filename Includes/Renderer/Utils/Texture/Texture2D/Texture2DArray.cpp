@@ -8,13 +8,22 @@ Texture2DArray::Texture2DArray():TextureBase() {
     this->isPBRMaterial = false;
     this->type = GL_TEXTURE_2D_ARRAY;
     this->type_string = "GL_TEXTURE_2D_ARRAY";
+
+    glCreateTextures(GL_TEXTURE_2D_ARRAY,1, &this->ID);
+    glCheckError();
 }
 
 Texture2DArray::Texture2DArray(std::vector<std::unique_ptr<Texture2D>> texs):TextureBase() {
+
+
     this->isPBRMaterial = false;
     this->type = GL_TEXTURE_2D_ARRAY;
     this->type_string = "GL_TEXTURE_2D_ARRAY";
     this->textures = std::move(texs);
+
+    glCreateTextures(GL_TEXTURE_2D_ARRAY,1, &this->ID);
+    glCheckError();
+
     this->loadToGL();
 }
 
@@ -34,18 +43,14 @@ void Texture2DArray::loadToGL() {
     try {
         this->areTexturesValid();
 
-        glCreateTextures(GL_TEXTURE_2D_ARRAY,1, &this->ID);
-        glCheckError();
-
         glBindTexture(GL_TEXTURE_2D_ARRAY, this->ID);
         glCheckError();
 
-        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, textures[0]->texWidth, textures[0]->texHeight, textures.size());
-        glCheckError(); //GL_INVALID_OPERATION
+        glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, textures[0]->texWidth, textures[0]->texHeight, this->textures.size());
+        glCheckError(); //segmentation fault here
 
-        for (int i = 0; i < this->textures.size(); ++i) {
-
-            glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i,textures[0]->texWidth, textures[0]->texWidth, 1, GL_RGBA, GL_UNSIGNED_BYTE, textures[i]->getData());
+        for (int i = 0; i < this->textures.size(); i++) {
+            glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i,textures[0]->texWidth, textures[0]->texHeight, 1, GL_RGB, GL_UNSIGNED_BYTE, this->textures[i]->getData());
             glCheckError(); //GL_INVALID_OPERATION
             textures[i]->clearTextureData();
             this->textureCount ++;
@@ -67,7 +72,7 @@ bool Texture2DArray::areTexturesValid() {
         auto width = textures[0]->texWidth;
         auto height = textures[0]->texHeight;
         for (auto &texture: textures) {
-            if(texture->texWidth != width || texture->texHeight != height){
+            if(texture->texWidth != width || texture->texHeight != height || texture->getData() == nullptr){
                 throw std::domain_error("Dimensions of the textures in the vector does not match");
             }
         }
