@@ -56,6 +56,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Utils/SkyBox/SkyBox.cpp
         Includes/Renderer/Utils/SkyBox/SkyBox.h
         Includes/Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h
+        Includes/Renderer/Utils/StopWatch/StopWatch.cpp
+        Includes/Renderer/Utils/StopWatch/StopWatch.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
