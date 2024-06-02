@@ -11,6 +11,7 @@
 #include <assimp/ai_assert.h>
 #include <assimp/scene.h>
 #include <vector>
+#include "functional"
 #include "thread"
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 #include "Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h"

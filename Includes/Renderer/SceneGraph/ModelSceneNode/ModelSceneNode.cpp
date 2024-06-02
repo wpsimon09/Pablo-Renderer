@@ -80,6 +80,11 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
     std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
 
+    std::vector<std::shared_ptr<Texture2D>> materialTextures;
+    std::lock_guard<std::mutex> lock(this->textureGuard);
+
+    std::thread albedoProcessor(&ModelSceneNode::processMaterialPropertyMultythreaded, meshMaterial, aiTextureType_DIFFUSE);
+
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
@@ -93,8 +98,6 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE, "_emmisionMap", 5));
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6));
-
-    mat->hasEmissionTexture = this->hasEmissionTexture;
 
     mat->hasEmissionTexture = this->hasEmissionTexture;
 
@@ -126,7 +129,7 @@ ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type
 void ModelSceneNode::castsShadow(bool hasShadow) {
     for(auto &child: this->children){
         if(child->getRenderable() != nullptr){
-            child->getRenderable()->castsShadwo = hasShadow;
+            child->getRenderable()->castsShadwo = hasShadow;git
         }
     }
 }
@@ -139,29 +142,6 @@ void ModelSceneNode::supportsIbl(bool supportsIBL) {
     }
 }
 
-std::shared_ptr<Texture2D>
-ModelSceneNode::processMaterialPropertyMultythreaded(aiMaterial *material, aiTextureType type) {
-    aiString path;
-    std::lock_guard<std::mutex> lock(this->textureGuard);
-
-    if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
-        if(type == aiTextureType_EMISSIVE){
-            this->hasEmissionTexture = true;
-        }
-        for(auto &loaded_texture : this->loadedTextures ){
-            if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
-                return loaded_texture;
-            }
-        }
-
-        auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), false);
-        this->loadedTextures.push_back(std::move(newTexture));
-        return loadedTextures.back();
-    }
-
-    return nullptr;
-
-}
 
 
 

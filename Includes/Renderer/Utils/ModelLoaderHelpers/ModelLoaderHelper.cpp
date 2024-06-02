@@ -68,3 +68,25 @@ void ModelLoaderHelper::processIndecies(std::vector<unsigned int> &indecies, aiM
         }
     }
 }
+
+std::shared_ptr<Texture2D> ModelLoaderHelper::processMaterialTexture(aiMaterial *material, aiTextureType type) {
+    aiString path;
+    std::lock_guard<std::mutex> lock(ModelLoaderHelper::textureLock);
+
+    if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
+        if(type == aiTextureType_EMISSIVE){
+            this->hasEmissionTexture = true;
+        }
+        for(auto &loaded_texture : this->loadedTextures ){
+            if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
+                return loaded_texture;
+            }
+        }
+
+        auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), false);
+        this->loadedTextures.push_back(std::move(newTexture));
+        return loadedTextures.back();
+    }
+
+    return nullptr;
+}
