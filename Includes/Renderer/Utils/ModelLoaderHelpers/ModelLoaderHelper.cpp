@@ -71,7 +71,7 @@ void ModelLoaderHelper::processIndecies(std::vector<unsigned int> &indecies, aiM
     }
 }
 
-void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialsToLoad materialToLoad,
+void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToProcess materialToLoad,
                                                std::vector<std::shared_ptr<Texture2D>>& renderableMaterialTextures) {
     aiString path;
     std::lock_guard<std::mutex> lock(ModelLoaderHelper::textureLock);

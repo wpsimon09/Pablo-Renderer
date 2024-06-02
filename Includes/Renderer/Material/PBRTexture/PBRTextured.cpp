@@ -78,11 +78,9 @@ void PBRTextured::configureShader() {
     this->shader->setFloat("supportsIBL", this->supportsIBL);
     for (auto &texture: this->textures) {
         if (texture != nullptr) {
-            int lastSampler = texture->samplerID;
             ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);
         }
     }
-    ShaderHelper::setTextureToShader(shader, *material, "_materialTextures", this->samplerCount);
 }
 
 void PBRTextured::addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture) {

@@ -7,26 +7,26 @@
 #include "assimp/scene.h"
 #include "vector"
 
-struct MaterialsToLoad{
+struct MaterialToProcess{
     aiTextureType textureType;
     std::string shaderName;
     int samplerNumber;
 
-    MaterialsToLoad(aiTextureType type, std::string shaderName, int samplerID){
-        textureType= type;
-        shaderName = shaderName;
-        samplerNumber = samplerID;
+    MaterialToProcess(aiTextureType type, std::string shaderName, int samplerID){
+        this->textureType= type;
+        this->shaderName = shaderName;
+        this->samplerNumber = samplerID;
     }
 };
 
-const std::vector<MaterialsToLoad> materialsToLoad = {
-        MaterialsToLoad(aiTextureType_DIFFUSE, "_albedoMap", 0),
-        MaterialsToLoad(aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1),
-        MaterialsToLoad(aiTextureType_METALNESS, "_metalnessMap", 2),
-        MaterialsToLoad(aiTextureType_NORMALS, "_normalMap", 3),
-        MaterialsToLoad(aiTextureType_AMBIENT_OCCLUSION, "_aoMap", 4),
-        MaterialsToLoad(aiTextureType_EMISSIVE, "_emmisionMap", 5),
-        MaterialsToLoad(aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6)
+const std::vector<MaterialToProcess> materialsToLoad = {
+        MaterialToProcess(aiTextureType_DIFFUSE, "_albedoMap", 0),
+        MaterialToProcess(aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1),
+        MaterialToProcess(aiTextureType_METALNESS, "_metalnessMap", 2),
+        MaterialToProcess(aiTextureType_NORMALS, "_normalMap", 3),
+        MaterialToProcess(aiTextureType_AMBIENT_OCCLUSION, "_aoMap", 4),
+        MaterialToProcess(aiTextureType_EMISSIVE, "_emmisionMap", 5),
+        MaterialToProcess(aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6)
 };
 
 #endif //PABLO_RENDERER_MATERIALSTOPROCESS_H
