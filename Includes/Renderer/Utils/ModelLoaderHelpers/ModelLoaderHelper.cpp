@@ -83,6 +83,7 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
         for(auto &loaded_texture : ModelLoaderHelper::loadedTextures ){
             if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
                 renderableMaterialTextures.push_back(loaded_texture);
+                return;
             }
         }
 
@@ -91,7 +92,9 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
         newTexture->samplerID = materialToLoad.samplerNumber;
         ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
         renderableMaterialTextures.push_back(loadedTextures.back());
-    }
+    }else
+        return;
+
 
 }
 

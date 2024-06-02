@@ -8,6 +8,7 @@
 
 ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::shared_ptr<Material> mat, std::string name): SceneNode() {
     Assimp::Importer importer;
+    auto start = std::chrono::steady_clock::now();
 
     this->material = std::move(mat);
     this->name = name;
@@ -20,7 +21,6 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
         return;
     }
-    auto start = std::chrono::steady_clock::now();
 
     this->wasFound = true;
     this->directory = path.substr(0, path.find_last_of('/'));
