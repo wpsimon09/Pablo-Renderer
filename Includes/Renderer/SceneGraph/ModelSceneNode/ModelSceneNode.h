@@ -83,7 +83,6 @@ private:
     processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string &shaderName,
                             const int samplerID);
 
-    std::shared_ptr<Texture2D> processMaterialPropertyMultythreaded(aiMaterial *material, aiTextureType type);
 };
 
 

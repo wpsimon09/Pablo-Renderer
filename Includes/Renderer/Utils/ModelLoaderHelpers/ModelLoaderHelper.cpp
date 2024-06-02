@@ -86,7 +86,7 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, aiTextureTy
             }
         }
 
-        auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), false);
+        auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), true, false);
         ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
         renderableMaterialTextures.push_back(loadedTextures.back());
     }

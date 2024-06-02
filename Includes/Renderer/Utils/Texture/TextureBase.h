@@ -76,13 +76,6 @@ public:
     int texWidth, texHeight;
 
     /***
-     * @brief Loads texture data that are stored to the opengl texture object
-     * @param numberOfChanels number of the colour chanes defualt is: GL_RGB
-     * @note only applies to the the texture data expressed in unsigned char
-     */
-    void processToOpenGL(GLenum numberOfChanels= GL_RGBA);
-
-    /***
      * Changes minifaction and magnification filtering method
      * @param mag filtering method to use for Magnification
      * @param min filtering method to use for Minification
@@ -112,6 +105,11 @@ public:
 
     void clearTextureData() { stbi_image_free(this->textureData);}
 
+    /***
+    * @brief Loads texture data that are stored to the opengl texture object
+    * @note only applies to the the texture data expressed in unsigned char
+    */
+    virtual void passToOpenGL(){};
 
     unsigned int getSamplerID() const { return this->samplerID; }
 

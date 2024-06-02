@@ -48,6 +48,8 @@ public:
 
     GLenum getInternalFormat(){return this->internalFormat;};
 
+    void passToOpenGL() override;
+
     ~Texture2D() = default;
 private:
     GLenum internalFormat;

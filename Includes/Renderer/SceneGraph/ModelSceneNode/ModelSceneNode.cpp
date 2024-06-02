@@ -111,20 +111,13 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     /***
      * @brief Non-multi threaded approach refactored to simple lood
      */
-    for()
-
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
-
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS, "_metalnessMap", 2));
-
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS, "_normalMap", 3));
-
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION, "_aoMap", 4));
-
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE, "_emmisionMap", 5));
-
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6));
-
+    int i = 0;
+    for(auto &textureToLoad : materialsToLoad){
+        auto newTexture = std::make_unique<PBRMaterial<Texture2D>>(materialTextures[i], textureToLoad.shaderName, textureToLoad.samplerNumber);
+        newTexture->type->passToOpenGL();
+        mat->addTexture(std::move(newTexture));
+        i++;
+    }
 
     mat->hasEmissionTexture = this->hasEmissionTexture;
 

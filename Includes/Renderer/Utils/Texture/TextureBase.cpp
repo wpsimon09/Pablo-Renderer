@@ -9,7 +9,8 @@ TextureBase::TextureBase(TextureBase &&other) noexcept: ID(other.ID), isPBRMater
                                                         fullPath(other.fullPath), samplerID(other.samplerID),
                                                         wasFound(other.wasFound), type(other.type),
                                                         type_string(other.type_string), texWidth(other.texWidth),
-                                                        texHeight(other.texHeight){
+                                                        texHeight(other.texHeight), textureData(other.textureData),
+                                                        format(other.format){
 
 }
 
@@ -25,6 +26,8 @@ TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
         type_string = std::move(other.type_string);
         texWidth = other.texWidth;
         texHeight = other.texHeight;
+        textureData = other.textureData;
+        format = other.format;
     }
     return *this;;
 
@@ -55,13 +58,14 @@ void TextureBase::loadPNG(const char *path,bool loadToGl, bool flip) {
         this->texHeight = height;
         this->wasFound = true;
 
+        if (nrComponents == 1)
+            format = GL_RED;
+        else if (nrComponents == 3)
+            format = GL_RGB;
+        else if (nrComponents == 4)
+            format = GL_RGBA;
+
         if(loadToGl){
-            if (nrComponents == 1)
-                format = GL_RED;
-            else if (nrComponents == 3)
-                format = GL_RGB;
-            else if (nrComponents == 4)
-                format = GL_RGBA;
 
             glBindTexture(GL_TEXTURE_2D, this->ID);
             glCheckError();
@@ -136,6 +140,7 @@ void TextureBase::setUnpackAlignment(int alignment) {
     glPixelStorei(GL_UNPACK_ALIGNMENT, alignment);
     this->unbind();
 }
+/*
 
 void TextureBase::processToOpenGL(GLenum numberOfChanels) {
     if(this->textureData != nullptr) {
@@ -156,3 +161,5 @@ void TextureBase::processToOpenGL(GLenum numberOfChanels) {
     }else
         throw std::domain_error("Data of the texture are empty or texture was not found");
 }
+*/
+
