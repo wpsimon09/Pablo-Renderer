@@ -8,6 +8,7 @@
 
 ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::shared_ptr<Material> mat, std::string name): SceneNode() {
     Assimp::Importer importer;
+    auto start = std::chrono::steady_clock::now();
 
     this->material = std::move(mat);
     this->name = name;
@@ -23,8 +24,15 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
 
     this->wasFound = true;
     this->directory = path.substr(0, path.find_last_of('/'));
+    ModelLoaderHelper::setDirectory(this->directory);
+
     processNode(scene->mRootNode, scene);
 
+    auto end = std::chrono::steady_clock::now();
+
+    std::chrono::duration<double> duration = end-start;
+
+    std::cout<<"Model loaded in:"<< duration.count() << " ms"<< std::endl;
 }
 
 void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
@@ -40,6 +48,10 @@ void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
 }
 
 void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
+
+    /***
+     * @brief Geometry processing
+     */
     std::vector<Vertex> vertecies;
     std::vector<unsigned int> indecies;
 
@@ -50,8 +62,10 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     verteciesProcessor.join();
     indeciesProcessor.join();
 
+    /***
+     * @brief Material Processing
+     */
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
-
     std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(name.empty() ? std::string(mesh->mName.C_Str()) : name,vertecies, indecies);
 
     std::shared_ptr<Material> renderableMaterial;
@@ -65,6 +79,9 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
         hasModelTextures = false;
     }
 
+    /***
+     * @brief Assembling material and geomtry together
+     */
     std::string renderableName = mesh->mName.C_Str() + std::to_string(this->processedRenderableCount);
 
     std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial, renderableName);
@@ -80,45 +97,39 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
     std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
 
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
+    std::vector<std::shared_ptr<Texture2D>> materialTextures;
 
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
+    std::vector<std::thread> textureThreads;
+    /***
+     * @brief Create threads
+     */
+    for(auto &texture: materialsToLoad ){
+        textureThreads.emplace_back(&ModelLoaderHelper::processMaterialTexture,meshMaterial,texture,std::ref(materialTextures));
+    }
 
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_METALNESS, "_metalnessMap", 2));
+    /***
+     * @brief Sync threads
+     */
+    for(auto &thread: textureThreads){
+        thread.join();
+    }
 
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_NORMALS, "_normalMap", 3));
+    /***
+     * @brief assign names and samplers
+     */
+    int i = 0;
+    for(auto &textureToLoad : materialTextures){
+        auto newTexture = std::make_unique<PBRMaterial<Texture2D>>(textureToLoad, textureToLoad->shaderName, textureToLoad->samplerID);
+        newTexture->type->passToOpenGL();
+        mat->addTexture(std::move(newTexture));
+        i++;
+    }
 
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_AMBIENT_OCCLUSION, "_aoMap", 4));
+    mat->hasEmissionTexture = ModelLoaderHelper::hasEmmision();
 
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE, "_emmisionMap", 5));
-
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6));
-
-    mat->hasEmissionTexture = this->hasEmissionTexture;
     return std::move(mat);
 }
 
-std::unique_ptr<PBRMaterial<Texture2D>>
-ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string& shaderName,const int samplerID) {
-        aiString path;
-
-        if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
-            if(type == aiTextureType_EMISSIVE){
-                this->hasEmissionTexture = true;
-            }
-            for(auto &loaded_texture : this->loadedTextures ){
-                if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
-                    return std::make_unique<PBRMaterial<Texture2D>>(loaded_texture, shaderName,samplerID);
-                }
-            }
-
-            Texture2D loadedTexture((directory +"/"+path.C_Str()).c_str());
-            this->loadedTextures.push_back(std::make_shared<Texture2D>(loadedTexture));
-            return std::make_unique<PBRMaterial<Texture2D>>(loadedTexture, shaderName, samplerID);
-        }
-
-        return nullptr;
-}
 
 void ModelSceneNode::castsShadow(bool hasShadow) {
     for(auto &child: this->children){
@@ -135,6 +146,7 @@ void ModelSceneNode::supportsIbl(bool supportsIBL) {
         }
     }
 }
+
 
 
 

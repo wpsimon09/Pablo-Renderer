@@ -12,18 +12,21 @@
 
 class Texture2DArray:public TextureBase {
 public:
-    Texture2DArray(std::vector<std::shared_ptr<Texture2D>> textures);
+    Texture2DArray();
 
-    bool isValidArray(std::vector<std::shared_ptr<Texture2D>> texutres);
+    explicit Texture2DArray(std::vector<std::shared_ptr<Texture2D>> textures);
+
+    bool areTexturesValid();
 
     void add(std::shared_ptr<Texture2D> texture);
+
+    void loadToGL();
 
     void bind() override;
 
     void unbind() override;
 private:
     int textureCount = 0;
-    void loadToGL();
     std::vector<std::shared_ptr<Texture2D>> textures;
 };
 

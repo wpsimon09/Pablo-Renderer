@@ -17,7 +17,17 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
     this->supportsAreaLight = supportsAreaLight;
     this->hasEmissionTexture = false;
 
+    this->material = std::make_unique<Texture2DArray>();
+
     if (!pathToTheDirectory.empty()) {
+
+        //Texture array test
+        fullPath = pathToTheDirectory + "/albedo" + fileFormat;
+        texture = std::make_unique<Texture2D>(fullPath.c_str(), true, false);
+        this->material->add(std::move(texture));
+        this->material->loadToGL();
+        this->samplerCount++;
+
         // Albedo map
         fullPath = pathToTheDirectory + "/albedo" + fileFormat;
         texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
@@ -57,6 +67,8 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
                 std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "displacementMap",
                                                          5));
     }
+
+
 
 }
 

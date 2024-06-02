@@ -26,7 +26,7 @@ ShaderHelper::setTextureToShader(std::shared_ptr<Shader> shader, const TextureBa
     glActiveTexture(GL_TEXTURE0 + samplerID);
     glCheckError();
 
-    //shader->use();
+    shader->use();
     shader->setInt(shaderName, samplerID);
 
     glBindTexture(texture.type, texture.ID);

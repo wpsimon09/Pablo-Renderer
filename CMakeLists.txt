@@ -55,6 +55,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/UI/Components/EnviromentUI/EnviromentUI.h
         Includes/Renderer/Utils/SkyBox/SkyBox.cpp
         Includes/Renderer/Utils/SkyBox/SkyBox.h
+        Includes/Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

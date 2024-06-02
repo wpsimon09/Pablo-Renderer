@@ -4,16 +4,18 @@
 
 #include "Texture2D.h"
 
-Texture2D::Texture2D(const char *path, bool isPBRMaterial):TextureBase() {
+Texture2D::Texture2D(const char *path, bool isPBRMaterial, bool loadToGl):TextureBase() {
     this->isPBRMaterial = isPBRMaterial;
     this->fullPath = path;
     this->type = GL_TEXTURE_2D;
     this->type_string = "GL_TEXTURE_2D";
     this->internalFormat = GL_RGBA;
-    glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
-    glCheckError();
+    if(loadToGl){
+        glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
+        glCheckError();
+    }
 
-    this->loadPNG(path);
+    this->loadPNG(path,loadToGl);
 }
 
 Texture2D::Texture2D() {
@@ -91,35 +93,22 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
     glCheckError();
 }
 
-float* Texture2D::getData() {
-    int dataSize = this->texWidth * this->texHeight * 4;
-
-    auto data = std::make_unique<float[]>(dataSize);
-
-    //pixel buffer object whose main purpose is to get the data from the texture without blowing performance
-    // it is getting data asynchronously
-    GLuint pbo;
-    glCreateBuffers(1,&pbo);
-    glCheckError();
-    glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo);
-    glCheckError();
-    glBufferData(GL_PIXEL_PACK_BUFFER, dataSize*sizeof(float), nullptr,GL_STREAM_READ);
+void Texture2D::passToOpenGL() {
+    glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
     glCheckError();
 
-    this->bind();
-    glGetTexImage(GL_TEXTURE_2D,0,GL_RGBA,GL_FLOAT, nullptr);
+    glBindTexture(GL_TEXTURE_2D, this->ID);
+    glCheckError();
 
-    float *imageData = (float*)glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);
-    if(imageData){
-        std::copy(imageData,imageData + dataSize,data.get());
-        delete imageData;
-        glUnmapBuffer(GL_PIXEL_PACK_BUFFER);
-    }
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->texWidth, this->texHeight, 0, format, GL_UNSIGNED_BYTE, this->textureData);
+    glCheckError();
 
-    glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
-    glDeleteBuffers(1, &pbo);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    return data.get();
+    stbi_image_free(textureData);
 }
 
 
