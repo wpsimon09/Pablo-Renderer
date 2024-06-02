@@ -16,6 +16,7 @@
 #include "Renderer/SceneGraph/SceneNode/SceneNode.h"
 #include "Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
+#include "Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h"
 
 class ModelSceneNode : public SceneNode {
 public:
@@ -58,11 +59,8 @@ private:
 
     std::vector<std::shared_ptr<Texture2D>> loadedTextures;
 
-    std::unique_ptr<Texture2DArray> loadedTextureArrays;
-
     std::vector<std::thread> threads;
 
-    std::mutex textureGuard;
 
     /***
      * Process node of the model from the assets

@@ -4,6 +4,8 @@
 
 #include "ModelLoaderHelper.h"
 
+#include <utility>
+
 void ModelLoaderHelper::processVertecies(std::vector<Vertex> &vertecies, aiMesh *mesh, const aiScene *scene) {
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex vertex;
@@ -69,24 +71,25 @@ void ModelLoaderHelper::processIndecies(std::vector<unsigned int> &indecies, aiM
     }
 }
 
-std::shared_ptr<Texture2D> ModelLoaderHelper::processMaterialTexture(aiMaterial *material, aiTextureType type) {
+void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, aiTextureType type,
+                                               std::vector<std::shared_ptr<Texture2D>>& renderableMaterialTextures) {
     aiString path;
     std::lock_guard<std::mutex> lock(ModelLoaderHelper::textureLock);
 
     if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
         if(type == aiTextureType_EMISSIVE){
-            this->hasEmissionTexture = true;
+            ModelLoaderHelper::hasEmmisionTexture = true;
         }
-        for(auto &loaded_texture : this->loadedTextures ){
+        for(auto &loaded_texture : ModelLoaderHelper::loadedTextures ){
             if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
-                return loaded_texture;
+                renderableMaterialTextures.push_back(loaded_texture);
             }
         }
 
         auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), false);
-        this->loadedTextures.push_back(std::move(newTexture));
-        return loadedTextures.back();
+        ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
+        renderableMaterialTextures.push_back(loadedTextures.back());
     }
 
-    return nullptr;
 }
+

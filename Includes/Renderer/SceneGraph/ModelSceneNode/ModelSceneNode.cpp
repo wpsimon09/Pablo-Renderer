@@ -23,6 +23,8 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
 
     this->wasFound = true;
     this->directory = path.substr(0, path.find_last_of('/'));
+    ModelLoaderHelper::setDirectory(this->directory);
+
     processNode(scene->mRootNode, scene);
 
 }
@@ -40,6 +42,10 @@ void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
 }
 
 void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
+
+    /***
+     * @brief Geometry processing
+     */
     std::vector<Vertex> vertecies;
     std::vector<unsigned int> indecies;
 
@@ -50,8 +56,10 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     verteciesProcessor.join();
     indeciesProcessor.join();
 
+    /***
+     * @brief Material Processing
+     */
     aiMaterial* meshMaterial = scene->mMaterials[mesh->mMaterialIndex];
-
     std::unique_ptr<Geometry> renderableGeometry = std::make_unique<ModelGeometry>(name.empty() ? std::string(mesh->mName.C_Str()) : name,vertecies, indecies);
 
     std::shared_ptr<Material> renderableMaterial;
@@ -65,6 +73,9 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
         hasModelTextures = false;
     }
 
+    /***
+     * @brief Assembling material and geomtry together
+     */
     std::string renderableName = mesh->mName.C_Str() + std::to_string(this->processedRenderableCount);
 
     std::unique_ptr<Renderable> processedRenderable = std::make_unique<Renderable>(std::move(renderableGeometry), renderableMaterial, renderableName);
@@ -81,11 +92,26 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
 
     std::vector<std::shared_ptr<Texture2D>> materialTextures;
-    std::lock_guard<std::mutex> lock(this->textureGuard);
 
-    std::thread albedoProcessor(&ModelSceneNode::processMaterialPropertyMultythreaded, meshMaterial, aiTextureType_DIFFUSE);
+    std::vector<std::thread> textureThreads;
+    /***
+     * @brief Create threads
+     */
+    for(auto &texture: materialsToLoad ){
+        textureThreads.emplace_back(&ModelLoaderHelper::processMaterialTexture,meshMaterial,texture.textureType,std::ref(materialTextures));
+    }
 
-    mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE , "_albedoMap", 0));
+    /***
+     * @brief Sync threads
+     */
+    for(auto &thread: textureThreads){
+        thread.join();
+    }
+
+    /***
+     * @brief Non-multi threaded approach refactored to simple lood
+     */
+    for()
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1));
 
@@ -98,6 +124,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_EMISSIVE, "_emmisionMap", 5));
 
     mat->addTexture(this->processMaterialProperty(meshMaterial, aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6));
+
 
     mat->hasEmissionTexture = this->hasEmissionTexture;
 
@@ -129,7 +156,7 @@ ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type
 void ModelSceneNode::castsShadow(bool hasShadow) {
     for(auto &child: this->children){
         if(child->getRenderable() != nullptr){
-            child->getRenderable()->castsShadwo = hasShadow;git
+            child->getRenderable()->castsShadwo = hasShadow;
         }
     }
 }
