@@ -10,6 +10,7 @@
 #include "stb_image.h"
 #include "stb_image_write.h"
 #include "Debug/DebugLogger.h"
+#include "mutex"
 
 /***
  * Base class for the Texutres used by the application

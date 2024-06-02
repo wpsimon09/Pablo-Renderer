@@ -10,6 +10,7 @@
 #include "assimp/mesh.h"
 #include "assimp/scene.h"
 #include <assimp/ai_assert.h>
+#include "Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h"
 
 #include "vector"
 #include "memory"
@@ -29,7 +30,7 @@ public:
 
     static void processIndecies(std::vector<unsigned int>&indecies, aiMesh*mesh);
 
-    static void processMaterialTexture(aiMaterial *material, aiTextureType type, std::vector<std::shared_ptr<Texture2D>> &renderableMaterialTextures);
+    static void processMaterialTexture(aiMaterial *material, MaterialsToLoad materialToLoad, std::vector<std::shared_ptr<Texture2D>> &renderableMaterialTextures);
 
     static void setDirectory(std::string dir) {ModelLoaderHelper::directory = dir;};
 

@@ -50,6 +50,8 @@ void TextureBase::unbind() {
 }
 
 void TextureBase::loadPNG(const char *path,bool loadToGl, bool flip) {
+    std::mutex textureLoaderLock;
+    std::lock_guard<std::mutex> lock(textureLoaderLock);
     stbi_set_flip_vertically_on_load(flip);
     int width, height, nrComponents;
     unsigned char *data = stbi_load(path, &width, &height, &nrComponents, 0);

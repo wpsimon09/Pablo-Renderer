@@ -98,7 +98,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
      * @brief Create threads
      */
     for(auto &texture: materialsToLoad ){
-        textureThreads.emplace_back(&ModelLoaderHelper::processMaterialTexture,meshMaterial,texture.textureType,std::ref(materialTextures));
+        textureThreads.emplace_back(&ModelLoaderHelper::processMaterialTexture,meshMaterial,texture,std::ref(materialTextures));
     }
 
     /***
@@ -109,42 +109,21 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     }
 
     /***
-     * @brief Non-multi threaded approach refactored to simple lood
+     * @brief assign names and samplers
      */
     int i = 0;
-    for(auto &textureToLoad : materialsToLoad){
-        auto newTexture = std::make_unique<PBRMaterial<Texture2D>>(materialTextures[i], textureToLoad.shaderName, textureToLoad.samplerNumber);
+    for(auto &textureToLoad : materialTextures){
+        auto newTexture = std::make_unique<PBRMaterial<Texture2D>>(textureToLoad, textureToLoad->shaderName, textureToLoad->samplerID);
         newTexture->type->passToOpenGL();
         mat->addTexture(std::move(newTexture));
         i++;
     }
 
-    mat->hasEmissionTexture = this->hasEmissionTexture;
+    mat->hasEmissionTexture = ModelLoaderHelper::hasEmmision();
 
     return std::move(mat);
 }
 
-std::unique_ptr<PBRMaterial<Texture2D>>
-ModelSceneNode::processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string& shaderName,const int samplerID) {
-        aiString path;
-
-        if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
-            if(type == aiTextureType_EMISSIVE){
-                this->hasEmissionTexture = true;
-            }
-            for(auto &loaded_texture : this->loadedTextures ){
-                if(std::strcmp(loaded_texture->getFullPath().c_str(), path.C_Str()) == 0){
-                    return std::make_unique<PBRMaterial<Texture2D>>(loaded_texture, shaderName,samplerID);
-                }
-            }
-
-            Texture2D loadedTexture((directory +"/"+path.C_Str()).c_str());
-            this->loadedTextures.push_back(std::make_shared<Texture2D>(loadedTexture));
-            return std::make_unique<PBRMaterial<Texture2D>>(loadedTexture, shaderName, samplerID);
-        }
-
-        return nullptr;
-}
 
 void ModelSceneNode::castsShadow(bool hasShadow) {
     for(auto &child: this->children){

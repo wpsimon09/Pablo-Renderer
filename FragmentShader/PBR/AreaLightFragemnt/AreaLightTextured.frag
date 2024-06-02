@@ -140,8 +140,8 @@ void main() {
     //-------------------------
     // GET VALUES FROM TEXTURES
     //-------------------------
-    albedo = texture(_materialTextures, vec3(fs_in.TexCoords, 0.0)).rgb;
-    //texture(_albedoMap, fs_in.TexCoords).rgb;
+    albedo =texture(_albedoMap, fs_in.TexCoords).rgb;
+    //texture(_materialTextures, vec3(fs_in.TexCoords, 0.0)).rgb;
     if (fs_in.isModel == 1.0) {
         roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
         metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;

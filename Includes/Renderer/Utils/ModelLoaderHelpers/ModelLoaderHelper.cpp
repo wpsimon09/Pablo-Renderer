@@ -71,13 +71,13 @@ void ModelLoaderHelper::processIndecies(std::vector<unsigned int> &indecies, aiM
     }
 }
 
-void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, aiTextureType type,
+void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialsToLoad materialToLoad,
                                                std::vector<std::shared_ptr<Texture2D>>& renderableMaterialTextures) {
     aiString path;
     std::lock_guard<std::mutex> lock(ModelLoaderHelper::textureLock);
 
-    if(material->GetTexture(type, 0, &path) == AI_SUCCESS){
-        if(type == aiTextureType_EMISSIVE){
+    if(material->GetTexture(materialToLoad.textureType, 0, &path) == AI_SUCCESS){
+        if(materialToLoad.textureType == aiTextureType_EMISSIVE){
             ModelLoaderHelper::hasEmmisionTexture = true;
         }
         for(auto &loaded_texture : ModelLoaderHelper::loadedTextures ){
@@ -87,6 +87,8 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, aiTextureTy
         }
 
         auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), true, false);
+        newTexture->shaderName = materialToLoad.shaderName;
+        newTexture->samplerID = materialToLoad.samplerNumber;
         ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
         renderableMaterialTextures.push_back(loadedTextures.back());
     }
