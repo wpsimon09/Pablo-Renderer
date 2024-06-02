@@ -17,6 +17,7 @@
 #include "Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
 #include "Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h"
+#include "chrono"
 
 class ModelSceneNode : public SceneNode {
 public:

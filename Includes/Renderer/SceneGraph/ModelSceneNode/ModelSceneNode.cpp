@@ -20,6 +20,7 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
         std::cout << "ERROR::ASSIMP::" << importer.GetErrorString() << std::endl;
         return;
     }
+    auto start = std::chrono::steady_clock::now();
 
     this->wasFound = true;
     this->directory = path.substr(0, path.find_last_of('/'));
@@ -27,6 +28,11 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
 
     processNode(scene->mRootNode, scene);
 
+    auto end = std::chrono::steady_clock::now();
+
+    std::chrono::duration<double> duration = end-start;
+
+    std::cout<<"Model loaded in:"<< duration.count() << " ms"<< std::endl;
 }
 
 void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
