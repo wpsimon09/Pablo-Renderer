@@ -8,7 +8,8 @@
 
 ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::shared_ptr<Material> mat, std::string name): SceneNode() {
     Assimp::Importer importer;
-    auto start = std::chrono::steady_clock::now();
+
+    StopWatch::Start();
 
     this->material = std::move(mat);
     this->name = name;
@@ -28,11 +29,9 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
 
     processNode(scene->mRootNode, scene);
 
-    auto end = std::chrono::steady_clock::now();
+    StopWatch::End();
 
-    std::chrono::duration<double> duration = end-start;
-
-    std::cout<<"Model loaded in:"<< duration.count() << " ms"<< std::endl;
+    std::cout<<"Model loaded in:"<< StopWatch::GetTimeInSec() << " sec"<< std::endl;
 }
 
 void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
