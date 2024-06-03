@@ -95,10 +95,6 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
 
 void Texture2D::passToOpenGL() {
 
-    if(glIsTexture(this->ID)){
-        return;
-    }
-
     glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
     glCheckError();
 
@@ -113,7 +109,9 @@ void Texture2D::passToOpenGL() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    stbi_image_free(textureData);
+    if(textureData == nullptr){
+        stbi_image_free(textureData);
+    }
 }
 
 

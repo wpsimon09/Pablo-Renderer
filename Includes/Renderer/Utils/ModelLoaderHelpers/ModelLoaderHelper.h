@@ -34,6 +34,8 @@ public:
 
     static void setDirectory(std::string dir) {ModelLoaderHelper::directory = dir;};
 
+    static void clearLoadedTextures() {loadedTextures.clear();}
+
     static bool hasEmmision(){return hasEmmisionTexture;}
 };
 

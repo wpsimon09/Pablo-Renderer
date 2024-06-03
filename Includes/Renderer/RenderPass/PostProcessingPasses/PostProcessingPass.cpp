@@ -7,9 +7,9 @@
 
 
 PostProcessingPass::PostProcessingPass() {
-    auto shader = ShaderManager::getShader(SHADER_POST_PROCESSING_MERGER);
+    //auto shader = ShaderManager::getShader(SHADER_POST_PROCESSING_MERGER);
 
-    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight(), std::move(shader));
+    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight());
     this->rendererType = POST_PROCESSING;
     this->isPostProcessingPass = true;
     this->name = "Post Processing";
