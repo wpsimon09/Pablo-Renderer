@@ -94,6 +94,11 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
 }
 
 void Texture2D::passToOpenGL() {
+
+    if(glIsTexture(this->ID)){
+        return;
+    }
+
     glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
     glCheckError();
 

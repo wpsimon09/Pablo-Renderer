@@ -99,6 +99,7 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     std::vector<std::shared_ptr<Texture2D>> materialTextures;
 
     std::vector<std::thread> textureThreads;
+
     /***
      * @brief Create threads
      */

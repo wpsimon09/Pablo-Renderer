@@ -72,6 +72,12 @@ public:
     std::string fullPath;
 
     /***
+     * @brief Relative path of the textue to the directory of the model
+     * @note empty if texture is not part of the model
+     */
+    std::string relativePath = "";
+
+    /***
      * @brief Dimensions of the texture
      */
     int texWidth, texHeight;
