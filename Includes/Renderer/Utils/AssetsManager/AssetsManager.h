@@ -8,11 +8,16 @@
 #include "map"
 #include "memory"
 #include "vector"
+#include "thread"
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 
 class AssetsManager {
 public:
     static inline AssetsManager* getInstance();
+
+    std::vector<std::reference_wrapper<Texture2D>> getMultipleTextures(std::vector<int> indexes);
+
+    std::reference_wrapper<Texture2D> getTexture(int index);
 
     void loadSingleTexture(const char *path);
 
@@ -20,7 +25,9 @@ public:
 
     ~AssetsManager();
 private:
-    static inline AssetsManager* instance;
+    int texturesCount = 0;
+
+    static inline AssetsManager* instance = nullptr;
 
     std::map<int, std::unique_ptr<Texture2D>> loadedTextures;
 };
