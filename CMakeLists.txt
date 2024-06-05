@@ -58,6 +58,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h
         Includes/Renderer/Utils/StopWatch/StopWatch.cpp
         Includes/Renderer/Utils/StopWatch/StopWatch.h
+        Includes/Renderer/Utils/AssetsManager/AssetsManager.cpp
+        Includes/Renderer/Utils/AssetsManager/AssetsManager.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
