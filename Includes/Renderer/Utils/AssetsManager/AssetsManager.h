@@ -10,6 +10,7 @@
 #include "vector"
 #include "thread"
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
+#include <iostream>
 
 class AssetsManager {
 public:
@@ -19,7 +20,7 @@ public:
 
     std::reference_wrapper<Texture2D> getTexture(int index);
 
-    void loadSingleTexture(const char *path);
+    void loadSingleTexture(const char *path, bool toGL = true);
 
     void loadMultipleTexutres(std::vector<const char*> texturePaths);
 
