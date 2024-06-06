@@ -10,7 +10,7 @@ std::shared_ptr<Texture2D> AssetsManager::loadSingleTexture(const char *path, bo
     return std::make_shared<Texture2D>(path,true, toGL);
 }
 
-void AssetsManager::loadSingleTexture(const char *path, std::vector<std::shared_ptr<Texture2D>> &tempStorage) {
+void AssetsManager::loadSingleTextureOnThread(const char *path, std::vector<std::shared_ptr<Texture2D>> &tempStorage) {
     tempStorage.push_back(std::make_shared<Texture2D>(path,true, false));
 }
 
@@ -19,7 +19,7 @@ std::shared_ptr<Texture2D> AssetsManager::getTexture(const char *path) {
     if(tex != loadedTextures.end()){
         return tex->second;
     }else
-        return loadSingleTexture(path);
+        return loadSingleTexture(path, true);
 }
 
 
@@ -38,11 +38,20 @@ void AssetsManager::loadMultipleTextures(std::vector<const char *> texturePaths)
     std::vector<std::shared_ptr<Texture2D>> textures;
 
     for(auto &path: texturePaths){
-        threads.emplace_back(&AssetsManager::loadSingleTexture, path, &textures);
+        threads.emplace_back(&AssetsManager::loadSingleTextureOnThread,path, &textures);
     }
 
     for(auto &thread: threads){
         thread.join();
+    }
+}
+
+AssetsManager *AssetsManager::getInstance() {
+    if(instance != nullptr){
+        return this->instance;
+    }else{
+        instance = new AssetsManager();
+        return instance;
     }
 }
 

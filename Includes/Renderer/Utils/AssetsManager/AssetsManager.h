@@ -14,21 +14,25 @@
 
 class AssetsManager {
 public:
-    static inline std::vector<std::shared_ptr<Texture2D>> getMultipleTextures(std::vector<const char*> paths);
+    AssetsManager* getInstance();
 
-    static inline std::shared_ptr<Texture2D> getTexture(const char* path);
+    std::vector<std::shared_ptr<Texture2D>> getMultipleTextures(std::vector<const char*> paths);
+
+    std::shared_ptr<Texture2D> getTexture(const char* path);
 
     ~AssetsManager();
 private:
+    AssetsManager() = default;
 
+    AssetsManager* instance;
 
     static inline std::shared_ptr<Texture2D> loadSingleTexture(const char *path, bool toGL = true);
 
-    static inline void loadSingleTexture(const char *path, std::vector<std::shared_ptr<Texture2D>>& tempStorage);
+    static inline void loadSingleTextureOnThread(const char *path, std::vector<std::shared_ptr<Texture2D>>& tempStorage);
 
     static inline void loadMultipleTextures(std::vector<const char*> texturePaths);
 
-    static inline std::map<const char *, std::shared_ptr<Texture2D>> loadedTextures;
+    std::map<const char *, std::shared_ptr<Texture2D>> loadedTextures;
 };
 
 
