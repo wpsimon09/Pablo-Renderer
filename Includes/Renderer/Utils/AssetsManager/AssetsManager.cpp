@@ -2,7 +2,6 @@
 // Created by wpsimon09 on 05/06/24.
 //
 
-#include <cstring>
 #include "AssetsManager.h"
 
 
@@ -24,13 +23,12 @@ std::shared_ptr<Texture2D> AssetsManager::getTexture(const char *path) {
 
 
 std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<const char *> paths) {
-    std::vector<std::shared_ptr<Texture2D>> texs;
+    std::vector<std::shared_ptr<Texture2D>> textures;
 
-    for (auto &path: paths) {
-        texs.push_back(getTexture(path));
-    }
 
-    return texs;
+    loadMultipleTextures(paths);
+
+    return textures;
 }
 
 void AssetsManager::loadMultipleTextures(std::vector<const char *> texturePaths) {
@@ -38,11 +36,15 @@ void AssetsManager::loadMultipleTextures(std::vector<const char *> texturePaths)
     std::vector<std::shared_ptr<Texture2D>> textures;
 
     for(auto &path: texturePaths){
-        threads.emplace_back(&AssetsManager::loadSingleTextureOnThread,path, &textures);
+        threads.emplace_back(&AssetsManager::loadSingleTextureOnThread,path, std::ref(textures));
     }
 
     for(auto &thread: threads){
         thread.join();
+    }
+
+    for (auto &texture: textures) {
+        texture->passToOpenGL();
     }
 }
 

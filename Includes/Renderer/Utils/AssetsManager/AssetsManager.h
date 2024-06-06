@@ -30,7 +30,7 @@ private:
 
     static inline void loadSingleTextureOnThread(const char *path, std::vector<std::shared_ptr<Texture2D>>& tempStorage);
 
-    static inline void loadMultipleTextures(std::vector<const char*> texturePaths);
+    void loadMultipleTextures(std::vector<const char*> texturePaths);
 
     std::map<const char *, std::shared_ptr<Texture2D>> loadedTextures;
 };
