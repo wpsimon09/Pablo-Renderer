@@ -6,54 +6,43 @@
 #include "AssetsManager.h"
 
 
-AssetsManager *AssetsManager::getInstance() {
-    if(instance != nullptr){
-        return instance;
-    }else{
-        instance = new AssetsManager();
-        return  instance;
-    }
+std::shared_ptr<Texture2D> AssetsManager::loadSingleTexture(const char *path, bool toGL) {
+    return std::make_shared<Texture2D>(path,true, toGL);
 }
 
-std::vector<std::reference_wrapper<Texture2D>> AssetsManager::getMultipleTextures(std::vector<int> indexes) {
-    std::vector<std::reference_wrapper<Texture2D>> texs;
+void AssetsManager::loadSingleTexture(const char *path, std::vector<std::shared_ptr<Texture2D>> &tempStorage) {
+    tempStorage.push_back(std::make_shared<Texture2D>(path,true, false));
+}
 
-    for (int &index: indexes) {
-        texs.push_back(getTexture(index));
+std::shared_ptr<Texture2D> AssetsManager::getTexture(const char *path) {
+    auto tex = loadedTextures.find(path);
+    if(tex != loadedTextures.end()){
+        return tex->second;
+    }else
+        return loadSingleTexture(path);
+}
+
+
+std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<const char *> paths) {
+    std::vector<std::shared_ptr<Texture2D>> texs;
+
+    for (auto &path: paths) {
+        texs.push_back(getTexture(path));
     }
 
     return texs;
 }
 
-std::reference_wrapper<Texture2D> AssetsManager::getTexture(int index) {
-    auto tex = loadedTextures.find(index);
-    if(tex != loadedTextures.end()){
-        return std::ref(*tex->second);
-    }else
-        throw std::runtime_error("Texture not found in loaded textures");
-}
-
-void AssetsManager::loadSingleTexture(const char *path, bool toGL) {
-    for(auto &loadedTexture: loadedTextures){
-        if(std::strcmp(path, loadedTexture.second->getFullPath().c_str()) == 0||
-           std::strcmp(path, loadedTexture.second->relativePath.c_str()) == 0 ){
-            return;
-        }
-    }
-    auto texture = std::make_unique<Texture2D>(path,true, toGL);
-    loadedTextures.insert(std::make_pair(texturesCount,std::move(texture)));
-    texturesCount++;
-}
-
-void AssetsManager::loadMultipleTexutres(std::vector<const char *> texturePaths) {
+void AssetsManager::loadMultipleTextures(std::vector<const char *> texturePaths) {
     std::vector<std::thread> threads;
+    std::vector<std::shared_ptr<Texture2D>> textures;
 
     for(auto &path: texturePaths){
-        threads.emplace_back(&AssetsManager::loadSingleTexture, path, false);
+        threads.emplace_back(&AssetsManager::loadSingleTexture, path, &textures);
     }
 
     for(auto &thread: threads){
         thread.join();
     }
-
 }
+
