@@ -6,10 +6,12 @@
 
 
 std::shared_ptr<Texture2D> AssetsManager::loadSingleTexture(const char *path, bool toGL) {
-    return std::make_shared<Texture2D>(path,true, toGL);
+    loadedTextures.insert(std::make_pair(path,std::make_shared<Texture2D>(path,true, toGL)));
+    return loadedTextures.end()->second;
 }
 
 void AssetsManager::loadSingleTextureOnThread(const char *path, std::vector<std::shared_ptr<Texture2D>> &tempStorage) {
+    std::lock_guard<std::mutex> lock(textureLock);
     tempStorage.push_back(std::make_shared<Texture2D>(path,true, false));
 }
 
@@ -24,14 +26,22 @@ std::shared_ptr<Texture2D> AssetsManager::getTexture(const char *path) {
 
 std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<const char *> paths) {
     std::vector<std::shared_ptr<Texture2D>> textures;
-
-
-    loadMultipleTextures(paths);
+    std::vector<const char*> texturesToLoad;
+    for (int i = 0; i < paths.size(); ++i) {
+        auto possibleTexture = loadedTextures.find(paths[i]);
+        if(possibleTexture != loadedTextures.end()){
+            textures.emplace_back(possibleTexture->second);
+            paths.erase(paths.begin()+i);
+        }else{
+            texturesToLoad.emplace_back(paths[i]);
+        }
+    }
+    loadMultipleTextures(texturesToLoad);
 
     return textures;
 }
 
-void AssetsManager::loadMultipleTextures(std::vector<const char *> texturePaths) {
+std::vector<std::shared_ptr<Texture2D>> AssetsManager::loadMultipleTextures(std::vector<const char *> texturePaths) {
     std::vector<std::thread> threads;
     std::vector<std::shared_ptr<Texture2D>> textures;
 
@@ -45,7 +55,10 @@ void AssetsManager::loadMultipleTextures(std::vector<const char *> texturePaths)
 
     for (auto &texture: textures) {
         texture->passToOpenGL();
+        loadedTextures.insert(std::make_pair(texture->getFullPath().c_str(), texture));
     }
+
+    return textures;
 }
 
 AssetsManager *AssetsManager::getInstance() {

@@ -22,15 +22,17 @@ public:
 
     ~AssetsManager();
 private:
+    static inline std::mutex textureLock;
+
     AssetsManager() = default;
 
     AssetsManager* instance;
 
-    static inline std::shared_ptr<Texture2D> loadSingleTexture(const char *path, bool toGL = true);
+    std::shared_ptr<Texture2D> loadSingleTexture(const char *path, bool toGL = true);
 
     static inline void loadSingleTextureOnThread(const char *path, std::vector<std::shared_ptr<Texture2D>>& tempStorage);
 
-    void loadMultipleTextures(std::vector<const char*> texturePaths);
+    std::vector<std::shared_ptr<Texture2D>> loadMultipleTextures(std::vector<const char*> texturePaths);
 
     std::map<const char *, std::shared_ptr<Texture2D>> loadedTextures;
 };
