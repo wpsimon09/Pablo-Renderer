@@ -14,7 +14,7 @@
 #include "Renderer/Utils/ShaderHelper/ShaderHelper.h"
 #include "imgui.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
-
+#include "Renderer/Utils/AssetsManager/AssetsManager.h"
 /***
  * Class representing PBR material with textures
  * @inherit Material.h

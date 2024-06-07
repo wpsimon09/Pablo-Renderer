@@ -6,8 +6,9 @@
 
 
 std::shared_ptr<Texture2D> AssetsManager::loadSingleTexture(const char *path, bool toGL) {
-    loadedTextures.insert(std::make_pair(path,std::make_shared<Texture2D>(path,true, toGL)));
-    return loadedTextures.end()->second;
+    auto newTexture =  std::make_shared<Texture2D>(path, true, toGL);
+    loadedTextures.insert(std::make_pair(path,newTexture));
+    return newTexture;
 }
 
 void AssetsManager::loadSingleTextureOnThread(const char *path, std::vector<std::shared_ptr<Texture2D>> &tempStorage) {
@@ -68,11 +69,11 @@ std::vector<std::shared_ptr<Texture2D>> AssetsManager::loadMultipleTextures(std:
 }
 
 AssetsManager *AssetsManager::getInstance() {
-    if(instance != nullptr){
-        return this->instance;
+    if(AssetsManager::instance != nullptr){
+        return AssetsManager::instance;
     }else{
-        instance = new AssetsManager();
-        return instance;
+        AssetsManager::instance = new AssetsManager();
+        return AssetsManager::instance;
     }
 }
 

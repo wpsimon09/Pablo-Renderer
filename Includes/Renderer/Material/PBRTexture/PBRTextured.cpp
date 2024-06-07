@@ -30,9 +30,10 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
 
         // Albedo map
         fullPath = pathToTheDirectory + "/albedo" + fileFormat;
-        texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        //texture = std::make_unique<Texture2D>(fullPath.c_str(), true);
+        auto tex = AssetsManager::getInstance()->getTexture(fullPath.c_str());
         this->addTexture(
-                std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "albedoMap", 0));
+                std::make_unique<PBRMaterial<Texture2D>>(tex, shaderNamingConvention + "albedoMap", 0));
 
         // Roughness map
         fullPath = pathToTheDirectory + "/roughness" + fileFormat;
