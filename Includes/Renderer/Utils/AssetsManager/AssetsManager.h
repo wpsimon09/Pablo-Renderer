@@ -37,7 +37,7 @@ private:
 
     std::vector<std::shared_ptr<Texture2D>> loadMultipleTextures(std::vector<const char *> texturePaths);
 
-    std::map<const char *, std::shared_ptr<Texture2D>> loadedTextures;
+    std::map<std::string,  std::shared_ptr<Texture2D>> loadedTextures;
 };
 
 
