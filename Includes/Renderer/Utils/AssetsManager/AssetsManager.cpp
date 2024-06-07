@@ -27,16 +27,22 @@ std::shared_ptr<Texture2D> AssetsManager::getTexture(const char *path) {
 std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<const char *> paths) {
     std::vector<std::shared_ptr<Texture2D>> textures;
     std::vector<const char*> texturesToLoad;
-    for (int i = 0; i < paths.size(); ++i) {
-        auto possibleTexture = loadedTextures.find(paths[i]);
+    
+    /***
+     * @brief Find what textures are already loaded and which needs to be loaded 
+     */
+    for (auto & path : paths) {
+        auto possibleTexture = loadedTextures.find(path);
         if(possibleTexture != loadedTextures.end()){
             textures.emplace_back(possibleTexture->second);
-            paths.erase(paths.begin()+i);
         }else{
-            texturesToLoad.emplace_back(paths[i]);
+            texturesToLoad.emplace_back(path);
         }
     }
-    loadMultipleTextures(texturesToLoad);
+
+    auto newTextures = loadMultipleTextures(texturesToLoad);
+
+    textures.insert(textures.end(), newTextures.begin(), newTextures.end());
 
     return textures;
 }
