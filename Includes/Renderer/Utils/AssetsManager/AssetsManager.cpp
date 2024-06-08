@@ -41,7 +41,7 @@ std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::
         }
     }
 
-    auto newTextures = loadMultipleTextures(texturesToLoad);
+        auto newTextures = loadMultipleTextures(texturesToLoad);
 
     textures.insert(textures.end(), newTextures.begin(), newTextures.end());
 

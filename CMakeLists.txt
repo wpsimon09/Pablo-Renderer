@@ -66,6 +66,8 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
         CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}"
 )
 
+add_definitions(PABLO_PATH=${PROJECT_SOURCE_DIR})
+
 # Add the include directories
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/Includes

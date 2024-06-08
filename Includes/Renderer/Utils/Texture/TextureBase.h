@@ -11,7 +11,9 @@
 #include "stb_image_write.h"
 #include "Debug/DebugLogger.h"
 #include "mutex"
+#include "filesystem"
 
+namespace fs = std::filesystem;
 /***
  * Base class for the Texutres used by the application
  * @inherit OGLObject
@@ -126,6 +128,7 @@ public:
 
     unsigned char* getData() {return this->textureData;}
 protected:
+    fs::path texturePath;
 
     /***
      * Loads PNG image to the texture
