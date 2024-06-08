@@ -109,8 +109,11 @@ void PBRTextured::renderUI() {
                             ImGui::TreePop();
                         }
                     }
+            else
+                ImGui::Text("Error::No texture loaded");
 
                 }
+
                 ImGui::TreePop();
             }
 
