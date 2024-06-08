@@ -17,9 +17,9 @@ class AssetsManager {
 public:
     static AssetsManager *getInstance();
 
-    std::vector<std::shared_ptr<Texture2D>> getMultipleTextures(std::vector<const char *> paths);
+    std::vector<std::shared_ptr<Texture2D>> getMultipleTextures(std::vector<std::string> paths);
 
-    std::shared_ptr<Texture2D> getTexture(const char *path);
+    std::shared_ptr<Texture2D> getTexture(std::string path);
 
     ~AssetsManager() = default;
 

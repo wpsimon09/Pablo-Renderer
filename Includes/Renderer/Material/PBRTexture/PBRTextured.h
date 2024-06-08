@@ -51,6 +51,9 @@ public:
     bool hasEmissionTexture = false;
 
 private:
+    void loadMaterials(AssetsManager* assetsManagerInstance,std::string pathToTheDirectory = "", std::string shaderNamingConvention = "_",
+                                           std::string fileFormat = ".png");
+
     std::unique_ptr<Texture2DArray> material;
     /***
      * All the textures the material possess

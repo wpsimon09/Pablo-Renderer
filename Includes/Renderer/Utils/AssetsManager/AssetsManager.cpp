@@ -16,16 +16,16 @@ void AssetsManager::loadSingleTextureOnThread(const char *path, std::vector<std:
     tempStorage.push_back(std::make_shared<Texture2D>(path,true, false));
 }
 
-std::shared_ptr<Texture2D> AssetsManager::getTexture(const char *path) {
+std::shared_ptr<Texture2D> AssetsManager::getTexture(std::string path) {
     auto tex = loadedTextures.find(path);
     if(tex != loadedTextures.end()){
         return tex->second;
     }else
-        return loadSingleTexture(path, true);
+        return loadSingleTexture(path.c_str(), true);
 }
 
 
-std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<const char *> paths) {
+std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<std::string> paths) {
     std::vector<std::shared_ptr<Texture2D>> textures;
     std::vector<const char*> texturesToLoad;
     
@@ -37,7 +37,7 @@ std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::
         if(possibleTexture != loadedTextures.end()){
             textures.emplace_back(possibleTexture->second);
         }else{
-            texturesToLoad.emplace_back(path);
+            texturesToLoad.emplace_back(path.c_str());
         }
     }
 
