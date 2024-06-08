@@ -24,39 +24,39 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
         fullPath = pathToTheDirectory + "/albedo" + fileFormat;
         auto texture = assetsManagerInstance->getTexture(fullPath.c_str());
         this->addTexture(
-                std::make_unique<PBRMaterial<Texture2D>>(texture, shaderNamingConvention + "albedoMap", 0));
+                std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "albedoMap", 0));
 
         // Roughness map
         fullPath = pathToTheDirectory + "/roughness" + fileFormat;
         texture = assetsManagerInstance->getTexture(fullPath.c_str());
         this->addTexture(
-                std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "roughnessMap",
+                std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "roughnessMap",
                                                          1));
 
         // Metallic map
         fullPath = pathToTheDirectory + "/metallic" + fileFormat;
         texture = assetsManagerInstance->getTexture(fullPath.c_str());
         this->addTexture(
-                std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "metallicMap",
+                std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "metallicMap",
                                                          2));
 
         // Normal map
         fullPath = pathToTheDirectory + "/normal" + fileFormat;
         texture = assetsManagerInstance->getTexture(fullPath.c_str());
         this->addTexture(
-                std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "normalMap", 3));
+                std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "normalMap", 3));
 
         // Ambient Occlusion map
         fullPath = pathToTheDirectory + "/ao" + fileFormat;
         texture = assetsManagerInstance->getTexture(fullPath.c_str());
         this->addTexture(
-                std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "aoMap", 4));
+                std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "aoMap", 4));
 
         // Depth map
         fullPath = pathToTheDirectory + "/displacement" + fileFormat;
         texture = assetsManagerInstance->getTexture(fullPath.c_str());
         this->addTexture(
-                std::make_unique<PBRMaterial<Texture2D>>(std::move(texture), shaderNamingConvention + "displacementMap",
+                std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "displacementMap",
                                                          5));
     }
 
@@ -69,7 +69,7 @@ void PBRTextured::configureShader() {
     this->shader->setFloat("hasEmission", this->hasEmissionTexture);
     this->shader->setFloat("supportsIBL", this->supportsIBL);
     for (auto &texture: this->textures) {
-        if (texture != nullptr) {
+        if (texture != nullptr && texture->type != nullptr) {
             ShaderHelper::setTextureToShader(shader, *texture->type, texture->shaderName, texture->samplerID);
         }
     }
@@ -91,25 +91,28 @@ void PBRTextured::renderUI() {
 
     if (ImGui::TreeNodeEx("Textures")) {
         for (auto &texture: this->textures) {
-            ImVec2 imageSize((float) texture->type->texWidth / 4, (float) texture->type->texHeight / 4);
-            if (ImGui::TreeNodeEx(texture->shaderName.c_str())) {
-                ImGui::BeginChild("##", imageSize);
-                ImGui::GetWindowDrawList()->AddImage(
+            if(texture->type != nullptr && texture != nullptr){
 
-                        (void *) texture->type->ID,
-                        ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-                        ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
-                               ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
-                        ImVec2(0, 1),
-                        ImVec2(1, 0)
-                );
-                ImGui::EndChild();
+                        ImVec2 imageSize((float) texture->type->texWidth / 4, (float) texture->type->texHeight / 4);
+                        if (ImGui::TreeNodeEx(texture->shaderName.c_str())) {
+                            ImGui::BeginChild("##", imageSize);
+                            ImGui::GetWindowDrawList()->AddImage(
+
+                                    (void *) texture->type->ID,
+                                    ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
+                                    ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
+                                           ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
+                                    ImVec2(0, 1),
+                                    ImVec2(1, 0)
+                            );
+                            ImGui::EndChild();
+                            ImGui::TreePop();
+                        }
+                    }
+
+                }
                 ImGui::TreePop();
             }
-        }
-        ImGui::TreePop();
-
-    }
 
     ImGui::NewLine();
     ImGui::Checkbox("SupportsIBL", &this->supportsIBL);
