@@ -25,6 +25,8 @@ public:
     ~AssetsManager() = default;
 
 private:
+    std::string projectPath = PABLO_PATH;
+
     inline static std::mutex textureLock;
 
     AssetsManager() = default;
