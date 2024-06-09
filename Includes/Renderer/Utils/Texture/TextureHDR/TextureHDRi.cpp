@@ -7,7 +7,7 @@
 TextureHDRi::TextureHDRi(const char *path):TextureBase() {
     this->type = GL_TEXTURE_2D;
     this->type_string = "GL_TEXTURE_2D (HDR)";
-    this->fullPath = path;
+    this->texturePath = path;
     this->isPBRMaterial = false;
     glCreateTextures(GL_TEXTURE_2D,1, &this->ID );
     this->samplerID = 0;

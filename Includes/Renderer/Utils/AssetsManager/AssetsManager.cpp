@@ -41,7 +41,7 @@ std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::
         }
     }
 
-        auto newTextures = loadMultipleTextures(texturesToLoad);
+    auto newTextures = loadMultipleTextures(texturesToLoad);
 
     textures.insert(textures.end(), newTextures.begin(), newTextures.end());
 
@@ -62,7 +62,8 @@ std::vector<std::shared_ptr<Texture2D>> AssetsManager::loadMultipleTextures(std:
 
     for (auto &texture: textures) {
         texture->passToOpenGL();
-        loadedTextures.insert(std::make_pair(texture->getFullPath().c_str(), texture));
+        auto path = texture->getFullPath();
+        loadedTextures.insert(std::make_pair(path, texture));
     }
 
     return textures;

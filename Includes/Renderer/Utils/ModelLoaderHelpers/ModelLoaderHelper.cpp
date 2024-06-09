@@ -80,14 +80,14 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
             ModelLoaderHelper::hasEmmisionTexture = true;
         }
         for(auto &loaded_texture : ModelLoaderHelper::loadedTextures ){
-            if(std::strcmp(loaded_texture->relativePath.c_str(), path.C_Str()) == 0){
+            if(std::strcmp(loaded_texture->getRelativePath().c_str(), path.C_Str()) == 0){
                 renderableMaterialTextures.push_back(loaded_texture);
                 return;
             }
         }
 
         auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), true, false);
-        newTexture->relativePath = path.C_Str();
+        newTexture->setRelativePath( path.C_Str());
         newTexture->shaderName = materialToLoad.shaderName;
         newTexture->samplerID = materialToLoad.samplerNumber;
         {

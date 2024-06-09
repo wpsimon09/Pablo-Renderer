@@ -6,7 +6,7 @@
 #include "TextureBase.h"
 
 TextureBase::TextureBase(TextureBase &&other) noexcept: ID(other.ID), isPBRMaterial(other.isPBRMaterial),
-                                                        fullPath(other.fullPath), samplerID(other.samplerID),
+                                                        texturePath(other.texturePath), samplerID(other.samplerID),
                                                         wasFound(other.wasFound), type(other.type),
                                                         type_string(other.type_string), texWidth(other.texWidth),
                                                         texHeight(other.texHeight), textureData(other.textureData),
@@ -19,7 +19,7 @@ TextureBase &TextureBase::operator=(TextureBase &&other) noexcept {
         release();
         ID = std::exchange(other.ID, 0);
         isPBRMaterial = other.isPBRMaterial;
-        fullPath = std::move(other.fullPath);
+        texturePath = std::move(other.texturePath);
         samplerID = other.samplerID;
         wasFound = other.wasFound;
         type = other.type;
@@ -140,6 +140,7 @@ void TextureBase::setUnpackAlignment(int alignment) {
     glPixelStorei(GL_UNPACK_ALIGNMENT, alignment);
     this->unbind();
 }
+
 /*
 
 void TextureBase::processToOpenGL(GLenum numberOfChanels) {

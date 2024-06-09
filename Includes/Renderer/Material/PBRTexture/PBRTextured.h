@@ -28,7 +28,7 @@ public:
      * @param shader shader that will be assosiated with texture
      * @param shaderNamingConvention naming conventions used in the shader for unifrom samplers
      * */
-    explicit PBRTextured(bool supportsAreaLight = false,std::string pathToTheDirectory = "",  std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
+    explicit PBRTextured(bool supportsAreaLight = false,std::string pathToTheDirectory = "", bool isRelativePath = true ,std::string shaderNamingConvention = "_", std::string fileFormat = ".png");
 
 
     std::shared_ptr<Texture2D> getAlbedoTexture() override;
@@ -51,7 +51,7 @@ public:
     bool hasEmissionTexture = false;
 
 private:
-    void loadMaterials(AssetsManager* assetsManagerInstance,std::string pathToTheDirectory = "", std::string shaderNamingConvention = "_",
+    void loadMaterials(AssetsManager* assetsManagerInstance,std::string pathToTheDirectory = "", bool isRelativePaht = true ,std::string shaderNamingConvention = "_",
                                            std::string fileFormat = ".png");
 
     std::unique_ptr<Texture2DArray> material;
