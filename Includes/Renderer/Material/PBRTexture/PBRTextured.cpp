@@ -4,7 +4,7 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory, std::string shaderNamingConvention,
+PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory, bool isRelativePath,std::string shaderNamingConvention,
                          std::string fileFormat) : Material() {
     if (supportsAreaLight) {
         this->shader = ShaderManager::getShader(SHADER_AREA_LIGHT_TEXTURES);
@@ -19,7 +19,7 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
 
     if (!pathToTheDirectory.empty()) {
         auto assetsManagerInstance = AssetsManager::getInstance();
-        this->loadMaterials(assetsManagerInstance, pathToTheDirectory, shaderNamingConvention, fileFormat);
+        this->loadMaterials(assetsManagerInstance, pathToTheDirectory,isRelativePath,shaderNamingConvention, fileFormat);
     }
 
 
@@ -91,7 +91,7 @@ std::vector<std::reference_wrapper<Texture2D>> PBRTextured::getTextures() {
     return fetchedTextures;
 }
 
-void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string pathToTheDirectory, std::string shaderNamingConvention, std::string fileFormat) {
+void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string pathToTheDirectory,bool isRelativePath, std::string shaderNamingConvention, std::string fileFormat) {
     std::string fullPath;
 
     /***
@@ -102,7 +102,9 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     /***
      * @brief Albedo map
      */
-    fullPath = pathToTheDirectory + "/albedo" + fileFormat;
+    auto absolutePath = isRelativePath ? PABLO_PATH : "";
+
+    fullPath = absolutePath + pathToTheDirectory + "/albedo" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "albedoMap", 0));
@@ -110,7 +112,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     /***
     * @brief Roughness
     */
-    fullPath = pathToTheDirectory + "/roughness" + fileFormat;
+    fullPath = absolutePath + pathToTheDirectory + "/roughness" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "roughnessMap",
@@ -119,7 +121,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     /***
     * @brief Metallic
     */
-    fullPath = pathToTheDirectory + "/metallic" + fileFormat;
+    fullPath = absolutePath + pathToTheDirectory + "/metallic" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "metallicMap",
@@ -128,7 +130,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     /***
     * @brief Normal map
     */
-    fullPath = pathToTheDirectory + "/normal" + fileFormat;
+    fullPath = absolutePath + pathToTheDirectory + "/normal" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "normalMap", 3));
@@ -136,7 +138,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     /***
      * @brief AO map
      */
-    fullPath = pathToTheDirectory + "/ao" + fileFormat;
+    fullPath = absolutePath + pathToTheDirectory + "/ao" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "aoMap", 4));
@@ -144,7 +146,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     /***
      * @brief Depth map
      */
-    fullPath = pathToTheDirectory + "/displacement" + fileFormat;
+    fullPath = absolutePath + pathToTheDirectory + "/displacement" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "displacementMap",

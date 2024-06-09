@@ -69,17 +69,6 @@ public:
     bool isPBRMaterial;
 
     /***
-     * @brief Full path to the texture
-     */
-    std::string fullPath;
-
-    /***
-     * @brief Relative path of the textue to the directory of the model
-     * @note empty if texture is not part of the model
-     */
-    std::string relativePath = "";
-
-    /***
      * @brief Dimensions of the texture
      */
     int texWidth, texHeight;
@@ -114,6 +103,8 @@ public:
 
     void clearTextureData() { stbi_image_free(this->textureData);}
 
+    void setRelativePath(const char* newPath) {this->texturePath = newPath; }
+
     /***
     * @brief Loads texture data that are stored to the opengl texture object
     * @note only applies to the the texture data expressed in unsigned char
@@ -124,10 +115,14 @@ public:
 
     void setSamplerID(unsigned int ID) { this->samplerID = ID; }
 
-    const std::string &getFullPath() const { return this->fullPath; };
+    std::string getFullPath() { return this->texturePath.string(); };
+
+    std::string getRelativePath() {return this->texturePath.relative_path();};
+
 
     unsigned char* getData() {return this->textureData;}
 protected:
+
     fs::path texturePath;
 
     /***

@@ -47,11 +47,11 @@ void Texture2DArray::loadToGL() {
         glCheckError();
 
         glTexStorage3D(GL_TEXTURE_2D_ARRAY, 1, GL_RGBA8, textures[0]->texWidth, textures[0]->texHeight, this->textures.size());
-        glCheckError(); //segmentation fault here
+        glCheckError();
 
         for (int i = 0; i < this->textures.size(); i++) {
             glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, i,textures[0]->texWidth, textures[0]->texHeight, 1, GL_RGB, GL_UNSIGNED_BYTE, this->textures[i]->getData());
-            glCheckError(); //GL_INVALID_OPERATION
+            glCheckError();
             textures[i]->clearTextureData();
             this->textureCount ++;
         }

@@ -4,6 +4,8 @@
 
 #include "RenderableBuilder.h"
 
+
+
 std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
     try{
 
@@ -13,8 +15,9 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
         std::string name = text;
 
         switch(selectedMateial){
+
             case TEXTURE:{
-                 material = std::make_shared<PBRTextured>(supportsAreaLight,textureDirectory);
+                material = std::make_shared<PBRTextured>(supportsAreaLight,textureDirectory,false);
                 break;
             }
             case COLOR:{

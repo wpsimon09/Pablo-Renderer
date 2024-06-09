@@ -25,6 +25,9 @@ public:
     ~AssetsManager() = default;
 
 private:
+    /***
+     * @brief Path to where engine is stored this configured in cMAKE and will always give error in IDR
+     */
     std::string projectPath = PABLO_PATH;
 
     inline static std::mutex textureLock;

@@ -10,6 +10,9 @@
 #include "Renderer/Geometry/Shapes/Sphere/SphereGeometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 class RenderableBuilder {
 public:
@@ -19,7 +22,7 @@ public:
     inline static std::string modelOath;
 
     inline static glm::vec3 color;
-    inline static std::string textureDirectory;
+    inline static fs::path textureDirectory;
     inline static bool castsShadow;
     inline static bool supportsIBL;
     inline static bool supportsAreaLight;
