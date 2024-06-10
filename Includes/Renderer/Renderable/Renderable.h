@@ -33,7 +33,7 @@ public:
     bool recievesShadow = true;
     bool isModel = false;
     bool isLineOnly = false;
-    const std::shared_ptr<Material> &getObjectMaterial() const;
+    const std::shared_ptr<Material> getObjectMaterial() const;
     bool isPartOfSceneNode = false;
 private:
     bool backFaceCulled = true;

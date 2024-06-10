@@ -7,13 +7,14 @@
 
 #include "Renderer/UI/Components/Component.h"
 #include "Renderer/Material/Material.h"
+#include "Renderer/Renderable/Renderable.h"
 #include "imgui.h"
 
 class MaterialUI:public Component {
 public:
-    inline static std::shared_ptr<Material> material;
+    inline static Renderable* renderable = nullptr;
     static void display(int posX, int posY, int width, int height = 0);
-
+    inline static bool displayChangeMaterialUI = false;
 };
 
 

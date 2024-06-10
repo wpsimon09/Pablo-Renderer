@@ -98,7 +98,7 @@ void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
         if (ImGui::Selectable(name.c_str(), selectedSceneNode == i)) {
             selectedSceneNode = i;
             sceneNode.isSelected = true;
-            MaterialUI::material = sceneNode.getRenderable()->getObjectMaterial();
+            MaterialUI::renderable = sceneNode.getRenderable().get();
             SceneNodeUI::sceneNode = &sceneNode;
         } else
             sceneNode.isSelected = false;

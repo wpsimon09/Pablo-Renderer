@@ -10,6 +10,7 @@
 #include "Renderer/Geometry/Shapes/Sphere/SphereGeometry.h"
 #include "Renderer/Geometry/Shapes/Plane/PlaneGeometry.h"
 #include "Renderer/SceneGraph/ModelSceneNode/ModelSceneNode.h"
+
 #include <filesystem>
 
 namespace fs = std::filesystem;

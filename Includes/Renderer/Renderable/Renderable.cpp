@@ -58,7 +58,7 @@ Renderable::Renderable() {
 
 }
 
-const std::shared_ptr<Material> &Renderable::getObjectMaterial() const {
+const std::shared_ptr<Material> Renderable::getObjectMaterial() const {
     return objectMaterial;
 }
 

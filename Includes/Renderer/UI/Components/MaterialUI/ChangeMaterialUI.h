@@ -2,8 +2,8 @@
 // Created by wpsimon09 on 09/06/24.
 //
 
-#ifndef PABLO_RENDERER_CHANGEMATERIAL_H
-#define PABLO_RENDERER_CHANGEMATERIAL_H
+#ifndef PABLO_RENDERER_CHANGEMATERIALUI_H
+#define PABLO_RENDERER_CHANGEMATERIALUI_H
 
 #include "imgui.h"
 #include "Renderer/Enums/UIBuilderEnums.h"
@@ -11,10 +11,9 @@
 #include "memory"
 #include "Renderer/Renderable/Renderable.h"
 
-class ChangeMaterial {
+class ChangeMaterialUI{
 public:
-    static inline void display(std::shared_ptr<Renderable> renderable);
-
+    static void display(Renderable *renderable);
 private:
     static inline MATERIAL selectedMaterial;
     inline static  std::string material [] = {
@@ -25,4 +24,4 @@ private:
 };
 
 
-#endif //PABLO_RENDERER_CHANGEMATERIAL_H
+#endif //PABLO_RENDERER_CHANGEMATERIALUI_H

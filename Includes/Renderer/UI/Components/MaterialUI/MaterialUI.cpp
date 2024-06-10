@@ -3,6 +3,7 @@
 //
 
 #include "MaterialUI.h"
+#include "Renderer/UI/Components/MaterialUI/ChangeMaterialUI.h"
 
 void MaterialUI::display(int posX, int posY, int width, int height) {
     MaterialUI::posX = posX;
@@ -12,12 +13,19 @@ void MaterialUI::display(int posX, int posY, int width, int height) {
 
     ImGui::Text("Material");
 
-        if(material != nullptr){
-            material->renderUI();
+        if(renderable != nullptr){
+            renderable->getObjectMaterial()->renderUI();
 
-            ImGui::Button("Change");
+            if(ImGui::Button("Change")){
+                displayChangeMaterialUI = true;
+            }
+
+            if(displayChangeMaterialUI){
+                if(renderable != nullptr){
+                    ChangeMaterialUI::display(renderable);
+                }
+            }
         }
         else
             ImGui::Text("No item selected please select one from the SceneStructure");
-
 }
