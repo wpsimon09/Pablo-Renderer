@@ -20,12 +20,19 @@ void ChangeMaterialUI::display(Renderable* renderable) {
         }
 
         if(selectedMaterial == COLOR){
+            ImGui::SetNextItemWidth(200);
             ImGui::ColorPicker3("Material color", &color.x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
         }
         else if (selectedMaterial == TEXTURE){
-            texturesDirectory = FileWindowUI::display(true);
+            ChangeMaterialUI::texturesDirectory = FileWindowUI::display(true);
             ImGui::Text("Selected texture directory:");
-            ImGui::Text("%s", texturesDirectory.c_str());
+            ImGui::BeginChild("Path",ImVec2(300, 40));
+            ImGui::Text(ChangeMaterialUI::texturesDirectory.c_str());
+            ImGui::EndChild();
+        }
+
+        if(ImGui::Button("Cancel")){
+            MaterialUI::displayChangeMaterialUI = false;
         }
     ImGui::End();
 }

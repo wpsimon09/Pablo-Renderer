@@ -10,6 +10,7 @@
 #include "string"
 #include "memory"
 #include "Renderer/Renderable/Renderable.h"
+#include "Renderer/UI/Components/MaterialUI/MaterialUI.h"
 
 class ChangeMaterialUI{
 public:
@@ -19,7 +20,7 @@ private:
     inline static  std::string material [] = {
             "TEXTURE", "COLOR"
     };
-    inline static std::string texturesDirectory = "";
+    inline static std::string texturesDirectory;
     inline static glm::vec3 color = glm::vec3(0.0f, 0.0F, 0.0F);
 };
 
