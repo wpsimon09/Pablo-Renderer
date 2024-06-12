@@ -6,6 +6,7 @@
 #include "Renderer/UI/Components/RenderableCreateationUI/FIleWindowUI/FileWindowUI.h"
 
 void ChangeMaterialUI::display(Renderable* renderable) {
+
     ImGui::Begin("Change the material");
         ImGui::SetWindowSize(ImVec2(400, 400));
         ImGui::Text("Select material");
@@ -19,16 +20,13 @@ void ChangeMaterialUI::display(Renderable* renderable) {
             ImGui::EndCombo();
         }
 
-        if(selectedMaterial == COLOR){
-            ImGui::SetNextItemWidth(200);
-            ImGui::ColorPicker3("Material color", &color.x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
-        }
-        else if (selectedMaterial == PBR_TEXTURE_MAPS){
-            ChangeMaterialUI::texturesDirectory = FileWindowUI::display(true);
-            ImGui::Text("Selected texture directory:");
-            ImGui::BeginChild("Path",ImVec2(300, 40));
-            ImGui::Text(ChangeMaterialUI::texturesDirectory.c_str());
-            ImGui::EndChild();
+        if(ImGui::Button("Apply")){
+            if(selectedMaterial == COLOR){
+                renderable->setMaterial(std::make_shared<PBRColor>());
+            }
+            else if (selectedMaterial == PBR_TEXTURE_MAPS){
+            }
+
         }
 
         if(ImGui::Button("Cancel")){
