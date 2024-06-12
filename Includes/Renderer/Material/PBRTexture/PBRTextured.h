@@ -15,6 +15,7 @@
 #include "imgui.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
 #include "Renderer/Utils/AssetsManager/AssetsManager.h"
+#include "PBRTexturedUI.h"
 /***
  * Class representing PBR material with textures
  * @inherit Material.h
@@ -44,7 +45,7 @@ public:
      * Adds texture to be used as material property
      * @param texture texture representing material proerty
      */
-    void addTexture(std::unique_ptr<PBRMaterial<Texture2D>> texture);
+    void addTexture(std::shared_ptr<PBRMaterial<Texture2D>> texture);
 
     void renderUI() override;
 
@@ -58,7 +59,7 @@ private:
     /***
      * All the textures the material possess
      */
-    std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> textures;
+    std::vector<std::shared_ptr<PBRMaterial<Texture2D>>> textures;
 };
 
 

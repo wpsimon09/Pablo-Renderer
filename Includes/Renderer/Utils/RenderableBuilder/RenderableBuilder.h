@@ -18,7 +18,7 @@ namespace fs = std::filesystem;
 class RenderableBuilder {
 public:
     inline static GEOMETRY selectedGeometry = CUBE;
-    inline static MATERIAL selectedMateial = TEXTURE;
+    inline static MATERIAL selectedMateial = PBR_TEXTURE_MAPS;
 
     inline static std::string modelOath;
 

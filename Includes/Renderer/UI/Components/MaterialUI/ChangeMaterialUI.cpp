@@ -23,7 +23,7 @@ void ChangeMaterialUI::display(Renderable* renderable) {
             ImGui::SetNextItemWidth(200);
             ImGui::ColorPicker3("Material color", &color.x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
         }
-        else if (selectedMaterial == TEXTURE){
+        else if (selectedMaterial == PBR_TEXTURE_MAPS){
             ChangeMaterialUI::texturesDirectory = FileWindowUI::display(true);
             ImGui::Text("Selected texture directory:");
             ImGui::BeginChild("Path",ImVec2(300, 40));

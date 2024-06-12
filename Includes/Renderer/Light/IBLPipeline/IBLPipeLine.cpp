@@ -15,7 +15,7 @@ IBLPipeLine::IBLPipeLine(const char *path) {
 
 void IBLPipeLine::generateIBLTextures() {
     //----------------------
-    // CONFIGURE HRI TEXTURE
+    // CONFIGURE HRI PBR_TEXTURE_MAPS
     //----------------------
     this->iblTextures.clear();
     this->inputHDRI->setSamplerID(0);

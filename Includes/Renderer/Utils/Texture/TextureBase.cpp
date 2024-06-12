@@ -116,7 +116,7 @@ void TextureBase::loadHRI(const char *path) {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        std::cout << "HDRI TEXTURE LOADED \xE2\x9C\x93" << std::endl;
+        std::cout << "HDRI PBR_TEXTURE_MAPS LOADED \xE2\x9C\x93" << std::endl;
         std::string base_filename = path;
         base_filename = base_filename.substr(base_filename.find_last_of("/\\") + 1);
         std::cout << "Image:" << base_filename << std::endl << std::endl;

@@ -62,7 +62,7 @@ void RenderableCreationUI::display() {
         if(RenderableBuilder::selectedMateial == COLOR){
             ImGui::ColorPicker3("Material color", &RenderableBuilder::color.x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
         }
-        else if (RenderableBuilder::selectedMateial == TEXTURE){
+        else if (RenderableBuilder::selectedMateial == PBR_TEXTURE_MAPS){
             FileWindowUI::display(true);
             ImGui::Text("Selected texture directory:");
             ImGui::Text(RenderableBuilder::textureDirectory.c_str());

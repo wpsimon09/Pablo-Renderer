@@ -16,7 +16,7 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
 
         switch(selectedMateial){
 
-            case TEXTURE:{
+            case PBR_TEXTURE_MAPS:{
                 material = std::make_shared<PBRTextured>(supportsAreaLight,textureDirectory,false);
                 break;
             }

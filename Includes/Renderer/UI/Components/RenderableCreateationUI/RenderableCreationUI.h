@@ -19,7 +19,7 @@ private:
     };
 
     inline static  std::string material [] = {
-            "TEXTURE", "COLOR"
+            "PBR_TEXTURE_MAPS", "COLOR"
     };
 
 public:

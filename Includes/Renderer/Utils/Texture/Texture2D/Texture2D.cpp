@@ -64,7 +64,7 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
     this->internalFormat = foramt;
 
     // ------------------
-    // TEXTURE GENERATION
+    // PBR_TEXTURE_MAPS GENERATION
     // -------------------
     glCreateTextures(GL_TEXTURE_2D,1, &this->ID);
     glCheckError();
@@ -77,7 +77,7 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
 
 
     // ------------------
-    // TEXTURE PARAMETERS
+    // PBR_TEXTURE_MAPS PARAMETERS
     // -------------------
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glCheckError();

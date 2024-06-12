@@ -18,7 +18,7 @@ public:
 private:
     static inline MATERIAL selectedMaterial;
     inline static  std::string material [] = {
-            "TEXTURE", "COLOR"
+            "PBR_TEXTURE_MAPS", "COLOR"
     };
     inline static std::string texturesDirectory;
     inline static glm::vec3 color = glm::vec3(0.0f, 0.0F, 0.0F);
