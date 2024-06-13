@@ -79,6 +79,7 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
         if(materialToLoad.textureType == aiTextureType_EMISSIVE){
             ModelLoaderHelper::hasEmmisionTexture = true;
         }
+        /*
         for(auto &loaded_texture : ModelLoaderHelper::loadedTextures ){
             if(std::strcmp(loaded_texture->getRelativePath().c_str(), path.C_Str()) == 0){
                 renderableMaterialTextures.push_back(loaded_texture);
@@ -94,8 +95,10 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
             std::lock_guard<std::mutex> lock(ModelLoaderHelper::textureLock);
             ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
             renderableMaterialTextures.push_back(loadedTextures.back());
-        }
-    }else
+        }*/
+        renderableMaterialTextures.push_back(assetsManagerInstance->getTexture(path.C_Str()));
+    }
+    else
         return;
 
 

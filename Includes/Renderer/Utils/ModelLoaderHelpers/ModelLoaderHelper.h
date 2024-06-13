@@ -11,6 +11,7 @@
 #include "assimp/scene.h"
 #include <assimp/ai_assert.h>
 #include "Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h"
+#include "Renderer/Utils/AssetsManager/AssetsManager.h"
 
 #include "vector"
 #include "memory"
@@ -24,6 +25,9 @@ private:
     inline static std::vector<std::shared_ptr<Texture2D>> loadedTextures;
     inline static bool hasEmmisionTexture = false;
     inline static std::string directory;
+
+    inline static AssetsManager* assetsManagerInstance = AssetsManager::getInstance();
+
 
 public:
     static void processVertecies( std::vector<Vertex> &vertecies,aiMesh* mesh, const aiScene* scene );
