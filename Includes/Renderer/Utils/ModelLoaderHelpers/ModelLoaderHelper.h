@@ -35,7 +35,7 @@ public:
 
     static void processIndecies(std::vector<unsigned int>&indecies, aiMesh*mesh);
 
-    static void processMaterialTexture(aiMaterial *material, MaterialToProcess materialToLoad, std::vector<PBRMaterial<std::shared_ptr<Texture2D>>> &renderableMaterialTextures);
+    static void processMaterialTexture(aiMaterial *material, MaterialToProcess materialToLoad, std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> &renderableMaterialTextures);
 
     static void setDirectory(std::string dir) {ModelLoaderHelper::directory = dir;};
 

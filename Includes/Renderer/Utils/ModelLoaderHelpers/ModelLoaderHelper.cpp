@@ -72,7 +72,7 @@ void ModelLoaderHelper::processIndecies(std::vector<unsigned int> &indecies, aiM
 }
 
 void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToProcess materialToLoad,
-                                               std::vector<PBRMaterial<std::shared_ptr<Texture2D>>> &renderableMaterialTextures) {
+                                               std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> &renderableMaterialTextures) {
     aiString path;
 
     if(material->GetTexture(materialToLoad.textureType, 0, &path) == AI_SUCCESS){
@@ -97,8 +97,8 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
             renderableMaterialTextures.push_back(loadedTextures.back());
         }*/
         std::shared_ptr<Texture2D> newTexture = assetsManagerInstance->getTextureOnThread((directory +"/"+path.C_Str()).c_str());
-        auto newMaterial = PBRMaterial<std::shared_ptr<Texture2D>>(newTexture, materialToLoad.shaderName, materialToLoad.samplerNumber);
-        renderableMaterialTextures.push_back(newMaterial);
+        auto newMaterial = std::make_unique<PBRMaterial<Texture2D>>(newTexture, materialToLoad.shaderName, materialToLoad.samplerNumber);
+        renderableMaterialTextures.emplace_back(std::move(newMaterial));
     }
 
     else

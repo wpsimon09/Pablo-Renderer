@@ -29,7 +29,7 @@ struct PBRMaterial {
      * @param samplerid sampler that is used for the textures
      */
     PBRMaterial(std::shared_ptr<T> type, std::string shaderName, int samplerid = 0) {
-        this->type = std::move(type);
+        this->type = type;
         this->shaderName = shaderName;
         this->samplerID = samplerid;
     }
@@ -41,7 +41,7 @@ struct PBRMaterial {
      * @param samplerid sampler that is used for the textures
      */
     PBRMaterial(T type, std::string shaderName, int samplerid = 0) {
-        this->type = std::make_unique<T>(std::move(type));
+        this->type = std::make_shared<T>(type);
         this->shaderName = shaderName;
         this->samplerID = samplerid;
     }
