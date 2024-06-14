@@ -30,9 +30,10 @@ std::shared_ptr<Texture2D> AssetsManager::getTextureOnThread(std::string path) {
         return tex->second;
     }else{
         std::lock_guard<std::mutex> lock(textureLock);
-        loadedTextures.insert(std::make_pair(path, std::make_shared<Texture2D>(path.c_str(),true, false)));
+        auto newTexture = std::make_shared<Texture2D>(path.c_str(),true, false);
+        loadedTextures.insert(std::make_pair(path, newTexture));
+        return newTexture;
     }
-    return loadedTextures.end()->second;
 }
 
 

@@ -96,7 +96,7 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
             ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
             renderableMaterialTextures.push_back(loadedTextures.back());
         }*/
-        renderableMaterialTextures.push_back(assetsManagerInstance->getTexture(path.C_Str()));
+        renderableMaterialTextures.push_back(assetsManagerInstance->getTextureOnThread((directory +"/"+path.C_Str()).c_str()));
     }
     else
         return;
