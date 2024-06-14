@@ -78,12 +78,8 @@ private:
      */
     void processRenderable(aiMesh *mesh, const aiScene *scene);
 
-
     std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial *meshMaterial);
 
-    std::unique_ptr<PBRMaterial<Texture2D>>
-    processMaterialProperty(aiMaterial *material, aiTextureType type, const std::string &shaderName,
-                            const int samplerID);
 
 };
 

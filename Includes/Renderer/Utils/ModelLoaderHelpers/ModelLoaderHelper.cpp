@@ -79,23 +79,6 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
         if(materialToLoad.textureType == aiTextureType_EMISSIVE){
             ModelLoaderHelper::hasEmmisionTexture = true;
         }
-        /*
-        for(auto &loaded_texture : ModelLoaderHelper::loadedTextures ){
-            if(std::strcmp(loaded_texture->getRelativePath().c_str(), path.C_Str()) == 0){
-                renderableMaterialTextures.push_back(loaded_texture);
-                return;
-            }
-        }
-
-        auto newTexture = std::make_shared<Texture2D>((directory +"/"+path.C_Str()).c_str(), true, false);
-        newTexture->setRelativePath( path.C_Str());
-        newTexture->shaderName = materialToLoad.shaderName;
-        newTexture->samplerID = materialToLoad.samplerNumber;
-        {
-            std::lock_guard<std::mutex> lock(ModelLoaderHelper::textureLock);
-            ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
-            renderableMaterialTextures.push_back(loadedTextures.back());
-        }*/
         std::shared_ptr<Texture2D> newTexture = assetsManagerInstance->getTextureOnThread((directory +"/"+path.C_Str()).c_str());
         auto newMaterial = std::make_unique<PBRMaterial<Texture2D>>(newTexture, materialToLoad.shaderName, materialToLoad.samplerNumber);
         renderableMaterialTextures.emplace_back(std::move(newMaterial));
