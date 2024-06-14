@@ -98,7 +98,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
 std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
     std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
 
-    std::vector<std::shared_ptr<Texture2D>> materialTextures;
+    std::vector<PBRMaterial<std::shared_ptr<Texture2D>>> materialTextures;
 
     std::vector<std::thread> textureThreads;
 
@@ -120,10 +120,9 @@ std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
      * @brief assign names and samplers
      */
     int i = 0;
-    for(auto &textureToLoad : materialTextures){
-        auto newTexture = std::make_unique<PBRMaterial<Texture2D>>(textureToLoad, textureToLoad->shaderName, textureToLoad->samplerID);
-        newTexture->type->passToOpenGL();
-        mat->addTexture(std::move(newTexture));
+    for(auto textureToLoad : materialTextures){
+        textureToLoad.type->get()->passToOpenGL();
+        mat->addTexture(std::move(textureToLoad));
         i++;
     }
 
