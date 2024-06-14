@@ -20,7 +20,11 @@ public:
 
     std::vector<std::shared_ptr<Texture2D>> getMultipleTextures(std::vector<std::string> paths);
 
+    std::shared_ptr<Texture2D> getTextureOnThread(std::string path);
+
     std::shared_ptr<Texture2D> getTexture(std::string path);
+
+    void loadTexturesToOpenGL();
 
     ~AssetsManager() = default;
 

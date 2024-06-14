@@ -24,6 +24,19 @@ std::shared_ptr<Texture2D> AssetsManager::getTexture(std::string path) {
         return loadSingleTexture(path.c_str(), true);
 }
 
+std::shared_ptr<Texture2D> AssetsManager::getTextureOnThread(std::string path) {
+    auto tex = loadedTextures.find(path);
+    if(tex != loadedTextures.end()){
+        return tex->second;
+    }else{
+        std::lock_guard<std::mutex> lock(textureLock);
+        auto newTexture = std::make_shared<Texture2D>(path.c_str(),true, false);
+        loadedTextures.insert(std::make_pair(path, newTexture));
+        return newTexture;
+    }
+}
+
+
 
 std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<std::string> paths) {
     std::vector<std::shared_ptr<Texture2D>> textures;
@@ -77,4 +90,14 @@ AssetsManager *AssetsManager::getInstance() {
         return AssetsManager::instance;
     }
 }
+
+void AssetsManager::loadTexturesToOpenGL() {
+    for(auto &texture: loadedTextures){
+        if(texture.second->isInGL){
+            texture.second->passToOpenGL();
+        }else
+            continue;
+    }
+}
+
 

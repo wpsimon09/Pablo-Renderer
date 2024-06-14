@@ -11,6 +11,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial, bool loadToGl):Textur
     this->type_string = "GL_TEXTURE_2D";
     this->internalFormat = GL_RGBA;
     if(loadToGl){
+        this->isInGL = true;
         glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
         glCheckError();
     }
@@ -30,6 +31,7 @@ Texture2D::Texture2D(int width, int height, float *data, GLenum format) {
     this->texWidth = width;
     this->texHeight = height;
     this->internalFormat = format;
+    this->isInGL = true;
 
     glCreateTextures(GL_TEXTURE_2D, 1, &this->ID);
     glCheckError();
@@ -62,6 +64,7 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
     this->texWidth = width;
     this->texHeight = height;
     this->internalFormat = foramt;
+    this->isInGL = true;
 
     // ------------------
     // PBR_TEXTURE_MAPS GENERATION
@@ -112,7 +115,7 @@ void Texture2D::passToOpenGL() {
     if(textureData != nullptr){
         stbi_image_free(textureData);
     }
-
+    this->isInGL = true;
     textureData = nullptr;
 }
 

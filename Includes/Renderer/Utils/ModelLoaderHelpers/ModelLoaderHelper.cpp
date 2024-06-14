@@ -72,13 +72,14 @@ void ModelLoaderHelper::processIndecies(std::vector<unsigned int> &indecies, aiM
 }
 
 void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToProcess materialToLoad,
-                                               std::vector<std::shared_ptr<Texture2D>>& renderableMaterialTextures) {
+                                               std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> &renderableMaterialTextures) {
     aiString path;
 
     if(material->GetTexture(materialToLoad.textureType, 0, &path) == AI_SUCCESS){
         if(materialToLoad.textureType == aiTextureType_EMISSIVE){
             ModelLoaderHelper::hasEmmisionTexture = true;
         }
+        /*
         for(auto &loaded_texture : ModelLoaderHelper::loadedTextures ){
             if(std::strcmp(loaded_texture->getRelativePath().c_str(), path.C_Str()) == 0){
                 renderableMaterialTextures.push_back(loaded_texture);
@@ -94,10 +95,14 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
             std::lock_guard<std::mutex> lock(ModelLoaderHelper::textureLock);
             ModelLoaderHelper::loadedTextures.push_back(std::move(newTexture));
             renderableMaterialTextures.push_back(loadedTextures.back());
-        }
-    }else
+        }*/
+        std::shared_ptr<Texture2D> newTexture = assetsManagerInstance->getTextureOnThread((directory +"/"+path.C_Str()).c_str());
+        auto newMaterial = std::make_unique<PBRMaterial<Texture2D>>(newTexture, materialToLoad.shaderName, materialToLoad.samplerNumber);
+        renderableMaterialTextures.emplace_back(std::move(newMaterial));
+    }
+
+    else
         return;
-
-
 }
+
 

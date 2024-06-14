@@ -53,6 +53,11 @@ public:
     std::string shaderName;
 
     /***
+     * @brief Boolean flag marking if texture data was loaded in GPU
+     */
+    bool isInGL = false;
+
+    /***
      * Sampler if the texture to be used in shader
      * this might be 0 or unused in some cases as the PBR material struct is sometimes handling samplers
      */
