@@ -21,12 +21,12 @@ struct MaterialToProcess{
 
 const std::vector<MaterialToProcess> materialsToLoad = {
         MaterialToProcess(aiTextureType_DIFFUSE, "_albedoMap", 0),
-        MaterialToProcess(aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1),
-        MaterialToProcess(aiTextureType_METALNESS, "_metalnessMap", 2),
-        MaterialToProcess(aiTextureType_NORMALS, "_normalMap", 3),
-        MaterialToProcess(aiTextureType_AMBIENT_OCCLUSION, "_aoMap", 4),
-        MaterialToProcess(aiTextureType_EMISSIVE, "_emmisionMap", 5),
-        MaterialToProcess(aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 6)
+    //    MaterialToProcess(aiTextureType_DIFFUSE_ROUGHNESS, "_rougnessMap", 1),
+  //      MaterialToProcess(aiTextureType_METALNESS, "_metalnessMap", 2),
+        MaterialToProcess(aiTextureType_NORMALS, "_normalMap", 1),
+        MaterialToProcess(aiTextureType_AMBIENT_OCCLUSION, "_aoMap", 2),
+        MaterialToProcess(aiTextureType_EMISSIVE, "_emmisionMap", 3),
+        MaterialToProcess(aiTextureType_UNKNOWN, "_rougnessMetalnessMap", 4)
 };
 
 #endif //PABLO_RENDERER_MATERIALSTOPROCESS_H

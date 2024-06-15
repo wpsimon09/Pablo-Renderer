@@ -75,7 +75,6 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
         ImGui::EndTabBar();
     }
 
-
     ImGui::End();
 
     if(showRendererCreation){
@@ -85,7 +84,6 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     if (showEnviromentMenu){
         EnviromentUI::display();
     }
-
 }
 
 void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
