@@ -42,16 +42,20 @@ void PBRColor::configureShader() {
 }
 
 void PBRColor::renderUI(){
-    ImGui::PushItemWidth(270);
-    ImGui::ColorPicker3("Color", &this->albedo->type->x);
+    ImGui::PushItemWidth(170);
+    ImGui::ColorPicker3("Color", &this->albedo->type->x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
 
-    if(ImGui::TreeNodeEx("Material properties")){
-           ImGui::SliderFloat("Roughens", this->rougness->type.get(), 0.0f, 1.0f);
-           ImGui::SliderFloat("Mealness", this->metalness->type.get(), 0.0f, 1.0f);
-           ImGui::SliderFloat("AO", this->ao->type.get(), 0.0f, 1.0f);
+    ImGui::Dummy(ImVec2(20,20));
 
-           ImGui::TreePop();
-    }
+    ImGui::SliderFloat("Roughens", this->rougness->type.get(), 0.0f, 1.0f);
+
+    ImGui::Dummy(ImVec2(20,20));
+
+    ImGui::SliderFloat("Mealness", this->metalness->type.get(), 0.0f, 1.0f);
+
+    ImGui::Dummy(ImVec2(20,20));
+
+    ImGui::SliderFloat("AO", this->ao->type.get(), 0.0f, 1.0f);
 
     ImGui::Checkbox("Supports IBL", &this->supportsIBL);
 }

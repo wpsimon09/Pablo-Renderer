@@ -200,6 +200,7 @@ void main() {
     //-----------
     vec3 ambient = vec3(0.0f);
 
+    vec3 f;
     if(fs_in.supportIBL == 1){
         vec3 F = FresnelShlickRoughness(max(dot(N,V),0.0), F0, roughness);;
         vec3 kS = F;
@@ -212,13 +213,14 @@ void main() {
         vec3 prefilterColor = textureLod(prefilterMap, R, roughness * MAX_REFLECTION_LOD).rgb;
 
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
-        vec3 specular = (prefilterColor * (kS * brdf.x +  brdf.y));
-
-        ambient = (kD * diff + specular ) *(0.7);
+        vec3 spec = (prefilterColor * (kS * brdf.x +  brdf.y));
+        f=spec;
+        ambient = (kD * diff + spec) *(0.7);
     }
     else{
         ambient = albedo * 0.3;
     }
+
 
 
     vec3 result = ambient + Lo;
@@ -227,7 +229,7 @@ void main() {
         result += emmisive;
     }
 
-    result = result / (result + vec3(1.0));
+    //result = result / (result + vec3(1.0));
 
     FragColor = vec4(result, 1.0);
 
