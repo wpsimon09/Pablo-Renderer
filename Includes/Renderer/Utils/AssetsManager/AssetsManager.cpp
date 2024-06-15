@@ -36,8 +36,6 @@ std::shared_ptr<Texture2D> AssetsManager::getTextureOnThread(std::string path) {
     }
 }
 
-
-
 std::vector<std::shared_ptr<Texture2D>> AssetsManager::getMultipleTextures(std::vector<std::string> paths) {
     std::vector<std::shared_ptr<Texture2D>> textures;
     std::vector<const char*> texturesToLoad;

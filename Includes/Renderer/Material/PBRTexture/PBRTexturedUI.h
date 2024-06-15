@@ -13,7 +13,7 @@ inline void DisplayMaterialTexturedUI(std::vector<std::shared_ptr<PBRMaterial<Te
         for (auto &texture: textures) {
             if(texture->type != nullptr && texture != nullptr){
 
-                ImVec2 imageSize((float) texture->type->texWidth / 50, (float) texture->type->texHeight / 50);
+                ImVec2 imageSize((float) texture->type->texWidth / 30, (float) texture->type->texHeight / 30);
                 if (ImGui::TreeNodeEx(texture->shaderName.c_str())) {
                     ImGui::BeginChild("##", imageSize);
                     ImGui::GetWindowDrawList()->AddImage(

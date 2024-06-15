@@ -56,6 +56,7 @@ private:
                                            std::string fileFormat = ".png");
 
     std::unique_ptr<Texture2DArray> material;
+
     /***
      * All the textures the material possess
      */
