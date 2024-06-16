@@ -36,6 +36,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h
         Includes/Renderer/RenderPass/PixelPicking/PixelPicking.cpp
         Includes/Renderer/RenderPass/PixelPicking/PixelPicking.h
+        Includes/Renderer/Renderers/SingleShaderRenderer/SingleShaderRenderer.cpp
+        Includes/Renderer/Renderers/SingleShaderRenderer/SingleShaderRenderer.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

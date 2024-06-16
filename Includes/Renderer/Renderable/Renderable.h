@@ -53,6 +53,7 @@ public:
     * @param shader Shader for renderable to use
     */
     Renderable(std::shared_ptr<Shader> shader);
+
     Renderable();
 
     /***

@@ -81,7 +81,7 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
         UncompiledShader(SHADER_GRID, "VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl",
                          "SHADER GRID"),
 
-        UncompiledShader(SHADER_PIXEL_PICKING, "VertexShader/FrameBufferDebugVertex.glsl",
+        UncompiledShader(SHADER_PIXEL_PICKING, "VertexShader/PixelPickingVertex/PixelPickingVertex.vert",
                          "FragmentShader/PixelPicking/PixelPicking.frag",
                          "PIXELATION SHADER"),
 };

@@ -10,7 +10,7 @@
 
 void OGLRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<FrameBuffer>& frameBuffer) {
     frameBuffer->bind();
-    this->scene = std::move(scene);
+    this->scene = scene;
     glViewport(0,0, frameBuffer->getWidht(), frameBuffer->getHeihgt());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

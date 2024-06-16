@@ -5,17 +5,19 @@
 #include "PixelPicking.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
-PixelPicking::PixelPicking() {
+PixelPicking::PixelPicking(){
+
     auto texture = std::make_unique<Texture2D>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight(), GL_RGBA32UI);
-    auto pixelPickingShader = ShaderManager::getShader(SHADER_PIXEL_PICKING);
-    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight());
+    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(), GLFWHelper::getScreenHeight(),nullptr, std::move(texture));
     this->name = "Pixel picking";
-    this->rendererType = COLOR_DEPTH_STENCIL;
+    this->rendererType = SINGLE_SHADER;
+
+    this->pixelPickingShader = ShaderManager::getShader(SHADER_PIXEL_PICKING);
 }
 
 std::shared_ptr<Texture2D> PixelPicking::render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) {
     scene->renderingConstrains = NONE;
-    renderer->render(scene,this->frameBuffer);
+    renderer->render(scene,this->frameBuffer, this->pixelPickingShader);
     this->renderPassResult = this->frameBuffer->getRenderedResult();
     return this->renderPassResult;
 }

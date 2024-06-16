@@ -27,6 +27,7 @@ Renderable::Renderable(std::shared_ptr<Geometry> geometry, std::shared_ptr<Mater
     this->objectMaterial = std::move(material);
     this->modelMatrix = glm::mat4(1.0f);
     this->transformations = std::make_unique<Transformations>();
+
 }
 
 Renderable::Renderable(std::shared_ptr<Shader> shader) {
@@ -55,7 +56,6 @@ std::shared_ptr<Shader> Renderable::getShader() {
 }
 
 Renderable::Renderable() {
-
 }
 
 const std::shared_ptr<Material> Renderable::getObjectMaterial() const {

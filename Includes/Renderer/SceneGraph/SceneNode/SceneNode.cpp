@@ -7,8 +7,7 @@
 
 
 SceneNode::SceneNode(std::unique_ptr<Renderable> renderable) {
-    ID::id++;
-    this->id = ID::id;
+    this->id = ++nextID;
 
     this->renderable = std::move(renderable);
     this->transformation = std::make_unique<Transformations>();

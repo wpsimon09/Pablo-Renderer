@@ -10,11 +10,6 @@
 #include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 #include "imgui.h"
 
-class ID{
-public:
-    static inline unsigned int id = 0;
-};
-
 /***
  * Scene graph pattern implementation
  */
@@ -86,6 +81,8 @@ public:
 
 protected:
     unsigned int id;
+
+    unsigned static int nextID;
 
     SceneNode *parent;
 
