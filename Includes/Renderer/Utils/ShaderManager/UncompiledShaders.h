@@ -63,6 +63,7 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
 
         UncompiledShader(SHADER_FRAME_BUFFER, "VertexShader/FrameBufferDebugVertex.glsl",
                          "FragmentShader/FrameBufferDebugFragment.glsl", "DRAW TO FRAME BUFFER SHADER"),
+
         UncompiledShader(SHADER_SMALL_FRAME_BUFFER, "VertexShader/FrameBufferDebugVertex.glsl",
                          "FragmentShader/Debug/FrameBufferDebug2.glsl", "Small freme buffer shader"),
 
@@ -79,6 +80,10 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
 
         UncompiledShader(SHADER_GRID, "VertexShader/FloorVertex.glsl", "FragmentShader/FloorFragment.glsl",
                          "SHADER GRID"),
+
+        UncompiledShader(SHADER_PIXEL_PICKING, "VertexShader/FrameBufferDebugVertex.glsl",
+                         "FragmentShader/PixelPicking/PixelPicking.frag",
+                         "PIXELATION SHADER"),
 };
 
 #endif //PABLO_RENDERER_UNCOMPILEDSHADERS_H

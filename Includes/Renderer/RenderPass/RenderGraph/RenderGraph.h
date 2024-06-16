@@ -10,6 +10,7 @@
 #include "Renderer/RenderPass/PostProcessingPasses/ChromaticAberration/ChromaticAberration.h"
 #include "Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.h"
 #include "Renderer/RenderPass/PostProcessingPasses/PostProcessingPass.h"
+#include "Renderer/RenderPass/PixelPicking/PixelPicking.h"
 #include "Renderer/Enums/RenderPassTypes.h"
 #include "map"
 
@@ -66,6 +67,7 @@ private:
     std::map<RENDER_PASS, std::shared_ptr<Texture2D>> renderResults;
 
     //hardcoded for now later will be refactored (hopefully)
+    std::unique_ptr<RenderPass> pixelPicking;
     std::unique_ptr<RenderPass> scenePass;
     std::unique_ptr<RenderPass> shadowMapPass;
     std::unique_ptr<RenderPass> chromaticAerrationPass;

@@ -14,8 +14,9 @@ enum RENDER_PASS {
 
         POST_PROCESSING_PASS = 2,
 
-        FINAL_PASS = 2,
+        FINAL_PASS = 3,
 
+        PIXEL_PICKING_PASS = 4
 };
 
 #endif //PABLO_RENDERER_RENDERPASSTYPES_H
