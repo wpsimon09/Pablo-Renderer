@@ -82,7 +82,7 @@ public:
 protected:
     unsigned int id;
 
-    unsigned static int nextID;
+    unsigned inline static int nextID;
 
     SceneNode *parent;
 

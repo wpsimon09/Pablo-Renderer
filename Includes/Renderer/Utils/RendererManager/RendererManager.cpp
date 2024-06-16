@@ -8,6 +8,7 @@ RendererManager::RendererManager() {
     this->renderers.push_back(std::make_shared<OGLRenderer>());
     this->renderers.push_back(std::make_shared<DepthRenderer>());
     this->renderers.push_back(std::make_shared<PostProcessingRenderer>());
+    this->renderers.push_back(std::make_shared<SingleShaderRenderer>());
 }
 
 std::shared_ptr<Renderer> RendererManager::requestRenderer(RENDERER_TYPE type) {

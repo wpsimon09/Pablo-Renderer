@@ -10,6 +10,7 @@
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/Renderers/DepthRenderer/DepthRenderer.h"
 #include "Renderer/Renderers/PostProcessingRenderer/PostProcessingRenderer.h"
+#include "Renderer/Renderers/SingleShaderRenderer/SingleShaderRenderer.h"
 #include "Renderer/Renderers/Renderer.h"
 
 class RendererManager {

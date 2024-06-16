@@ -27,8 +27,8 @@ void SingleShaderRenderer::renderSceneGraph(SceneNode &sceneNode) {
     if(sceneNode.getRenderable() != nullptr){
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
 
-        shader->setInt("")
-
+        shader->setInt("objectID", sceneNode.getID());
+        sceneNode.render(GEOMETRY_ONLY, true);
     }
 
     for (auto &childNode : sceneNode.getChildren()) {

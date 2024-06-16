@@ -35,7 +35,6 @@ void DepthRenderer::renderSceneGraph(SceneNode &sceneNode) {
         this->scene->lights.find(AREA)->second->update(shader, renderalbe->castsShadwo);
         this->shader->setMat4("model",sceneNode.getModelMatrix());
         sceneNode.render(scene->renderingConstrains, true);
-
     }
 
     for (auto &childNode : sceneNode.getChildren()) {
