@@ -15,7 +15,7 @@ public:
 
     std::shared_ptr<Texture2D> render(std::shared_ptr<Texture2D> renderedScene, std::shared_ptr<Renderer> renderer) override;
 private:
-    int pixelSize = 2;
+    int pixelSize = 1;
 };
 
 

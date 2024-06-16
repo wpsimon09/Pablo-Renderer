@@ -34,36 +34,6 @@ add_executable(${CMAKE_PROJECT_NAME}
         3rdPartyLybraries/Includes/ImGuiFileDialog/ImGuiFileDialog.cpp
         Includes/Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.cpp
         Includes/Renderer/Utils/ModelLoaderHelpers/ModelLoaderHelper.h
-        Includes/Renderer/Renderers/PostProcessingRenderer/PostProcessingRenderer.cpp
-        Includes/Renderer/Renderers/PostProcessingRenderer/PostProcessingRenderer.h
-        Includes/Renderer/RenderPass/PostProcessingPasses/ChromaticAberration/ChromaticAberration.cpp
-        Includes/Renderer/RenderPass/PostProcessingPasses/ChromaticAberration/ChromaticAberration.h
-        Includes/Renderer/UI/Components/RenderGraphUI/RenderGraphUI.cpp
-        Includes/Renderer/UI/Components/RenderGraphUI/RenderGraphUI.h
-        source/stb_image_write.cpp
-        Includes/Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.cpp
-        Includes/Renderer/RenderPass/PostProcessingPasses/Pixelation/Pixelation.h
-        Includes/Renderer/Enums/ShaderTypes.h
-        Includes/Renderer/Utils/ShaderManager/ShaderManager.cpp
-        Includes/Renderer/Utils/ShaderManager/ShaderManager.h
-        Includes/Renderer/Utils/ShaderManager/UncompiledShaders.h
-        Includes/Renderer/RenderPass/PostProcessingPasses/PostProcessingPass.cpp
-        Includes/Renderer/RenderPass/PostProcessingPasses/PostProcessingPass.h
-        Includes/Renderer/Utils/Texture/Texture2D/Texture2DArray.cpp
-        Includes/Renderer/Utils/Texture/Texture2D/Texture2DArray.h
-        Includes/Renderer/UI/Components/EnviromentUI/EnviromentUI.cpp
-        Includes/Renderer/UI/Components/EnviromentUI/EnviromentUI.h
-        Includes/Renderer/Utils/SkyBox/SkyBox.cpp
-        Includes/Renderer/Utils/SkyBox/SkyBox.h
-        Includes/Renderer/Utils/ModelLoaderHelpers/MaterialsToProcess.h
-        Includes/Renderer/Utils/StopWatch/StopWatch.cpp
-        Includes/Renderer/Utils/StopWatch/StopWatch.h
-        Includes/Renderer/Utils/AssetsManager/AssetsManager.cpp
-        Includes/Renderer/Utils/AssetsManager/AssetsManager.h
-        Includes/Renderer/UI/Components/MaterialUI/ChangeMaterialUI.cpp
-        Includes/Renderer/UI/Components/MaterialUI/ChangeMaterialUI.h
-        Includes/Renderer/Material/PBRTexture/PBRTexturedUI.h
-        Includes/Renderer/Material/PBRTexture/PBRTexturedMaterial.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

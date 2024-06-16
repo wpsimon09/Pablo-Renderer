@@ -9,7 +9,7 @@
 DirectionalLight::DirectionalLight(glm::vec3 color, glm::vec3 position) : Light(color, position) {
     this->type = "Directional";
     auto geometry = std::make_unique<ScreenSpaceQuadGeometry>();
-    auto material = std::make_unique<BasicMaterialTextured>(ShaderManager::getShader(SHADER_DIRECTIONAL_LIGHT_SOURCE), "Assets/Textures/AdvancedLightning/sun.png", "lightTexture");
+    auto material = std::make_unique<BasicMaterialTextured>(ShaderManager::getShader(SHADER_DIRECTIONAL_LIGHT_SOURCE), "Assets/Textures/sun.png", "lightTexture");
     material->shader->use();
     material->shader->setVec3("lightColor", this->color->property);
     this->lightRenderable = std::make_shared<Renderable>(std::move(geometry), std::move(material));

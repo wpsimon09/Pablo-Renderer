@@ -76,3 +76,5 @@ crashlytics-build.properties
 fabric.properties
 cmake-build-debug/
 cmake-build-release/
+
+imgui.ini
