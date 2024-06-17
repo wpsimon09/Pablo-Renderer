@@ -49,6 +49,8 @@ public:
      */
     void render(RENDERING_CONSTRAINS renderingConstrain, bool geometryOnly = false);
 
+    void renderGeometry();
+
     /***
      * Getter for children
      * @return reference to the all children owned by the scene node

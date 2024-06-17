@@ -85,6 +85,15 @@ void SceneNode::render(RENDERING_CONSTRAINS renderingConstrain,bool geometryOnly
     }
 }
 
+void SceneNode::renderGeometry() {
+    if(this->isVisible){
+        if(renderable != nullptr){
+            renderable->renderGeomtry();
+        }
+    }
+}
+
+
 void SceneNode::setMaterial(std::shared_ptr<Material> newMaterial) {
     for(auto &child: this->children){
         if(child->getRenderable() != nullptr){
@@ -92,6 +101,7 @@ void SceneNode::setMaterial(std::shared_ptr<Material> newMaterial) {
         }
     }
 }
+
 
 
 

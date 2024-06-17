@@ -56,12 +56,13 @@ void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
 
     RenderPass* finalPass;
     auto allPasses =  this->getRenderPasses();
-    for(auto &pass: allPasses){
-        if(pass.get().canBeRendered()){
-            finalPass = &pass.get();
-            //break;
+    for(int i = allPasses.size()-1; i >= 0; i-- ){
+        if(allPasses[i].get().canBeRendered()){
+            finalPass = &allPasses[i].get();
+            break;
         }
     }
+
     frameBuffer.setColorAttachment(finalPass->getRenderedResult());
     frameBuffer.drawInsideSelf();
 
