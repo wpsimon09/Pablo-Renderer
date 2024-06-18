@@ -80,6 +80,8 @@ public:
      */
     static glm::vec2 getPointerPosition(bool normalize = false);
 
+    static glm::vec2 getPointerPositionTransfmed(int x, int y, int displayWidth = 1980, int displayHeight = 1980, int pickingWidth = 800, int pickingHeight = 600);
+
     static glm::vec2 getScreenDimensions(int marginX = 0, int marginY = 0){return {screen_W- marginX, screen_H-marginY};};
 
     static int getScreenWidth(int margin = 0) {return GLFWHelper::screen_W - margin;};

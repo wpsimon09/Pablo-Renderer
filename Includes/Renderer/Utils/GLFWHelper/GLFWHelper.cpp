@@ -137,6 +137,14 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
     }
 }
 
+glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int displayWidth, int displayHeight, int pickingWidth,
+                                                  int pickingHeight) {
+    int x_picked = (x/displayWidth) * pickingWidth;
+    int y_picked = (y/displayHeight) * pickingHeight;
+
+    return {x_picked, y_picked};
+}
+
 
 
 
