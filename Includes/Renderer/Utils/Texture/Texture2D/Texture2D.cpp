@@ -20,6 +20,7 @@ Texture2D::Texture2D(const char *path, bool isPBRMaterial, bool loadToGl):Textur
 }
 
 Texture2D::Texture2D() {
+
 }
 
 Texture2D::Texture2D(int width, int height, float *data, GLenum format) {

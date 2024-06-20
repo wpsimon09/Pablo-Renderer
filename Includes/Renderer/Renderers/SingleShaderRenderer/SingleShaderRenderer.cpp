@@ -25,20 +25,15 @@ void SingleShaderRenderer::render(std::shared_ptr<Scene> scene, std::unique_ptr<
 
 void SingleShaderRenderer::renderSceneGraph(SceneNode &sceneNode) {
     if(sceneNode.getRenderable() != nullptr){
-        if(sceneNode.getRenderable()->getBackFaceCull()){
-            glEnable(GL_CULL_FACE);
-            glCullFace(GL_BACK);
-        }
-        shader->use();
         ShaderHelper::setTransfomrationMatrices(shader, sceneNode.getModelMatrix(), this->scene->camera->getViewMatrix(), this->scene->camera->getPojectionMatix());
-        shader->setInt("objectID", sceneNode.getID());
+        this->shader->use();
+        this->shader->setFloat("objectID", sceneNode.getID());
         sceneNode.renderGeometry();
     }
 
     for (auto &childNode : sceneNode.getChildren()) {
         this->renderSceneGraph(*childNode);
     }
-    glDisable(GL_CULL_FACE);
 }
 
 

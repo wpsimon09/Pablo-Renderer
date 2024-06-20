@@ -7,7 +7,7 @@
 
 PixelPicking::PixelPicking(){
 
-    auto texture = std::make_unique<Texture2D>(800, 600, GL_RGBA32UI);
+    auto texture = std::make_unique<Texture2D>(800, 600, GL_RGBA32F);
     this->frameBuffer = std::make_unique<FrameBuffer>(800, 600,nullptr, std::move(texture));
     this->name = "Pixel picking";
     this->rendererType = SINGLE_SHADER;

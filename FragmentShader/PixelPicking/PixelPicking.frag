@@ -1,9 +1,9 @@
 #version 460
 
-out vec3 FragmentColor;
+out vec4 FragmentColor;
 
-uniform int objectID;
+uniform float objectID;
 
 void main() {
-    FragmentColor = vec3(objectID, gl_PrimitiveID+1, 0.0);
+    FragmentColor = vec4(objectID, gl_PrimitiveID-1, 0.0, 1.0);
 }

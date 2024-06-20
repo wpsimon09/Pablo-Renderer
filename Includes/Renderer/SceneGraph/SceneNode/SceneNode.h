@@ -86,7 +86,7 @@ public:
     float getID(){return this->id;}
 
 protected:
- float id;
+    float id;
 
     unsigned inline static int nextID;
 
