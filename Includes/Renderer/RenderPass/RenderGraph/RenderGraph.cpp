@@ -91,8 +91,8 @@ void RenderGraph::prepareForNextFrame() {
 std::vector<std::reference_wrapper<RenderPass>> RenderGraph::getRenderPasses() {
     std::vector<std::reference_wrapper<RenderPass>> renderPasses;
     renderPasses.emplace_back(*shadowMapPass);
-    renderPasses.emplace_back(*scenePass);
     renderPasses.emplace_back(*pixelPicking);
+    renderPasses.emplace_back(*scenePass);
     for (auto &postProcessPass : this->postProcessingPass->getChilder()) {
         renderPasses.emplace_back(postProcessPass);
     }

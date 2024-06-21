@@ -5,5 +5,5 @@ out vec4 FragmentColor;
 uniform float objectID;
 
 void main() {
-    FragmentColor = vec4(objectID, gl_PrimitiveID-1, 0.0, 1.0);
+    FragmentColor = vec4(1.0, 0.0, 0.0, 1.0);
 }
