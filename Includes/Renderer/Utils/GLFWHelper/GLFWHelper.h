@@ -24,6 +24,10 @@ public:
         instance = inst;
     }
 
+
+   float getClickedObject(int x, int y) const;
+
+
     inline static PabloRenderer* getInstance(){return instance;}
 
     /***

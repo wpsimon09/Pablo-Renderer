@@ -38,3 +38,7 @@ void RenderPass::renderUI() {
         this->frameBuffer->saveAsPNG("image.png");
     }
 }
+
+FrameBuffer & RenderPass::getFrameBuffer() {
+    return *this->frameBuffer;
+}

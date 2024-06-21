@@ -12,8 +12,11 @@ class PixelPicking: public RenderPass {
 
 public:
     PixelPicking();
+
     std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) override;
+
 private:
+    std::shared_ptr<Scene> scene;
     std::shared_ptr<Shader> pixelPickingShader;
 };
 

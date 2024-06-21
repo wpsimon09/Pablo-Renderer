@@ -99,6 +99,17 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     return true;
 }
 
+float GLFWHelper::getClickedObject(int x, int y) const {
+    this->frameBuffer->bind();
+
+    float selectedObject;
+
+    glReadPixels(x,y,1,1, GL_RED,GL_FLOAT,&selectedObject);
+    glGetError();
+
+    return selectedObject;
+}
+
 void GLFWHelper::processResize(GLFWwindow *window) {
     glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
     instance->getScene()->camera->processResize(GLFWHelper::screen_W, GLFWHelper::screen_H);

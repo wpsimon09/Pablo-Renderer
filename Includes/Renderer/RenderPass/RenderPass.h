@@ -52,6 +52,10 @@ public:
 
     std::string getName() {return this->name;}
 
+
+    FrameBuffer &getFrameBuffer();
+
+
     bool canBeRendered() {return this->isActive;}
 
     bool isPostProcess() {return this->isPostProcessingPass;}
