@@ -144,7 +144,8 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
         if (action == GLFW_PRESS) {
             auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY);
             auto selectedObjectID = getClickedObject(pointerPositionTransformed.x, pointerPositionTransformed.y);
-
+            instance->getScene()->setSelectedNodeID(selectedObjectID);
+            std::cout<<selectedObjectID<<std::endl;
             isMousePressed = true;
             glfwSetCursor(instance->getWindow(), hand);
         } else if (action == GLFW_RELEASE) {

@@ -15,7 +15,7 @@ private:
      * Selected scene node Index
      * @def -1 means nothing is selected
      */
-    inline static int selectedSceneNode = -1;
+    inline static float selectedSceneNode = -1;
 
     static void displaySceneNodeMenu(SceneNode& sceneNode);
 public:

@@ -17,6 +17,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     //reset recursion counting each frame
     i = 0;
 
+
     Component::posX = posX;
     Component::poxY = posY;
     Component::width = width;
@@ -31,6 +32,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 
     //display sthe entire scene graph structure
     displaySceneNodeMenu(*PabloRenderer::getInstance()->getScene()->root);
+    selectedSceneNode = PabloRenderer::getInstance()->getScene()->getSelectedNodeID();
 
     ImGui::EndChild();
 
@@ -89,12 +91,13 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
     if(renderalbe != nullptr){
-        auto name  = sceneNode.getRenderable()->name;
+        auto name  = sceneNode.getRenderable()->name ;
+        name += sceneNode.getID();
         if(name.empty()){
             name = "##";
         }
-        if (ImGui::Selectable(name.c_str(), selectedSceneNode == i)) {
-            selectedSceneNode = i;
+        if (ImGui::Selectable(name.c_str(), selectedSceneNode == sceneNode.getID())) {
+            //selectedSceneNode = sceneNode.getID();
             sceneNode.isSelected = true;
             MaterialUI::renderable = sceneNode.getRenderable().get();
             SceneNodeUI::sceneNode = &sceneNode;
