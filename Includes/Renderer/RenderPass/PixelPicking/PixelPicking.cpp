@@ -11,7 +11,7 @@ PixelPicking::PixelPicking(){
     this->frameBuffer = std::make_unique<FrameBuffer>(800, 600,nullptr, std::move(texture));
     this->name = "Pixel picking";
     this->rendererType = SINGLE_SHADER;
-
+    this->render_pass  = PIXEL_PICKING_PASS;
     this->pixelPickingShader = ShaderManager::getShader(SHADER_PIXEL_PICKING);
 }
 
