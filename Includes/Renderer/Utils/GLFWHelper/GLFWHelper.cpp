@@ -100,7 +100,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 }
 
 float GLFWHelper::getClickedObject(int x, int y) const {
-    this->frameBuffer->bind();
+
 
     float selectedObject;
 

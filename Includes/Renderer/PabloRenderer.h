@@ -1,6 +1,5 @@
 //
 // Created by wpsimon09 on 02/02/24.
-//
 
 #ifndef PABLO_RENDERER_PABLORENDERER_H
 #define PABLO_RENDERER_PABLORENDERER_H
@@ -22,6 +21,9 @@
 
 
 
+/**
+ * This is a god class that starts up everything
+ */
 class PabloRenderer {
 public:
 

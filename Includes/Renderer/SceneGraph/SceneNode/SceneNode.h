@@ -85,10 +85,13 @@ public:
 
     float getID(){return this->id;}
 
+    void setUI_ID(int uiID) {this-> UI_ID = uiID;};
+
+    int getUI_ID() {return this->UI_ID;}
 protected:
     float id;
 
-    unsigned inline static int nextID;
+    int UI_ID;
 
     SceneNode *parent;
 
