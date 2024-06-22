@@ -16,13 +16,13 @@ void GLFWHelper::processInput(GLFWwindow *window, float deltaTime) {
 }
 
 void GLFWHelper::scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    if(UI::getIo()->WantCaptureMouse && canProcessMouse) {
+    if (UI::getIo()->WantCaptureMouse && canProcessMouse) {
         instance->getScene()->camera->zoom((float) yoffset);
     }
 }
 
 void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
-    if(UI::getIo()->WantCaptureMouse && canProcessMouse){
+    if (UI::getIo()->WantCaptureMouse && canProcessMouse) {
         if (instance->firstMouse) {
             instance->lastX = xpos;
             instance->lastY = ypos;
@@ -65,9 +65,9 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     screen_H = mode->height;
 
 
-    instance->setWindow(glfwCreateWindow(width == 0?screen_W:width, height==0? screen_H:0, "Pablo-renderer", NULL, NULL));
-    if (instance->getWindow() == NULL)
-    {
+    instance->setWindow(glfwCreateWindow(width == 0 ? screen_W : width, height == 0 ? screen_H : 0, "Pablo-renderer",
+                                         NULL, NULL));
+    if (instance->getWindow() == NULL) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         return false;
@@ -84,8 +84,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
+    if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return false;
     }
@@ -99,28 +98,32 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     return true;
 }
 
-float GLFWHelper::getClickedObject(int x, int y) const {
+float GLFWHelper::getClickedObject(int x, int y) {
+    try {
+        PabloRenderer::getInstance()->getRenderGraph().getFrameBuffer(PIXEL_PICKING_PASS).bind();
+        float selectedID;
 
-    PabloRenderer::getInstance()->getRenderGraph()->
-    float selectedObject;
+        glReadPixels(x, y, 1, 1, GL_RED,GL_FLOAT, &selectedID);
+        glGetError();
 
-    glReadPixels(x,y,1,1, GL_RED,GL_FLOAT,&selectedObject);
-    glGetError();
-
-    return selectedObject;
+        return selectedID;
+    } catch (std::exception &e) {
+        std::cerr << e.what();
+        return -1;
+    }
 }
 
 void GLFWHelper::processResize(GLFWwindow *window) {
     glfwGetWindowSize(instance->getWindow(), &GLFWHelper::screen_W, &GLFWHelper::screen_H);
     instance->getScene()->camera->processResize(GLFWHelper::screen_W, GLFWHelper::screen_H);
-    std::cout<<GLFWHelper::screen_W<<std::endl;std::cout<<GLFWHelper::screen_H<<std::endl;
-
+    std::cout << GLFWHelper::screen_W << std::endl;
+    std::cout << GLFWHelper::screen_H << std::endl;
 }
 
 glm::vec2 GLFWHelper::getPointerPosition(bool normalize) {
-    if(normalize){
-        float mouseX_norm = (2.0 * pointerX)/GLFWHelper::screen_W - 1;
-        float mouseY_norm = 1.0 - (2* pointerY)/GLFWHelper::screen_H;
+    if (normalize) {
+        float mouseX_norm = (2.0 * pointerX) / GLFWHelper::screen_W - 1;
+        float mouseY_norm = 1.0 - (2 * pointerY) / GLFWHelper::screen_H;
         return {mouseX_norm, mouseY_norm};
     }
     return {pointerX, pointerY};
@@ -135,10 +138,13 @@ glm::vec2 GLFWHelper::getDefaultFrameBufferDimentions() {
 }
 
 void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
-    GLFWcursor* hand = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
-    GLFWcursor* cursor = glfwCreateStandardCursor(GLFW_CURSOR_NORMAL);
+    GLFWcursor *hand = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+    GLFWcursor *cursor = glfwCreateStandardCursor(GLFW_CURSOR_NORMAL);
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         if (action == GLFW_PRESS) {
+            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY);
+            auto selectedObjectID = getClickedObject(pointerPositionTransformed.x, pointerPositionTransformed.y);
+
             isMousePressed = true;
             glfwSetCursor(instance->getWindow(), hand);
         } else if (action == GLFW_RELEASE) {
@@ -150,13 +156,8 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
 
 glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int displayWidth, int displayHeight, int pickingWidth,
                                                   int pickingHeight) {
-    int x_picked = (x/displayWidth) * pickingWidth;
-    int y_picked = (y/displayHeight) * pickingHeight;
+    int x_picked = (x / displayWidth) * pickingWidth;
+    int y_picked = (y / displayHeight) * pickingHeight;
 
     return {x_picked, y_picked};
 }
-
-
-
-
-

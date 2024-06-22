@@ -25,8 +25,6 @@ public:
     }
 
 
-   float getClickedObject(int x, int y) const;
-
 
     inline static PabloRenderer* getInstance(){return instance;}
 
@@ -83,6 +81,8 @@ public:
      * @return 2 component vector of mouse positions
      */
     static glm::vec2 getPointerPosition(bool normalize = false);
+
+   static float getClickedObject(int x, int y);
 
     static glm::vec2 getPointerPositionTransfmed(int x, int y, int displayWidth = 1980, int displayHeight = 1980, int pickingWidth = 800, int pickingHeight = 600);
 

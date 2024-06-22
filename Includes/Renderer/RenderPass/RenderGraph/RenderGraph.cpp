@@ -25,13 +25,13 @@ void RenderGraph::preProcessing() {
     if(shadowMapPass->canBeRendered()){
         this->shadowMapPass->render(this->scene, renderer);
     }
-    this->renderResults.insert(std::make_pair(SHADOW_MAP_PASS, shadowMapPass->getRenderedResult()));
+    this->renderResults.insert(std::make_pair(shadowMapPass->getRenderPass(), shadowMapPass->getRenderedResult()));
 
     renderer = this->rendererManager->requestRenderer(pixelPicking->rendererType);
     if(pixelPicking->canBeRendered()){
         this->pixelPicking->render(this->scene, renderer);
     }
-    this->renderResults.insert(std::make_pair(PIXEL_PICKING_PASS, pixelPicking->getRenderedResult()));
+    this->renderResults.insert(std::make_pair(pixelPicking->getRenderPass(), pixelPicking->getRenderedResult()));
 }
 
 void RenderGraph::render() {
@@ -40,7 +40,7 @@ void RenderGraph::render() {
     if(scenePass->canBeRendered()){
         this->scenePass->render(scene, renderer);
     }
-    this->renderResults.insert(std::make_pair(SCENE_PASS, scenePass->getRenderedResult()));
+    this->renderResults.insert(std::make_pair(scenePass->getRenderPass(), scenePass->getRenderedResult()));
 }
 
 void RenderGraph::postProcessing() {
@@ -49,7 +49,7 @@ void RenderGraph::postProcessing() {
     if(postProcessingPass->canBeRendered()){
         postProcessingPass->render(scenePass->getRenderedResult(), renderer);
     }
-    this->renderResults.insert(std::make_pair(POST_PROCESSING_PASS, postProcessingPass->getRenderedResult()));
+    this->renderResults.insert(std::make_pair(postProcessingPass->getRenderPass(), postProcessingPass->getRenderedResult()));
 }
 
 void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
@@ -76,8 +76,11 @@ std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) 
 FrameBuffer & RenderGraph::getFrameBuffer(RENDER_PASS render_pass) {
     auto renderPasses = getRenderPasses();
     for(auto renderPass : renderPasses) {
-        if(renderPass.get().)
+        if(renderPass.get().getRenderPass() == render_pass) {
+            return renderPass.get().getFrameBuffer();
+        }
     }
+    throw std::invalid_argument("Provided render pass was not found\n");
 }
 
 
