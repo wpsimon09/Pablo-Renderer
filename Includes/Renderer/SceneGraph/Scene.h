@@ -65,12 +65,15 @@ public:
      */
     void setup();
 
+    float getIDofSelectedSceneNode() {return this->selectedNodeID;}
+
     std::map<LIGHT_TYPE, std::unique_ptr<Light>> lights;
 
     std::unique_ptr<OrbitCamera> camera;
     std::unique_ptr<Light> light;
 private:
     std::shared_ptr<IBLPipeLine> iblPipeLine;
+    float selectedNodeID = -1;
     std::unique_ptr<SkyBox> skyBox;
 public:
     const std::shared_ptr<IBLPipeLine> &getIblPipeLine() const;

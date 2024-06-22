@@ -73,6 +73,13 @@ std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) 
     return renderResults.find(renderPass)->second;
 }
 
+FrameBuffer & RenderGraph::getFrameBuffer(RENDER_PASS render_pass) {
+    auto renderPasses = getRenderPasses();
+    for(auto renderPass : renderPasses) {
+        if(renderPass.get().)
+    }
+}
+
 
 void RenderGraph::prepareForNextFrame() {
     this->renderResults.clear();

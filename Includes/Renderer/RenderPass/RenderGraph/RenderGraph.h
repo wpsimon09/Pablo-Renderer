@@ -57,6 +57,7 @@ public:
      */
     std::shared_ptr<Texture2D> getDebugTexture(RENDER_PASS renderPass);
 
+    FrameBuffer& getFrameBuffer(RENDER_PASS render_pass);
     /***
      * Returns vector of all render passes
      * @return vector of all render passes in renderer

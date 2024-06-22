@@ -101,7 +101,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 
 float GLFWHelper::getClickedObject(int x, int y) const {
 
-
+    PabloRenderer::getInstance()->getRenderGraph()->
     float selectedObject;
 
     glReadPixels(x,y,1,1, GL_RED,GL_FLOAT,&selectedObject);

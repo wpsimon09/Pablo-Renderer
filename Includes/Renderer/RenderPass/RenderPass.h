@@ -5,6 +5,7 @@
 #ifndef PABLO_RENDERER_RENDERPASS_H
 #define PABLO_RENDERER_RENDERPASS_H
 #include "memory"
+#include "Renderer/Enums/RenderPassTypes.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
@@ -61,7 +62,11 @@ public:
     bool isPostProcess() {return this->isPostProcessingPass;}
 
     RENDERER_TYPE rendererType;
+
+    RENDER_PASS getRenderPass() {return this->render_pass;}
 protected:
+    RENDER_PASS render_pass;
+
     std::string name;
     bool isActive = true;
 

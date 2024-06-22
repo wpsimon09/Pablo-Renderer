@@ -13,6 +13,7 @@ PostProcessingPass::PostProcessingPass() {
     this->rendererType = POST_PROCESSING;
     this->isPostProcessingPass = true;
     this->name = "Post Processing";
+    this->render_pass = POST_PROCESSING_PASS;
 }
 
 std::shared_ptr<Texture2D>

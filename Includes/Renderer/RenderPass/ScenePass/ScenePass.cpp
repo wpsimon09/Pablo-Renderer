@@ -8,6 +8,7 @@
 ScenePass::ScenePass():RenderPass() {
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
     this->rendererType = COLOR_DEPTH_STENCIL;
+    this->render_pass = SCENE_PASS;
     this->name = "Scene pass";
 }
 

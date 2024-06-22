@@ -11,7 +11,7 @@ Pixelation::Pixelation() {
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
     this->rendererType = POST_PROCESSING;
     this->isPostProcessingPass = true;
-
+    this->render_pass = PIXELATION_POST_PROCESSING_PASS;
     this->name = "Pixelation pass";
 }
 

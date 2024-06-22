@@ -9,6 +9,7 @@ ShadowMapPass::ShadowMapPass() {
     this->frameBuffer = std::make_unique<FrameBuffer>(1200, 800);
     this->frameBuffer->makeDepthOnly();
     this->rendererType = DEPTH_ONLY;
+    this->render_pass = SHADOW_MAP_PASS;
     this->name = "Shadow map pass";
 }
 
