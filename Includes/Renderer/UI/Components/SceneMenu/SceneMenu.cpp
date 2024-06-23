@@ -92,7 +92,7 @@ void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
     if(renderalbe != nullptr){
         auto name  = sceneNode.getRenderable()->name ;
-        name += sceneNode.getID();
+        name += "" + std::to_string((int)sceneNode.getID());
         if(name.empty()){
             name = "##";
         }

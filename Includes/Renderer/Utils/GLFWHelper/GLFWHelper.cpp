@@ -142,8 +142,8 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
     GLFWcursor *cursor = glfwCreateStandardCursor(GLFW_CURSOR_NORMAL);
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         if (action == GLFW_PRESS) {
-            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY);
-            auto selectedObjectID = getClickedObject(pointerPositionTransformed.x, pointerPositionTransformed.y);
+            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY, 800, 600);
+            auto selectedObjectID = getClickedObject(pointerPositionTransformed.x ,pointerPositionTransformed.y);
             instance->getScene()->setSelectedNodeID(selectedObjectID);
             std::cout<<selectedObjectID<<std::endl;
             isMousePressed = true;
@@ -155,10 +155,10 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
     }
 }
 
-glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int displayWidth, int displayHeight, int pickingWidth,
-                                                  int pickingHeight) {
-    int x_picked = (x / displayWidth) * pickingWidth;
-    int y_picked = (y / displayHeight) * pickingHeight;
+glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int pickingWidth,
+                                                  int pickingHeight, int xOffset, int yOffset) {
+    int x_picked = (x / screen_W) * (pickingWidth + xOffset);
+    int y_picked = (y / screen_H) * (pickingHeight + yOffset);
 
     return {x_picked, y_picked};
 }

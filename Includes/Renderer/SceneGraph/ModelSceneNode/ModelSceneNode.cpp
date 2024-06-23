@@ -15,6 +15,7 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
     this->name = name;
     this->supportsIBL = true;
     this->supportsAreaLight = supportsAreaLight;
+    this->id = ID::id++;
     const aiScene *scene = importer.ReadFile(path.c_str(),
                                              aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace | aiProcess_OptimizeGraph );
 

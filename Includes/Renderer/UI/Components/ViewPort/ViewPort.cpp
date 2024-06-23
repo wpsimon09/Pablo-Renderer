@@ -15,7 +15,7 @@ void ViewPort::display(int posX, int posY, int width, int height) {
     ImGui::SetWindowSize(ImVec2((float)width,(float)height));
     ImGui::GetWindowDrawList()->AddImage(
             (void *)renderedScene->ID,
-            ImVec2(300, 0),
+            ImVec2(posX, posY),
             ImVec2((float)renderedScene->texWidth, (float)renderedScene->texHeight),
             ImVec2(0, 1),
             ImVec2(1, 0)

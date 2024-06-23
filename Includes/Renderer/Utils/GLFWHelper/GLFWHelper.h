@@ -82,9 +82,19 @@ public:
      */
     static glm::vec2 getPointerPosition(bool normalize = false);
 
-   static float getClickedObject(int x, int y);
 
-    static glm::vec2 getPointerPositionTransfmed(int x, int y, int displayWidth = 1980, int displayHeight = 1980, int pickingWidth = 800, int pickingHeight = 600);
+    /**
+     * @brief Returns the ID of the object picked from the pixel picking texture
+     * @param x x position
+     * @param y y position
+     * @return ID of the selected object
+     */
+    static float getClickedObject(int x, int y);
+
+    //------------------
+    // SETTERS / GETTERS
+    //------------------
+    static glm::vec2 getPointerPositionTransfmed(int x, int y, int pickingWidth = 800, int pickingHeight = 600, int xOffset = 0, int yOffset = 0);
 
     static glm::vec2 getScreenDimensions(int marginX = 0, int marginY = 0){return {screen_W- marginX, screen_H-marginY};};
 
