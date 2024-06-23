@@ -32,6 +32,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 
     //display sthe entire scene graph structure
     displaySceneNodeMenu(*PabloRenderer::getInstance()->getScene()->root);
+
     selectedSceneNode = PabloRenderer::getInstance()->getScene()->getSelectedNodeID();
 
     ImGui::EndChild();
@@ -92,11 +93,11 @@ void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
     auto& renderalbe = sceneNode.getRenderable();
     if(renderalbe != nullptr){
         auto name  = sceneNode.getRenderable()->name ;
-        name += "" + std::to_string((int)sceneNode.getID());
+        name += " " + std::to_string((int)sceneNode.getID());
         if(name.empty()){
             name = "##";
         }
-        if (ImGui::Selectable(name.c_str(), selectedSceneNode == sceneNode.getID()) || selectedSceneNode==sceneNode.getID()) {
+        if (ImGui::Selectable(name.c_str(), selectedSceneNode == sceneNode.getID()) || sceneNode.getID() == selectedSceneNode) {
             selectedSceneNode = sceneNode.getID();
             sceneNode.isSelected = true;
             MaterialUI::renderable = sceneNode.getRenderable().get();

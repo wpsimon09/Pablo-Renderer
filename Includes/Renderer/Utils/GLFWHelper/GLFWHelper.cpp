@@ -103,6 +103,8 @@ float GLFWHelper::getClickedObject(int x, int y) {
         PabloRenderer::getInstance()->getRenderGraph().getFrameBuffer(PIXEL_PICKING_PASS).bind();
         float selectedID;
 
+        std::cout<<"Mouse position is X: "<<x<<" Y: "<<y<<" "<<std::endl;
+
         glReadPixels(x, y, 1, 1, GL_RED,GL_FLOAT, &selectedID);
         glGetError();
 
@@ -142,8 +144,9 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
     GLFWcursor *cursor = glfwCreateStandardCursor(GLFW_CURSOR_NORMAL);
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         if (action == GLFW_PRESS) {
-            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY, 800, 600);
+            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY, 800, 600 );
             auto selectedObjectID = getClickedObject(pointerPositionTransformed.x ,pointerPositionTransformed.y);
+
             instance->getScene()->setSelectedNodeID(selectedObjectID);
             std::cout<<selectedObjectID<<std::endl;
             isMousePressed = true;
@@ -157,8 +160,11 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
 
 glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int pickingWidth,
                                                   int pickingHeight, int xOffset, int yOffset) {
-    int x_picked = (x / screen_W) * (pickingWidth + xOffset);
-    int y_picked = (y / screen_H) * (pickingHeight + yOffset);
+    float x_ratio = static_cast<float>(x) / static_cast<float>(screen_W);
+    float y_ratio = static_cast<float>(y) / static_cast<float>(screen_H);
 
-    return {x_picked, y_picked};
+    float x_picked = static_cast<int>(x_ratio * pickingWidth) + xOffset;
+    float y_picked = static_cast<int>(y_ratio * pickingHeight) + yOffset;
+
+    return {x_picked, y_picked} ;
 }

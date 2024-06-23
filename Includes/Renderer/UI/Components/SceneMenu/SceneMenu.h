@@ -17,6 +17,8 @@ private:
      */
     inline static float selectedSceneNode = -1;
 
+    inline static float selectedSceneNodeFromScene = -1;
+
     static void displaySceneNodeMenu(SceneNode& sceneNode);
 public:
     inline static bool showRendererCreation = false;
