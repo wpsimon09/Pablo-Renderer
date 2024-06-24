@@ -160,11 +160,8 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
 
 glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int pickingWidth,
                                                   int pickingHeight, int xOffset, int yOffset) {
-    float x_ratio = static_cast<float>(x) / static_cast<float>(screen_W);
-    float y_ratio = static_cast<float>(y) / static_cast<float>(screen_H);
-
-    float x_picked = static_cast<int>(x_ratio * pickingWidth) + xOffset;
-    float y_picked = static_cast<int>(y_ratio * pickingHeight) + yOffset;
+    float x_picked = (float)x * (pickingWidth/(float)(screen_W- 500));
+    float y_picked = (float)y * (pickingHeight / (float)(screen_H));
 
     return {x_picked, y_picked} ;
 }

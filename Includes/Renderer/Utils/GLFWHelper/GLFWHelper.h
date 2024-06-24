@@ -6,6 +6,7 @@
 #define PABLO_RENDERER_GLFWHELPER_H
 
 #include "Renderer/PabloRenderer.h"
+#include "algorithm"
 
 class PabloRenderer;
 class GLFWHelper {
