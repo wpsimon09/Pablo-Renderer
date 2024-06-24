@@ -22,6 +22,8 @@ void GLFWHelper::scroll_callback(GLFWwindow *window, double xoffset, double yoff
 }
 
 void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
+    pointerX = (float)xpos;
+    pointerY = (float)ypos;
     if (UI::getIo()->WantCaptureMouse && canProcessMouse) {
         if (instance->firstMouse) {
             instance->lastX = xpos;
@@ -45,10 +47,6 @@ void GLFWHelper::mouse_callback(GLFWwindow *window, double xpos, double ypos) {
         if (yOffset != 0.0 && isMousePressed && !isCtrlPressed) {
             instance->getScene()->camera->rotatePolar(-yOffset);
         }
-
-
-        GLFWHelper::pointerX = xpos;
-        GLFWHelper::pointerY = ypos;
     }
 }
 
@@ -103,7 +101,9 @@ float GLFWHelper::getClickedObject(int x, int y) {
         PabloRenderer::getInstance()->getRenderGraph().getFrameBuffer(PIXEL_PICKING_PASS).bind();
         float selectedID;
 
-        std::cout<<"Mouse position is X: "<<x<<" Y: "<<y<<" "<<std::endl;
+        std::cout<<"Mouse position is X: "<<pointerX<<" Y: "<<pointerY<<" "<<std::endl;
+        std::cout<<"Re mapped mouse position is X: "<<x<<" Y: "<<y<<" "<<std::endl;
+
 
         glReadPixels(x, y, 1, 1, GL_RED,GL_FLOAT, &selectedID);
         glGetError();
@@ -144,13 +144,14 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
     GLFWcursor *cursor = glfwCreateStandardCursor(GLFW_CURSOR_NORMAL);
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         if (action == GLFW_PRESS) {
-            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY, 800, 600 );
+            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY, 1000, 800, 500, 16 );
             auto selectedObjectID = getClickedObject(pointerPositionTransformed.x ,pointerPositionTransformed.y);
 
             instance->getScene()->setSelectedNodeID(selectedObjectID);
             std::cout<<selectedObjectID<<std::endl;
             isMousePressed = true;
             glfwSetCursor(instance->getWindow(), hand);
+
         } else if (action == GLFW_RELEASE) {
             isMousePressed = false;
             glfwSetCursor(instance->getWindow(), cursor);
@@ -160,8 +161,17 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
 
 glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int pickingWidth,
                                                   int pickingHeight, int xOffset, int yOffset) {
-    float x_picked = (float)x * (pickingWidth/(float)(screen_W- 500));
-    float y_picked = (float)y * (pickingHeight / (float)(screen_H));
+    float remapped_viewport_x = screen_W - xOffset;
+    float remapped_viewport_y = screen_H - yOffset;
+
+    float remapped_x = x - xOffset;
+    float remapped_y = y - yOffset;
+
+    if(remapped_x <0 ) remapped_x = 0;
+    if(remapped_x > remapped_viewport_x) remapped_x = remapped_viewport_x;
+
+    float x_picked = (float)remapped_x * ((float)pickingWidth/remapped_viewport_x);
+    float y_picked = (float)remapped_y * ((float)pickingHeight / remapped_viewport_y);
 
     return {x_picked, y_picked} ;
 }

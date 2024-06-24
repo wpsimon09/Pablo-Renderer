@@ -57,6 +57,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
 )
 
 
+
 # Include and link Glad
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/3rdPartyLybraries/Includes/glad)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE glad)
