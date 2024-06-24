@@ -15,7 +15,8 @@
  */
 class Grid: public Renderable {
 public:
-    /***
+    /**
+     * @class Grid
      * Creates a grid
      * Material: basic material color (white)
      * Geometry: grid geometry

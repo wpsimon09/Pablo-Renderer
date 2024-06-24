@@ -20,7 +20,7 @@ public:
      * Creates instance of the IBL pipeline
      * @param path path to the equirectangular map of the environment
      */
-    explicit IBLPipeLine(const char* path);
+    explicit IBLPipeLine(const char *path);
 
     /***
      * @brief Regenerates the IBL
@@ -46,6 +46,12 @@ public:
      */
     void calculatePreview(const char *path);
 
+    /**
+     * @brief Get sampler count after sending IBL textures to the shader
+     * @return updatd sampler count
+     */
+    int getSamplersCount() { return this->samplersCount; }
+
     /***
      * Cube map texture of the equirectangualr map
      */
@@ -54,19 +60,22 @@ public:
     /***
      * Generated IBL textures
      */
-    std::vector<std::shared_ptr<PBRMaterial<TextureBase>>> iblTextures;
+    std::vector<std::shared_ptr<PBRMaterial<TextureBase> > > iblTextures;
 
-    int getSamplersCount() {return this->samplersCount; }
+    /**
+     * @brief Gets HDR texture
+     * @return HDR texture
+     */
+    std::shared_ptr<TextureHDRi> getHDR() { return this->inputHDRI; }
 
-    std::shared_ptr<TextureHDRi> getHDR() {return this->inputHDRI;}
 private:
     std::shared_ptr<TextureHDRi> inputHDRI;
     int samplersCount;
+
     //---------------------------
     // STAGES OF THE IBL PIPELINE
     //---------------------------
-    std::vector<std::unique_ptr<BaseStage>> stages;
-
+    std::vector<std::unique_ptr<BaseStage> > stages;
     std::unique_ptr<PrefilterMap> hdrToPrefilterMap;
     std::unique_ptr<HDRToCubeMap> hdrToCubeMap;
     std::unique_ptr<Irradiance> hdrToIrradiance;

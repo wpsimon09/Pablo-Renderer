@@ -60,8 +60,10 @@ protected:
      */
     std::unique_ptr<VAO> vao;
 
+    /**
+     * @brief Name of the geometry
+     */
     std::string name;
-public:
 };
 
 

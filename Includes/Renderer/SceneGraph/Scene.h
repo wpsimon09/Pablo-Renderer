@@ -51,7 +51,7 @@ public:
      */
     void add(std::unique_ptr<Renderable> renderable, std::shared_ptr<SceneNode> parent = root);
 
-    SkyBox& getSkyBox() {return *this->skyBox;}
+    SkyBox &getSkyBox() { return *this->skyBox; }
 
     void removeSceneNode(int id);
 
@@ -65,21 +65,65 @@ public:
      */
     void setup();
 
-    std::map<LIGHT_TYPE, std::unique_ptr<Light>> lights;
+    /**
+     * @brief Sets the ID of the selected node to be used by the UI
+     * @param id id of the selected scene node picked from the screen
+     */
+    void setSelectedNodeID(float id) { selectedNodeID = id; }
 
+    /**
+     * @brief Retrieves the node that is being selected by UI or by pixel picking
+     */
+    float getSelectedNodeID() { return selectedNodeID; }
+
+    /**
+     * @brief Retrieves the IBL pipeline of the scene
+     * @return reference to IBL pipeline
+     */
+    const std::shared_ptr<IBLPipeLine> &getIblPipeLine() const;
+
+    /**
+     * @brief Sets the different IBL pipeline to be used
+     * @param iblPipeLine ibl pipeline to be used
+     */
+    void setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine);
+
+    /**
+     * @brief Map of the lights in the scene (key : LIGHT_TYPE, value : @class Light)
+     */
+    std::map<LIGHT_TYPE, std::unique_ptr<Light> > lights;
+
+    /**
+     * @brief Camera to be used by the scene
+     */
     std::unique_ptr<OrbitCamera> camera;
+
+    /**
+     * @brief Light used by the scene
+     * @deprecated replaced by lights map
+     */
     std::unique_ptr<Light> light;
 
-    void setSelectedNodeID(float id) {selectedNodeID = id;}
-    float getSelectedNodeID() {return selectedNodeID;}
-private:
-    std::shared_ptr<IBLPipeLine> iblPipeLine;
-    float selectedNodeID = -1;
-    std::unique_ptr<SkyBox> skyBox;
-public:
-    const std::shared_ptr<IBLPipeLine> &getIblPipeLine() const;
+    /**
+     * @brief Rendering constarins of the scene, for example to only render objects that casts shadows
+     */
     RENDERING_CONSTRAINS renderingConstrains = NONE;
-    void setIblPipeLine(const std::shared_ptr<IBLPipeLine> &iblPipeLine);
+
+private:
+    /**
+     * @brief IBL pipeline utilized by the scene
+     */
+    std::shared_ptr<IBLPipeLine> iblPipeLine;
+
+    /**
+     * @brief Scene node ID that is currently selected
+     */
+    float selectedNodeID = -1;
+
+    /**
+     * @brief Sky box of the scene
+     */
+    std::unique_ptr<SkyBox> skyBox;
 };
 
 

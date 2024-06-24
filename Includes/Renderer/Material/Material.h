@@ -49,11 +49,6 @@ struct PBRMaterial {
 
 class Material {
 public:
-    std::shared_ptr<Shader> shader;
-
-    bool supportsIBL = false;
-    bool supportsAreaLight = false;
-
     Material() = default;
 
     /***
@@ -64,35 +59,60 @@ public:
         this->shader = std::move(shader);
     }
 
+    ~Material() = default;
+
     /***
      * Pass all of the relevant uniforms to the shader
      */
-    virtual void configureShader() {};
+    virtual void configureShader() {
+    };
 
     /***
      * @brief Gets all of the of textures if material has any
      * @return vector of shared pointer to the textures
      */
-    virtual std::vector<std::reference_wrapper<Texture2D>> getTextures() {std::vector<std::reference_wrapper<Texture2D>> tex; return tex;};
+    virtual std::vector<std::reference_wrapper<Texture2D> > getTextures() {
+        std::vector<std::reference_wrapper<Texture2D> > tex;
+        return tex;
+    };
 
     /***
      * Unbinds all of the textures bound during rendering
      */
-    virtual void unbindTextures(){}
+    virtual void unbindTextures() {
+    }
 
-    virtual void renderUI(){};
+    /**
+     * @brief Renders UI of the concrete material
+     * @note this method is overwritten in concrete materials
+     */
+    virtual void renderUI() {
+    };
 
-    virtual std::shared_ptr<Texture2D> getAlbedoTexture(){return nullptr;};
+    /**
+     * @brief Gets albedo texture of the material
+     * @return albedo texture of the material or nullptr if no texture is found
+     */
+    virtual std::shared_ptr<Texture2D> getAlbedoTexture() { return nullptr; };
 
+    /**
+     * @brief Prints log
+     * @deprecated This does not work anymore
+     */
+    virtual void printLog() const {
+    };
 
-    ~Material() = default;
+    std::shared_ptr<Shader> shader;
 
-    virtual void printLog() const {};
+    bool supportsIBL = false;
+    bool supportsAreaLight = false;
+
 protected:
     /***
      * Number of samplers that are used in the given material
      */
     int samplerCount = 0;
+
 public:
     int getSamplerCount() const { return samplerCount; }
 };

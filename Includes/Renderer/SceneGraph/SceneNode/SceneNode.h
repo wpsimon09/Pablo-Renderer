@@ -9,9 +9,10 @@
 #include "Renderer/Renderable/Renderable.h"
 #include "Renderer/Utils/RenderingConstrains/RenderingConstrains.h"
 #include "imgui.h"
-class ID{
+
+class ID {
 public:
- static inline float id = 0;
+    static inline float id = 0;
 };
 
 /***
@@ -27,13 +28,12 @@ public:
 
     ~SceneNode();
 
-public:
-    bool isSelected = false;
-
-    std::unique_ptr<Transformations> transformation;
-
     const std::unique_ptr<Renderable> &getRenderable() const;
 
+    /**
+     * @brief Changes the renderable of the scene node
+     * @param renderable Renderable to be used in SceneNode
+     */
     void setRenderable(std::unique_ptr<Renderable> renderable);
 
     /***
@@ -49,23 +49,58 @@ public:
     void update();
 
     /***
-     * Renders self and all the children to the currently bound GL_FRAMEBUFFER
+     * Renders self and all the children to the currently bound GL_FRAMEBUFFER, using their proper material and shading
      */
     void render(RENDERING_CONSTRAINS renderingConstrain, bool geometryOnly = false);
 
+    /**
+     * @brief Renders self and children using only glDrawCall without specifing material properties,
+     * so before this mehtod is called the shader should be configured to handle rendering of the geometry
+     */
     void renderGeometry();
 
     /***
      * Getter for children
      * @return reference to the all children owned by the scene node
      */
-    const std::vector<std::unique_ptr<SceneNode>> &getChildren() const;
+    const std::vector<std::unique_ptr<SceneNode> > &getChildren() const;
 
-    std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorStart();
+    /**
+     * @brief Getter for childre itteratior
+     * @return First child to be used as an itterator
+     */
+    std::vector<std::unique_ptr<SceneNode> >::const_iterator getChildIteratorStart();
 
-    std::vector<std::unique_ptr<SceneNode>>::const_iterator getChildIteratorEnd();
+    /**
+     * @brief End of the children
+     * @return End of the child vector to be used as an itterator
+     */
+    std::vector<std::unique_ptr<SceneNode> >::const_iterator getChildIteratorEnd();
 
-    //facade
+    /**
+     * @brief Chnages materail of the attached renderable
+     * @param newMaterial Material that will be applied to the renderable if there is any
+     */
+    void setMaterial(std::shared_ptr<Material> newMaterial);
+
+    /**
+     * @brief Retrieves the ability of the scene node to be rendered (bit missleading name tho)
+     * @return True if the object is visible false otherwise(not from camera point of view) this means that this flag determines if the renderable can be rendered
+     */
+    bool &getVisibility() { return isVisible; }
+
+    /**
+     * @brief Retrieves ID of the scene node
+     * @return Unique ID of the scene node
+     */
+    float getID() { return this->id; }
+
+
+    /*
+     **********************************
+     | FACADE FOR THE TRANSFORMATIONS |
+     **********************************
+     */
     glm::vec3 getPosition() const { return this->transformation->getPosition(); }
 
     const glm::vec3 getRotations() const { return this->transformation->getRotations(); }
@@ -76,39 +111,62 @@ public:
 
     const unsigned long getNumberOfChildren() const { return this->children.size(); }
 
-    void setMaterial(std::shared_ptr<Material> newMaterial);
+    glm::vec3 getInitialPosition() { return initialPosition; }
+    glm::vec3 getInitialRotation() { return initialRotation; }
+    glm::vec3 getInitialScale() { return initialScale; }
+    /*
+    ********************************************************************************************
+    ********************************************************************************************
+    */
 
-    glm::vec3 getInitialPosition(){return initialPosition;}
-    glm::vec3 getInitialRotation(){return initialRotation;}
-    glm::vec3 getInitialScale(){return initialScale;}
-    bool &getVisibility(){return isVisible;}
+    /**
+     * @brief Determines if the SceneNode is currently selected
+     */
+    bool isSelected = false;
 
-    float getID(){return this->id;}
+    /**
+     * @brief Transformation of the scnee node @class Transformations
+     */
+    std::unique_ptr<Transformations> transformation;
 
-    void setUI_ID(int uiID) {this-> UI_ID = uiID;};
-
-    int getUI_ID() {return this->UI_ID;}
 protected:
+    /**
+     * @brief Unique ID of the scene node
+     */
     float id;
 
-    int UI_ID;
-
+    /**
+     * @brief Parent of the scene node
+     * @todo memory leak ?
+     */
     SceneNode *parent;
-
+    /**
+     * @brief Is scene node visible or rather if it can be rendereed defautl = True
+     */
     bool isVisible = true;
-
+    /**
+     * @brief is scene node parrent node if true has at least 1 child defautl false
+     */
     bool isParent = false;
 
-    glm::vec3 initialPosition;
-    glm::vec3 initialRotation;
-    glm::vec3 initialScale;
-
+    /**
+     * @brief Renderable of the SceneNode @class Renderable
+     */
     std::unique_ptr<Renderable> renderable;
 
     /***
      * Children owned by the scene node
      */
-    std::vector<std::unique_ptr<SceneNode>> children;
+    std::vector<std::unique_ptr<SceneNode> > children;
+
+    /*
+     ********************************
+     * POSITIONS BEFORE TRANSLATIONS |
+     *********************************
+    */
+    glm::vec3 initialPosition;
+    glm::vec3 initialRotation;
+    glm::vec3 initialScale;
 };
 
 
