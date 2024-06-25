@@ -66,7 +66,7 @@ std::vector<std::reference_wrapper<Texture2D>> PBRTextured::getTextures() {
 
 void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string pathToTheDirectory,bool isRelativePath, std::string shaderNamingConvention, std::string fileFormat) {
     std::string fullPath;
-
+    this->textures.clear();
     /***
      * @brief Gather textures paths to laod
      */
