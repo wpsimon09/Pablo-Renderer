@@ -82,23 +82,13 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "albedoMap", 0));
 
-    /***
-    * @brief Roughness
-    */
-    fullPath = absolutePath + pathToTheDirectory + "/roughness" + fileFormat;
+    /**
+     * Metalness, roughness, ao maps packed in one texture
+     */
+    fullPath = absolutePath + pathToTheDirectory + "/arm" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "roughnessMap",
-                                                     1));
-
-    /***
-    * @brief Metallic
-    */
-    fullPath = absolutePath + pathToTheDirectory + "/metallic" + fileFormat;
-    pathsToLoad.push_back(fullPath);
-    this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "metallicMap",
-                                                     2));
+            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "armMap", 1));
 
     /***
     * @brief Normal map
@@ -106,15 +96,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     fullPath = absolutePath + pathToTheDirectory + "/normal" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "normalMap", 3));
-
-    /***
-     * @brief AO map
-     */
-    fullPath = absolutePath + pathToTheDirectory + "/ao" + fileFormat;
-    pathsToLoad.push_back(fullPath);
-    this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "aoMap", 4));
+            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "normalMap", 2));
 
     /***
      * @brief Depth map
@@ -123,13 +105,16 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     pathsToLoad.push_back(fullPath);
     this->addTexture(
             std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "displacementMap",
-                                                    5));
+                                                    3));
     /***
      * @brief Preform load
      */
     auto loadedTextures = assetsManagerInstance->getMultipleTextures(pathsToLoad);
     for(int i = 0; i<loadedTextures.size(); i++){
-        textures[i]->type = loadedTextures[i];
+        if(loadedTextures[i]->wasFound) {
+            textures[i]->type = loadedTextures[i];
+        }else
+            delete loadedTextures[i];
     }
 }
 
