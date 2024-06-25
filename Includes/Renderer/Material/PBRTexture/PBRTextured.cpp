@@ -113,8 +113,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     for(int i = 0; i<loadedTextures.size(); i++){
         if(loadedTextures[i]->wasFound) {
             textures[i]->type = loadedTextures[i];
-        }else
-            delete loadedTextures[i];
+        }
     }
 }
 
