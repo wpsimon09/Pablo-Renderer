@@ -7,7 +7,8 @@
 
 std::shared_ptr<Texture2D> AssetsManager::loadSingleTexture(const char *path, bool toGL) {
     auto newTexture =  std::make_shared<Texture2D>(path, true, toGL);
-    loadedTextures.insert(std::make_pair(path,newTexture));
+    if(newTexture->wasFound);
+        loadedTextures.insert(std::make_pair(path,newTexture));
     return newTexture;
 }
 

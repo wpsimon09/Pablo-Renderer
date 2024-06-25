@@ -22,29 +22,36 @@ void ChangeMaterialUI::display(Renderable *renderable) {
 
     if (selectedMaterial == PBR_TEXTURE_MAPS) {
         auto allTextures = AssetsManager::getInstance()->getLoadedTextures();
-        int sizeX = allTextures.size() / 2;
-        int sizeY = allTextures.size() - sizeX;
-        for (int col = 0; col < sizeY; col++) {
-            for (int row = 0; row < sizeX; row++) {
-                if (row > 0)
+        int rowsTotal = allTextures.size() / 3;
+        int columnsTotal = 3;
+        int displayedImage = 0;
+        for (int row = 0; row < rowsTotal; row++) {
+            for (int col = 0; col < columnsTotal; col++) {
+                if (col > 0)
                     ImGui::SameLine();
 
+                auto image = allTextures[displayedImage];
+
                 ImGui::SetItemAllowOverlap();
-                ImVec2 imageSize((float) allTextures[row]->texWidth / 40, (float) allTextures[row]->texHeight / 40);
-                ImGui::GetWindowDrawList()->AddImage(
-                        reinterpret_cast<ImTextureID>(allTextures[row]->ID),
-                        ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-                        ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
-                               ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
-                        ImVec2(0, 1),
-                        ImVec2(1, 0)
-                );
-                if (ImGui::Selectable("Texture", false, 0, ImVec2(40, 40))) {
-                }
+                    ImVec2 imageSize((float) image->texWidth / 40, (float) image->texHeight / 40);
+
+                        ImGui::GetWindowDrawList()->AddImage(
+                                reinterpret_cast<ImTextureID>(image->ID),
+                                ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
+                                ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
+                                       ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
+                                ImVec2(0, 1),
+                                ImVec2(1, 0)
+                        );
+                        if (ImGui::Selectable("Texture", false, 0, ImVec2(image->texWidth/40, image->texHeight / 40))) {
+                        }
+
+                displayedImage++;
             }
         }
     }
 
+    ImGui::NewLine();
     if (ImGui::Button("Apply")) {
         if (selectedMaterial == COLOR) {
             renderable->setMaterial(std::make_shared<PBRColor>());
