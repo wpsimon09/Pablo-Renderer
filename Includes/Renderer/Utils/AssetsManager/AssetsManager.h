@@ -45,7 +45,7 @@ public:
      * @brief Retrieves all loaded textues
      * @return map of all the textures loaded together with theair paths
      */
-    const std::map<std::string, std::shared_ptr<Texture2D>> getLoadedTextures();
+    const std::vector<std::shared_ptr<Texture2D>> getLoadedTextures();
 
     /**
      * @brief Loades all of the textures that are loaded in assets manager to the OpenGL

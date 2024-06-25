@@ -24,12 +24,14 @@ std::shared_ptr<Texture2D> AssetsManager::getTexture(std::string path) {
         return loadSingleTexture(path.c_str(), true);
 }
 
-const std::map<std::string, std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures() {
+const std::vector<std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures() {
     std::vector<std::shared_ptr<Texture2D>> second;
 
     for (auto texture : loadedTextures) {
         second.emplace_back(texture.second);
     }
+
+    return second;
 }
 
 std::shared_ptr<Texture2D> AssetsManager::getTextureOnThread(std::string path) {
