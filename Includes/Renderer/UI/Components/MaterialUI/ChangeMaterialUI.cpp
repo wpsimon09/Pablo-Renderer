@@ -31,10 +31,9 @@ void ChangeMaterialUI::display(Renderable *renderable) {
                     ImGui::SameLine();
 
                 auto image = allTextures[displayedImage];
-
+                ImVec2 imageSize (60,60);
+                if(image->wasFound) {
                 ImGui::SetItemAllowOverlap();
-                    ImVec2 imageSize((float) image->texWidth / 40, (float) image->texHeight / 40);
-
                         ImGui::GetWindowDrawList()->AddImage(
                                 reinterpret_cast<ImTextureID>(image->ID),
                                 ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
@@ -43,9 +42,9 @@ void ChangeMaterialUI::display(Renderable *renderable) {
                                 ImVec2(0, 1),
                                 ImVec2(1, 0)
                         );
-                        if (ImGui::Selectable("Texture", false, 0, ImVec2(image->texWidth/40, image->texHeight / 40))) {
+                        if (ImGui::Selectable("Texture", false, 0, imageSize)) {
                         }
-
+                }
                 displayedImage++;
             }
         }
