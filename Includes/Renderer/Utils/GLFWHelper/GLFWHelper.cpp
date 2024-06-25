@@ -167,7 +167,7 @@ glm::vec2 GLFWHelper::getPointerPositionTransfmed(int x, int y, int pickingWidth
     float remapped_x = x - xOffset;
     float remapped_y = y - yOffset;
 
-    if(remapped_x <0 ) remapped_x = 0;
+    if(remapped_x <0 ) remapped_x = -1;
     if(remapped_x > remapped_viewport_x) remapped_x = remapped_viewport_x;
 
     float x_picked = (float)remapped_x * ((float)pickingWidth/remapped_viewport_x);

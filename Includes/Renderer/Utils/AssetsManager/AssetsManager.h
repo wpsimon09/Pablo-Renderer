@@ -13,33 +13,68 @@
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include <iostream>
 
-
+/**
+ * @brief Holds textures and in the future models used in the engine, @todo Extend to all shapes and models
+ */
 class AssetsManager {
 public:
     static AssetsManager *getInstance();
 
+    /**
+     * @brief Retrieves multiple textures. @note this method is usin multy-threading and might liead to some problems
+     * @param paths paths of the textures to load or retrieve
+     * @return vector of the loaded textures
+     */
     std::vector<std::shared_ptr<Texture2D>> getMultipleTextures(std::vector<std::string> paths);
 
+    /**
+     * @brief Retreives single texture on separate thread ensuring thread safety
+     * @param path path of the texture to retrieve
+     * @return retrieved textured
+     */
     std::shared_ptr<Texture2D> getTextureOnThread(std::string path);
 
+    /**
+     * @brief Retrieves single thexture on main thread without ensuring thread safetyness
+     * @param path path to the texture to retrieve
+     * @return retrived textured
+     */
     std::shared_ptr<Texture2D> getTexture(std::string path);
 
+    /**
+     * @brief Loades all of the textures that are loaded in assets manager to the OpenGL
+     */
     void loadTexturesToOpenGL();
 
     ~AssetsManager() = default;
 
 private:
     /***
-     * @brief Path to where engine is stored this configured in cMAKE and will always give error in IDR
+     * @brief Path to where engine is stored this configured in cMAKE and might always give error in IDE
      */
     std::string projectPath = PABLO_PATH;
 
+    /**
+     * @brief Mutex for thread locking and te
+     */
     inline static std::mutex textureLock;
 
     AssetsManager() = default;
 
+    /**
+     * @brief Instance for Singelton purposes
+     */
     static inline AssetsManager *instance;
 
+    /**
+     * @brief Loads single texture to the assets manager and returns shared pointer to it
+     * @param path path of the texture
+     * @param toGL boolean flag that determines if the texture is going to be loaded to openGl or not
+     * this paramater is for the purpose of multy-threading without creating additiona OpenGL contexts
+     * default value is True, if false the texture Data will be copied and stored inside the texture instance.
+     * It is up to the user to ensure that the texture will acctualy by loaded to OpenGL in order to be used.
+     * @return shared pointer to the texture instance
+     */
     std::shared_ptr<Texture2D> loadSingleTexture(const char *path, bool toGL = true);
 
     static inline void
