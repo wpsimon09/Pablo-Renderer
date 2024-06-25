@@ -42,6 +42,12 @@ public:
     std::shared_ptr<Texture2D> getTexture(std::string path);
 
     /**
+     * @brief Retrieves all loaded textues
+     * @return map of all the textures loaded together with theair paths
+     */
+    const std::map<std::string, std::shared_ptr<Texture2D>> getLoadedTextures() {return this->loadedTextures;}
+
+    /**
      * @brief Loades all of the textures that are loaded in assets manager to the OpenGL
      */
     void loadTexturesToOpenGL();

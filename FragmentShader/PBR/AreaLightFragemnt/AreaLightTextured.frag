@@ -29,8 +29,7 @@ uniform samplerCube prefilterMap;
 uniform sampler2D BRDFtexture;
 
 uniform sampler2D _albedoMap;
-uniform sampler2D _roughnessMap;
-uniform sampler2D _metallicMap;
+uniform sampler2D _armMap;
 uniform sampler2D _normalMap;
 uniform sampler2D _aoMap;
 uniform sampler2D _rougnessMetalnessMap;
@@ -145,14 +144,16 @@ void main() {
     if (fs_in.isModel == 1.0) {
         roughness = texture(_rougnessMetalnessMap, fs_in.TexCoords).g;
         metallic = texture(_rougnessMetalnessMap, fs_in.TexCoords).b;
+        ao = texture(_aoMap, fs_in.TexCoords).r;
     } else {
-        roughness = texture(_roughnessMap, fs_in.TexCoords).r;
-        metallic = texture(_metallicMap, fs_in.TexCoords).r;
+        vec3 arm = texture(_armMap, fs_in.TexCoords).rgb;
+        ao = arm.r;
+        roughness = arm.g;
+        metallic = arm.b;
     }
     if (fs_in.hasEmission == 1) {
         emmisive = texture(_emmisionMap, fs_in.TexCoords).rgb;
     }
-    ao = texture(_aoMap, fs_in.TexCoords).r;
     vec3 N = getNormalFromMap();
 
 
