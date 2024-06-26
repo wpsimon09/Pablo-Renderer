@@ -15,6 +15,8 @@
 class ChangeMaterialUI{
 public:
     static void display(Renderable *renderable);
+
+    static void displayExistingMaterials(int &_selectedID);
 private:
     static inline int selectedID = -1;
     static inline MATERIAL selectedMaterial;

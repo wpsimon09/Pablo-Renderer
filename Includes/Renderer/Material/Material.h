@@ -49,10 +49,10 @@ struct PBRMaterial {
      * @param samplerid sampler that is used for the textures
      */
     PBRMaterial(T type, std::string shaderName, int samplerid = 0,MATERIAL_TEXTURE_TYPE texture_type = UNDEFINED) {
-        this->type = std::make_shared<T>(type);
-        this->shaderName = shaderName;
-        this->samplerID = samplerid;
-        this->material_type = texture_type;
+     this->type = std::make_shared<T>(type);
+     this->shaderName = shaderName;
+     this->samplerID = samplerid;
+     this->material_type = texture_type;
     }
 };
 
@@ -141,6 +141,8 @@ protected:
     std::string name;
 public:
     int getSamplerCount() const { return samplerCount; }
+
+    bool operator == (const Material  &other);
 };
 
 

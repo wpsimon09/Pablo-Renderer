@@ -3,3 +3,10 @@
 //
 
 #include "Material.h"
+
+bool Material::operator==(const Material &other) {
+    if(other.ID == this->ID) {
+        return true;
+    }else
+        return false;
+}
