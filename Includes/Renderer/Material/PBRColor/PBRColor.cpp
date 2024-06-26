@@ -38,6 +38,10 @@ void PBRColor::printLog() const {
     std::cout<<*this;
 }
 
+glm::vec3 PBRColor::getAlbedoColour() {
+    return *this->albedo->type;
+}
+
 void PBRColor::configureShader() {
     this->shader->use();
     this->shader->setFloat("supportsIBL", this->supportsIBL);

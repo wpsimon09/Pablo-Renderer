@@ -29,13 +29,16 @@ private:
     std::unique_ptr<PBRMaterial<float>> metalness;
     std::unique_ptr<PBRMaterial<float>> rougness ;
     std::unique_ptr<PBRMaterial<float>> ao;
-public:
-    void renderUI() override;
 
 public:
+
+    void renderUI() override;
+
     friend std::ostream& operator<<(std::ostream& os, const PBRColor& mat);
 
     void printLog() const override;
+
+    glm::vec3 getAlbedoColour() override;
 
     /***
      * Sets all of the information to the shader uniforms using the naming convention specified in contractor

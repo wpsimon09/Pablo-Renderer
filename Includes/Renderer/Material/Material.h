@@ -105,7 +105,13 @@ public:
      * @brief Gets albedo texture of the material
      * @return albedo texture of the material or nullptr if no texture is found
      */
-    virtual std::shared_ptr<Texture2D> getAlbedoTexture() { return nullptr; };
+    virtual std::shared_ptr<Texture2D> getAlbedoTexture() { throw std::logic_error("Albedo texture does not exist on material:" +  this->name + "\n"); };
+
+    /**
+     * @brief Gets the albedo colour of the matreial if found otherwise trhrows exception
+     * @return RGB represenation of the albedo material
+     */
+    virtual glm::vec3 getAlbedoColour() {throw std::logic_error("Albedo colour does not exist on material:" +  this->name + "\n");}
 
     /**
      * @brief Prints log
@@ -113,6 +119,8 @@ public:
      */
     virtual void printLog() const {
     };
+
+    std::string getName() {return this->name;}
 
     std::shared_ptr<Shader> shader;
 

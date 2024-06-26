@@ -39,6 +39,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Renderers/SingleShaderRenderer/SingleShaderRenderer.cpp
         Includes/Renderer/Renderers/SingleShaderRenderer/SingleShaderRenderer.h
         Includes/Renderer/Enums/MaterialTextureType.h
+        Includes/Renderer/UI/Components/MaterialUI/ChangeSingleTextureUI.cpp
+        Includes/Renderer/UI/Components/MaterialUI/ChangeSingleTextureUI.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

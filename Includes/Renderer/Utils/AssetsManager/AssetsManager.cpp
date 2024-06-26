@@ -25,15 +25,6 @@ std::shared_ptr<Texture2D> AssetsManager::getTexture(std::string path) {
         return loadSingleTexture(path.c_str(), true);
 }
 
-const std::vector<std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures() {
-    std::vector<std::shared_ptr<Texture2D>> second;
-
-    for (auto texture : loadedTextures) {
-        second.emplace_back(texture.second);
-    }
-
-    return second;
-}
 
 std::shared_ptr<Texture2D> AssetsManager::getTextureOnThread(std::string path) {
     auto tex = loadedTextures.find(path);
@@ -113,6 +104,26 @@ void AssetsManager::storeMaterial(std::shared_ptr<Material> newMaterial) {
     if(!this->loadedMaterials.contains(newMaterial->getID())) {
         this->loadedMaterials.insert(std::make_pair(newMaterial->getID(), newMaterial));
     }
+}
+
+const std::vector<std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures() {
+    std::vector<std::shared_ptr<Texture2D>> second;
+
+    for (auto texture : loadedTextures) {
+        second.emplace_back(texture.second);
+    }
+
+    return second;
+}
+
+std::vector<std::shared_ptr<Material>> AssetsManager::getExistingMaterisl() {
+    std::vector<std::shared_ptr<Material>> second;
+
+    for (auto material : loadedMaterials) {
+        second.emplace_back(material.second);
+    }
+
+    return second;
 }
 
 

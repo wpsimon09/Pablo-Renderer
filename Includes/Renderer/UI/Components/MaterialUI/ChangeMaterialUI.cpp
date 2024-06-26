@@ -21,43 +21,45 @@ void ChangeMaterialUI::display(Renderable *renderable) {
     }
 
     if (selectedMaterial == PBR_TEXTURE_MAPS) {
-        auto allTextures = AssetsManager::getInstance()->getLoadedTextures();
-        int rowsTotal = allTextures.size() / 3;
+        auto allMaterials = AssetsManager::getInstance()->getExistingMaterisl();
         int columnsTotal = 3;
-        int displayedImage = 0;
-        ImGui::SeparatorText("Loaded textures");
+        int displayedMaterial = 0;
+        ImGui::SeparatorText("Existing materials");
         ImGui::Dummy(ImVec2(30,0));
         ImGui::BeginChild("Texture", ImVec2(300, 200));
 
-        ImGui::SetItemTooltip(allTextures[0]->getFullPath().c_str());
+        ImGui::SetItemTooltip(allMaterials[0]->getName().c_str());
 
-        while(displayedImage != allTextures.size()) {
+        while(displayedMaterial != allMaterials.size()) {
             for (int col = 0; col < columnsTotal; col++) {
-                if(displayedImage>=allTextures.size())
-                    break;
-                if (col > 0)
-                    ImGui::SameLine();
+                try {
+                    if(displayedMaterial>=allMaterials.size())
+                        break;
+                    if (col > 0)
+                        ImGui::SameLine();
 
-                auto image = allTextures[displayedImage];
+                    auto material = allMaterials[displayedMaterial];
 
-                ImVec2 imageSize (60,60);
-                if(image->wasFound) {
-                    ImGui::SetItemAllowOverlap();
-                    ImGui::GetWindowDrawList()->AddImage(
-                            reinterpret_cast<ImTextureID>(image->ID),
-                            ImGui::GetCursorScreenPos(),
-                            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
-                                   ImGui::GetCursorScreenPos().y + imageSize.y ),
-                            ImVec2(0, 1),
-                            ImVec2(1, 0)
-                    );
+                    ImVec2 imageSize (60,60);
+                        ImGui::SetItemAllowOverlap();
+                        ImGui::GetWindowDrawList()->AddImage(
+                                reinterpret_cast<ImTextureID>(material->getAlbedoTexture()->ID),
+                                ImGui::GetCursorScreenPos(),
+                                ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
+                                       ImGui::GetCursorScreenPos().y + imageSize.y ),
+                                ImVec2(0, 1),
+                                ImVec2(1, 0)
+                        );
 
-                    if (ImGui::Selectable("##", image->ID == selectedID, 0, imageSize)) {
-                        selectedID = image->ID;
-                    }
-                    ImGui::SetItemTooltip(image->getFullPath().c_str());
+                        if (ImGui::Selectable("##", material->getID() == selectedID, 0, imageSize)) {
+                            selectedID = material->getID();
+                        }
+                        ImGui::SetItemTooltip(material->getName().c_str());
+                }catch (std::exception &e) {
+
                 }
-                displayedImage++;
+
+                displayedMaterial++;
 
             }
         }
