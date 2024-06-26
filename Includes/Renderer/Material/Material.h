@@ -21,6 +21,7 @@ struct PBRMaterial {
     std::shared_ptr<T> type;
     std::string shaderName;
     int samplerID;
+    MATERIAL_TEXTURE_TYPE material_type;
 
     /***
      * Create PBR material instance
@@ -28,10 +29,11 @@ struct PBRMaterial {
      * @param shaderName name that matches the shader's uniform name
      * @param samplerid sampler that is used for the textures
      */
-    PBRMaterial(std::shared_ptr<T> type, std::string shaderName, int samplerid = 0) {
+    PBRMaterial(std::shared_ptr<T> type, std::string shaderName, int samplerid = 0, MATERIAL_TEXTURE_TYPE texture_type = UNDEFINED) {
         this->type = type;
         this->shaderName = shaderName;
         this->samplerID = samplerid;
+        this->material_type = texture_type;
     }
 
     /***
@@ -40,10 +42,11 @@ struct PBRMaterial {
      * @param shaderName name that matches the shader's unifrom name
      * @param samplerid sampler that is used for the textures
      */
-    PBRMaterial(T type, std::string shaderName, int samplerid = 0) {
+    PBRMaterial(T type, std::string shaderName, int samplerid = 0,MATERIAL_TEXTURE_TYPE texture_type = UNDEFINED) {
         this->type = std::make_shared<T>(type);
         this->shaderName = shaderName;
         this->samplerID = samplerid;
+        this->material_type = texture_type;
     }
 };
 

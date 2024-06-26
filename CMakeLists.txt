@@ -38,6 +38,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/RenderPass/PixelPicking/PixelPicking.h
         Includes/Renderer/Renderers/SingleShaderRenderer/SingleShaderRenderer.cpp
         Includes/Renderer/Renderers/SingleShaderRenderer/SingleShaderRenderer.h
+        Includes/Renderer/Enums/MaterialTextureType.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

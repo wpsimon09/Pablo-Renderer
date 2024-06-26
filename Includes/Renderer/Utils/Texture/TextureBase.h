@@ -12,6 +12,7 @@
 #include "Debug/DebugLogger.h"
 #include "mutex"
 #include "filesystem"
+#include "Renderer/Enums/MaterialTextureType.h"
 
 namespace fs = std::filesystem;
 /***
@@ -83,6 +84,11 @@ public:
      *
      */
     int bundleID;
+
+    /**
+     * @brief Specifies texture type only applicable if the texture is Part of the texture bundle or texture is PBR material
+     */
+    MATERIAL_TEXTURE_TYPE textureType = UNDEFINED;
 
     /***
      * Changes minifaction and magnification filtering method
