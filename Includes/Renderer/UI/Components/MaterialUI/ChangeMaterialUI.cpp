@@ -25,11 +25,12 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         int rowsTotal = allTextures.size() / 3;
         int columnsTotal = 3;
         int displayedImage = 0;
-        for (int row = 0; row < rowsTotal; row++) {
+        while(displayedImage != allTextures.size()) {
             for (int col = 0; col < columnsTotal; col++) {
                 if (col > 0)
                     ImGui::SameLine();
-
+                if(displayedImage>=allTextures.size())
+                    break;
                 auto image = allTextures[displayedImage];
                 ImVec2 imageSize (60,60);
                 if(image->wasFound) {
@@ -42,7 +43,7 @@ void ChangeMaterialUI::display(Renderable *renderable) {
                                 ImVec2(0, 1),
                                 ImVec2(1, 0)
                         );
-                        if (ImGui::Selectable("Texture", false, 0, imageSize)) {
+                        if (ImGui::Selectable("##", false, 0, imageSize)) {
                         }
                 }
                 displayedImage++;

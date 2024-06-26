@@ -34,7 +34,7 @@ int main() {
 
     auto gridRenderable = std::make_unique<Grid>();
 
-    auto goldMaterial = std::make_shared<PBRTextured>(true, "/home/wpsimon09/Desktop/Textures/rusty-metal", false);
+    auto goldMaterial = std::make_shared<PBRTextured>(true, "/home/wpsimon09/Desktop/Textures/hangar-black", false);
 
     std::string pabloPath = PABLO_PATH;
 

@@ -82,7 +82,7 @@ As of now renderer's shader only support one directional light and 1 area light 
 ![Pablo](Assets/ReadmeImages/pablo-4.png)
 
 
-![Area light](Assets/ReadmeImages/area-light-3.png)
+![Area light](Assets/ReadmeImages/pablo-5.png)
 
 # Video
 
