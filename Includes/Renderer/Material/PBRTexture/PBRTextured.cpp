@@ -4,13 +4,20 @@
 
 #include "PBRTextured.h"
 
-PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory, bool isRelativePath,std::string shaderNamingConvention,
+PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory, bool isRelativePath, std::string name, std::string shaderNamingConvention,
                          std::string fileFormat) : Material() {
     if (supportsAreaLight) {
         this->shader = ShaderManager::getShader(SHADER_AREA_LIGHT_TEXTURES);
     } else {
         this->shader = ShaderManager::getShader(SHADER_PBR_TEXTURED);
     }
+
+    if(name.empty()) {
+        this->name = "Textured material" + std::to_string(this->ID);
+    }else {
+        this->name = name;
+    }
+    
     this->supportsIBL = true;
     this->supportsAreaLight = supportsAreaLight;
     this->hasEmissionTexture = false;

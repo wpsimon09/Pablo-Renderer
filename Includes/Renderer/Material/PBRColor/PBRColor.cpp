@@ -4,11 +4,17 @@
 
 #include "PBRColor.h"
 
-PBRColor::PBRColor(glm::vec3 albedo,bool supportsIBL,bool supportsAreaLight, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
+PBRColor::PBRColor(glm::vec3 albedo,bool supportsIBL,bool supportsAreaLight, std::string name, float metallic, float rougness, float ao, std::string shaderNamingConvention): Material() {
     if(supportsAreaLight){
         this->shader = ShaderManager::getShader(SHADER_AREA_LIGHT_COLOUR);
     }else
         this->shader = ShaderManager::getShader(SHADER_PBR_COLOUR);
+
+    if(name.empty()) {
+        this->name = "Colour material" + std::to_string(this->ID);
+    }else
+        this->name = name;
+
     this->supportsIBL = supportsIBL;
     this->supportsAreaLight = supportsAreaLight;
 

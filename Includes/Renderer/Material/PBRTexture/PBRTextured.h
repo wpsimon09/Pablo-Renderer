@@ -31,7 +31,7 @@ public:
      * false means that textures are located somewhere in the directory of the engine
      * */
     explicit PBRTextured(bool supportsAreaLight = false, std::string pathToTheDirectory = "",
-                         bool isRelativePath = true, std::string shaderNamingConvention = "_",
+                         bool isRelativePath = true, std::string name = "", std::string shaderNamingConvention = "_",
                          std::string fileFormat = ".png");
 
 

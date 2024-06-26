@@ -58,7 +58,7 @@ struct PBRMaterial {
 
 class Material {
 public:
-    Material() = default;
+    Material() { this-> ID = MaterialID::id++;}
 
     /***
      * Creates an instance of the material class
@@ -69,7 +69,7 @@ public:
         this->ID =  MaterialID::id++;
     }
 
-    ~Material() { this-> ID = MaterialID::id++;};
+    ~Material()= default;
 
     unsigned int getID() const{return this->ID;}
 
@@ -130,6 +130,7 @@ protected:
      */
     unsigned int ID = 0;
 
+    std::string name;
 public:
     int getSamplerCount() const { return samplerCount; }
 };
