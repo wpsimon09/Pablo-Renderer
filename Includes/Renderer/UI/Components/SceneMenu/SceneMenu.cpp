@@ -27,7 +27,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     ImGui::SetWindowPos(ImVec2((float) posX, (float) posY));
     ImGui::SetWindowSize(ImVec2((float) width, (float) height/2));
     ImGui::SeparatorText("Scene");
-    ImGui::BeginChild("Scene", ImVec2((float) width - 20, (float) GLFWHelper::getScreenHeight() / 2 - 100), true,
+    ImGui::BeginChild("Scene", ImVec2((float) width - 20, (float) GLFWHelper::getScreenHeight() / 2 - 120), true,
                       ImGuiWindowFlags_HorizontalScrollbar);
 
     //display sthe entire scene graph structure
