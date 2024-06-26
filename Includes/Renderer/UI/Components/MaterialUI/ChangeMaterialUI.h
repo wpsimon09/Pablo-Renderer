@@ -16,9 +16,9 @@ class ChangeMaterialUI{
 public:
     static void display(Renderable *renderable);
 
-    static void displayExistingMaterials(int &_selectedID);
+    static void displayExistingMaterials(std::shared_ptr<Material> &_selectedID);
 private:
-    static inline int selectedID = -1;
+    static inline std::shared_ptr<Material> selectedID = nullptr;
     static inline MATERIAL selectedMaterial;
     inline static  std::string material [] = {
             "TEXTURE MAP", "COLOR"

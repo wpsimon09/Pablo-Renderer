@@ -11,7 +11,7 @@ void ChangeMaterialUI::display(Renderable *renderable) {
     ImGui::SetWindowSize(ImVec2(400, 400));
     ImGui::Text("Select material");
     if (ImGui::BeginCombo("Material", material[selectedMaterial].c_str())) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             if (ImGui::Selectable(material[i].c_str(), selectedMaterial == i)) {
                 selectedMaterial = (MATERIAL) i;
             }
@@ -24,9 +24,6 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         displayExistingMaterials(ChangeMaterialUI::selectedID);
     }
 
-    if (selectedMaterial == PBR_TEXTURE_BUNDLE) {
-
-    }
 
     ImGui::NewLine();
     if (ImGui::Button("Apply")) {
@@ -43,7 +40,7 @@ void ChangeMaterialUI::display(Renderable *renderable) {
     ImGui::End();
 }
 
-void ChangeMaterialUI::displayExistingMaterials(int &_selectedID) {
+void ChangeMaterialUI::displayExistingMaterials(std::shared_ptr<Material> &_selectedID) {
     auto allMaterials = AssetsManager::getInstance()->getExistingMaterisl();
     int columnsTotal = 3;
     int displayedMaterial = 0;
@@ -55,7 +52,6 @@ void ChangeMaterialUI::displayExistingMaterials(int &_selectedID) {
 
     while(displayedMaterial != allMaterials.size()) {
         for (int col = 0; col < columnsTotal; col++) {
-            try {
                 if(displayedMaterial>=allMaterials.size())
                     break;
                 if (col > 0)
@@ -65,22 +61,26 @@ void ChangeMaterialUI::displayExistingMaterials(int &_selectedID) {
 
                 ImVec2 imageSize (60,60);
                 ImGui::SetItemAllowOverlap();
-                ImGui::GetWindowDrawList()->AddImage(
+                if(material->getAlbedoTexture() != nullptr){
+
+                    ImGui::GetWindowDrawList()->AddImage(
                         reinterpret_cast<ImTextureID>(material->getAlbedoTexture()->ID),
                         ImGui::GetCursorScreenPos(),
                         ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
                                ImGui::GetCursorScreenPos().y + imageSize.y ),
                         ImVec2(0, 1),
                         ImVec2(1, 0)
-                );
+                    );
+                }else {
+                    auto albedo = material->getAlbedoColour();
+                    ImVec2 p = ImGui::GetCursorScreenPos();
+                    ImGui::GetWindowDrawList()->AddRectFilled(p, ImVec2(p.x + 60, p.y + 60), ImGui::GetColorU32(ImVec4(albedo.r, albedo.g, albedo.b,1.0f)));
+                }
 
-                if (ImGui::Selectable("##", material->getID() == _selectedID, 0, imageSize)) {
-                    _selectedID = material->getID();
+                if (ImGui::Selectable("##", material == _selectedID, 0, imageSize)) {
+                    _selectedID = material;
                 }
                 ImGui::SetItemTooltip(material->getName().c_str());
-            }catch (std::exception &e) {
-
-            }
 
             displayedMaterial++;
 

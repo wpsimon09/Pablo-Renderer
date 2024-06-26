@@ -4,7 +4,7 @@
 
 #include "Material.h"
 
-bool Material::operator==(const Material &other) {
+bool Material::operator==(const Material &other) const {
     if(other.ID == this->ID) {
         return true;
     }else

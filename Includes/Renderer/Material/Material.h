@@ -105,13 +105,13 @@ public:
      * @brief Gets albedo texture of the material
      * @return albedo texture of the material or nullptr if no texture is found
      */
-    virtual std::shared_ptr<Texture2D> getAlbedoTexture() { throw std::logic_error("Albedo texture does not exist on material:" +  this->name + "\n"); };
+    virtual std::shared_ptr<Texture2D> getAlbedoTexture() { return nullptr; };
 
     /**
      * @brief Gets the albedo colour of the matreial if found otherwise trhrows exception
      * @return RGB represenation of the albedo material
      */
-    virtual glm::vec3 getAlbedoColour() {throw std::logic_error("Albedo colour does not exist on material:" +  this->name + "\n");}
+    virtual glm::vec3 getAlbedoColour() {return glm::vec3(-1.0f);}
 
     /**
      * @brief Prints log
@@ -142,7 +142,7 @@ protected:
 public:
     int getSamplerCount() const { return samplerCount; }
 
-    bool operator == (const Material  &other);
+    bool operator == (const Material  &other) const;
 };
 
 
