@@ -16,9 +16,11 @@ class ChangeMaterialUI{
 public:
     static void display(Renderable *renderable);
 private:
+    static inline int selectedID = -1;
     static inline MATERIAL selectedMaterial;
+    static inline PBRMaterial<Texture2D> materialToChangle;
     inline static  std::string material [] = {
-            "PBR_TEXTURE_MAPS", "COLOR"
+            "TEXTURE MAP", "COLOR", "TEXTURE BUNDLE"
     };
     inline static std::string texturesDirectory;
     inline static glm::vec3 color = glm::vec3(0.0f, 0.0F, 0.0F);

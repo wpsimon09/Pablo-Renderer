@@ -78,6 +78,12 @@ public:
      */
     int texWidth, texHeight;
 
+    /**
+     * @brief Reffers to the ID of the texture material bundle
+     *
+     */
+    int bundleID;
+
     /***
      * Changes minifaction and magnification filtering method
      * @param mag filtering method to use for Magnification

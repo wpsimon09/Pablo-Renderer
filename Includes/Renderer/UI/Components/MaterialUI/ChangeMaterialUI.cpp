@@ -11,7 +11,7 @@ void ChangeMaterialUI::display(Renderable *renderable) {
     ImGui::SetWindowSize(ImVec2(400, 400));
     ImGui::Text("Select material");
     if (ImGui::BeginCombo("Material", material[selectedMaterial].c_str())) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             if (ImGui::Selectable(material[i].c_str(), selectedMaterial == i)) {
                 selectedMaterial = (MATERIAL) i;
             }
@@ -29,6 +29,8 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         ImGui::Dummy(ImVec2(10,0));
         ImGui::BeginChild("Texture", ImVec2(300, 200));
 
+        ImGui::SetItemTooltip(allTextures[0]->getFullPath().c_str());
+
         while(displayedImage != allTextures.size()) {
             for (int col = 0; col < columnsTotal; col++) {
                 if(displayedImage>=allTextures.size())
@@ -41,7 +43,6 @@ void ChangeMaterialUI::display(Renderable *renderable) {
                 ImVec2 imageSize (60,60);
                 if(image->wasFound) {
                     ImGui::SetItemAllowOverlap();
-                    ImGui::SetItemTooltip(image->getFullPath().c_str());
                     ImGui::GetWindowDrawList()->AddImage(
                             reinterpret_cast<ImTextureID>(image->ID),
                             ImGui::GetCursorScreenPos(),
@@ -51,13 +52,20 @@ void ChangeMaterialUI::display(Renderable *renderable) {
                             ImVec2(1, 0)
                     );
 
-                    if (ImGui::Selectable("##", false, 0, imageSize)) {
+                    if (ImGui::Selectable("##", image->ID == selectedID, 0, imageSize)) {
+                        selectedID = image->ID;
                     }
+                    ImGui::SetItemTooltip(image->getFullPath().c_str());
                 }
                 displayedImage++;
+
             }
         }
         ImGui::EndChild();
+    }
+
+    if (selectedMaterial == PBR_TEXTURE_BUNDLE) {
+
     }
 
     ImGui::NewLine();
@@ -65,6 +73,7 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         if (selectedMaterial == COLOR) {
             renderable->setMaterial(std::make_shared<PBRColor>());
         } else if (selectedMaterial == PBR_TEXTURE_MAPS) {
+
         }
     }
 
