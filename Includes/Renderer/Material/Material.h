@@ -12,6 +12,12 @@
 #include "memory"
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include "Renderer/Utils/ShaderManager/ShaderManager.h"
+
+class MaterialID {
+public:
+ static inline float id = 0;
+};
+
 /***
  * Struct for storing information about material
  * @tparam T property of the material datatype eg.: color, texture, etc...
@@ -60,9 +66,12 @@ public:
      */
     explicit Material(std::shared_ptr<Shader> shader) {
         this->shader = std::move(shader);
+        this->ID =  MaterialID::id++;
     }
 
-    ~Material() = default;
+    ~Material() { this-> ID = MaterialID::id++;};
+
+    unsigned int getID() const{return this->ID;}
 
     /***
      * Pass all of the relevant uniforms to the shader
@@ -71,7 +80,7 @@ public:
     };
 
     /***
-     * @brief Gets all of the of textures if material has any
+     * @brief Gets all of the of textures if material has any (virutal)
      * @return vector of shared pointer to the textures
      */
     virtual std::vector<std::reference_wrapper<Texture2D> > getTextures() {
@@ -115,6 +124,11 @@ protected:
      * Number of samplers that are used in the given material
      */
     int samplerCount = 0;
+
+    /**
+     * @brief Unique identifier of the material
+     */
+    unsigned int ID = 0;
 
 public:
     int getSamplerCount() const { return samplerCount; }

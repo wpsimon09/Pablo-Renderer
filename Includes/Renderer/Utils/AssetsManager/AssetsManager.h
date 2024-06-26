@@ -13,6 +13,8 @@
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include <iostream>
 
+#include "Renderer/Material/Material.h"
+
 /**
  * @brief Holds textures and in the future models used in the engine, @todo Extend to all shapes and models
  */
@@ -52,6 +54,8 @@ public:
      */
     void loadTexturesToOpenGL();
 
+    void storeMaterial(std::shared_ptr<Material> newMaterial);
+
     ~AssetsManager() = default;
 
 private:
@@ -89,6 +93,8 @@ private:
     std::vector<std::shared_ptr<Texture2D>> loadMultipleTextures(std::vector<const char *> texturePaths);
 
     std::map<std::string,  std::shared_ptr<Texture2D>> loadedTextures;
+
+    std::map<unsigned int, std::shared_ptr<Material>> loadedMaterials;
 };
 
 

@@ -18,7 +18,6 @@ public:
 private:
     static inline int selectedID = -1;
     static inline MATERIAL selectedMaterial;
-    static inline PBRMaterial<Texture2D> materialToChangle;
     inline static  std::string material [] = {
             "TEXTURE MAP", "COLOR", "TEXTURE BUNDLE"
     };

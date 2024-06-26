@@ -78,7 +78,7 @@ private:
      */
     void processRenderable(aiMesh *mesh, const aiScene *scene);
 
-    std::unique_ptr<PBRTextured> processRenderableMaterial(aiMaterial *meshMaterial);
+    std::shared_ptr<PBRTextured> processRenderableMaterial(aiMaterial *meshMaterial);
 
 
 };

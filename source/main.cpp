@@ -32,9 +32,12 @@ int main() {
     auto planeGeometry = std::make_shared<PlaneGeometry>();
     auto sphereGeometry = std::make_shared<SphereGeometry>();
 
+    auto assetsManager = AssetsManager::getInstance();
+
     auto gridRenderable = std::make_unique<Grid>();
 
     auto goldMaterial = std::make_shared<PBRTextured>(true, "/home/wpsimon09/Desktop/Textures/hangar-black", false);
+    assetsManager->storeMaterial(goldMaterial);
 
     std::string pabloPath = PABLO_PATH;
 
@@ -47,8 +50,10 @@ int main() {
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -0.2f, 0.0f));
 
 
-    auto color1 = std::make_unique<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true, true);
-    auto color2 = std::make_unique<PBRColor>(glm::vec3(0.8f, 1.0f, 1.0f), true, true);
+    auto color1 = std::make_shared<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), true, true);
+    assetsManager->storeMaterial(color1);
+    auto color2 = std::make_shared<PBRColor>(glm::vec3(0.8f, 1.0f, 1.0f), true, true);
+    assetsManager->storeMaterial(color2);
 
     auto cubeColor = std::make_unique<Renderable>(sphereGeometry, std::move(goldMaterial), "Sphere");
 

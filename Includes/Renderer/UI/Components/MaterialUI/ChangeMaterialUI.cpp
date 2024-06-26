@@ -26,7 +26,7 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         int columnsTotal = 3;
         int displayedImage = 0;
         ImGui::SeparatorText("Loaded textures");
-        ImGui::Dummy(ImVec2(10,0));
+        ImGui::Dummy(ImVec2(30,0));
         ImGui::BeginChild("Texture", ImVec2(300, 200));
 
         ImGui::SetItemTooltip(allTextures[0]->getFullPath().c_str());

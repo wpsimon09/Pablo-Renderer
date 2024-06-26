@@ -109,4 +109,10 @@ void AssetsManager::loadTexturesToOpenGL() {
     }
 }
 
+void AssetsManager::storeMaterial(std::shared_ptr<Material> newMaterial) {
+    if(!this->loadedMaterials.contains(newMaterial->getID())) {
+        this->loadedMaterials.insert(std::make_pair(newMaterial->getID(), newMaterial));
+    }
+}
+
 

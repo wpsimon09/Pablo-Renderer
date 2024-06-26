@@ -23,7 +23,6 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
     }
 
 
-
 }
 
 void PBRTextured::configureShader() {

@@ -81,6 +81,8 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
         hasModelTextures = false;
     }
 
+    AssetsManager::getInstance()->storeMaterial(renderableMaterial);
+
     /***
      * @brief Assembling material and geomtry together
      */
@@ -96,8 +98,8 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     this->addChild(std::move(processedNode));
 }
 
-std::unique_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
-    std::unique_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
+std::shared_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
+    std::shared_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
 
     std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> materialTextures;
 
