@@ -49,6 +49,12 @@ void TextureBase::unbind() {
     glGetError();
 }
 
+std::string TextureBase::getFileName() {
+    std::string base_filename = texturePath;
+    base_filename = base_filename.substr(base_filename.find_last_of("/\\") + 1);
+    return base_filename;
+}
+
 void TextureBase::loadPNG(const char *path,bool loadToGl, bool flip) {
     stbi_set_flip_vertically_on_load(flip);
     int width, height, nrComponents;

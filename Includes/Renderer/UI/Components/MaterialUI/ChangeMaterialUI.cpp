@@ -25,30 +25,39 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         int rowsTotal = allTextures.size() / 3;
         int columnsTotal = 3;
         int displayedImage = 0;
+        ImGui::SeparatorText("Loaded textures");
+        ImGui::Dummy(ImVec2(10,0));
+        ImGui::BeginChild("Texture", ImVec2(300, 200));
+
         while(displayedImage != allTextures.size()) {
             for (int col = 0; col < columnsTotal; col++) {
-                if (col > 0)
-                    ImGui::SameLine();
                 if(displayedImage>=allTextures.size())
                     break;
+                if (col > 0)
+                    ImGui::SameLine();
+
                 auto image = allTextures[displayedImage];
+
                 ImVec2 imageSize (60,60);
                 if(image->wasFound) {
-                ImGui::SetItemAllowOverlap();
-                        ImGui::GetWindowDrawList()->AddImage(
-                                reinterpret_cast<ImTextureID>(image->ID),
-                                ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-                                ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
-                                       ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
-                                ImVec2(0, 1),
-                                ImVec2(1, 0)
-                        );
-                        if (ImGui::Selectable("##", false, 0, imageSize)) {
-                        }
+                    ImGui::SetItemAllowOverlap();
+                    ImGui::SetItemTooltip(image->getFullPath().c_str());
+                    ImGui::GetWindowDrawList()->AddImage(
+                            reinterpret_cast<ImTextureID>(image->ID),
+                            ImGui::GetCursorScreenPos(),
+                            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
+                                   ImGui::GetCursorScreenPos().y + imageSize.y ),
+                            ImVec2(0, 1),
+                            ImVec2(1, 0)
+                    );
+
+                    if (ImGui::Selectable("##", false, 0, imageSize)) {
+                    }
                 }
                 displayedImage++;
             }
         }
+        ImGui::EndChild();
     }
 
     ImGui::NewLine();

@@ -124,6 +124,8 @@ public:
 
     std::string getRelativePath() {return this->texturePath.relative_path();};
 
+    std::string getFileName();
+
 
     unsigned char* getData() {return this->textureData;}
 protected:
