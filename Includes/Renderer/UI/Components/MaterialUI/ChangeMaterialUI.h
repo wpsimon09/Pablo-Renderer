@@ -18,13 +18,18 @@ public:
 
     static void displayExistingMaterials(std::shared_ptr<Material> &_selectedID);
 private:
+    static void displayColourChange();
+
     static inline std::shared_ptr<Material> selectedID = nullptr;
     static inline MATERIAL selectedMaterial;
     inline static  std::string material [] = {
-            "TEXTURE MAP", "COLOR"
+            "ALL MATERIALS","TEXTURE MAP", "COLOR"
     };
     inline static std::string texturesDirectory;
+
     inline static glm::vec3 color = glm::vec3(0.0f, 0.0F, 0.0F);
+    inline static bool supportsAreaLight = false;
+    inline static bool isIBLOn = false;
 };
 
 

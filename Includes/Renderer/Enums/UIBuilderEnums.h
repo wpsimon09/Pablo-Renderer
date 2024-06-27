@@ -14,9 +14,9 @@ enum GEOMETRY{
 };
 
 enum MATERIAL {
-    PBR_TEXTURE_MAPS = 0,
-    COLOR = 1,
-    PBR_TEXTURE_BUNDLE = 2
+    ALL = 0,
+    PBR_TEXTURE_MAPS = 1,
+    COLOR = 2
 };
 
 

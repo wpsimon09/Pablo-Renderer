@@ -11,7 +11,7 @@ void ChangeMaterialUI::display(Renderable *renderable) {
     ImGui::SetWindowSize(ImVec2(400, 400));
     ImGui::Text("Select material");
     if (ImGui::BeginCombo("Material", material[selectedMaterial].c_str())) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             if (ImGui::Selectable(material[i].c_str(), selectedMaterial == i)) {
                 selectedMaterial = (MATERIAL) i;
             }
@@ -20,15 +20,25 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         ImGui::EndCombo();
     }
 
-    if (selectedMaterial == PBR_TEXTURE_MAPS) {
+    if (selectedMaterial == ALL) {
         displayExistingMaterials(ChangeMaterialUI::selectedID);
     }
 
-
     ImGui::NewLine();
     if (ImGui::Button("Apply")) {
-        if(selectedID !=nullptr)
-            renderable->setMaterial(selectedID);
+        switch(selectedMaterial) {
+            case ALL: {
+                if(selectedID !=nullptr) {
+                    renderable->setMaterial(selectedID);
+                    break;
+                }
+            }
+            case COLOR: {
+                renderable->setMaterial(std::make_shared<PBRColor>());
+                break;
+            }
+            default:{break;}
+        }
     }
 
     if (ImGui::Button("Cancel")) {
@@ -84,4 +94,11 @@ void ChangeMaterialUI::displayExistingMaterials(std::shared_ptr<Material> &_sele
         }
     }
     ImGui::EndChild();
+}
+
+void ChangeMaterialUI::displayColourChange() {
+    ImGui::Begin("ColourChane");
+        ImGui::SeparatorText("Create a new material");
+
+    ImGui::End();
 }
