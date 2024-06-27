@@ -20,6 +20,9 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         ImGui::EndCombo();
     }
 
+    ImGui::SeparatorText("Existing materials");
+    ImGui::Dummy(ImVec2(30,0));
+
     if (selectedMaterial == ALL) {
         displayExistingMaterials(ChangeMaterialUI::selectedID);
     }
@@ -47,12 +50,10 @@ void ChangeMaterialUI::display(Renderable *renderable) {
     ImGui::End();
 }
 
-void ChangeMaterialUI::displayExistingMaterials(std::shared_ptr<Material> &_selectedID) {
+void ChangeMaterialUI::displayExistingMaterials(std::shared_ptr<Material> &_selectedID, MATERIAL mat) {
     auto allMaterials = AssetsManager::getInstance()->getExistingMaterisl();
     int columnsTotal = 3;
     int displayedMaterial = 0;
-    ImGui::SeparatorText("Existing materials");
-    ImGui::Dummy(ImVec2(30,0));
     ImGui::BeginChild("Texture", ImVec2(300, 200));
 
     ImGui::SetItemTooltip(allMaterials[0]->getName().c_str());
@@ -68,7 +69,7 @@ void ChangeMaterialUI::displayExistingMaterials(std::shared_ptr<Material> &_sele
 
                 ImVec2 imageSize (60,60);
                 ImGui::SetItemAllowOverlap();
-                if(material->getAlbedoTexture() != nullptr){
+                if(material->getAlbedoTexture() != nullptr && (mat == ALL || mat == PBR_TEXTURE_MAPS) ){
 
                     ImGui::GetWindowDrawList()->AddImage(
                         reinterpret_cast<ImTextureID>(material->getAlbedoTexture()->ID),
@@ -97,8 +98,5 @@ void ChangeMaterialUI::displayExistingMaterials(std::shared_ptr<Material> &_sele
 }
 
 void ChangeMaterialUI::displayColourChange() {
-    ImGui::Begin("ColourChane");
-        ImGui::SeparatorText("Create a new material");
-
-    ImGui::End();
+    displayExistingMaterials(selectedID, COLOR);
 }
