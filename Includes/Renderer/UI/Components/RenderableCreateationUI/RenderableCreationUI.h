@@ -18,10 +18,6 @@ private:
             "CUBE", "SPHERE", "PLANE", "MODEL"
     };
 
-    inline static  std::string material [] = {
-            "PBR_TEXTURE_MAPS", "COLOR"
-    };
-
 public:
     static inline bool hasFocus = false;
     static void display();

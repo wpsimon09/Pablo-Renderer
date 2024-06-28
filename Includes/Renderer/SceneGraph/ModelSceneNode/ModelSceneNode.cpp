@@ -73,15 +73,16 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     std::shared_ptr<Material> renderableMaterial;
     bool hasModelTextures;
     if(this->material == nullptr){
-        renderableMaterial = this->processRenderableMaterial(meshMaterial);
+        renderableMaterial = AssetsManager::getInstance()->getMaterialByAssimpIndex(mesh->mMaterialIndex);
+        if(renderableMaterial == nullptr) {
+            renderableMaterial = this->processRenderableMaterial(meshMaterial, mesh->mMaterialIndex);
+        }
         hasModelTextures = true;
     }
     else{
         renderableMaterial = this->material;
         hasModelTextures = false;
     }
-
-    AssetsManager::getInstance()->storeMaterial(renderableMaterial);
 
     /***
      * @brief Assembling material and geomtry together
@@ -98,7 +99,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     this->addChild(std::move(processedNode));
 }
 
-std::shared_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial) {
+std::shared_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial, unsigned int materialIndex) {
     std::shared_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
 
     std::vector<std::unique_ptr<PBRMaterial<Texture2D>>> materialTextures;
@@ -130,6 +131,8 @@ std::shared_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     }
 
     mat->hasEmissionTexture = ModelLoaderHelper::hasEmmision();
+    mat->setAssimpMaterialIndex(materialIndex);
+    AssetsManager::getInstance()->storeMaterial(mat);
 
     return std::move(mat);
 }

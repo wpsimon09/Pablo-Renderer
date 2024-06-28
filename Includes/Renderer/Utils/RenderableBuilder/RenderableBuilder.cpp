@@ -14,7 +14,12 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
 
         std::string name = text;
 
-        material = selectedMateial;
+        if(selectedMateial == nullptr)
+            material = std::make_shared<PBRColor>();
+        else {
+            material = selectedMateial;
+        }
+
 
         if(selectedGeometry != MODEL){
             /***

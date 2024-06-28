@@ -127,6 +127,24 @@ std::vector<std::shared_ptr<Material>> AssetsManager::getExistingMaterisl(MATERI
     return second;
 }
 
+std::shared_ptr<Material> AssetsManager::getMaterialByAlbedoTexture(std::string fileName) {
+    for(auto material: loadedMaterials) {
+        if(material.second->getAlbedoTexture()->getFileName() == fileName) {
+            return material.second;
+        }
+    }
+    return nullptr;
+}
+
+std::shared_ptr<Material> AssetsManager::getMaterialByAssimpIndex(unsigned int assimpIndex) {
+    for(auto material: loadedMaterials) {
+        if(material.second->getAssimpIndex() == assimpIndex) {
+            return material.second;
+        }
+    }
+    return nullptr;
+}
+
 
 
 

@@ -11,11 +11,18 @@
 #include "Renderer/Utils/VAO/VAO.h"
 #include "memory"
 
+class GeometryID {
+public:
+ static inline int ID;
+};
+
 /***
  * Represents geometrical information about object
  */
 class Geometry {
 public:
+    Geometry() {this->ID = GeometryID::ID++;}
+
     /**
      *
      * @return returns index of the vertex of the geometry
@@ -43,13 +50,25 @@ public:
      */
     virtual std::vector<glm::vec3>getAreaLightCornerPoints();
 
+    unsigned int getID() {return ID;};
+
     std::string getName() const;
 
     virtual ~Geometry(){};
     unsigned int numVerticies;
     unsigned int numIndecies;
 
-protected:
+    friend bool operator==(const Geometry &lhs, const Geometry &rhs) {
+     return lhs.ID == rhs.ID;
+    }
+
+    friend bool operator!=(const Geometry &lhs, const Geometry &rhs) {
+     return !(lhs == rhs);
+    }
+
+   protected:
+    unsigned int ID;
+
     /***
      * How to render the geometry: GL_TRIANGLES, GL_LINES, GL_TRIANGLE_STRIP etc...
      */

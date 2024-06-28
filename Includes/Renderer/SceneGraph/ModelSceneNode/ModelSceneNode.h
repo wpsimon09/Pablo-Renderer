@@ -53,13 +53,13 @@ private:
 
     bool hasEmissionTexture = false;
 
+    std::string albedoPaths = "";
+
     int processedRenderableCount = 0;
 
     std::shared_ptr<Material> material = nullptr;
 
     std::shared_ptr<Shader> shader;
-
-    std::vector<std::shared_ptr<Texture2D>> loadedTextures;
 
     std::vector<std::thread> threads;
 
@@ -78,7 +78,7 @@ private:
      */
     void processRenderable(aiMesh *mesh, const aiScene *scene);
 
-    std::shared_ptr<PBRTextured> processRenderableMaterial(aiMaterial *meshMaterial);
+    std::shared_ptr<PBRTextured> processRenderableMaterial(aiMaterial *meshMaterial, unsigned int materialIndex);
 
 
 };

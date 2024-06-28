@@ -58,6 +58,15 @@ public:
 
     std::vector<std::shared_ptr<Material>> getExistingMaterisl(MATERIAL materialType = ALL);
 
+    /**
+     * @brief Retrieves the material with the corresponding texture
+     * @param fileName file name of the albeod texture to check against
+     * @return allreayLoaded PBR Textured material;
+     */
+    std::shared_ptr<Material> getMaterialByAlbedoTexture(std::string fileName);
+
+    std::shared_ptr<Material> getMaterialByAssimpIndex(unsigned int assimpIndex);
+
     ~AssetsManager() = default;
 
 private:
@@ -85,7 +94,7 @@ private:
      * this paramater is for the purpose of multy-threading without creating additiona OpenGL contexts
      * default value is True, if false the texture Data will be copied and stored inside the texture instance.
      * It is up to the user to ensure that the texture will acctualy by loaded to OpenGL in order to be used.
-     * @return shared pointer to the texture instance
+     * @return shared pointer to the loaded texture instance
      */
     std::shared_ptr<Texture2D> loadSingleTexture(const char *path, bool toGL = true);
 

@@ -18,7 +18,7 @@ void RenderableCreationUI::display() {
     hasFocus = ImGui::IsWindowFocused();
 
 
-    ImGui::SetWindowSize(ImVec2(400, 400));
+    ImGui::SetWindowSize(ImVec2(400, 500));
 
     ImGui::InputText("Name",RenderableBuilder::text, 32);
 

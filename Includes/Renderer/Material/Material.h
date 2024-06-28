@@ -125,6 +125,9 @@ public:
 
     MATERIAL getType() const {return this->materialType;}
 
+    void setAssimpMaterialIndex(unsigned int mMaterialIndex) {this->assimpMaterialIndex = (int)mMaterialIndex;}
+    int getAssimpIndex() {return this->assimpMaterialIndex;}
+
     std::shared_ptr<Shader> shader;
 
     bool supportsIBL = false;
@@ -140,6 +143,12 @@ protected:
      * @brief Unique identifier of the material
      */
     unsigned int ID = 0;
+
+    /**
+     * @brief Represents assimp material index, this is used during model loading to determine if the material is allready loaded
+     * somewhere in the Engine
+     */
+    int assimpMaterialIndex = -1;
 
     std::string name;
 
