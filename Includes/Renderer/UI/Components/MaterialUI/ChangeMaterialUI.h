@@ -20,6 +20,7 @@ public:
 private:
     static void displayColourChange();
 
+    static inline std::vector<std::shared_ptr<Material>> allMaterials;
     static inline std::shared_ptr<Material> selectedID = nullptr;
     static inline MATERIAL selectedMaterial;
     inline static  std::string material [] = {

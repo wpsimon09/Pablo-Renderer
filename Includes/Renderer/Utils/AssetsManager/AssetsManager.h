@@ -56,7 +56,7 @@ public:
 
     void storeMaterial(std::shared_ptr<Material> newMaterial);
 
-    std::vector<std::shared_ptr<Material>> getExistingMaterisl();
+    std::vector<std::shared_ptr<Material>> getExistingMaterisl(MATERIAL materialType = ALL);
 
     ~AssetsManager() = default;
 

@@ -23,6 +23,7 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
     this->hasEmissionTexture = false;
 
     this->material = std::make_unique<Texture2DArray>();
+    this->materialType = PBR_TEXTURE_MAPS;
 
     if (!pathToTheDirectory.empty()) {
         auto assetsManagerInstance = AssetsManager::getInstance();

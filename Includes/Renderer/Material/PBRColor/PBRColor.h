@@ -9,6 +9,7 @@
 #include "memory"
 #include "imgui.h"
 
+
 /***
  * Class representing material that has no textures apply to it
  */

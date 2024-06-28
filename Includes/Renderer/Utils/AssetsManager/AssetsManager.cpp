@@ -116,11 +116,12 @@ const std::vector<std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures()
     return second;
 }
 
-std::vector<std::shared_ptr<Material>> AssetsManager::getExistingMaterisl() {
+std::vector<std::shared_ptr<Material>> AssetsManager::getExistingMaterisl(MATERIAL materialType) {
     std::vector<std::shared_ptr<Material>> second;
 
     for (auto material : loadedMaterials) {
-        second.emplace_back(material.second);
+        if(materialType == ALL || materialType == material.second->getType())
+            second.emplace_back(material.second);
     }
 
     return second;

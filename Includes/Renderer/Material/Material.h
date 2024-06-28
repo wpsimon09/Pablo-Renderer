@@ -12,6 +12,7 @@
 #include "memory"
 #include "Renderer/Utils/Texture/Texture2D/Texture2D.h"
 #include "Renderer/Utils/ShaderManager/ShaderManager.h"
+#include  "Renderer/Enums/UIBuilderEnums.h"
 
 class MaterialID {
 public:
@@ -122,6 +123,8 @@ public:
 
     std::string getName() {return this->name;}
 
+    MATERIAL getType() const {return this->materialType;}
+
     std::shared_ptr<Shader> shader;
 
     bool supportsIBL = false;
@@ -139,6 +142,8 @@ protected:
     unsigned int ID = 0;
 
     std::string name;
+
+   MATERIAL materialType;
 public:
     int getSamplerCount() const { return samplerCount; }
 
