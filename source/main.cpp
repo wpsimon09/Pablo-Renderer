@@ -21,7 +21,6 @@ int SCR_HEIGHT = 1080;
 
 
 int main() {
-
     auto pabloRenderer = PabloRenderer::getInstance();
     pabloRenderer->init();
 

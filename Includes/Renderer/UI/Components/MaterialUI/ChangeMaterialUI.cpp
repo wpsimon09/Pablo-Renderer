@@ -20,9 +20,6 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         ImGui::EndCombo();
     }
 
-    ImGui::SeparatorText("Existing materials");
-    ImGui::Dummy(ImVec2(30,0));
-
     displayExistingMaterials(ChangeMaterialUI::selectedID, selectedMaterial);
 
     ImGui::NewLine();
@@ -44,6 +41,9 @@ void ChangeMaterialUI::displayExistingMaterials(std::shared_ptr<Material> &_sele
     int columnsTotal = 3;
     int displayedMaterial = 0;
     ImGui::BeginChild("Texture", ImVec2(300, 200));
+
+    ImGui::SeparatorText("Existing materials");
+    ImGui::Dummy(ImVec2(30,0));
 
     ImGui::SetItemTooltip(allMaterials[0]->getName().c_str());
 

@@ -5,6 +5,7 @@
 #include "RenderableCreationUI.h"
 #include "Renderer/PabloRenderer.h"
 #include "FIleWindowUI/FileWindowUI.h"
+#include "Renderer/UI/Components/MaterialUI/ChangeMaterialUI.h"
 #include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
 
 
@@ -22,7 +23,7 @@ void RenderableCreationUI::display() {
     ImGui::InputText("Name",RenderableBuilder::text, 32);
 
     ImGui::NewLine();
-    ImGui::Text("Select properties of material");
+    ImGui::SeparatorText("Select Geometry");
     if(ImGui::BeginCombo("Geometry", geometry[RenderableBuilder::selectedGeometry].c_str())){
         for(int i = 0; i<4; i++){
             if(ImGui::Selectable(geometry[i].c_str(), RenderableBuilder::selectedGeometry==i)){
@@ -38,9 +39,7 @@ void RenderableCreationUI::display() {
 
         ImGui::Text("Selected model path:");
         ImGui::Text(RenderableBuilder::modelOath.c_str());
-    }
 
-    if(RenderableBuilder::selectedGeometry == MODEL){
         ImGui::Checkbox("Keep model material", &RenderableBuilder::keepModelMaterial);
     }
 
@@ -48,25 +47,7 @@ void RenderableCreationUI::display() {
 
     //display only if the material is selectable
     if(!RenderableBuilder::keepModelMaterial || RenderableBuilder::selectedGeometry != MODEL) {
-        ImGui::Text("Select material");
-        if(ImGui::BeginCombo("Material", material[RenderableBuilder::selectedMateial].c_str())){
-            for(int i = 0; i<2; i++){
-                if(ImGui::Selectable(material[i].c_str(), RenderableBuilder::selectedMateial==i)){
-                    RenderableBuilder::selectedMateial= (MATERIAL)i;
-                }
-            }
-
-            ImGui::EndCombo();
-        }
-
-        if(RenderableBuilder::selectedMateial == COLOR){
-            ImGui::ColorPicker3("Material color", &RenderableBuilder::color.x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
-        }
-        else if (RenderableBuilder::selectedMateial == PBR_TEXTURE_MAPS){
-            FileWindowUI::display(true);
-            ImGui::Text("Selected texture directory:");
-            ImGui::Text(RenderableBuilder::textureDirectory.c_str());
-        }
+        ChangeMaterialUI::displayExistingMaterials(RenderableBuilder::selectedMateial, ALL);
     }
 
 

@@ -14,22 +14,7 @@ std::unique_ptr<SceneNode> RenderableBuilder::buildRenderable() {
 
         std::string name = text;
 
-        switch(selectedMateial){
-
-            case PBR_TEXTURE_MAPS:{
-                material = std::make_shared<PBRTextured>(supportsAreaLight,textureDirectory,false);
-                break;
-            }
-            case COLOR:{
-                material = std::make_shared<PBRColor>(color, supportsIBL, supportsAreaLight);
-                break;
-            }
-            default:{
-                break;
-            }
-
-        }
-
+        material = selectedMateial;
 
         if(selectedGeometry != MODEL){
             /***
