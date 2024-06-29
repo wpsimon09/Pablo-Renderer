@@ -11,20 +11,10 @@
 inline void DisplayMaterialTexturedUI(std::vector<std::shared_ptr<PBRMaterial<Texture2D>>> textures){
         for (auto &texture: textures) {
             if(texture->type != nullptr && texture != nullptr && texture->type->wasFound){
-                ImGui::Text(texture->shaderName.c_str());
-                ImVec2 imageSize((float) texture->type->texWidth / 30, (float) texture->type->texHeight / 30);
+                ImVec2 imageSize((float) 60, (float) 60);
+                ImGui::ImageButton(texture->shaderName.c_str(), reinterpret_cast<ImTextureID>(texture->type->ID), imageSize);
                 ImGui::SameLine(imageSize.x + 20);
-                    ImGui::BeginChild(texture->shaderName.c_str(), imageSize);
-                    ImGui::GetWindowDrawList()->AddImage(
-
-                            reinterpret_cast<ImTextureID>(texture->type->ID),
-                            ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-                            ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
-                                   ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
-                            ImVec2(0, 1),
-                            ImVec2(1, 0)
-                    );
-                    ImGui::EndChild();
+                ImGui::Text(texture->shaderName.c_str());
             }
         }
 }

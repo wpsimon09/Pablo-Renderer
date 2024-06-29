@@ -27,7 +27,7 @@ public:
      * @param isPBRMaterial is the loaded texture part of the PBR material workflow ?
      * @note texture should end with .png
      */
-    explicit Texture2D(const char *path, bool isPBRMaterial = false, bool loadToGl=true);
+    explicit Texture2D(const char *path, bool isPBRMaterial = false, bool loadToGl=true, MATERIAL_TEXTURE_TYPE textureType = UNDEFINED );
 
     /***
      * Creates texture with no color data but just with allocated memory
@@ -49,6 +49,10 @@ public:
     GLenum getInternalFormat(){return this->internalFormat;};
 
     void passToOpenGL() override;
+
+    MATERIAL_TEXTURE_TYPE getMaterialTextureType() {return this->textureType;}
+
+    void setTextureType(MATERIAL_TEXTURE_TYPE newType){this->textureType  = newType;};
 
     ~Texture2D() = default;
 private:

@@ -87,7 +87,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     fullPath = absolutePath + pathToTheDirectory + "/albedo" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "albedoMap", 0));
+            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "albedoMap", 0, MATERIAL_ALBEDO));
 
     /**
      * Metalness, roughness, ao maps packed in one texture
@@ -95,7 +95,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     fullPath = absolutePath + pathToTheDirectory + "/arm" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "armMap", 1));
+            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "armMap", 1, MATERIAL_ARM));
 
     /***
     * @brief Normal map
@@ -103,16 +103,9 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     fullPath = absolutePath + pathToTheDirectory + "/normal" + fileFormat;
     pathsToLoad.push_back(fullPath);
     this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "normalMap", 2));
+            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "normalMap", 2, MATERIAL_NORMAL));
 
-    /***
-     * @brief Depth map
-     */
-    fullPath = absolutePath + pathToTheDirectory + "/displacement" + fileFormat;
-    pathsToLoad.push_back(fullPath);
-    this->addTexture(
-            std::make_unique<PBRMaterial<Texture2D>>(nullptr, shaderNamingConvention + "displacementMap",
-                                                    3));
+
     /***
      * @brief Preform load
      */
@@ -120,6 +113,7 @@ void PBRTextured::loadMaterials(AssetsManager* assetsManagerInstance,std::string
     for(int i = 0; i<loadedTextures.size(); i++){
         if(loadedTextures[i]->wasFound) {
             textures[i]->type = loadedTextures[i];
+            textures[i]->type->setTextureType(textures[i]->material_type);
         }
     }
 }

@@ -4,10 +4,11 @@
 
 #include "Texture2D.h"
 
-Texture2D::Texture2D(const char *path, bool isPBRMaterial, bool loadToGl):TextureBase() {
+Texture2D::Texture2D(const char *path, bool isPBRMaterial,bool loadToGl, MATERIAL_TEXTURE_TYPE textureType ):TextureBase() {
     this->isPBRMaterial = isPBRMaterial;
     this->texturePath = path;
     this->type = GL_TEXTURE_2D;
+    this->textureType = textureType;
     this->type_string = "GL_TEXTURE_2D";
     this->internalFormat = GL_RGBA;
     if(loadToGl){

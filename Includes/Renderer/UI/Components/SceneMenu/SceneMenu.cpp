@@ -10,6 +10,7 @@
 #include "Renderer/UI/Components/RenderGraphUI/RenderGraphUI.h"
 #include "Renderer/UI/Components/EnviromentUI/EnviromentUI.h"
 #include <algorithm>
+
 // recursion counting mechanism for selecting right renderables
 int i = 0;
 
@@ -91,10 +92,6 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
 
     void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode, int indentLevel) {
 
-    for (int i = 0; i < indentLevel; ++i) {
-        ImGui::Indent();
-    }
-
     auto& renderable = sceneNode.getRenderable();
     if (renderable != nullptr) {
         auto name = renderable->name;
@@ -116,7 +113,4 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
         displaySceneNodeMenu(*childNode, indentLevel + 1);
     }
 
-    for (int i = 0; i < indentLevel; ++i) {
-        ImGui::Unindent();
-    }
     }
