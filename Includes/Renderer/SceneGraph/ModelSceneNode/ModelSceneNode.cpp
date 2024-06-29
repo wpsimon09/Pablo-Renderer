@@ -36,10 +36,10 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
         AssetsManager::getInstance()->storeMaterial(std::move(modelMaterial.second));
     }
 
+    importer.FreeScene();
 
     std::cout<<"Model loaded in:"<< StopWatch::GetTimeInSec() << " sec"<< std::endl;
     ModelLoaderHelper::clearLoadedTextures();
-
 }
 
 void ModelSceneNode::processNode(aiNode *node, const aiScene *scene) {
