@@ -32,6 +32,11 @@ ModelSceneNode::ModelSceneNode(std::string path, bool supportsAreaLight, std::sh
 
     StopWatch::End();
 
+    for(auto &modelMaterial:this->modelMaterials) {
+        AssetsManager::getInstance()->storeMaterial(std::move(modelMaterial.second));
+    }
+
+
     std::cout<<"Model loaded in:"<< StopWatch::GetTimeInSec() << " sec"<< std::endl;
     ModelLoaderHelper::clearLoadedTextures();
 
@@ -73,7 +78,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     std::shared_ptr<Material> renderableMaterial;
     bool hasModelTextures;
     if(this->material == nullptr){
-        renderableMaterial = AssetsManager::getInstance()->getMaterialByAssimpIndex(mesh->mMaterialIndex);
+        renderableMaterial = checkIfMaterialIsLoadedAndRetrieveIt(mesh->mMaterialIndex);
         if(renderableMaterial == nullptr) {
             renderableMaterial = this->processRenderableMaterial(meshMaterial, mesh->mMaterialIndex);
         }
@@ -98,6 +103,7 @@ void ModelSceneNode::processRenderable(aiMesh *mesh, const aiScene *scene) {
     this->processedRenderableCount++;
     this->addChild(std::move(processedNode));
 }
+
 
 std::shared_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial *meshMaterial, unsigned int materialIndex) {
     std::shared_ptr<PBRTextured> mat = std::make_unique<PBRTextured>(this->supportsAreaLight);
@@ -131,8 +137,8 @@ std::shared_ptr<PBRTextured>ModelSceneNode::processRenderableMaterial(aiMaterial
     }
 
     mat->hasEmissionTexture = ModelLoaderHelper::hasEmmision();
-    mat->setAssimpMaterialIndex(materialIndex);
-    AssetsManager::getInstance()->storeMaterial(mat);
+
+    this->modelMaterials.insert(std::make_pair(materialIndex, mat));
 
     return std::move(mat);
 }
@@ -154,7 +160,13 @@ void ModelSceneNode::supportsIbl(bool supportsIBL) {
     }
 }
 
+std::shared_ptr<Material> ModelSceneNode::checkIfMaterialIsLoadedAndRetrieveIt(unsigned int materialIndex) {
+    auto loadedMaterial = this->modelMaterials.find(materialIndex);
 
+    if(loadedMaterial != modelMaterials.end())
+        return loadedMaterial->second;
+    return nullptr;
+}
 
 
 

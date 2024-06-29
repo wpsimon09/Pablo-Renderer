@@ -63,6 +63,8 @@ private:
 
     std::vector<std::thread> threads;
 
+    std::map<unsigned int, std::shared_ptr<Material>> modelMaterials;
+
 
     /***
      * Process node of the model from the assets
@@ -77,6 +79,8 @@ private:
      * @param scene scene in which the model is located
      */
     void processRenderable(aiMesh *mesh, const aiScene *scene);
+
+    std::shared_ptr<Material> checkIfMaterialIsLoadedAndRetrieveIt(unsigned int materialIndex);
 
     std::shared_ptr<PBRTextured> processRenderableMaterial(aiMaterial *meshMaterial, unsigned int materialIndex);
 
