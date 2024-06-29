@@ -19,14 +19,7 @@ void EnviromentUI::display() {
 
     ImVec2 imageSize((float) iblPiplineInstance->getHDR()->texWidth / 12, (float) iblPiplineInstance->getHDR()->texHeight / 12);
         ImGui::BeginChild("HDRPreview", imageSize, true);
-        ImGui::GetWindowDrawList()->AddImage(
-                (void *) iblPiplineInstance->getHDR()->ID,
-                ImGui::GetCursorScreenPos(), // Use cursor screen position as top-left corner
-                ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x ,
-                       ImGui::GetCursorScreenPos().y + imageSize.y ), // Use bottom-right corner
-                ImVec2(0, 1),
-                ImVec2(1, 0)
-        );
+    ImGui::Image(reinterpret_cast<ImTextureID>(iblPiplineInstance->getHDR()->ID), imageSize, ImVec2(0, 1),ImVec2(1, 0));
         ImGui::EndChild();
 
     instance->getScene()->getSkyBox().renderUI();
