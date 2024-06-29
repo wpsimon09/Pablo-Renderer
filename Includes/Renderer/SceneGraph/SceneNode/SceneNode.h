@@ -90,10 +90,18 @@ public:
     bool &getVisibility() { return isVisible; }
 
     /**
+     * @brief Retrieves the parental status of the scene node :D
+     * @return ture if the scene node is parent otherwise false
+     */
+    bool isParentNode(){return this->parent == nullptr;}
+
+
+    /**
      * @brief Retrieves ID of the scene node
      * @return Unique ID of the scene node
      */
     float getID() { return this->id; }
+
 
 
     /*

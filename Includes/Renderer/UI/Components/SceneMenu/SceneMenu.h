@@ -19,7 +19,7 @@ private:
 
     inline static float selectedSceneNodeFromScene = -1;
 
-    static void displaySceneNodeMenu(SceneNode& sceneNode);
+    static void displaySceneNodeMenu(SceneNode& sceneNode, int indentLevel = 0);
 public:
     inline static bool showRendererCreation = false;
     inline static bool showEnviromentMenu = false;

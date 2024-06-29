@@ -89,12 +89,17 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     }
 }
 
-void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
-    auto& renderalbe = sceneNode.getRenderable();
-    if(renderalbe != nullptr){
-        auto name  = sceneNode.getRenderable()->name ;
-        name += " " + std::to_string((int)sceneNode.getID());
-        if(name.empty()){
+    void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode, int indentLevel) {
+
+    for (int i = 0; i < indentLevel; ++i) {
+        ImGui::Indent();
+    }
+
+    auto& renderable = sceneNode.getRenderable();
+    if (renderable != nullptr) {
+        auto name = renderable->name;
+        name += " " + std::to_string(static_cast<int>(sceneNode.getID()));
+        if (name.empty()) {
             name = "##";
         }
         if (ImGui::Selectable(name.c_str(), selectedSceneNode == sceneNode.getID()) || sceneNode.getID() == selectedSceneNode) {
@@ -102,13 +107,16 @@ void SceneMenu::displaySceneNodeMenu(SceneNode &sceneNode) {
             sceneNode.isSelected = true;
             MaterialUI::renderable = sceneNode.getRenderable().get();
             SceneNodeUI::sceneNode = &sceneNode;
-        } else
+        } else {
             sceneNode.isSelected = false;
+        }
     }
 
-    i++;
-
-    for(auto &childNode: sceneNode.getChildren()){
-        SceneMenu::displaySceneNodeMenu(*childNode);
+    for (auto& childNode : sceneNode.getChildren()) {
+        displaySceneNodeMenu(*childNode, indentLevel + 1);
     }
-}
+
+    for (int i = 0; i < indentLevel; ++i) {
+        ImGui::Unindent();
+    }
+    }
