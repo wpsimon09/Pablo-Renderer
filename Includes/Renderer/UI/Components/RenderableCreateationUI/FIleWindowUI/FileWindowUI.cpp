@@ -17,7 +17,8 @@ std::string FileWindowUI::display(bool getDirectory ,int widht, int heigh) {
     if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
         if (ImGuiFileDialog::Instance()->IsOk()) {
             //ImGui::SetNextWindowFocus();
-            //ImGui::SetNextWindowFocus();
+
+            ImGui::SetNextWindowFocus();
             RenderableCreationUI::hasFocus = true;
             //ImGui::SetNextWindowSize(ImVec2((float)widht,(float) heigh));
             if(getDirectory){

@@ -56,6 +56,8 @@ public:
 
     void storeMaterial(std::shared_ptr<Material> newMaterial);
 
+    void storeTexture(std::shared_ptr<Texture2D> newTexture);
+
     std::vector<std::shared_ptr<Material>> getExistingMaterisl(MATERIAL materialType = ALL);
 
     /**

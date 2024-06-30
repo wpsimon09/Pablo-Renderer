@@ -9,7 +9,6 @@ void PBRTexturedMaterialUI::display(std::vector<std::shared_ptr<PBRMaterial<Text
     for (auto &texture: materialTextures) {
         if(texture->type != nullptr && texture != nullptr && texture->type->wasFound){
             ImVec2 imageSize((float) 60, (float) 60);
-            ImGui::BeginChild("ChangeSection");
             ImGui::Image(reinterpret_cast<ImTextureID>(texture->type->ID), imageSize);
             ImGui::SameLine(imageSize.x + 20);
             ImGui::Text(texture->shaderName.c_str());
@@ -18,7 +17,6 @@ void PBRTexturedMaterialUI::display(std::vector<std::shared_ptr<PBRMaterial<Text
                 selectedMaterial = texture;
                 canOpenChangeUI = true;
             }
-            ImGui::EndChild();
         }
     }
     if(canOpenChangeUI)

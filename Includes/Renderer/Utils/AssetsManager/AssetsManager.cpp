@@ -106,6 +106,12 @@ void AssetsManager::storeMaterial(std::shared_ptr<Material> newMaterial) {
     }
 }
 
+void AssetsManager::storeTexture(std::shared_ptr<Texture2D> newTexture) {
+    if(!loadedTextures.contains(newTexture->getFullPath())) {
+        loadedTextures.insert(std::make_pair(newTexture->getFullPath(), std::move(newTexture)));
+    }
+}
+
 const std::vector<std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures() {
     std::vector<std::shared_ptr<Texture2D>> second;
 
@@ -128,7 +134,7 @@ std::vector<std::shared_ptr<Material>> AssetsManager::getExistingMaterisl(MATERI
 }
 
 std::shared_ptr<Material> AssetsManager::getMaterialByAlbedoTexture(std::string fileName) {
-    for(auto material: loadedMaterials) {
+    for(auto &material: loadedMaterials) {
         if(material.second->getAlbedoTexture()->getFileName() == fileName) {
             return material.second;
         }
