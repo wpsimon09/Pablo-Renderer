@@ -15,11 +15,7 @@
 class ChangeMaterialUI{
 public:
     static void display(Renderable *renderable);
-
-    static void displayExistingMaterials(std::shared_ptr<Material> &_selectedID, MATERIAL mat = ALL);
 private:
-    static void displayColourChange();
-
     static void displayCreateNewMaterial();
 
     static inline std::vector<std::shared_ptr<Material>> allMaterials;
