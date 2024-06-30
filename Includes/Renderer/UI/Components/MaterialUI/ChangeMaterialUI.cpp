@@ -58,7 +58,6 @@ void ChangeMaterialUI::displayCreateNewMaterial() {
     }
 
         if(selectedMaterialForCreation == PBR_TEXTURE_MAPS) {
-
             ImGui::SeparatorText("Select directory with texture maps");
             texturesDirectory = FileWindowUI::display(true);
             ImGui::SameLine();

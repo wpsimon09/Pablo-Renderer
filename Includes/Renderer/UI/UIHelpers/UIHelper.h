@@ -13,7 +13,7 @@ class UIHelper {
 public:
     static void displayExistingMaterials(std::shared_ptr<Material> &_selectedID, MATERIAL mat = ALL);
 
-    static void displayExistingTextures(MATERIAL_TEXTURE_TYPE filter = UNDEFINED);
+    static void displayExistingTextures(std::shared_ptr<Texture2D> &_selectedID, MATERIAL_TEXTURE_TYPE filter = UNDEFINED);
 
     template<typename T>
     static void displayItemsInGrid(std::vector<T> items);
