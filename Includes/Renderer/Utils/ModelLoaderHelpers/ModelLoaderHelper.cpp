@@ -80,6 +80,7 @@ void ModelLoaderHelper::processMaterialTexture(aiMaterial *material, MaterialToP
             ModelLoaderHelper::hasEmmisionTexture = true;
         }
         std::shared_ptr<Texture2D> newTexture = assetsManagerInstance->getTextureOnThread((directory +"/"+path.C_Str()).c_str());
+        newTexture->setTextureType(materialToLoad.material_texture_type);
         auto newMaterial = std::make_unique<PBRMaterial<Texture2D>>(newTexture, materialToLoad.shaderName, materialToLoad.samplerNumber, materialToLoad.material_texture_type);
         renderableMaterialTextures.emplace_back(std::move(newMaterial));
     }

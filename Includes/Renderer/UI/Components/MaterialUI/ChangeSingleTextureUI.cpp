@@ -9,14 +9,14 @@
 void ChangeSingleTextureUI::display(std::shared_ptr<PBRMaterial<Texture2D> > &materialToChange,
                                     MATERIAL_TEXTURE_TYPE textureToChange) {
     ImGui::Begin("Change texture");
-    ImGui::SetWindowSize(ImVec2(350, 260));
-    auto allTextures = AssetsManager::getInstance()->getLoadedTextures();
+    ImGui::SetWindowSize(ImVec2(350, 460));
+    auto allTextures = AssetsManager::getInstance()->getLoadedTextures(textureToChange);
     int rowsTotal = allTextures.size() / 3;
     int columnsTotal = 3;
     int displayedImage = 0;
     ImGui::SeparatorText("Loaded textures");
     ImGui::Dummy(ImVec2(30, 0));
-    ImGui::BeginChild("Texture", ImVec2(300, 130));
+    ImGui::BeginChild("Texture", ImVec2(300, 330));
 
     ImGui::SetItemTooltip(allTextures[0]->getFullPath().c_str());
 
@@ -87,22 +87,4 @@ void ChangeSingleTextureUI::addTextureFromDirectory(MATERIAL_TEXTURE_TYPE textur
         newTexture = AssetsManager::getInstance()->getTexture(newTexturePath);
         selectedID = newTexture;
     }
-
-    if (newTexture != nullptr)
-        if (newTexture->wasFound) {
-            ImGui::SetItemAllowOverlap();
-            ImVec2 imageSize(60, 60);
-            ImGui::GetWindowDrawList()->AddImage(
-                reinterpret_cast<ImTextureID>(newTexture->ID),
-                ImGui::GetCursorScreenPos(),
-                ImVec2(ImGui::GetCursorScreenPos().x + imageSize.x,
-                       ImGui::GetCursorScreenPos().y + imageSize.y),
-                ImVec2(0, 1),
-                ImVec2(1, 0)
-            );
-            std::string label = newTexture->shaderName + std::to_string(newTexture->ID);
-            if (ImGui::Selectable(label.c_str(), newTexture == selectedID, 0, imageSize)) {
-                selectedID = newTexture;
-            }
-        }
 }

@@ -112,11 +112,12 @@ void AssetsManager::storeTexture(std::shared_ptr<Texture2D> newTexture) {
     }
 }
 
-const std::vector<std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures() {
+const std::vector<std::shared_ptr<Texture2D>> AssetsManager::getLoadedTextures(MATERIAL_TEXTURE_TYPE filter) {
     std::vector<std::shared_ptr<Texture2D>> second;
 
     for (auto texture : loadedTextures) {
-        second.emplace_back(texture.second);
+        if(texture.second->getMaterialTextureType() == filter || filter == UNDEFINED)
+            second.emplace_back(texture.second);
     }
 
     return second;

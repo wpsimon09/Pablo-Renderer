@@ -45,9 +45,10 @@ public:
 
     /**
      * @brief Retrieves all loaded textues
-     * @return map of all the textures loaded together with theair paths
+     * @param filter material texture type of the Texture, for example MATERIAL_ALBEDO retrivies only loaded albedo textures
+     * @return vector of all the textures loaded together with their paths
      */
-    const std::vector<std::shared_ptr<Texture2D>> getLoadedTextures();
+    const std::vector<std::shared_ptr<Texture2D>> getLoadedTextures(MATERIAL_TEXTURE_TYPE filter = UNDEFINED);
 
     /**
      * @brief Loades all of the textures that are loaded in assets manager to the OpenGL
