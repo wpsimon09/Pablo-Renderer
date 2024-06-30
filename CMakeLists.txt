@@ -41,6 +41,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Enums/MaterialTextureType.h
         Includes/Renderer/UI/Components/MaterialUI/ChangeSingleTextureUI.cpp
         Includes/Renderer/UI/Components/MaterialUI/ChangeSingleTextureUI.h
+        Includes/Renderer/UI/Components/MaterialUI/PBRTexturedMaterialUI.cpp
+        Includes/Renderer/UI/Components/MaterialUI/PBRTexturedMaterialUI.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

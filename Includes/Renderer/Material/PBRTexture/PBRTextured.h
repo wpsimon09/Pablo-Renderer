@@ -15,7 +15,7 @@
 #include "imgui.h"
 #include "Renderer/Utils/Texture/Texture2D/Texture2DArray.h"
 #include "Renderer/Utils/AssetsManager/AssetsManager.h"
-#include "PBRTexturedUI.h"
+#include "Renderer/UI/Components/MaterialUI/PBRTexturedMaterialUI.h"
 /***
  * Class representing PBR material with textures
  * @inherit Material.h

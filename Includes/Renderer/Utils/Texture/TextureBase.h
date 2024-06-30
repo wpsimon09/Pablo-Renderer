@@ -141,6 +141,13 @@ public:
 
     unsigned char* getData() {return this->textureData;}
 protected:
+    friend bool operator==(const TextureBase &lhs, const TextureBase &rhs) {
+     return lhs.ID == rhs.ID;
+    }
+
+    friend bool operator!=(const TextureBase &lhs, const TextureBase &rhs) {
+     return !(lhs == rhs);
+    }
 
     fs::path texturePath;
 
