@@ -7,7 +7,7 @@
 void ChangeSingleTextureUI::display(std::shared_ptr<PBRMaterial<Texture2D>> &materialToChange,
     MATERIAL_TEXTURE_TYPE textureToChange) {
         ImGui::Begin("Change texture");
-
+        ImGui::SetWindowSize(ImVec2(350, 260));
         auto allTextures = AssetsManager::getInstance()->getLoadedTextures();
         int rowsTotal = allTextures.size() / 3;
         int columnsTotal = 3;

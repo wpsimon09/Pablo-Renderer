@@ -13,7 +13,8 @@ void PBRTexturedMaterialUI::display(std::vector<std::shared_ptr<PBRMaterial<Text
             ImGui::Image(reinterpret_cast<ImTextureID>(texture->type->ID), imageSize);
             ImGui::SameLine(imageSize.x + 20);
             ImGui::Text(texture->shaderName.c_str());
-            if(ImGui::Button("Change")) {
+            std::string label = "Change ##" + texture->shaderName;
+            if(ImGui::Button(label.c_str())) {
                 selectedMaterial = texture;
                 canOpenChangeUI = true;
             }
