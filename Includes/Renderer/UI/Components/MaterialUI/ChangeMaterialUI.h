@@ -20,9 +20,12 @@ public:
 private:
     static void displayColourChange();
 
+    static void displayCreateNewMaterial();
+
     static inline std::vector<std::shared_ptr<Material>> allMaterials;
     static inline std::shared_ptr<Material> selectedID = nullptr;
     static inline MATERIAL selectedMaterial;
+    static inline MATERIAL selectedMaterialForCreation;
     inline static  std::string material [] = {
             "ALL MATERIALS","TEXTURE MAP", "COLOR"
     };
@@ -31,6 +34,7 @@ private:
     inline static glm::vec3 color = glm::vec3(0.0f, 0.0F, 0.0F);
     inline static bool supportsAreaLight = false;
     inline static bool isIBLOn = false;
+    inline static bool canShowCreationOfNewMaterial = false;
 };
 
 
