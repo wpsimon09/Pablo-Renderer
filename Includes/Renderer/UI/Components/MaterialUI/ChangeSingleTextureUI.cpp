@@ -38,8 +38,8 @@ void ChangeSingleTextureUI::display(std::shared_ptr<PBRMaterial<Texture2D>> &mat
                             ImVec2(0, 1),
                             ImVec2(1, 0)
                     );
-
-                    if (ImGui::Selectable("##", image == selectedID, 0, imageSize)) {
+                    std::string label = image->shaderName + std::to_string(image->ID);
+                    if (ImGui::Selectable(label.c_str(), image == selectedID, 0, imageSize)) {
                         selectedID = image;
                     }
                     ImGui::SetItemTooltip(image->getFullPath().c_str());
@@ -49,10 +49,18 @@ void ChangeSingleTextureUI::display(std::shared_ptr<PBRMaterial<Texture2D>> &mat
         }
         ImGui::EndChild();
 
+        ImGui::NewLine();
+
         if(ImGui::Button("Apply")) {
-            materialToChange->type = selectedID;
+            if(selectedID != nullptr) {
+                materialToChange->type = selectedID;
+                PBRTexturedMaterialUI::canOpenChangeUI = false;
+            }
+
         }
+
         ImGui::SameLine();
+
         if(ImGui::Button("Cancel")) {
             PBRTexturedMaterialUI::canOpenChangeUI = false;
         }
