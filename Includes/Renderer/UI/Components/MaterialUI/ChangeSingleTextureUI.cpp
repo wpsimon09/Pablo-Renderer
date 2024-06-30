@@ -3,8 +3,8 @@
 //
 
 #include "ChangeSingleTextureUI.h"
-
-void ChangeSingleTextureUI::display(std::shared_ptr<PBRMaterial<Texture2D>> materialToChange,
+#include "PBRTexturedMaterialUI.h"
+void ChangeSingleTextureUI::display(std::shared_ptr<PBRMaterial<Texture2D>> &materialToChange,
     MATERIAL_TEXTURE_TYPE textureToChange) {
         ImGui::Begin("Change texture");
 
@@ -48,6 +48,14 @@ void ChangeSingleTextureUI::display(std::shared_ptr<PBRMaterial<Texture2D>> mate
             }
         }
         ImGui::EndChild();
+
+        if(ImGui::Button("Apply")) {
+            materialToChange->type = selectedID;
+        }
+        ImGui::SameLine();
+        if(ImGui::Button("Cancel")) {
+            PBRTexturedMaterialUI::canOpenChangeUI = false;
+        }
 
         ImGui::End();
 }

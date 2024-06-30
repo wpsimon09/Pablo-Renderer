@@ -10,7 +10,10 @@
 #include "imgui.h"
 
 class PBRTexturedMaterialUI {
+private:
+    static inline std::shared_ptr<PBRMaterial<Texture2D>> selectedMaterial;
 public:
+    static inline bool canOpenChangeUI = false;
     static void display(std::vector<std::shared_ptr<PBRMaterial<Texture2D>>> materialTextures);
 };
 
