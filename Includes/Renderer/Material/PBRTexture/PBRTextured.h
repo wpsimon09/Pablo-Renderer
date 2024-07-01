@@ -52,6 +52,8 @@ public:
 
     void renderUI() override;
 
+    void setAreaLightSupport(bool supportsAreaLight) override;
+
     bool hasEmissionTexture = false;
 
 private:

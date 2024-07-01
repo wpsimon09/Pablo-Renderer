@@ -30,7 +30,6 @@ PBRTextured::PBRTextured(bool supportsAreaLight, std::string pathToTheDirectory,
         this->loadMaterials(assetsManagerInstance, pathToTheDirectory,isRelativePath,shaderNamingConvention, fileFormat);
     }
 
-
 }
 
 void PBRTextured::configureShader() {
@@ -62,6 +61,16 @@ void PBRTextured::renderUI() {
     ImGui::NewLine();
     ImGui::Checkbox("SupportsIBL", &this->supportsIBL);
 }
+
+void PBRTextured::setAreaLightSupport(bool supportsAreaLight) {
+    this->supportsAreaLight = supportsAreaLight;
+    if (this->supportsAreaLight) {
+        this->shader = ShaderManager::getShader(SHADER_AREA_LIGHT_TEXTURES);
+    } else {
+        this->shader = ShaderManager::getShader(SHADER_PBR_TEXTURED);
+    }
+}
+
 
 std::vector<std::reference_wrapper<Texture2D>> PBRTextured::getTextures() {
     std::vector<std::reference_wrapper<Texture2D>> fetchedTextures;

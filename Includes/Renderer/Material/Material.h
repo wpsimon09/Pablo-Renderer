@@ -121,6 +121,8 @@ public:
     virtual void printLog() const {
     };
 
+    virtual void setAreaLightSupport(bool supportsAreaLight) {}
+
     std::string getName() {return this->name;}
 
     MATERIAL getType() const {return this->materialType;}
@@ -134,6 +136,8 @@ public:
     bool supportsAreaLight = false;
 
 protected:
+
+
     /***
      * Number of samplers that are used in the given material
      */

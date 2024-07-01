@@ -68,12 +68,14 @@ void ChangeMaterialUI::displayCreateNewMaterial() {
     ImGui::InputText("Name", nameOfTheMaterial, 64);
 
         if(selectedMaterialForCreation == PBR_TEXTURE_MAPS) {
+            ImGui::Dummy(ImVec2(0, 30));
             ImGui::SeparatorText("Select directory with texture maps");
             texturesDirectory = FileWindowUI::display(true);
             ImGui::SameLine();
             ImGui::Text("(?)");
             ImGui::SetItemTooltip("Texture maps must be named albedo.png, normal.png and arm.png for it to load properly");
 
+            ImGui::Dummy(ImVec2(0, 30));
             ImGui::SeparatorText("Additional properties");
             ImGui::Checkbox("Supports area light", &supportsAreaLight);
 
@@ -82,12 +84,16 @@ void ChangeMaterialUI::displayCreateNewMaterial() {
             }
 
             if(selectedID != nullptr) {
+                ImGui::Dummy(ImVec2(0, 30));
                 ImGui::SeparatorText("Preview");
                 ImGui::Image(reinterpret_cast<ImTextureID>(selectedID->getAlbedoTexture()->ID), ImVec2(70,70));
             }
 
+            ImGui::Dummy(ImVec2(0, 10));
+
             if(ImGui::Button("Create")) {
                 if(selectedID !=nullptr) {
+                    selectedID->setAreaLightSupport(supportsAreaLight);
                     AssetsManager::getInstance()->storeMaterial(selectedID);
                     canShowCreationOfNewMaterial = false;
                 }
