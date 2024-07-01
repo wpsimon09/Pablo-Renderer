@@ -5,6 +5,7 @@
 #include "ScenePass.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
+
 ScenePass::ScenePass():RenderPass() {
     glm::vec2 screenDimentions = GLFWHelper::getScreenDimensions();
     this->gNormal = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGBA16F);
@@ -28,3 +29,23 @@ std::shared_ptr<Texture2D> ScenePass::render(std::shared_ptr<Scene> scene, std::
     return this->renderPassResult;
 }
 
+void ScenePass::renderUI() {
+    RenderPass::renderUI();
+    ImGui::Indent(20);
+    ImVec2 imageSize(300,300);
+    if(ImGui::TreeNode("G-Buffer")) {
+
+        ImGui::SeparatorText("Position G buffer");
+        ImGui::Image(reinterpret_cast<ImTextureID>(gPosition->ID),imageSize, ImVec2(0, 1),ImVec2(1, 0));
+
+        ImGui::SeparatorText("Normal G buffer");
+        ImGui::Image(reinterpret_cast<ImTextureID>(gNormal->ID), imageSize, ImVec2(0, 1), ImVec2(1, 0));
+
+        ImGui::SeparatorText("Colour and Shininess G buffer");
+        ImGui::Image(reinterpret_cast<ImTextureID>(gColourAndShininess->ID), imageSize, ImVec2(0, 1), ImVec2(1, 0));
+
+        ImGui::TreePop();
+    }
+
+
+}
