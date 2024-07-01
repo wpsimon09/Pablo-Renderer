@@ -238,7 +238,7 @@ void main() {
     FragColor = vec4(result, 1.0);
 
     gPosition = fs_in.FragPos.xyz;
-    gNormal = N.xyz;
+    gNormal = N.rgb  ;
     gShininessColour.rgb = albedo.rgb;
     gShininessColour.a = roughness;
 

@@ -22,7 +22,7 @@ void RenderPass::prepareForNextFrame() {
 void RenderPass::renderUI() {
     ImGui::Text("Result of render pass");
     ImGui::Checkbox("Is active", &isActive);
-    ImVec2 imageSize((float) this->renderPassResult->texWidth/4, (float) this->renderPassResult->texHeight/4);
+    ImVec2 imageSize(200, 150);
     ImGui::Image(reinterpret_cast<ImTextureID>(this->renderPassResult->ID), imageSize, ImVec2(0, 1),ImVec2(1, 0));
 
     if(ImGui::Button("Take a photo")){

@@ -32,7 +32,7 @@ std::shared_ptr<Texture2D> ScenePass::render(std::shared_ptr<Scene> scene, std::
 void ScenePass::renderUI() {
     RenderPass::renderUI();
     ImGui::Indent(20);
-    ImVec2 imageSize(300,300);
+    ImVec2 imageSize(100,80);
     if(ImGui::TreeNode("G-Buffer")) {
 
         ImGui::SeparatorText("Position G buffer");
