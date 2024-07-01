@@ -7,7 +7,7 @@
 #include "FIleWindowUI/FileWindowUI.h"
 #include "Renderer/UI/Components/MaterialUI/ChangeMaterialUI.h"
 #include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
-
+#include "Renderer/UI/UIHelpers/UIHelper.h"
 
 
 void RenderableCreationUI::display() {
@@ -47,7 +47,7 @@ void RenderableCreationUI::display() {
 
     //display only if the material is selectable
     if(!RenderableBuilder::keepModelMaterial || RenderableBuilder::selectedGeometry != MODEL) {
-        ChangeMaterialUI::displayExistingMaterials(RenderableBuilder::selectedMateial, ALL);
+        UIHelper::displayExistingMaterials(RenderableBuilder::selectedMateial, ALL);
     }
 
 

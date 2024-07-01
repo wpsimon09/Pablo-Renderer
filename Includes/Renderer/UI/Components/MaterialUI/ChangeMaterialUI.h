@@ -15,11 +15,7 @@
 class ChangeMaterialUI{
 public:
     static void display(Renderable *renderable);
-
-    static void displayExistingMaterials(std::shared_ptr<Material> &_selectedID, MATERIAL mat = ALL);
 private:
-    static void displayColourChange();
-
     static void displayCreateNewMaterial();
 
     static inline std::vector<std::shared_ptr<Material>> allMaterials;
@@ -31,6 +27,7 @@ private:
     };
     inline static std::string texturesDirectory;
 
+    inline static char nameOfTheMaterial[64];
     inline static glm::vec3 color = glm::vec3(0.0f, 0.0F, 0.0F);
     inline static bool supportsAreaLight = false;
     inline static bool isIBLOn = false;
