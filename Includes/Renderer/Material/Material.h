@@ -127,6 +127,8 @@ public:
 
     MATERIAL getType() const {return this->materialType;}
 
+    std::string getShaderString() {return shader->name; }
+
     void setAssimpMaterialIndex(unsigned int mMaterialIndex) {this->assimpMaterialIndex = (int)mMaterialIndex;}
     int getAssimpIndex() {return this->assimpMaterialIndex;}
 

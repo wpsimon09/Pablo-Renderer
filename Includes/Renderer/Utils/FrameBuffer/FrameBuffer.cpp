@@ -172,3 +172,41 @@ void FrameBuffer::saveAsPNG(std::string path) {
         std::cout<<"Frame buffer saved to the path" + path <<std::endl;
 }
 
+void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
+    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gColourAndShininess) {
+
+    glDeleteFramebuffers(1, &this->ID);
+    glCheckError();
+
+    glCreateFramebuffers(1, &this->ID);
+    glCheckError();
+
+    this->bind();
+
+    gPosition->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition->ID, 0);
+    glCheckError();
+
+    gNormal->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal->ID, 0);
+    glCheckError();
+
+    gColourAndShininess->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gColourAndShininess->ID, 0);
+    glCheckError();
+
+    this->colorAttachment->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, colorAttachment->ID, 0);
+    glCheckError();
+
+
+    GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+    glDrawBuffers(4, drawBuffers);
+    glCheckError();
+
+    checkFrameBufferCompleteness();
+    std::cout<<"FRAME BUFFER TRANSFERED TO SUPPORT G-BUFFER SUCCESSFULY \xE2\x9C\x93 "<<std::endl;
+
+    this->unbind();
+}
+

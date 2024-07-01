@@ -54,6 +54,8 @@ void PBRColor::configureShader() {
 }
 
 void PBRColor::renderUI(){
+    ImGui::Text(this->shader->name.c_str());
+
     ImGui::PushItemWidth(170);
     ImGui::ColorPicker3("Color", &this->albedo->type->x, ImGuiColorEditFlags_NoLabel | ImGuiColorEditFlags_NoTooltip | ImGuiColorEditFlags_NoInputs);
 

@@ -6,7 +6,15 @@
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
 ScenePass::ScenePass():RenderPass() {
+    glm::vec2 screenDimentions = GLFWHelper::getScreenDimensions();
+    this->gNormal = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGBA16F);
+    this->gPosition = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGBA16F);
+    this->gColourAndShininess = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGBA16F);
+
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
+
+    this->frameBuffer->transferToGbufferSupport(gPosition, gNormal,gColourAndShininess);
+
     this->rendererType = COLOR_DEPTH_STENCIL;
     this->render_pass = SCENE_PASS;
     this->name = "Scene pass";
