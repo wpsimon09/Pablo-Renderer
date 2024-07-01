@@ -45,6 +45,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/UI/Components/MaterialUI/PBRTexturedMaterialUI.h
         Includes/Renderer/UI/UIHelpers/UIHelper.cpp
         Includes/Renderer/UI/UIHelpers/UIHelper.h
+        Includes/Renderer/RenderPass/GBufferPass/GBufferPass.cpp
+        Includes/Renderer/RenderPass/GBufferPass/GBufferPass.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

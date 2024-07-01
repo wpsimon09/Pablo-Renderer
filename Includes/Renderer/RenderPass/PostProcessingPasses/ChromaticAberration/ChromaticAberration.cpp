@@ -12,6 +12,7 @@ ChromaticAberration::ChromaticAberration() {
     this->rendererType = POST_PROCESSING;
     this->render_pass = CHROMATIC_ABBERATION_POST_PROCESSING_PASS;
     this->isPostProcessingPass = true;
+    this->isActive = false;
 
     this->name = "Chromatic aberration";
 }
