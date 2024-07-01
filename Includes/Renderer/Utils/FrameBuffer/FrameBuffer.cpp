@@ -183,6 +183,12 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
 
     this->bind();
 
+    this->renderBuffer = std::make_unique<RenderBuffer>(this->width, this->height);
+    this->renderBuffer->bind();
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
+    glCheckError();
+
+
     gPosition->bind();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition->ID, 0);
     glCheckError();
