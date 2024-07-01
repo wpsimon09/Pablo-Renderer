@@ -1,5 +1,7 @@
 #version 330 core
 
+layout (location = 3) out vec4 FragColor;
+
 in VS_OUT {
     vec3 FragPos;
     vec3 Normal;
@@ -7,7 +9,6 @@ in VS_OUT {
     vec4 FragPosLight;
 }fs_in;
 
-out vec4 FragColor;
 
 void main()
 {
