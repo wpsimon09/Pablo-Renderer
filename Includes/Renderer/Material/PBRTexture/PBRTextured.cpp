@@ -56,7 +56,7 @@ std::shared_ptr<Texture2D> PBRTextured::getAlbedoTexture() {
 }
 
 void PBRTextured::renderUI() {
-
+    ImGui::Text(this->shader->name.c_str());
     PBRTexturedMaterialUI::display(this->textures);
     ImGui::NewLine();
     ImGui::Checkbox("SupportsIBL", &this->supportsIBL);

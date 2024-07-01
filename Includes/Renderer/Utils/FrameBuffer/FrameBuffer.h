@@ -98,12 +98,16 @@ public:
      */
     void saveAsPNG(std::string path);
 
+    void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gColourAndShininess);
+
     int getWidht() {return this->width;}
     int getHeihgt() {return this->height;}
 protected:
     std::shared_ptr<Shader> shader;
     std::unique_ptr<RenderBuffer> renderBuffer;
     std::shared_ptr<Texture2D> colorAttachment;
+
+    std::vector<std::shared_ptr<Texture2D>> colourAttachemnts;
     int width, height;
 private:
     void clear() {

@@ -13,6 +13,7 @@ Pixelation::Pixelation() {
     this->isPostProcessingPass = true;
     this->render_pass = PIXELATION_POST_PROCESSING_PASS;
     this->name = "Pixelation pass";
+    this->isActive = false;
 }
 
 std::shared_ptr<Texture2D>

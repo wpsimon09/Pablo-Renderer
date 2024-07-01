@@ -1,6 +1,10 @@
 #version 460
 
-out vec4 FragColor;
+layout (location = 0) out vec3 gPosition;
+layout (location = 1) out vec3 gNormal;
+layout (location = 2) out vec4 gShininessColour;
+layout (location = 3) out vec4 FragColor;
+
 
 in VS_OUT {
     vec3 FragPos;
@@ -219,4 +223,9 @@ void main() {
     vec3 finalColor = ambient + Lo;
 
     FragColor = vec4(finalColor, 1.0);
+
+    gPosition = fs_in.FragPos.xyz;
+    gNormal = N.xyz;
+    gShininessColour.rgb = _valAlbedo.rgb;
+    gShininessColour.a = _valRougness;
 }

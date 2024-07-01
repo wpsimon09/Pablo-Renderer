@@ -1,12 +1,13 @@
 #version 330 core
 
+layout (location = 3) out vec4 FragColor;
+
 uniform sampler2D lightTexture;
 
 uniform vec3 lightColor;
 
 in vec2 TextureCoords;
 
-out vec4 FragmentColor;
 
 void main() {
 
@@ -14,5 +15,5 @@ void main() {
 	if(texColor.a < 0.1)
 		discard;
 
-	FragmentColor = vec4(lightColor, 1.0f);
+	FragColor = vec4(lightColor, 1.0f);
 }

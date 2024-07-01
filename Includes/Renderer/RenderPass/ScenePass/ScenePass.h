@@ -8,7 +8,13 @@
 #include "Renderer/RenderPass/RenderPass.h"
 
 class ScenePass: public RenderPass {
+private:
+    std::shared_ptr<Texture2D> gPosition;
+    std::shared_ptr<Texture2D> gNormal;
+    std::shared_ptr<Texture2D> gColourAndShininess;
 public:
+    void renderUI() override;
+
     ScenePass();
     std::shared_ptr<Texture2D> render(std::shared_ptr<Scene> scene, std::shared_ptr<Renderer> renderer) override;
 };
