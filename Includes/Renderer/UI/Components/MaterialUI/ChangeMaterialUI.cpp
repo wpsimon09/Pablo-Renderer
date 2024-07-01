@@ -9,7 +9,6 @@
 
 void ChangeMaterialUI::display(Renderable *renderable) {
     ImGui::Begin("Change the material");
-    ImGui::SetWindowSize(ImVec2(400, 400));
     ImGui::Text("Select material");
     if (ImGui::BeginCombo("Material", material[selectedMaterial].c_str())) {
         for (int i = 0; i < 3; i++) {
@@ -23,6 +22,10 @@ void ChangeMaterialUI::display(Renderable *renderable) {
 
     UIHelper::displayExistingMaterials(ChangeMaterialUI::selectedID, selectedMaterial);
 
+    ImGui::Dummy(ImVec2(0,50));
+
+    ImGui::Separator();
+
     if(ImGui::Button("Create new material")) {
         canShowCreationOfNewMaterial = true;
     }
@@ -31,7 +34,13 @@ void ChangeMaterialUI::display(Renderable *renderable) {
         displayCreateNewMaterial();
     }
 
+    ImGui::Separator();
+
+    ImGui::Dummy(ImVec2(0,20));
+
     ImGui::NewLine();
+
+    ImGui::SetNextItemShortcut(ImGuiKey_Enter);
     if (ImGui::Button("Apply")) {
         if (selectedID != nullptr) {
             AssetsManager::getInstance()->storeMaterial(selectedID);
@@ -56,6 +65,7 @@ void ChangeMaterialUI::displayCreateNewMaterial() {
         }
         ImGui::EndCombo();
     }
+    ImGui::InputText("Name", nameOfTheMaterial, 64);
 
         if(selectedMaterialForCreation == PBR_TEXTURE_MAPS) {
             ImGui::SeparatorText("Select directory with texture maps");
@@ -68,7 +78,7 @@ void ChangeMaterialUI::displayCreateNewMaterial() {
             ImGui::Checkbox("Supports area light", &supportsAreaLight);
 
             if(!texturesDirectory.empty()) {
-                selectedID = std::make_shared<PBRTextured>(supportsAreaLight,texturesDirectory, false);
+                selectedID = std::make_shared<PBRTextured>(supportsAreaLight,texturesDirectory, false, nameOfTheMaterial);
             }
 
             if(selectedID != nullptr) {

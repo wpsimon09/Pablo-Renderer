@@ -27,6 +27,7 @@ private:
     };
     inline static std::string texturesDirectory;
 
+    inline static char nameOfTheMaterial[64];
     inline static glm::vec3 color = glm::vec3(0.0f, 0.0F, 0.0F);
     inline static bool supportsAreaLight = false;
     inline static bool isIBLOn = false;
