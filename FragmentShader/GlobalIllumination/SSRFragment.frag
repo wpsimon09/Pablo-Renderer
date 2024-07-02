@@ -6,6 +6,8 @@ uniform sampler2D gColourShininess;
 
 uniform mat4 projection;
 
+in vec2 TexCoords;
+
 //controlls the length of the reflected (around Nrmal) RAY
 float maxDistance = 15;
 
@@ -20,7 +22,49 @@ int steps = 10;
 // calculations are not allways precise this allows for some error margin
 float thikness = 0.5;
 
-
 void main() {
+    vec2 texSize  = textureSize(gPosition, 0).xy;
+    vec2 texCoordCalculated = gl_FragCoord.xy / texSize;
+
+    vec2 texSize = textureSize(gPosition,0);
+
+    // vector from camera to the position of the fragmnet
+    vec3 positionFrom = texture(gPosition, TexCoords).xyz;
+
+    //above but normalized
+    vec3 positionFromNorm = normalize(positionFrom.xyz);
+
+    // normalized normal vector
+    vec3 normal = normalize(texture(gNormal, TexCoords).xyz);
+
+    // reflected vector
+    vec3 reflected = normalize(reflect(positionFromNorm,normal));
+
+    // start of the ray martching
+    vec4 startView = vec4(positionFrom.xyz + (reflected * 0),        1.0);
+
+    // end of the raymarching
+    vec4 endView  = vec4(positionFrom.xyz + (reflected*maxDistance), 1.0);
+
+    // calculate the start point in the view space
+    // -------------------------------------------
+    vec4 startFrag = startView;
+    // translate to view space the fragment position
+    startFrag = projection * startFrag;
+    // preform prespective devitions
+    startFrag.xyz /= startFrag.w;
+    //convert screen space coordinates to UV coordinates
+    startFrag.xy = startFrag.xy * 0.5 + 0.5;
+    // convert from UV cooridnates to the pixel coordinates
+    startFrag.xy *= texSize;
+
+    // calculate the start point in the view space
+    // -------------------------------------------
+    vec4 endFrag = endView;
+    endFrag = projection* endFrag;
+    endFrag.xyz /= endFrag.w;
+    endFrag.xy = endFrag.xy * 0.5 + 0.5;
+    endFrag.xy *= texSize;
+
 
 }
