@@ -241,5 +241,4 @@ void main() {
     gNormal = N.rgb  ;
     gShininessColour.rgb = albedo.rgb;
     gShininessColour.a = roughness;
-
 }
