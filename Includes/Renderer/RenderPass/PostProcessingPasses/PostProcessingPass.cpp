@@ -37,7 +37,7 @@ void PostProcessingPass::addPostProcessingPass(std::unique_ptr<RenderPass> rende
     if (renderPass->isPostProcess() && renderPass != nullptr){
         this->postProcessingPasses.emplace_back(std::move(renderPass));
     }else
-        std::cerr<<"Invalid post processing render pass supported ";
+        std::cerr<<"Invalid post processing render pass";
 }
 
 void PostProcessingPass::prepareForNextFrame() {
