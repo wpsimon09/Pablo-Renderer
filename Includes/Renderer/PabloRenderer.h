@@ -23,6 +23,10 @@
 
 /**
  * This is a god class that starts up everything
+ * [1] In the beginning God created the heaven and the earth.
+ * [2] And the earth was without form, and void; and darkness was upon the face of the deep.
+ * And the Spirit of God moved upon the face of the waters.
+ * [3] And God said, Let there be light: and there was light.
  */
 class PabloRenderer {
 public:
