@@ -32,5 +32,11 @@ std::shared_ptr<Shader> ShaderManager::getShader(ShaderType type) {
     }
 }
 
+void ShaderManager::relodeShaders() {
+    for (auto &shader: compiledShaders ) {
+        shader.second->recomplie();
+    }
+}
+
 
 

@@ -23,6 +23,8 @@ int steps = 10;
 float thikness = 0.5;
 
 void main() {
+    vec4 uv = vec4(0.0);
+
     vec2 texSize  = textureSize(gPosition, 0).xy;
     vec2 texCoordCalculated = gl_FragCoord.xy / texSize;
 
@@ -66,5 +68,12 @@ void main() {
     endFrag.xy = endFrag.xy * 0.5 + 0.5;
     endFrag.xy *= texSize;
 
+    vec2 frag = startFrag.xy;
+    uv.xy =frag/texSize;
 
+    // difference betwen begining of the ray to its end
+    float deltaX = endFrag.x - startFrag.x;
+    float deltaY = endFrag.y - startFrag.y;
+
+    
 }

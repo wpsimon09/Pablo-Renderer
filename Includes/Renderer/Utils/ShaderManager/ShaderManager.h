@@ -19,7 +19,7 @@ class ShaderManager {
 public:
     static ShaderManager* getInstance();
     static std::shared_ptr<Shader> getShader(ShaderType type);
-
+    static void relodeShaders();
 private:
     ShaderManager();
     inline static std::map<ShaderType,std::shared_ptr<Shader>> compiledShaders;

@@ -7,6 +7,8 @@
 void GLFWHelper::processInput(GLFWwindow *window, float deltaTime) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+        ShaderManager::relodeShaders();
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
         isCtrlPressed = true;
     else

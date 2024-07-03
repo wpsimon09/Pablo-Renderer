@@ -235,7 +235,7 @@ void main() {
 
     //result = result / (result + vec3(1.0));
 
-    FragColor = vec4(result, 1.0);
+        FragColor = vec4(result, 1.0);
 
     gPosition = fs_in.FragPos.xyz;
     gNormal = N.rgb  ;
