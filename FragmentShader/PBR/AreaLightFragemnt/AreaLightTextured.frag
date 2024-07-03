@@ -1,7 +1,7 @@
 #version 460
 
 layout (location = 0) out vec4 gPosition;
-layout (location = 1) out vec3 gNormal;
+layout (location = 1) out vec4 gNormal;
 layout (location = 2) out vec4 gShininessColour;
 layout (location = 3) out vec4 FragColor;
 
@@ -238,7 +238,7 @@ void main() {
     FragColor = vec4(result, 1.0);
 
     gPosition = vec4(fs_in.FragPos.xyz,1.0);
-    gNormal = N.rgb  ;
+    gNormal = vec4(N.rgb,1.0)  ;
     gShininessColour.rgb = albedo.rgb;
     gShininessColour.a = roughness;
 }

@@ -109,7 +109,7 @@ float GLFWHelper::getClickedObject(int x, int y) {
         std::cout<<"Re mapped mouse position is X: "<<x<<" Y: "<<y<<" "<<std::endl;
 
 
-        glReadPixels(x, y, 2, 2, GL_RED,GL_FLOAT, &selectedID);
+        glReadPixels(x, y, 1, 1, GL_RED,GL_FLOAT, &selectedID);
         glGetError();
 
         return selectedID;
@@ -148,7 +148,7 @@ void GLFWHelper::mouse_button_callback(GLFWwindow *window, int button, int actio
     GLFWcursor *cursor = glfwCreateStandardCursor(GLFW_CURSOR_NORMAL);
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         if (action == GLFW_PRESS) {
-            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY, 1000, 800,500 );
+            auto pointerPositionTransformed = getPointerPositionTransfmed((int)pointerX, (int)pointerY, 800, 600,500,20 );
             auto selectedObjectID = getClickedObject(pointerPositionTransformed.x ,pointerPositionTransformed.y);
 
             instance->getScene()->setSelectedNodeID(selectedObjectID);
