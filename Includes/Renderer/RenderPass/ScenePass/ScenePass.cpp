@@ -8,9 +8,15 @@
 
 ScenePass::ScenePass():RenderPass() {
     glm::vec2 screenDimentions = GLFWHelper::getScreenDimensions();
+
     this->gNormal = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGB16F);
+    gNormal->shaderName = "gNormal";
+
     this->gPosition = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGB16F);
+    gPosition->shaderName = "gPosition";
+
     this->gColourAndShininess = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGB16F);
+    gColourAndShininess->shaderName = "gColourShininess";
 
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
 
@@ -48,4 +54,13 @@ void ScenePass::renderUI() {
     }
 
 
+}
+
+std::vector<std::shared_ptr<TextureBase>> ScenePass::getAdditionalOutputs() {
+    std::vector<std::shared_ptr<TextureBase>> gBufferTextures ={
+        this->gPosition,
+        this->gNormal,
+        this->gColourAndShininess,
+    };
+    return gBufferTextures;
 }

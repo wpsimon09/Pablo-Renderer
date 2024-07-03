@@ -9,6 +9,7 @@
 #include "Renderer/Utils/Texture/TextureBase.h"
 #include "Debug/DebugLogger.h"
 #include "memory"
+
 class ShaderHelper {
 public:
     /***
@@ -37,14 +38,5 @@ public:
      * @param samplerID sampler ID
      */
     static void setTextureToShader(std::shared_ptr<Shader> shader, const TextureBase& texture, std::string shaderName, int samplerID);
-
-    /***
- * Sets texture to the shader
- * @param shader shader to be used
- * @param texture texture that needs to be passed to the shader
- * @param shaderName uniform name
- */
-
-
 };
 #endif //PABLO_RENDERER_SHADERHELPER_H

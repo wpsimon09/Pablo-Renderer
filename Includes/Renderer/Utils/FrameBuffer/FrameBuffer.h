@@ -100,6 +100,10 @@ public:
 
     void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gColourAndShininess);
 
+    bool hasGBufferSupport(){return supportsGBuffer;}
+
+    std::vector<std::shared_ptr<Texture2D>> getGBufferTextures();
+
     int getWidht() {return this->width;}
     int getHeihgt() {return this->height;}
 protected:
@@ -108,6 +112,9 @@ protected:
     std::shared_ptr<Texture2D> colorAttachment;
 
     std::vector<std::shared_ptr<Texture2D>> colourAttachemnts;
+
+    bool supportsGBuffer = false;
+
     int width, height;
 private:
     void clear() {

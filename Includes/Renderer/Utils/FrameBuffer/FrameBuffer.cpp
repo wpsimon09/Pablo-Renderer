@@ -213,6 +213,8 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
     checkFrameBufferCompleteness();
     std::cout<<"FRAME BUFFER TRANSFERED TO SUPPORT G-BUFFER SUCCESSFULY \xE2\x9C\x93 "<<std::endl;
 
+    this->supportsGBuffer = true;
+
     this->unbind();
 }
 

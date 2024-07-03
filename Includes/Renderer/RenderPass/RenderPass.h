@@ -95,6 +95,8 @@ public:
      */
     RENDER_PASS getRenderPass() { return this->render_pass; }
 
+    virtual std::vector<std::shared_ptr<TextureBase>> getAdditionalOutputs() {};
+
 protected:
     /**
      * @brief Type of the render pass

@@ -8,6 +8,8 @@ uniform mat4 projection;
 
 in vec2 TexCoords;
 
+out vec4 FragColor;
+
 //controlls the length of the reflected (around Nrmal) RAY
 float maxDistance = 15;
 
@@ -27,8 +29,6 @@ void main() {
 
     vec2 texSize  = textureSize(gPosition, 0).xy;
     vec2 texCoordCalculated = gl_FragCoord.xy / texSize;
-
-    vec2 texSize = textureSize(gPosition,0);
 
     // vector from camera to the position of the fragmnet
     vec3 positionFrom = texture(gPosition, TexCoords).xyz;
@@ -75,5 +75,6 @@ void main() {
     float deltaX = endFrag.x - startFrag.x;
     float deltaY = endFrag.y - startFrag.y;
 
+    FragColor = texture(gColourShininess, TexCoords);
     
 }

@@ -5,6 +5,8 @@
 
 #include "RenderGraph.h"
 
+#include "Renderer/RenderPass/PostProcessingPasses/ScreenSpaceReflection/ScreenSpaceReflection.h"
+
 RenderGraph::RenderGraph(std::shared_ptr<Scene> scene) {
     this->scene = scene;
     this->rendererManager = std::make_unique<RendererManager>();
@@ -16,6 +18,7 @@ void RenderGraph::init() {
     this->pixelPicking = std::make_unique<PixelPicking>();
 
     this->postProcessingPass = std::make_unique<PostProcessingPass>();
+    this->postProcessingPass->addPostProcessingPass(std::make_unique<ScreenSpaceReflection>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ChromaticAberration>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<Pixelation>());
 }
@@ -71,6 +74,16 @@ void RenderGraph::displayResult(FrameBuffer &frameBuffer) {
 
 std::shared_ptr<Texture2D> RenderGraph::getDebugTexture(RENDER_PASS renderPass) {
     return renderResults.find(renderPass)->second;
+}
+
+std::reference_wrapper<RenderPass> RenderGraph::getRenderPass(RENDER_PASS render_pass) {
+    auto renderPasses = getRenderPasses();
+    for(auto renderPass : renderPasses) {
+        if(renderPass.get().getRenderPass() == render_pass) {
+            return renderPass.get();
+        }
+    }
+    throw std::invalid_argument("Provided render pass was not found\n");
 }
 
 FrameBuffer & RenderGraph::getFrameBuffer(RENDER_PASS render_pass) {

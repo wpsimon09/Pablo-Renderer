@@ -84,6 +84,10 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
         UncompiledShader(SHADER_PIXEL_PICKING, "VertexShader/PixelPickingVertex/PixelPickingVertex.vert",
                          "FragmentShader/PixelPicking/PixelPicking.frag",
                          "PIXEL PICKING SHADER"),
+
+    UncompiledShader(SHADER_SCREEN_SPACE_REFLECTIONS, "VertexShader/FrameBufferDebugVertex.glsl",
+             "FragmentShader/GlobalIllumination/SSRFragment.frag",
+             "PIXELATION SHADER"),
 };
 
 #endif //PABLO_RENDERER_UNCOMPILEDSHADERS_H

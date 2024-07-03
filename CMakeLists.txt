@@ -49,6 +49,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/RenderPass/GBufferPass/GBufferPass.h
         Includes/Renderer/UI/MenuBar/MenuBarUI.cpp
         Includes/Renderer/UI/MenuBar/MenuBarUI.h
+        Includes/Renderer/RenderPass/PostProcessingPasses/ScreenSpaceReflection/ScreenSpaceReflection.cpp
+        Includes/Renderer/RenderPass/PostProcessingPasses/ScreenSpaceReflection/ScreenSpaceReflection.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
