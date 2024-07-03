@@ -3,6 +3,8 @@
 //
 
 #include "UI.h"
+
+#include "MenuBar/MenuBarUI.h"
 #include "Renderer/UI/Components/SceneMenu/SceneMenu.h"
 #include "Renderer/UI/Components/ViewPort/ViewPort.h"
 #include "Renderer/UI/Components/BottomMenu/BottomMenu.h"
@@ -27,19 +29,20 @@ void UI::render() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+        MenuBarUI::display();
 
         //-------------------------
         // TOOLS
         //-------------------------
         LightUI::debugTexture = debugTexture;
-        SceneMenu::display(0,10,500, GLFWHelper::getScreenHeight(10));
+        SceneMenu::display(0,20,500, GLFWHelper::getScreenHeight(10));
 
         //------------
         // VIEW PORT
         //-----------
         ViewPort::renderedScene = renderedScene;
         ViewPort::imGuiIo = imGuiIo;
-        ViewPort::display(500,10, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(10));
+        ViewPort::display(500,20, GLFWHelper::getScreenWidth(500), GLFWHelper::getScreenHeight(10));
 
         //-----------
         //BOTTOM MENU

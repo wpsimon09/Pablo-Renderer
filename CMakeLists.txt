@@ -47,6 +47,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/UI/UIHelpers/UIHelper.h
         Includes/Renderer/RenderPass/GBufferPass/GBufferPass.cpp
         Includes/Renderer/RenderPass/GBufferPass/GBufferPass.h
+        Includes/Renderer/UI/MenuBar/MenuBarUI.cpp
+        Includes/Renderer/UI/MenuBar/MenuBarUI.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

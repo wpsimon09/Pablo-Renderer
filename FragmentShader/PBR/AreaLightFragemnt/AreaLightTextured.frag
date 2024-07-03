@@ -219,7 +219,7 @@ void main() {
         vec2 brdf = texture(BRDFtexture, vec2(max(dot(N,V), 0.0), roughness)).rg;
         vec3 spec = (prefilterColor * (kS * brdf.x +  brdf.y));
         f=spec;
-        ambient = (kD * diff + spec) *(0.7);
+        ambient = (kD * diff + spec) *(0.8);
     }
     else{
         ambient = albedo * 0.3;
@@ -235,7 +235,7 @@ void main() {
 
     //result = result / (result + vec3(1.0));
 
-        FragColor = vec4(result, 1.0);
+    FragColor = vec4(result, 1.0);
 
     gPosition = fs_in.FragPos.xyz;
     gNormal = N.rgb  ;
