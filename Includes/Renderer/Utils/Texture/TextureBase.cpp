@@ -137,8 +137,13 @@ void TextureBase::loadHRI(const char *path) {
 }
 
 void TextureBase::generateMipMaps() {
-    //glBindTexture(this->type, this->ID);
-    //glGenerateMipmap(this->type);
+    this->bind();
+    glGenerateMipmap(this->type);
+    glCheckError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glCheckError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glCheckError();
 }
 
 void TextureBase::setUnpackAlignment(int alignment) {

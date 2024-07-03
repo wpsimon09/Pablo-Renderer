@@ -95,7 +95,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
     glfwSetWindowRefreshCallback(instance->getWindow(), processResize);
     glfwSetMouseButtonCallback(instance->getWindow(), mouse_button_callback);
 
-    glfwSwapInterval(0);
+    //glfwSwapInterval(0);
 
     return true;
 }

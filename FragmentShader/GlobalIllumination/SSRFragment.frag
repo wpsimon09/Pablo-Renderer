@@ -75,6 +75,6 @@ void main() {
     float deltaX = endFrag.x - startFrag.x;
     float deltaY = endFrag.y - startFrag.y;
 
-    FragColor = texture(gColourShininess, TexCoords);
+    FragColor = vec4(texture(gPosition , TexCoords).rgb, 1.0);
     
 }
