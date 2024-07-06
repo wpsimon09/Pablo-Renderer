@@ -19,7 +19,7 @@ float resolution = 0.3;
 
 //ammoount of steps taken while marching along ray direction
 // this is reinfinment pass
-int steps = 10;
+int steps = 2;
 
 // calculations are not allways precise this allows for some error margin
 float thikness = 0.5;
@@ -54,7 +54,7 @@ void main() {
     // -------------------------------------------
     vec4 startFrag = startView;
     // translate to view space the fragment position
-    startFrag = projection * startFrag;
+    startFrag = Pojection * startFrag;
     // preform prespective devitions
     startFrag.xyz /= startFrag.w;
     //convert screen space coordinates to UV coordinates
@@ -65,7 +65,7 @@ void main() {
     // calculate the start point in the view space
     // -------------------------------------------
     vec4 endFrag = endView;
-    endFrag = projection* endFrag;
+    endFrag = Pojection* endFrag;
     endFrag.xyz /= endFrag.w;
     endFrag.xy = endFrag.xy * 0.5 + 0.5;
     endFrag.xy *= texSize;
@@ -166,7 +166,9 @@ void main() {
     visibility = clamp(visibility, 0,1);
     uv.ba = vec2(visibility);
 
-    FragColor = texture(gColourShininess, uv.xy);
+    FragColor= normalize(uv);
+
+    //FragColor = texture(gColourShininess, TexCoords);
     //FragColor = vec4(texture(gColourShininess , TexCoords).rgb, 1.0);
     //FragColor = vec4(normalize(positionFrom),1.0);
 
