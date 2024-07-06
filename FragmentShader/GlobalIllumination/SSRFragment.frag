@@ -69,12 +69,25 @@ void main() {
     endFrag.xy *= texSize;
 
     vec2 frag = startFrag.xy;
-    uv.xy =frag/texSize;
+    uv.xy = frag/texSize;
 
     // difference betwen begining of the ray to its end
     float deltaX = endFrag.x - startFrag.x;
     float deltaY = endFrag.y - startFrag.y;
 
+    float useX = abs(deltaX) >= abs(deltaY) ? 1 : 0;
+    float delta = mix(abs(deltaY), abs(deltaX), useX) * clamp(resolution, 0 ,1);
+
+    vec2 increment = vec2(deltaX, deltaY) / max(delta,0.001);
+
+    float search0 = 0;
+    float serach1 = 0;
+
+    float viweDistance = startFrag.y;
+    //float depth = thikness;
+
+
     FragColor = vec4(texture(gNormal , TexCoords).rgb, 1.0);
-    
+    FragColor = vec4(normalize(positionFrom),1.0);
+
 }

@@ -54,7 +54,7 @@ void SceneMenu::display(int posX, int posY, int width, int height) {
     ImGui::End();
     ImGui::Begin("Tools", NULL,  ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
     ImGui::SetWindowPos(ImVec2((float) posX, (float) posY + (height/2)));
-    ImGui::SetWindowSize(ImVec2((float) width, (float) height/2));
+    ImGui::SetWindowSize(ImVec2((float) width, (float) height/2-10));
     if (ImGui::BeginTabBar("Renderable properties"))
     {
         if (ImGui::BeginTabItem("Material"))
