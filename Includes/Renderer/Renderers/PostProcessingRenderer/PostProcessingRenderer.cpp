@@ -22,7 +22,8 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
 
     auto shader = frameBuffer->getShader();
     shader->use();
-    shader->setMat4("projection", scene->camera->getPojectionMatix());
+
+    shader->setMat4("Projection", scene->camera->getPojectionMatix());
     int textureCount = 0;
     for(auto &input: this->renderPassInputs){
         input->setSamplerID(textureCount);
