@@ -89,7 +89,7 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
              "FragmentShader/GlobalIllumination/SSRFragment.frag",
              "SSR UV SHADER"),
 
-    UncompiledShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING, "VertexShader/FrameBufferDebugVertex.glsl",
+    UncompiledShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING, "VertexShader/GlobalIllumination/SSRVertex.vert",
          "FragmentShader/GlobalIllumination/ReflectedColour.frag",
          "REFLECTED COLOUR"),
 };

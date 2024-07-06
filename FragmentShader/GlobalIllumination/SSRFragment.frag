@@ -26,7 +26,7 @@ void main() {
     vec4 positionFromNorm = normalize(positionFrom);
     vec4 positionTo = positionFromNorm;
 
-    if (  positionFrom.w <= 0.0 ) {FragColor = uv; return;}
+    //if (  positionFrom.w <= 0.0 ) {FragColor = uv; return;}
 
     vec3 normal = normalize(texture(gNormal, TexCoords).xyz);
     vec3 reflected = normalize(reflect(positionFromNorm.xyz, normal));
@@ -64,7 +64,7 @@ void main() {
     int hit0 = 0;
     int hit1 = 0;
 
-    int maxIterations = min(int(delta), 280);
+    int maxIterations = min(int(delta), 380);
 
     for(int i = 0; i < (maxIterations); ++i) {
         frag += increment;
@@ -119,10 +119,11 @@ void main() {
     float alpha = clamp(uv.b, 0, 1);
 
     FragColor = uv;
+
     //FragColor = vec4(normalize(delta);
     // Debug output to visualize different aspects
     // FragColor = texture(gColourShininess, TexCoords);
-     FragColor = vec4(texture(gColourShininess , TexCoords).rgb, 1.0);
+     //FragColor = vec4(texture(gColourShininess , TexCoords).rgb, 1.0);
     // FragColor = vec4(normalize(positionFrom), 1.0);
     // FragColor = vec4(0.0, 0.0, 0.2, 1.0);
 }

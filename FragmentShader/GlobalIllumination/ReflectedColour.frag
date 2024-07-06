@@ -1,4 +1,4 @@
-#version 100
+#version 460
 
 uniform sampler2D reflectedUVCoordinatesMap;
 uniform sampler2D colourTexture;
@@ -13,4 +13,6 @@ void main() {
 
     float alpha = clamp(uv.b, 0, 1);
     FragColor = vec4(mix(vec3(0), color.rgb, alpha), alpha);
+
+    //FragColor = color;
 }

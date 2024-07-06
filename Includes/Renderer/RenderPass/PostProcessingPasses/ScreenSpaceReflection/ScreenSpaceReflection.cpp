@@ -25,16 +25,19 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
                                                          std::shared_ptr<Renderer> renderer) {
     //getting reflected UV coordinates
     renderer->setInputsForRenderPass(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs());
-    renderer->render(this->reflectedColourFrameBuffer);
-    this->renderPassResult = this->frameBuffer->getRenderedResult();
+    renderer->render(this->reflectedUVcoordinatesFrameBuffe);
 
+    auto UVTexture = this->reflectedUVcoordinatesFrameBuffe->getRenderedResult();
+    UVTexture->shaderName = "reflectedUVCoordinatesMap";
+
+    auto frameColor = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getRenderedResult();
+    frameColor->shaderName = "colourTexture";
     //getting reflected colour
-    std::vector<std::shared_ptr<TextureBase>> inputsForSpecularMapPass = {this->renderPassResult};
-
+    std::vector<std::shared_ptr<TextureBase>> inputsForSpecularMapPass = {UVTexture,frameColor};
 
     renderer->setInputsForRenderPass(inputsForSpecularMapPass);
-    renderer->render(this->frameBuffer);
-    this->renderPassResult = this->frameBuffer->getRenderedResult();
+    renderer->render(this->reflectedColourFrameBuffer);
+    this->renderPassResult = this->reflectedColourFrameBuffer->getRenderedResult();
 
     return this->renderPassResult;
 }
