@@ -4,6 +4,8 @@
 
 #include "PostProcessingRenderer.h"
 
+#include "Renderer/PabloRenderer.h"
+
 void PostProcessingRenderer::setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) {
     this->renderPassInputs = std::move(inputs);
 }
@@ -20,6 +22,7 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
 
     auto shader = frameBuffer->getShader();
     shader->use();
+    shader->setMat4("projection", scene->camera->getPojectionMatix());
     int textureCount = 0;
     for(auto &input: this->renderPassInputs){
         input->setSamplerID(textureCount);

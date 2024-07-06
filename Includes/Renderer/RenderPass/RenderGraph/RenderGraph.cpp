@@ -48,7 +48,7 @@ void RenderGraph::render() {
 
 void RenderGraph::postProcessing() {
     auto renderer = this->rendererManager->requestRenderer(postProcessingPass->rendererType);
-
+    renderer->setScene(this->scene);
     if(postProcessingPass->canBeRendered()){
         postProcessingPass->render(scenePass->getRenderedResult(), renderer);
     }

@@ -20,7 +20,7 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
 std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture2D> renderedScene,
                                                          std::shared_ptr<Renderer> renderer) {
     renderer->setInputsForRenderPass(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs());
-
+    frameBuffer->getShader()->use();
     renderer->render(this->frameBuffer);
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
