@@ -173,7 +173,7 @@ void FrameBuffer::saveAsPNG(std::string path) {
 }
 
 void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
-    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gColourAndShininess) {
+    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess) {
 
     glDeleteFramebuffers(1, &this->ID);
     glCheckError();
@@ -197,8 +197,8 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal->ID, 0);
     glCheckError();
 
-    gColourAndShininess->bind();
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gColourAndShininess->ID, 0);
+    gSpecularAndShininess->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gSpecularAndShininess->ID, 0);
     glCheckError();
 
     this->colorAttachment->bind();

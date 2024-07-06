@@ -8,7 +8,11 @@
 
 ScreenSpaceReflection::ScreenSpaceReflection() {
     auto shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS);
-    this->frameBuffer =  std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+    this->reflectedUVcoordinatesFrameBuffe =  std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+
+    shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING);
+    this->reflectedColourFrameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+
     this->isActive = true;
     this->isPostProcessingPass = true;
 
@@ -19,8 +23,16 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
 
 std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture2D> renderedScene,
                                                          std::shared_ptr<Renderer> renderer) {
+    //getting reflected UV coordinates
     renderer->setInputsForRenderPass(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs());
-    frameBuffer->getShader()->use();
+    renderer->render(this->reflectedColourFrameBuffer);
+    this->renderPassResult = this->frameBuffer->getRenderedResult();
+
+    //getting reflected colour
+    std::vector<std::shared_ptr<TextureBase>> inputsForSpecularMapPass = {this->renderPassResult};
+
+
+    renderer->setInputsForRenderPass(inputsForSpecularMapPass);
     renderer->render(this->frameBuffer);
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 

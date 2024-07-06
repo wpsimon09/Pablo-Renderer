@@ -201,6 +201,8 @@ void main()
 
     vec3 L;
 
+    vec3 specular = vec3(0.0);
+
     for(int i = 0; i<5 ; i++)
     {
         //light direction
@@ -226,7 +228,7 @@ void main()
         float denominator = 4.0 * max(dot(N,V), 0.0) * max(dot(N,L), 0.0);
 
         //calculate the specular component
-        vec3 specular = numerator / max(denominator, 0.001);
+        specular = numerator / max(denominator, 0.001);
 
         //calculate the ammount that gets refracted and what gets reflected
         vec3 kS = F;
@@ -290,6 +292,6 @@ void main()
     FragColor = vec4(color, 1.0);
     gPosition = vec4(fs_in.FragPos.xyz,1.0);
     gNormal = vec4(N.xyz,1.0);
-    gShininessColour.rgb = albedo.rgb;
+    gShininessColour.rgb = specular.rgb;
     gShininessColour.a = roughness;
 }

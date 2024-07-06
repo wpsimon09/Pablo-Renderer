@@ -87,7 +87,11 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
 
     UncompiledShader(SHADER_SCREEN_SPACE_REFLECTIONS, "VertexShader/GlobalIllumination/SSRVertex.vert",
              "FragmentShader/GlobalIllumination/SSRFragment.frag",
-             "PIXELATION SHADER"),
+             "SSR UV SHADER"),
+
+    UncompiledShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING, "VertexShader/FrameBufferDebugVertex.glsl",
+         "FragmentShader/GlobalIllumination/ReflectedColour.frag",
+         "REFLECTED COLOUR"),
 };
 
 #endif //PABLO_RENDERER_UNCOMPILEDSHADERS_H

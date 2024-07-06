@@ -26,7 +26,7 @@ void main() {
     vec4 positionFromNorm = normalize(positionFrom);
     vec4 positionTo = positionFromNorm;
 
-    if (  positionFrom.w <= 0.0) {FragColor = uv; return;}
+    if (  positionFrom.w <= 0.0 ) {FragColor = uv; return;}
 
     vec3 normal = normalize(texture(gNormal, TexCoords).xyz);
     vec3 reflected = normalize(reflect(positionFromNorm.xyz, normal));
@@ -64,9 +64,9 @@ void main() {
     int hit0 = 0;
     int hit1 = 0;
 
-    int maxIterations = min(int(delta), 100);
+    int maxIterations = min(int(delta), 280);
 
-    for(int i = 0; i < maxIterations; ++i) {
+    for(int i = 0; i < (maxIterations); ++i) {
         frag += increment;
         uv.xy = frag / texSize;
         positionTo = texture(gPosition, uv.xy);
@@ -85,6 +85,8 @@ void main() {
 
     search1 = search0 + ((search1 - search0) / 2.0);
     steps *= hit0;
+
+    maxIterations = min(steps, 200);
 
     for(int i = 0; i < maxIterations; ++i) {
         frag = mix(startFrag.xy, endFrag.xy, search1);
@@ -114,11 +116,13 @@ void main() {
     visibility = clamp(visibility, 0.0, 1.0);
     uv.ba = vec2(visibility);
 
-    FragColor = vec4(uv);
+    float alpha = clamp(uv.b, 0, 1);
 
+    FragColor = uv;
+    //FragColor = vec4(normalize(delta);
     // Debug output to visualize different aspects
     // FragColor = texture(gColourShininess, TexCoords);
-    // FragColor = vec4(texture(gColourShininess , TexCoords).rgb, 1.0);
+     FragColor = vec4(texture(gColourShininess , TexCoords).rgb, 1.0);
     // FragColor = vec4(normalize(positionFrom), 1.0);
     // FragColor = vec4(0.0, 0.0, 0.2, 1.0);
 }

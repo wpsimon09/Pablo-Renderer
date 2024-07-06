@@ -13,7 +13,9 @@ public:
 
     std::shared_ptr<Texture2D>
     render(std::shared_ptr<Texture2D> renderedScene, std::shared_ptr<Renderer> renderer) override;
-
+private:
+    std::unique_ptr<FrameBuffer> reflectedColourFrameBuffer;
+    std::unique_ptr<FrameBuffer> reflectedUVcoordinatesFrameBuffe;
 };
 
 
