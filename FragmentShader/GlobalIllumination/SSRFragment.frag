@@ -57,7 +57,7 @@ void main() {
     float search0 = 0.0;
     float search1 = 0.0;
 
-    float viewDistance = startView.z;
+    float viewDistance = startView.y;
     float depth = thickness;
 
     int hit0 = 0;
@@ -85,7 +85,7 @@ void main() {
     search1 = search0 + ((search1 - search0) / 2.0);
     steps *= hit0;
 
-    maxIterations = min(steps, 200);
+    maxIterations = min(int(steps), 400);
 
     for(int i = 0; i < maxIterations; ++i) {
         frag = mix(startFrag.xy, endFrag.xy, search1);
@@ -114,7 +114,6 @@ void main() {
 
     visibility = clamp(visibility, 0.0, 1.0);
     uv.ba = vec2(visibility);
-
     float alpha = clamp(uv.b, 0, 1);
 
     FragColor = uv;
