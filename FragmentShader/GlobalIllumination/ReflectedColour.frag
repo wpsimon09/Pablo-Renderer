@@ -13,9 +13,8 @@ void main() {
     vec4 colourScene = texture(colourTexture, TexCoords);
 
     float alpha = clamp(uv.b, 0, 1);
-    //vec4 reflected  = vec4(mix(vec3(0), color.rgb, alpha), alpha) ;
-    FragColor = color;
-
+    vec4 reflected  = vec4(mix(vec3(0), color.rgb, alpha), alpha) ;
+    FragColor = mix(reflected , colourScene, uv.b);
     //FragColor = vec4(uv.xy, 0.2,1.0);
     //FragColor = color;
 }
