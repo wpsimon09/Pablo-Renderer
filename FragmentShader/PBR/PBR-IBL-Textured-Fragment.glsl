@@ -292,6 +292,6 @@ void main()
     FragColor = vec4(color, 1.0);
     gPosition = vec4(fs_in.FragPos.xyz,1.0);
     gNormal = vec4(N.xyz,metallic);
-    gShininessColour.rgb = specular.rgb;
+    gShininessColour.rgb = color.rgb;
     gShininessColour.a = roughness;
 }

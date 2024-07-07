@@ -18,7 +18,6 @@ void main() {
 
     vec2 texSize = textureSize(gPosition, 0).xy;
     vec2 texCoordCalculated = gl_FragCoord.xy / texSize;
-
     vec4 uv = vec4(0.0);
 
     vec4 positionFrom = texture(gPosition, TexCoords);
@@ -28,6 +27,7 @@ void main() {
     if (  positionFrom.w <= 0.0 ) {FragColor = uv; return;}
 
     vec3 normal = normalize(texture(gNormal, TexCoords).xyz);
+    float specular = texture(gNormal, TexCoords).a;
     vec3 reflected = normalize(reflect(positionFromNorm.xyz, normal));
 
     vec4 startView = vec4(positionFrom.xyz + (reflected *         0.0), 1.0);
@@ -117,7 +117,10 @@ void main() {
     float alpha = clamp(uv.b, 0, 1);
 
     FragColor = uv;
-
+    if(specular > 0){
+        FragColor = vec4(1.0);
+    }else
+        FragColor = vec4(0.0);
     //FragColor = vec4(normalize(delta);
     // Debug output to visualize different aspects
     // FragColor = texture(gColourShininess, TexCoords);

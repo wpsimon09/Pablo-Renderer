@@ -3,6 +3,7 @@
 uniform sampler2D reflectedUVCoordinatesMap;
 uniform sampler2D colourTexture;
 
+
 in vec2 TexCoords;
 
 out vec4 FragColor;
@@ -14,7 +15,7 @@ void main() {
 
     float alpha = clamp(uv.b, 0, 1);
     vec4 reflected  = vec4(mix(vec3(0), color.rgb, alpha), alpha) ;
-    FragColor = mix(reflected , colourScene, uv.b);
+    FragColor = uv;
     //FragColor = vec4(uv.xy, 0.2,1.0);
     //FragColor = color;
 }
