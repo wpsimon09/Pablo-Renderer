@@ -21,7 +21,6 @@ ScenePass::ScenePass():RenderPass() {
     gColourAndShininess->generateMipMaps();
     gColourAndShininess->shaderName = "gColourShininess";
 
-
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
 
     this->frameBuffer->transferToGbufferSupport(gPosition, gNormal,gColourAndShininess);
@@ -36,6 +35,9 @@ std::shared_ptr<Texture2D> ScenePass::render(std::shared_ptr<Scene> scene, std::
     renderer->setInputsForRenderPass(this->inputs);
     renderer->render(scene, this->frameBuffer);
     this->renderPassResult = this->frameBuffer->getRenderedResult();
+    this->gRenderedScene = this->renderPassResult;
+    this->gRenderedScene->shaderName = "gRenderedScene";
+
     return this->renderPassResult;
 }
 
@@ -65,6 +67,7 @@ std::vector<std::shared_ptr<TextureBase>> ScenePass::getAdditionalOutputs() {
         this->gPosition,
         this->gNormal,
         this->gColourAndShininess,
+        this->gRenderedScene
     };
     return gBufferTextures;
 }
