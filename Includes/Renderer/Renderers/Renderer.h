@@ -59,6 +59,8 @@ public:
     virtual void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase> > inputs) {
     };
 
+    void clearInputs() {this->renderPassInputs.clear();}
+
     void setScene(std::shared_ptr<Scene> scene){this->scene = scene;}
 
 protected:

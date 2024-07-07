@@ -33,7 +33,7 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
     auto frameColor = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getRenderedResult();
     frameColor->shaderName = "colourTexture";
     //getting reflected colour
-    std::vector<std::shared_ptr<TextureBase>> inputsForSpecularMapPass = {UVTexture,frameColor};
+    std::vector<std::shared_ptr<TextureBase>> inputsForSpecularMapPass = {UVTexture, frameColor};
 
     renderer->setInputsForRenderPass(inputsForSpecularMapPass);
     renderer->render(this->reflectedColourFrameBuffer);

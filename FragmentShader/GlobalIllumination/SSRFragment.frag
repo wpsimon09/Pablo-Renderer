@@ -2,7 +2,6 @@
 
 uniform sampler2D gNormal;
 uniform sampler2D gPosition;
-uniform sampler2D gColourShininess;
 
 uniform mat4 Projection;
 
@@ -10,10 +9,10 @@ in vec2 TexCoords;
 
 out vec4 FragColor;
 
-float maxDistance = 8;
-float resolution = 0.3;
-int steps = 5;
-float thickness = 0.5;
+float maxDistance = 15;
+float resolution = 1;
+int steps = 10;
+float thickness = 0.3;
 
 void main() {
 
@@ -26,13 +25,13 @@ void main() {
     vec4 positionFromNorm = normalize(positionFrom);
     vec4 positionTo = positionFromNorm;
 
-    //if (  positionFrom.w <= 0.0 ) {FragColor = uv; return;}
+    if (  positionFrom.w <= 0.0 ) {FragColor = uv; return;}
 
     vec3 normal = normalize(texture(gNormal, TexCoords).xyz);
     vec3 reflected = normalize(reflect(positionFromNorm.xyz, normal));
 
-    vec4 startView = vec4(positionFrom.xyz + (reflected * 0.0), 1.0);
-    vec4 endView = vec4(positionFrom.xyz + (reflected * maxDistance), 1.0);
+    vec4 startView = vec4(positionFrom.xyz + (reflected *         0.0), 1.0);
+    vec4 endView = vec4(positionFrom.xyz +   (reflected * maxDistance), 1.0);
 
     vec4 startFrag = Projection * startView;
     startFrag.xyz /= startFrag.w;
