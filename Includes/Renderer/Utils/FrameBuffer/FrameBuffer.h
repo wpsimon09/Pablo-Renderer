@@ -98,7 +98,7 @@ public:
      */
     void saveAsPNG(std::string path);
 
-    void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess);
+    void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D> depthMap = nullptr);
 
     bool hasGBufferSupport(){return supportsGBuffer;}
 
@@ -122,7 +122,7 @@ private:
         //this->ID;
     };
 
-    void checkFrameBufferCompleteness();
+    bool checkFrameBufferCompleteness();
 public:
     //-------------
     // C++ RULE 3/5

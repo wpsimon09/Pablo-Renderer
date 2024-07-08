@@ -149,12 +149,14 @@ void FrameBuffer::makeDepthOnly(std::shared_ptr<Texture2D> depthMapTexture) {
     this->isDepthOnly = true;
 }
 
-void FrameBuffer::checkFrameBufferCompleteness() {
+bool FrameBuffer::checkFrameBufferCompleteness() {
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE){
         std::cout<<"FRAME BUFFER COMPLETE \xE2\x9C\x93 "<<std::endl;
+        return true;
     }
     else{
-        std::cerr<<"!!!!!!! DEPTH FRAME BUFFER NOT COMPLETE !!!!!!!!"<<std::endl;
+        std::cerr<<"!!!!!!! FRAME BUFFER NOT COMPLETE !!!!!!!!"<<std::endl;
+        return false;
     }
 }
 
@@ -173,7 +175,7 @@ void FrameBuffer::saveAsPNG(std::string path) {
 }
 
 void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
-    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess) {
+    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess,  std::shared_ptr<Texture2D> depthMap) {
 
     glDeleteFramebuffers(1, &this->ID);
     glCheckError();
@@ -185,7 +187,7 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
 
     this->renderBuffer = std::make_unique<RenderBuffer>(this->width, this->height);
     this->renderBuffer->bind();
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
     glCheckError();
 
 
@@ -201,17 +203,23 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gSpecularAndShininess->ID, 0);
     glCheckError();
 
+
     this->colorAttachment->bind();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, colorAttachment->ID, 0);
     glCheckError();
 
+    if(depthMap !=nullptr) {
+        depthMap->bind();
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap->ID, 0);
+        glCheckError();
+    }
 
     GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
     glDrawBuffers(4, drawBuffers);
     glCheckError();
 
-    checkFrameBufferCompleteness();
-    std::cout<<"FRAME BUFFER TRANSFERED TO SUPPORT G-BUFFER SUCCESSFULY \xE2\x9C\x93 "<<std::endl;
+    if(checkFrameBufferCompleteness())
+        std::cout<<"FRAME BUFFER TRANSFERED TO SUPPORT G-BUFFER SUCCESSFULY \xE2\x9C\x93 "<<std::endl;
 
     this->supportsGBuffer = true;
 

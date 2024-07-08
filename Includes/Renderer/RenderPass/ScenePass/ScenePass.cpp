@@ -19,12 +19,14 @@ ScenePass::ScenePass():RenderPass() {
 
     this->gColourAndShininess = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGBA16F);
     gColourAndShininess->generateMipMaps();
-
     gColourAndShininess->shaderName = "gColourShininess";
+
+    this->gDepth = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_DEPTH_COMPONENT24);
+    this->gDepth->shaderName = "gDepth";
 
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
 
-    this->frameBuffer->transferToGbufferSupport(gPosition, gNormal,gColourAndShininess);
+    this->frameBuffer->transferToGbufferSupport(gPosition, gNormal,gColourAndShininess, gDepth);
 
     this->rendererType = COLOR_DEPTH_STENCIL;
     this->render_pass = SCENE_PASS;
@@ -68,7 +70,8 @@ std::vector<std::shared_ptr<TextureBase>> ScenePass::getAdditionalOutputs() {
         this->gPosition,
         this->gNormal,
         this->gColourAndShininess,
-        this->gRenderedScene
+        this->gRenderedScene,
+        this->gDepth
     };
     return gBufferTextures;
 }
