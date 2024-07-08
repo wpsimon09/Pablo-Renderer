@@ -47,6 +47,8 @@ float PositionToDepth(vec3 position){
     return depth;
 }
 
+
+
 vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth){
     float depth;
 
@@ -153,5 +155,5 @@ void main() {
 
     FragColor = vec4(mix(SSR,texture(gRenderedScene, TexCoords).rgb, 0.5),1.0);
     //FragColor = vec4(texture(gColourShininess, TexCoords).rgb,1.0);
-    FragColor = vec4(SSR,1.0);
+    //FragColor = vec4();
 }

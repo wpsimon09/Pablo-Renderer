@@ -80,9 +80,9 @@ void FrameBuffer::drawInsideSelf(bool useColourAttachemntAsTexture) {
     this->objectGeometry->render();
 }
 
-void FrameBuffer::setShader(std::unique_ptr<Shader> shader) {
-    this->shader = std::move(shader);
-    this->objectMaterial->shader = std::move(shader);
+void FrameBuffer::setShader(std::shared_ptr<Shader> shader) {
+    this->shader = shader;
+    this->objectMaterial->shader = shader;
 }
 
 FrameBuffer::FrameBuffer(FrameBuffer &&other):ID(other.ID), colorAttachment(std::move(other.colorAttachment)), renderBuffer(std::move(other.renderBuffer)), width(other.width), height(other.height), shader(std::move(other).shader) {

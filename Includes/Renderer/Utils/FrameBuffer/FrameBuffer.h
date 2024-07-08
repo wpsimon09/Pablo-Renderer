@@ -60,7 +60,7 @@ public:
      * Sets the shader that should be used while preforming rendering
      * @param shader shader to be used
      */
-    void setShader(std::unique_ptr<Shader> shader);
+    void setShader(std::shared_ptr<Shader> shader);
 
     /***
      * Renders the frame buffer to the default frame buffer which is 0

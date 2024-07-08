@@ -10,6 +10,9 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     auto shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS);
     this->frameBuffer =  std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
 
+    shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING);
+    this->mergeFrameBufer= std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+
     this->isActive = true;
     this->isPostProcessingPass = true;
 
@@ -20,11 +23,18 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
 
 std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture2D> renderedScene,
                                                          std::shared_ptr<Renderer> renderer) {
-    //getting reflected UV coordinates
+    //getting ray traced SSR
     renderer->setInputsForRenderPass(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs());
     renderer->render(this->frameBuffer);
-
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
+    renderer->clearInputs();
+    this->renderPassResult->shaderName = "SSR";
+
+    //gettingFinalResult
+    renderedScene->shaderName = "renderedScene";
+    renderer->setInputsForRenderPass({this->renderPassResult, renderedScene});
+    renderer->render(this->mergeFrameBufer);
+    this->renderPassResult = this->mergeFrameBufer->getRenderedResult();
     return this->renderPassResult;
 }
