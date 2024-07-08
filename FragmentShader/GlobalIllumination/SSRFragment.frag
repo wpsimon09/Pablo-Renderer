@@ -109,18 +109,18 @@ void main() {
     vec2 MetalicRougness;
 
     //rougness
-    MetalicRougness.r = colourShininess.r;
+    MetalicRougness.r = colourShininess.a;
     //metalness
     MetalicRougness.g = N.a;
 
     if(MetalicRougness.r < 0.01)
             discard;
 
-    vec3 viewNormal = vec3(vec4(N.rgb,1.0) * invView);
+    vec3 viewNormal = normalize(vec3(vec4(N.rgb,1.0) ));
     vec3 viewPos = texture(gPosition, TexCoords).rgb;
     vec3 albedo = texture(gRenderedScene, TexCoords).rgb;
 
-    float spec = N.a;
+    float spec = MetalicRougness.r;
 
     vec3 F0 = vec3(0.04);
     F0 = mix(F0, albedo, MetalicRougness.g);
@@ -131,7 +131,7 @@ void main() {
     vec3 hitPos = viewPos;
     float dDepth;
 
-    vec3 wp = vec3(vec4(viewPos, 1.0)* invView);
+    vec3 wp = vec3(vec4(viewPos, 1.0));
     vec3 jitt = mix(vec3(0.0), vec3(hash(wp)), spec);
     vec4 coords = RayMarch((vec3(jitt)+ R *max(minRayStep, -viewPos.z)), hitPos, dDepth);
 
@@ -140,7 +140,10 @@ void main() {
 
     float ReflectionMultiplier = pow(MetalicRougness.g, reflectionSpecularFalloffExponent) * screenEdgeFactor * -R.z;
 
-    vec3 SSR = texture(gRenderedScene, coords.xy).rgb * clamp(ReflectionMultiplier, 0.0,0.9)*Fresnel;
+    vec3 SSR = texture(gRenderedScene, coords.xy).rgb * clamp(ReflectionMultiplier, 0.0,0.9)* Fresnel;
 
-    FragColor = vec4(SSR,1.0);
+    //SSR = mix(SSR, texture(gRenderedScene,TexCoords).rgb, MetalicRougness.g);
+    //SSR  = vec3(coords.xy,1.0);
+    FragColor = vec4(texture(gRenderedScene, coords.xy).rgb, 1.0);
+
 }
