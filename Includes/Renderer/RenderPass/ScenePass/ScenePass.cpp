@@ -61,8 +61,6 @@ void ScenePass::renderUI() {
 
         ImGui::TreePop();
     }
-
-
 }
 
 std::vector<std::shared_ptr<TextureBase>> ScenePass::getAdditionalOutputs() {

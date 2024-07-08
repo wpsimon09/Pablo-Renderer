@@ -16,10 +16,10 @@ in vec2 TexCoords;
 
 out vec4 FragColor;
 
-const float step = 0.1;
-const float minRayStep = 0.1;
+const float step = 0.07;
+const float minRayStep = 0.01;
 const float maxSteps = 30;
-const int numBinarySearchSteps = 5;
+const int numBinarySearchSteps = 90;
 const float reflectionSpecularFalloffExponent = 3.0;
 
 float Metallic;
@@ -39,7 +39,7 @@ vec3 PositionFromDepth(float depth) {
     vec4 viewSpacePosition = invProjection * clipSpacePosition;
 
     // Perspective division
-    viewSpacePosition /= viewSpacePosition.w;
+    viewSpacePosition.xyz /= viewSpacePosition.w;
 
     return viewSpacePosition.xyz;
 }
@@ -64,7 +64,7 @@ vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth){
         projectedCoord.xy /= projectedCoord.w;
         projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
 
-        depth = PositionFromDepth(texture(gDepth, projectedCoord.xy).r).z;
+        depth = texture(gDepth, projectedCoord.xy).r;
 
 
         dDepth = hitCoord.z - depth;
@@ -97,7 +97,7 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
         projectedCoord.xy /= projectedCoord.w;
         projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
 
-        depth = PositionFromDepth(texture(gDepth, projectedCoord.xy).r).z;
+        depth = texture(gDepth, projectedCoord.xy).r;
         if(depth >1000.0);
         continue;
         dDepth = hitCoord.z - depth;
@@ -127,11 +127,10 @@ void main() {
     //metalness
     MetalicRougness.g = N.a;
 
-    if(MetalicRougness.r < 0.01)
-    discard;
 
-    vec3 viewNormal = vec3(vec4(N.rgb,1.0) * Projection);
-    vec3 viewPos = PositionFromDepth(texture(gPosition, TexCoords).r);
+
+    vec3 viewNormal = vec3(vec4(N.rgb,1.0) );
+    vec3 viewPos = PositionFromDepth(texture(gDepth, TexCoords).r);
     vec3 albedo = texture(gRenderedScene, TexCoords).rgb;
 
     float spec = N.a;
@@ -147,14 +146,14 @@ void main() {
 
     vec3 wp = vec3(vec4(viewPos, 1.0)* invView);
     vec3 jitt = mix(vec3(0.0), vec3(hash(wp)), spec);
-    vec4 coords = RayMarch((vec3(jitt)+ R *max(minRayStep, -viewPos.z)), hitPos, dDepth);
+    vec4 coords = RayMarch((vec3(jitt)+ R ), hitPos, dDepth);
 
     vec2 dCoords = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - coords.xy));
     float screenEdgeFactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0,1.0);
 
-    float ReflectionMultiplier = pow(MetalicRougness.g, reflectionSpecularFalloffExponent) * screenEdgeFactor * -R.z;
+    float ReflectionMultiplier = pow(MetalicRougness.g, reflectionSpecularFalloffExponent)  * -R.z;
 
-    vec3 SSR = texture(gRenderedScene, coords.xy).rgb *Fresnel;
+    vec3 SSR = texture(gRenderedScene, coords.xy).rgb * ReflectionMultiplier * Fresnel;
 
-    FragColor = vec4(vec3(texture(gDepth,TexCoords).r),1.0);
+    FragColor = vec4(SSR,1.0);
 }
