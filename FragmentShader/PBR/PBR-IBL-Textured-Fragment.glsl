@@ -289,9 +289,8 @@ void main()
     //HDR
     color = color / (color + vec3(1.0));
 
-    FragColor = vec4(color, 1.0);
     gPosition = vec4(fs_in.FragPos.xyz,1.0);
     gNormal = vec4(N.xyz,metallic);
-    gShininessColour.rgb = color.rgb;
-    gShininessColour.a = roughness;
+    gShininessColour.rgb = vec4(color.rgb, roughness);
+    FragColor = vec4(color, 1.0);
 }
