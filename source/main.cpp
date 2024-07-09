@@ -24,7 +24,7 @@ int main() {
     auto pabloRenderer = PabloRenderer::getInstance();
     pabloRenderer->init();
 
-    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunrise.hdr");
+    auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/sunset.hdr");
     iblPipeLine->generateIBLTextures();
 
     auto cubeGeometry = std::make_shared<CubeGeometry>();

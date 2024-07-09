@@ -16,11 +16,11 @@ in vec2 TexCoords;
 
 out vec4 FragColor;
 
-const float step = 0.1;
-const float minRayStep = 0.1;
-const float maxSteps = 40;
-const int numBinarySearchSteps = 100;
-const float reflectionSpecularFalloffExponent = 1.2;
+const float step = 0.08;
+const float minRayStep = 0.01;
+const float maxSteps = 20;
+const int numBinarySearchSteps = 10;
+const float reflectionSpecularFalloffExponent = 2.2;
 
 float Metallic;
 
@@ -104,7 +104,7 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
             continue;
         dDepth = hitCoord.z - depth;
 
-        if ((dir.z - dDepth) < 1) {
+        if (abs(dDepth) < 3.0) {
             vec3 newCoord = hitCoord;
             float newDepth;
             hitCoord = BinarySearch(dir, newCoord, newDepth);
@@ -120,6 +120,7 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
 
 
 void main() {
+
     vec4 colourShininess = texture(gColourShininess, TexCoords);
     vec4 N = normalize(texture(gNormal, TexCoords));
 
@@ -144,21 +145,22 @@ void main() {
     vec3 R = normalize(reflect(normalize(viewPos), normalize(viewNormal)));
 
     vec3 hitPos = viewPos;
+    vec3 hitPos2 = viewPos;
     float dDepth;
 
-    vec3 wp = vec3(vec4(viewPos, 1.0) * invProjection);
+    vec3 wp = vec3(vec4(viewPos, 1.0)  * invProjection);
     vec3 jitt = mix(vec3(0.0), vec3(hash(wp)), spec);
     vec4 coords = RayMarch(vec3( jitt * R ), hitPos, dDepth);
     vec4 coords2 = RayMarch(vec3( R), hitPos, dDepth);
 
-    coords =  mix(coords , coords2,1.0);
+    coords =  mix(coords , coords2,0.4);
     coords.y += 0.01;
     //coords = mix(coords, coords3,1);
 
-    vec2 dCoords = smoothstep(0.1, 0.9, abs(vec2(0.5, 0.5) - coords.xy));
+    vec2 dCoords = smoothstep(0.1, 0.9, abs(vec2(0.5, 0.5) - TexCoords));
     float screenEdgeFactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0,1.0);
 
-    float ReflectionMultiplier = pow(MetalicRougness.g, reflectionSpecularFalloffExponent) * screenEdgeFactor  * -R.z;
+    float ReflectionMultiplier = pow(MetalicRougness.r, reflectionSpecularFalloffExponent) * screenEdgeFactor  * -R.z;
 
 
     vec3 SSR = texture(gRenderedScene, coords.xy).rgb * ReflectionMultiplier * Fresnel;
