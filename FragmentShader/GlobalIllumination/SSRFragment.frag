@@ -52,6 +52,11 @@ vec3 hash(vec3 a)
     return fract((a.xxy + a.yxx)*a.zyx);
 }
 
+float LinearizeDepth(float depth) {
+    float z = depth * 2.0 - 1.0;
+    return (2.0 * 0.1 * 170) / (170 + 0.1 - z * (170 - 0.1));
+}
+
 vec3 BinarySearch(inout vec3 dir, inout vec3 hitCoord, inout float dDepth){
     float depth;
 
@@ -100,8 +105,11 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
         projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
 
         depth = texture(gDepth, projectedCoord.xy).r;
-        if(depth >1000.0)
+        depth = LinearizeDepth(depth);
+
+        if(depth >10.0)
             continue;
+
         dDepth = hitCoord.z - depth;
 
         if (abs(dDepth) < 3.0) {
@@ -117,6 +125,7 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
 
     return vec4(projectedCoord.xy, depth, 0.0);
 }
+
 
 
 void main() {
