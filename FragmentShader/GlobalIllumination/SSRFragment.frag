@@ -16,9 +16,9 @@ in vec2 TexCoords;
 
 out vec4 FragColor;
 
-const float step = 0.1;
-const float minRayStep = 0.1;
-const float maxSteps = 100;
+const float step = 0.01;
+const float minRayStep = 0.01;
+const float maxSteps = 600;
 const int numBinarySearchSteps = 190;
 const float reflectionSpecularFalloffExponent = 4.0;
 
@@ -97,8 +97,8 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
         projectedCoord.xy /= projectedCoord.w;
         projectedCoord.xy = projectedCoord.xy * 0.5 + 0.5;
 
-        depth = texture(gDepth, projectedCoord.xy).r;
-        if(depth >1000.0)
+        depth = textureLod(gDepth, projectedCoord.xy,3).r;
+        if(depth >100.0)
             continue;
         dDepth = hitCoord.z - depth;
 
@@ -106,7 +106,6 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
             if(dDepth <= 0.0){
                 vec4 Resutl;
                 Resutl = vec4(BinarySearch(dir, hitCoord, dDepth),1.0);
-                //Resutl = vec4(projectedCoord.xy, depth, 0.0);
                 return Resutl;
             }
         }
@@ -119,12 +118,13 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
 
 void main() {
     vec4 colourShininess = texture(gColourShininess, TexCoords);
-    vec4 N = texture(gNormal, TexCoords);
+    vec4 N = normalize(texture(gNormal, TexCoords));
 
     vec2 MetalicRougness;
 
     //rougness
     MetalicRougness.r = colourShininess.a;
+
     //metalness
     MetalicRougness.g = N.a;
 
@@ -147,12 +147,12 @@ void main() {
     vec3 jitt = mix(vec3(0.0), vec3(hash(wp)), spec);
     vec4 coords = RayMarch(vec3( jitt * R ), hitPos, dDepth);
 
-    vec2 dCoords = smoothstep(0.2, 0.6, abs(vec2(0.5, 0.5) - TexCoords.xy));
+    vec2 dCoords = smoothstep(0.1, 0.9, abs(vec2(0.5, 0.5) - TexCoords.xy));
     float screenEdgeFactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0,1.0);
 
     float ReflectionMultiplier = pow(MetalicRougness.g, reflectionSpecularFalloffExponent) * screenEdgeFactor  * -R.z;
 
-    vec3 SSR = texture(gRenderedScene, coords.xy).rgb * ReflectionMultiplier * Fresnel;
+    vec3 SSR = texture(gRenderedScene, coords.xy).rgb * ReflectionMultiplier * Fresnel * 2;
 
     FragColor = vec4(SSR,1.0   );
 }

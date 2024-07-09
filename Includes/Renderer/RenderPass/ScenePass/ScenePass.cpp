@@ -21,7 +21,7 @@ ScenePass::ScenePass():RenderPass() {
     gColourAndShininess->generateMipMaps();
     gColourAndShininess->shaderName = "gColourShininess";
 
-    this->gDepth = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_DEPTH_COMPONENT24);
+    this->gDepth = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_DEPTH_COMPONENT32F);
     this->gDepth->shaderName = "gDepth";
 
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
