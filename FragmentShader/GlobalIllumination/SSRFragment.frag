@@ -16,9 +16,9 @@ in vec2 TexCoords;
 
 out vec4 FragColor;
 
-const float step = 0.2;
+const float step = 0.1;
 const float minRayStep = 0.1;
-const float maxSteps = 20;
+const float maxSteps = 40;
 const int numBinarySearchSteps = 100;
 const float reflectionSpecularFalloffExponent = 1.2;
 
@@ -104,7 +104,7 @@ vec4 RayMarch(vec3 dir,inout vec3 hitCoord, out float dDepth){
             continue;
         dDepth = hitCoord.z - depth;
 
-        if ((dir.z - dDepth) < 0.2) {
+        if ((dir.z - dDepth) < 1) {
             vec3 newCoord = hitCoord;
             float newDepth;
             hitCoord = BinarySearch(dir, newCoord, newDepth);
@@ -151,7 +151,9 @@ void main() {
     vec4 coords = RayMarch(vec3( jitt * R ), hitPos, dDepth);
     vec4 coords2 = RayMarch(vec3( R), hitPos, dDepth);
 
-    coords = mix(coords , coords2,0.2);
+    coords =  mix(coords , coords2,1.0);
+    coords.y += 0.01;
+    //coords = mix(coords, coords3,1);
 
     vec2 dCoords = smoothstep(0.1, 0.9, abs(vec2(0.5, 0.5) - coords.xy));
     float screenEdgeFactor = clamp(1.0 - (dCoords.x + dCoords.y), 0.0,1.0);
