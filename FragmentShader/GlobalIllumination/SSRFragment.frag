@@ -16,10 +16,10 @@ in vec2 TexCoords;
 
 out vec4 FragColor;
 
-const float step = 0.08;
+const float step = 0.98;
 const float minRayStep = 0.01;
-const float maxSteps = 20;
-const int numBinarySearchSteps = 10;
+const float maxSteps = 40;
+const int numBinarySearchSteps = 20;
 const float reflectionSpecularFalloffExponent = 2.2;
 
 float Metallic;
@@ -148,7 +148,7 @@ void main() {
     float spec = MetalicRougness.r;
 
     vec3 F0 = vec3(0.04);
-    F0 = mix(F0, albedo, MetalicRougness.g);
+    F0 = mix(F0, albedo, MetalicRougness.r);
     vec3 Fresnel = fresnelSchlick(max(dot(normalize(viewNormal), normalize(viewPos)), 0.0), F0);
 
     vec3 R = normalize(reflect(normalize(viewPos), normalize(viewNormal)));
@@ -159,11 +159,10 @@ void main() {
 
     vec3 wp = vec3(vec4(viewPos, 1.0)  * invProjection);
     vec3 jitt = mix(vec3(0.0), vec3(hash(wp)), spec);
-    vec4 coords = RayMarch(vec3( jitt * R ), hitPos, dDepth);
+    vec4 coords = RayMarch(vec3( R ), hitPos, dDepth);
     vec4 coords2 = RayMarch(vec3( R), hitPos, dDepth);
 
     coords =  mix(coords , coords2,0.4);
-    coords.y += 0.01;
     //coords = mix(coords, coords3,1);
 
     vec2 dCoords = smoothstep(0.1, 0.9, abs(vec2(0.5, 0.5) - TexCoords));
@@ -171,7 +170,7 @@ void main() {
 
     float ReflectionMultiplier = pow(MetalicRougness.r, reflectionSpecularFalloffExponent) * screenEdgeFactor  * -R.z;
 
-    vec3 SSR = texture(gRenderedScene, coords.xy).rgb * ReflectionMultiplier * Fresnel;
+    vec3 SSR = texture(gColourShininess, coords.xy).rgb * ReflectionMultiplier ;
 
     FragColor = vec4(SSR,1.0);
 }
