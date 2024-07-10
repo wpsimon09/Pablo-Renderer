@@ -171,8 +171,7 @@ void main() {
 
     float ReflectionMultiplier = pow(MetalicRougness.r, reflectionSpecularFalloffExponent) * screenEdgeFactor  * -R.z;
 
-
     vec3 SSR = texture(gRenderedScene, coords.xy).rgb * ReflectionMultiplier * Fresnel;
 
-    FragColor = vec4(SSR,1.0   );
+    FragColor = vec4(SSR,1.0);
 }

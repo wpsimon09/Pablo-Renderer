@@ -8,7 +8,7 @@
 Camera::Camera(glm::vec3 center, glm::vec3 up) {
     this->center = center;
     this->worldUp = up;
-    this->projection = glm::perspective(glm::radians(65.0f), (float)GLFWHelper::getScreenWidth() / (float)GLFWHelper::getScreenHeight(), 0.1f, 170.0f);
+    this->projection = glm::perspective(glm::radians(65.0f), (float)GLFWHelper::getScreenWidth() / (float)GLFWHelper::getScreenHeight(), 0.1f, 700.0f);
 }
 
 
