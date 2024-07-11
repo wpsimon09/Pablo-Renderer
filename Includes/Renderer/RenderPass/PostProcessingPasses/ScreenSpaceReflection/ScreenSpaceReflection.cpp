@@ -21,8 +21,8 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     this->name = "Screen space reflection pass";
 
     uniformValues["cb_zThickness"] = Parameter(0.2f);
-    uniformValues["cb_nearPlaneZ"] =Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getFarPlane(), false);
-    uniformValues["cb_farPlaneZ"] = Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getNearPlane(), false);
+    uniformValues["cb_nearPlaneZ"] =Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getNearPlane(), false);
+    uniformValues["cb_farPlaneZ"] = Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getFarPlane(), false);
     uniformValues["cb_stride"] = Parameter<float>(0.2f);
     uniformValues["cb_maxSteps"] = Parameter<float>(10.0f, true, 0.0f, 200.0f)  ;
     uniformValues["cb_maxDistance"] = Parameter<float>(0.2f, true, 0.0f, 100.0f);
