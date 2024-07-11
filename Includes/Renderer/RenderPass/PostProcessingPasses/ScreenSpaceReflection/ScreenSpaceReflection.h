@@ -15,7 +15,7 @@ public:
     render(std::shared_ptr<Texture2D> renderedScene, std::shared_ptr<Renderer> renderer) override;
 private:
     std::unique_ptr<FrameBuffer> mergeFrameBufer;
-    std::map<std::string, Parameter> uniformValues;
+    std::map<std::string, Parameter<float>> uniformValues;
 
 
     void setParamsToShader(std::shared_ptr<Shader> shader);

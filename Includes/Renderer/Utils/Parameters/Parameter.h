@@ -6,20 +6,25 @@
 #define PARAMETER_H
 #include <glm/common.hpp>
 
-
+template <typename T>
 class Parameter {
 public:
-    explicit Parameter(float val,bool isCustomizable= true, float min = 0.0, float max = 1.0);
+    Parameter()
+      : maxValue(static_cast<T>(1.0)), minValue(static_cast<T>(0.0)), currentValue(T()), isCustomizable(true) {}
 
-    float getMax(){return maxValue;}
-    float getMin(){return minValue;}
+    explicit Parameter(T val,bool isCustomizable= true, T min = static_cast<T>(0.0), T max = static_cast<T>(1.0))
+    : maxValue(max), minValue(min), currentValue(val), isCustomizable(isCustomizable) {}
+    T getMax() const {return maxValue;}
+    T getMin() const {return minValue;}
 
-    float &getValue(){return currentValue;}
-    float getVlaue() const{return currentValue;}
+    T &getValue(){return currentValue;}
+    T getValueConst() const {return currentValue;}
+
+    bool canBeChanged() {return this->isCustomizable;}
 private:
-    float maxValue;
-    float minValue;
-    float currentValue;
+    T maxValue;
+    T minValue;
+    T currentValue;
 
     bool isCustomizable;
 };

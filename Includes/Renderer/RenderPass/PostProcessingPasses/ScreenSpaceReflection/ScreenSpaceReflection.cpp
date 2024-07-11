@@ -20,16 +20,16 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     this->render_pass = SCREEN_SPACE_REFLECTION_PASS;
     this->name = "Screen space reflection pass";
 
-    uniformValues["cb_zThickness"] = Parameter(0.2);
-    uniformValues["cb_nearPlaneZ"] =Parameter(PabloRenderer::getInstance()->getScene()->camera->getFarPlane());
-    uniformValues["cb_farPlaneZ"] = PabloRenderer::getInstance()->getScene()->camera->getNearPlane();
-    uniformValues["cb_stride"] = 0.2f;
-    uniformValues["cb_maxSteps"] = 20.0f;
-    uniformValues["cb_maxDistance"] = 30.0f;
-    uniformValues["cb_strideZCutoff"] = 20.0f;
-    uniformValues["cb_fadeStart"] = 200.0f;
-    uniformValues["cb_fadeEnd"] = 300.0f;
-    uniformValues["cb_sslr_padding0"] = 0.2f;
+    uniformValues["cb_zThickness"] = Parameter(0.2f);
+    uniformValues["cb_nearPlaneZ"] =Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getFarPlane(), false);
+    uniformValues["cb_farPlaneZ"] = Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getNearPlane(), false);
+    uniformValues["cb_stride"] = Parameter<float>(0.2f);
+    uniformValues["cb_maxSteps"] = Parameter<float>(10.0f, true, 0.0f, 200.0f)  ;
+    uniformValues["cb_maxDistance"] = Parameter<float>(0.2f, true, 0.0f, 100.0f);
+    uniformValues["cb_strideZCutoff"] = Parameter<float>(30.0f, true, 0.0f, 100.0f);
+    uniformValues["cb_fadeStart"] = Parameter<float>(200.0f, true, 0.0f, 400.0f);
+    uniformValues["cb_fadeEnd"] = Parameter<float>(300.0f, true, 0.0f, 400.0f);
+    uniformValues["cb_sslr_padding0"] = Parameter<float>(0.2f);
 }
 
 std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture2D> renderedScene,
@@ -64,13 +64,14 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
 void ScreenSpaceReflection::setParamsToShader(std::shared_ptr<Shader> shader) {
     shader->use();
     for(auto param: this->uniformValues) {
-        shader->setFloat(param.first, param.second);
+        shader->setFloat(param.first, param.second.getValueConst());
     }
 }
 
 void ScreenSpaceReflection::renderUI() {
     RenderPass::renderUI();
-    for(auto param: this->uniformValues) {
-        ImGui::SliderFloat(param.first.c_str(), &param.second, 0.0, 100);
+    for(auto &param: this->uniformValues) {
+        if(param.second.canBeChanged())
+            ImGui::SliderFloat(param.first.c_str(), &param.second.getValue(), param.second.getMin(), param.second.getMax());
     }
 }
