@@ -25,6 +25,17 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
                                                          std::shared_ptr<Renderer> renderer) {
     //getting ray traced SSR
     renderer->setInputsForRenderPass(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs());
+
+    auto shader = this->frameBuffer->getShader();
+    shader->use();
+    shader->setMat4("Projection", PabloRenderer::getInstance()->getScene()->camera->getPojectionMatix());
+    shader->setMat4("invProjection", glm::inverse(PabloRenderer::getInstance()->getScene()->camera->getPojectionMatix()));
+
+    shader->setMat4("View", PabloRenderer::getInstance()->getScene()->camera->getViewMatrix());
+    shader->setMat4("invView", glm::inverse(PabloRenderer::getInstance()->getScene()->camera->getViewMatrix()));
+
+    setParamsToShader(shader);
+
     renderer->render(this->frameBuffer);
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
@@ -37,4 +48,22 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
     renderer->render(this->mergeFrameBufer);
     this->renderPassResult = this->mergeFrameBufer->getRenderedResult();
     return this->renderPassResult;
+}
+
+void ScreenSpaceReflection::setParamsToShader(std::shared_ptr<Shader> shader) {
+    shader->use();
+    shader->setFloat("cb_zThickness", zThikness);
+    shader->setFloat("cb_nearPlaneZ", nerPlane);
+    shader->setFloat("cb_farPlaneZ", farPlane);
+    shader->setFloat("cb_stride", stride);
+    shader->setFloat("cb_maxSteps", maxSteps);
+    shader->setFloat("cb_maxDistance", maxDistance);
+    shader->setFloat("cb_strideZCutoff", strideZCutoff);
+    shader->setFloat("cb_fadeStart", fadeStart);
+    shader->setFloat("cb_fadeEnd", fadeEnd);
+    shader->setFloat("cb_sslr_padding0", sslrPadding);
+}
+
+void ScreenSpaceReflection::renderUI() {
+
 }
