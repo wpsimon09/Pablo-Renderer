@@ -97,11 +97,13 @@ out vec3 hitPoint) {
 
     //from NDC to pixel space
     vec4 H0 =  Projection * vec4(csOrigin,   1.0);
-    H0.xy *= depthBufferSize;
-    H0.xy = H0.xy * 0.5 + 0.5;
+    H0.xy = H0.xy/H0.w;
+    H0.xy = 0.5 * (H0.xy + 1) * depthBufferSize;
+
     vec4 H1 =  Projection * vec4(csEndPoint, 1.0);
-    H1.xy *= depthBufferSize;
-    H1.xy = H0.xy * 0.5 + 0.5;
+    H1.xy = H1.xy/H1.w;
+    H1.xy = 0.5 * (H1.xy + 1) * depthBufferSize;
+
 
     //from perspective devision
     float k0 = 1.0f / H0.w;
