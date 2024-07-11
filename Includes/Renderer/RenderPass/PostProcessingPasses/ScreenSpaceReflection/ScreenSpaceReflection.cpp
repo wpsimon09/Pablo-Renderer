@@ -19,6 +19,17 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     this->rendererType = POST_PROCESSING;
     this->render_pass = SCREEN_SPACE_REFLECTION_PASS;
     this->name = "Screen space reflection pass";
+
+    uniformValues["cb_zThickness"] = Parameter(0.2);
+    uniformValues["cb_nearPlaneZ"] =Parameter(PabloRenderer::getInstance()->getScene()->camera->getFarPlane());
+    uniformValues["cb_farPlaneZ"] = PabloRenderer::getInstance()->getScene()->camera->getNearPlane();
+    uniformValues["cb_stride"] = 0.2f;
+    uniformValues["cb_maxSteps"] = 20.0f;
+    uniformValues["cb_maxDistance"] = 30.0f;
+    uniformValues["cb_strideZCutoff"] = 20.0f;
+    uniformValues["cb_fadeStart"] = 200.0f;
+    uniformValues["cb_fadeEnd"] = 300.0f;
+    uniformValues["cb_sslr_padding0"] = 0.2f;
 }
 
 std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture2D> renderedScene,
@@ -52,18 +63,14 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
 
 void ScreenSpaceReflection::setParamsToShader(std::shared_ptr<Shader> shader) {
     shader->use();
-    shader->setFloat("cb_zThickness", zThikness);
-    shader->setFloat("cb_nearPlaneZ", nerPlane);
-    shader->setFloat("cb_farPlaneZ", farPlane);
-    shader->setFloat("cb_stride", stride);
-    shader->setFloat("cb_maxSteps", maxSteps);
-    shader->setFloat("cb_maxDistance", maxDistance);
-    shader->setFloat("cb_strideZCutoff", strideZCutoff);
-    shader->setFloat("cb_fadeStart", fadeStart);
-    shader->setFloat("cb_fadeEnd", fadeEnd);
-    shader->setFloat("cb_sslr_padding0", sslrPadding);
+    for(auto param: this->uniformValues) {
+        shader->setFloat(param.first, param.second);
+    }
 }
 
 void ScreenSpaceReflection::renderUI() {
-
+    RenderPass::renderUI();
+    for(auto param: this->uniformValues) {
+        ImGui::SliderFloat(param.first.c_str(), &param.second, 0.0, 100);
+    }
 }
