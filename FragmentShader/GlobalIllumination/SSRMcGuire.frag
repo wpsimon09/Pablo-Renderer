@@ -108,8 +108,8 @@ out vec3 hitPoint) {
     // Transform to screen space
     mat4 projectToPixelMaterix = createPixelTransformMatrix(cb_depthBufferSize);
 
-    vec4 H0 = projectToPixelMaterix * vec4(csOrigin, 1.0);
-    vec4 H1 = projectToPixelMaterix * vec4(csEndPoint, 1.0);
+    vec4 H0 = Projection * vec4(csOrigin, 1.0);
+    vec4 H1 = Projection * vec4(csEndPoint, 1.0);
 
     float k0 = 1.0 / H0.w;
     float k1 = 1.0 / H1.w;
