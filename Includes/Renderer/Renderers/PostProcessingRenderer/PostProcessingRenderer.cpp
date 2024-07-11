@@ -23,12 +23,6 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
     auto shader = frameBuffer->getShader();
     shader->use();
 
-    shader->setMat4("Projection", scene->camera->getPojectionMatix());
-    shader->setMat4("invProjection", glm::inverse(scene->camera->getPojectionMatix()));
-
-    shader->setMat4("View", scene->camera->getViewMatrix());
-    shader->setMat4("invView", glm::inverse(scene->camera->getViewMatrix()));
-
     int textureCount = 0;
     for(auto &input: this->renderPassInputs){
         input->setSamplerID(textureCount);

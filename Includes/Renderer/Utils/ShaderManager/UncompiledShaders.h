@@ -86,7 +86,7 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
                          "PIXEL PICKING SHADER"),
 
     UncompiledShader(SHADER_SCREEN_SPACE_REFLECTIONS, "VertexShader/GlobalIllumination/SSRVertex.vert",
-             "FragmentShader/GlobalIllumination/SSRFragment.frag",
+             "FragmentShader/GlobalIllumination/SSRMcGuire.frag",
              "SSR UV SHADER"),
 
     UncompiledShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING, "VertexShader/GlobalIllumination/SSRVertex.vert",
