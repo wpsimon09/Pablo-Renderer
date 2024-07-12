@@ -189,7 +189,7 @@ out vec3 hitPoint) {
     }
 
     Q.xy += dQ.xy * stepCount;
-    hitPoint = Q * (1.0 / K);
+    hitPoint = Q * (1.0 / PQ);
 
     return (rayZmax >= sceneZmax - cb_zThickness) && (rayZmin <= sceneZmax);
 }
@@ -230,6 +230,7 @@ void main() {
     vec3 col;
 
     hitPixel *= 1/cb_depthBufferSize;
+
     hitPixel = hitPixel * 0.5 + 0.5;
 
     if(intersection)

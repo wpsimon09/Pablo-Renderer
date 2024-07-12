@@ -25,7 +25,7 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     uniformValues["cb_farPlaneZ"] = Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getFarPlane(), false);
     uniformValues["cb_stride"] = Parameter<float>(0.2f);
     uniformValues["cb_maxSteps"] = Parameter<float>(10.0f, true, 0.0f, 200.0f)  ;
-    uniformValues["cb_maxDistance"] = Parameter<float>(0.2f, true, 0.0f, 100.0f);
+    uniformValues["cb_maxDistance"] = Parameter<float>(0.2f, true, 0.0f, 2000.0f);
     uniformValues["cb_strideZCutoff"] = Parameter<float>(30.0f, true, 0.0f, 100.0f);
     uniformValues["cb_fadeStart"] = Parameter<float>(200.0f, true, 0.0f, 400.0f);
     uniformValues["cb_fadeEnd"] = Parameter<float>(300.0f, true, 0.0f, 400.0f);
@@ -73,5 +73,9 @@ void ScreenSpaceReflection::renderUI() {
     for(auto &param: this->uniformValues) {
         if(param.second.canBeChanged())
             ImGui::SliderFloat(param.first.c_str(), &param.second.getValue(), param.second.getMin(), param.second.getMax());
+        else {
+            std::string s = param.first + ":" + std::to_string(param.second.getValue());
+            ImGui::BulletText(s.c_str());
+        }
     }
 }
