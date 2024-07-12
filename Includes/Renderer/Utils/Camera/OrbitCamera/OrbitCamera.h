@@ -10,7 +10,7 @@
 
 class OrbitCamera:public Camera {
 public:
-    explicit OrbitCamera(glm::vec3 center=glm::vec3(0.0f, 0.0f, 0.0f) ,glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float radius = 40.0f, float minRadius = 2.0f, float azimuthAngle = 10.0f, float polarAngle = 10.0f);
+    explicit OrbitCamera(glm::vec3 center=glm::vec3(0.0f, 0.0f, 0.0f) ,glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float radius = 40.0f, float minRadius = 1.0f, float azimuthAngle = -10.0f, float polarAngle = 10.0f);
 
     void rotateAzimutn(float radians);
 

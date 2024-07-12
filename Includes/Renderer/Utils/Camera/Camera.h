@@ -23,6 +23,10 @@ public:
     void update(std::shared_ptr<Shader> shader);
 
     virtual void processResize(int newWidht, int newHeight){};
+
+    float getFarPlane() {return this->farPlane;}
+    float getNearPlane() {return this->nearPlane;}
+
 protected:
     virtual glm::vec3 getEye(){return glm::vec3(1.0f);};
 
@@ -31,6 +35,9 @@ protected:
     glm::vec3 worldUp;
 
     glm::mat4 projection = glm::mat4(1.0f);
+
+    float farPlane;
+    float nearPlane;
 };
 
 

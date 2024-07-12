@@ -21,6 +21,7 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
     glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
     auto shader = frameBuffer->getShader();
+    shader->use();
 
     int textureCount = 0;
     for(auto &input: this->renderPassInputs){

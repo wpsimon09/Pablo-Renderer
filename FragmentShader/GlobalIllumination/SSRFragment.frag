@@ -16,11 +16,11 @@ in vec2 TexCoords;
 
 out vec4 FragColor;
 
-const float step = 0.28;
-const float minRayStep = 0.01;
-const float maxSteps = 40;
-const int numBinarySearchSteps = 20;
-const float reflectionSpecularFalloffExponent = 2.2;
+uniform float step ;
+uniform float minRayStep ;
+uniform float maxSteps ;
+uniform float numBinarySearchSteps ;
+uniform float reflectionSpecularFalloffExponent ;
 
 float Metallic;
 
