@@ -173,7 +173,7 @@ out vec3 hitPoint) {
         K += dk;
         stepCount += 1.0;
 
-        hitPixel = permute ? P.yx : P;
+        hitPixel = permute ? P.yx : P.xy;
 
         rayZmin = prevZMaxEstimate;
         rayZmax = (dQ.z * 0.5 + Q.z) / (dk * 0.5 + K);
@@ -226,8 +226,13 @@ void main() {
                                             hitPixel, hitPoint);
     vec3 col;
 
-    hitPixel *= vec2(1/cb_depthBufferSize.x, 1/cb_depthBufferSize.y);
-    col = texture(gColourShininess, hitPixel.xy).rgb;
+    hitPixel *= 1/cb_depthBufferSize;
+    hitPixel = hitPixel *0.5 + 0.5;
+    hitPixel.xy = hitPixel.xy;
 
+    if(intersection)
+            col = texture(gColourShininess, hitPixel.xy).rgb;
+    else
+            col = vec3(0.0);
     FragColor = vec4(col,1.0);
 }
