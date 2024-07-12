@@ -96,13 +96,16 @@ out vec3 hitPoint) {
     hitPixel = vec2(-1, -1);
 
     //from NDC to pixel space
+    vec2 size = textureSize(gDepth, 0);
     vec4 H0 =  Projection * vec4(csOrigin,   1.0);
-    H0.xy = H0.xy/H0.w;
-    H0.xy = 0.5 * (H0.xy + 1) * depthBufferSize;
+    H0.xy *= size;
+    //H0.xy = H0.xy/H0.w;
+    //H0.xy = 0.5 * (H0.xy + 1) * depthBufferSize;
 
     vec4 H1 =  Projection * vec4(csEndPoint, 1.0);
-    H1.xy = H1.xy/H1.w;
-    H1.xy = 0.5 * (H1.xy + 1) * depthBufferSize;
+    H1.xy *= size;
+  //  H1.xy = H1.xy/H1.w;
+//    H1.xy = 0.5 * (H1.xy + 1) * depthBufferSize;
 
 
     //from perspective devision
@@ -222,7 +225,9 @@ void main() {
     bool intersection = traceScreenSpaceRay(rayOriginVS, rayDirectionVS, 0.2, cb_depthBufferSize,
                                             hitPixel, hitPoint);
     vec3 col;
-    col = texture(gRenderedScene, hitPixel.xy).rgb;
+
+    hitPixel *= vec2(1/cb_depthBufferSize.x, 1/cb_depthBufferSize.y);
+    col = texture(gColourShininess, hitPixel.xy).rgb;
 
     FragColor = vec4(col,1.0);
 }
