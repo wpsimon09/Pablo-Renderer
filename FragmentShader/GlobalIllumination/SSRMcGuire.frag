@@ -17,7 +17,6 @@ in vec2 TexCoords;
 out vec4 FragColor;
 
 // dimensions of the z-buffer
-vec2 cb_depthBufferSize = textureSize(gDepth,0);
 
 // thickness to ascribe to each pixel in the depth buffer
 uniform float cb_zThickness;
@@ -77,16 +76,6 @@ void swap(inout float a, inout float b){
     b = t;
 }
 
-mat4 createPixelTransformMatrix(vec2 viewportDimensions) {
-
-    mat4 projectToPixelMatrix = mat4(
-        vec4(viewportDimensions.x / 2.0, 0.0, 0.0, 0.0),
-        vec4(0.0, viewportDimensions.y / 2.0, 0.0, 0.0),
-        vec4(0.0, 0.0, 1.0, 0.0),
-        vec4(viewportDimensions.x / 2.0, viewportDimensions.y / 2.0, 0.0, 1.0)
-    );
-    return projectToPixelMatrix;
-}
 
 float linearDepthTexelFetch(vec2 hitPixel){
     return linearizeDepth(texture(gDepth, hitPixel).r);
@@ -96,6 +85,7 @@ bool traceScreenSpaceRay(
     vec3 csOrigin,
     vec3 csDir,
     float jitter,
+    vec2 depthBufferSize,
 out vec2 hitPixel,
 out vec3 hitPoint) {
 
@@ -105,14 +95,24 @@ out vec3 hitPoint) {
 
     hitPixel = vec2(-1, -1);
 
-    // Transform to screen space
-    mat4 projectToPixelMaterix = createPixelTransformMatrix(cb_depthBufferSize);
+    //from NDC to pixel space
+    vec2 size = textureSize(gDepth, 0);
+    vec4 H0 =  Projection * vec4(csOrigin,   1.0);
+    //H0.xy = H0.xy/H0.w;
+    H0.xy *= size;
+    //H0.xy = H0.xy * 0.5 + 0.5;
+    //H0.xy = 0.5 * (H0.xy + 1) * depthBufferSize;
 
-    vec4 H0 = Projection * vec4(csOrigin, 1.0);
-    vec4 H1 = Projection * vec4(csEndPoint, 1.0);
+    vec4 H1 =  Projection * vec4(csEndPoint, 1.0);
+    //H1.xy = H1.xy/H1.w;
+    H1.xy *= size;
+    //H1.xy = H1.xy * 0.5 + 0.5;
+//    H1.xy = 0.5 * (H1.xy + 1) * depthBufferSize;
 
-    float k0 = 1.0 / H0.w;
-    float k1 = 1.0 / H1.w;
+
+    //from perspective devision
+    float k0 = 1.0f / H0.w;
+    float k1 = 1.0f / H1.w;
 
     vec3 Q0 = csOrigin * k0;
     vec3 Q1 = csEndPoint * k1;
@@ -122,7 +122,7 @@ out vec3 hitPoint) {
 
     hitPixel = vec2(-1.0, -1.0);
 
-    P1 += vec2((distanceSquared(P0, P1) < 0.0001) ? 0.01 : 0.0);
+    P1 += vec2((distanceSquared(P0, P1) < 0.0001) ? vec2(0.01,0.01) : vec2(0.0,0.0));
     vec2 delta = P1 - P0;
 
     bool permute = false;
@@ -153,6 +153,8 @@ out vec3 hitPoint) {
     vec3 Q = Q0;
     float K = k0;
 
+
+
     float prevZMaxEstimate = csOrigin.z;
     float rayZmin = prevZMaxEstimate;
     float rayZmax = prevZMaxEstimate;
@@ -169,12 +171,12 @@ out vec3 hitPoint) {
     (sceneZmax != 0.0)) {
 
         P += dP;
-        stepCount++;
-
         Q.z += dQ.z;
         K += dk;
+        stepCount += 1.0;
 
-        hitPixel = permute ? P.yx : P.yx;
+        hitPixel = permute ? P.yx : P.xy;
+        hitPixel.y = depthBufferSize.y - hitPixel.y;
 
         rayZmin = prevZMaxEstimate;
         rayZmax = (dQ.z * 0.5 + Q.z) / (dk * 0.5 + K);
@@ -183,13 +185,13 @@ out vec3 hitPoint) {
             swap(rayZmin, rayZmax);
         }
 
-        sceneZmax = texture(gDepth, hitPixel).r;
+        sceneZmax = texelFetch(gDepth, ivec2(hitPixel), 0).r;
     }
 
     Q.xy += dQ.xy * stepCount;
-    hitPoint = Q * (1.0 / K);
+    hitPoint = Q * (1.0 / PQ);
 
-    return intersetcsDepthBuffer(sceneZmax, rayZmin, rayZmax);
+    return (rayZmax >= sceneZmax - cb_zThickness) && (rayZmin <= sceneZmax);
 }
 
 
@@ -208,24 +210,32 @@ vec3 PositionFromDepth(float depth) {
 
 
 void main() {
-    vec3 normalVS = texture(gNormal, TexCoords).xyz;
-    normalVS = normalize(vec3(vec4(normalVS,1.0)*View));
+    vec2 cb_depthBufferSize = textureSize(gDepth,0);
+
+    vec3 normalVS = normalize(texture(gNormal, TexCoords).xyz);
+    normalVS = normalize(vec3(vec4(normalVS,1.0) * View));
 
     float depth = texture(gDepth, TexCoords).r;
 
-    vec3 rayOriginVS = vec3(vec4(PositionFromDepth(depth),1.0)*invProjection);
+    vec3 rayOriginVS = vec3(vec4(PositionFromDepth(depth),1.0));
 
     vec3 toPostionVS = normalize(rayOriginVS);
-    vec3 rayDirectionVS =reflect(normalize(toPostionVS), normalize(normalVS));
-
-    rayDirectionVS = vec3(vec4(rayDirectionVS, 1.0)* View);
+    vec3 rayDirectionVS =normalize(reflect(normalize(toPostionVS), normalize(normalVS)));
 
     vec2 hitPixel = vec2(0.0);
     vec3 hitPoint = vec3(0.0);
 
-    bool intersection = traceScreenSpaceRay(rayOriginVS, rayDirectionVS, 0.2,
+    bool intersection = traceScreenSpaceRay(rayOriginVS, rayDirectionVS, 0.2, cb_depthBufferSize,
                                             hitPixel, hitPoint);
     vec3 col;
-    col = texture(gColourShininess, hitPixel.xy).rgb;
+
+    hitPixel *= 1/cb_depthBufferSize;
+
+    hitPixel = hitPixel * 0.5 + 0.5;
+
+    if(intersection)
+            col = texture(gColourShininess, vec2(hitPixel.x, hitPixel.y)).rgb;
+    else
+            col = vec3(0.0);
     FragColor = vec4(col,1.0);
 }
