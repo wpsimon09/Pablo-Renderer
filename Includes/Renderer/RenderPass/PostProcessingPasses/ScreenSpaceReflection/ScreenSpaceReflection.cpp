@@ -25,6 +25,18 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
                                                          std::shared_ptr<Renderer> renderer) {
     //getting ray traced SSR
     renderer->setInputsForRenderPass(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs());
+
+    auto shader = frameBuffer->getShader();
+    shader->use();
+
+    shader->setMat4("Projection", PabloRenderer::getInstance()->getScene()->camera->getPojectionMatix());
+    shader->setMat4("invProjection", glm::inverse(PabloRenderer::getInstance()->getScene()->camera->getPojectionMatix()));
+
+    shader->setMat4("View", PabloRenderer::getInstance()->getScene()->camera->getViewMatrix());
+    shader->setMat4("invView", glm::inverse(PabloRenderer::getInstance()->getScene()->camera->getViewMatrix()));
+
+    shader->setVec3("cameraPosition", PabloRenderer::getInstance()->getScene()->camera->getPosition());
+
     renderer->render(this->frameBuffer);
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
