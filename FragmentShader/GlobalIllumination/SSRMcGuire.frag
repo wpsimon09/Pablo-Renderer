@@ -99,16 +99,12 @@ out vec3 hitPoint) {
     vec2 size = textureSize(gDepth, 0);
     vec4 H0 =  Projection * vec4(csOrigin,   1.0);
     //H0.xy = H0.xy/H0.w;
-    H0.xy *= size;
-    //H0.xy = H0.xy * 0.5 + 0.5;
-    //H0.xy = 0.5 * (H0.xy + 1) * depthBufferSize;
+    //H0.xy *= size;
+    H0.xy = H0.xy * 0.5 + 0.5;
 
     vec4 H1 =  Projection * vec4(csEndPoint, 1.0);
-    //H1.xy = H1.xy/H1.w;
-    H1.xy *= size;
-    //H1.xy = H1.xy * 0.5 + 0.5;
-//    H1.xy = 0.5 * (H1.xy + 1) * depthBufferSize;
-
+    H1.xy = H1.xy/H1.w;
+    H1.xy = H1.xy * 0.5 + 0.5;
 
     //from perspective devision
     float k0 = 1.0f / H0.w;
@@ -140,8 +136,8 @@ out vec3 hitPoint) {
     vec3 dQ = (Q1 - Q0) * invdx;
     float dk = (k1 - k0) * invdx;
 
-    float strideScale = 1.0 - min(1.0, csOrigin.z * cb_strideZCutoff);
-    float stride = 1.0 + strideScale * cb_stride;
+    float strideScale = 1.0f - min(1.0, csOrigin.z * cb_strideZCutoff);
+    float stride = 1.0f + strideScale * cb_stride;
 
     dP *= stride;
     dQ *= stride;
@@ -153,12 +149,13 @@ out vec3 hitPoint) {
     vec3 Q = Q0;
     float K = k0;
 
-
-
     float prevZMaxEstimate = csOrigin.z;
     float rayZmin = prevZMaxEstimate;
     float rayZmax = prevZMaxEstimate;
     float sceneZmax = rayZmax + 100.0;
+
+    vec4 PQK = vec4(P0, Q0.z, k0);
+    vec4 dPQK = vec4(dP, dQ.z, dk);
 
     float end = P1.x * stepDir;
 
@@ -167,29 +164,35 @@ out vec3 hitPoint) {
 
     while (((P.x * stepDir) <= end) &&
     (stepCount < cb_maxSteps) &&
-    ((rayZmax < sceneZmax - cb_zThickness) || (rayZmin > sceneZmax)) &&
-    (sceneZmax != 0.0)) {
+    ((rayZmax < sceneZmax - cb_zThickness) || (rayZmin > sceneZmax)) && (sceneZmax != 0.0))
+    {
 
         P += dP;
         Q.z += dQ.z;
         K += dk;
         stepCount += 1.0;
 
-        hitPixel = permute ? P.yx : P.xy;
-        hitPixel.y = depthBufferSize.y - hitPixel.y;
-
         rayZmin = prevZMaxEstimate;
-        rayZmax = (dQ.z * 0.5 + Q.z) / (dk * 0.5 + K);
+        rayZmax = (dPQK.z * 0.5 + PQK.z) / (dPQK.w * 0.5 + PQK.w);
         prevZMaxEstimate = rayZmax;
+
         if (rayZmin > rayZmax) {
             swap(rayZmin, rayZmax);
         }
+        hitPixel = permute ? PQK.yx : PQK.xy;
+
+        hitPixel.y = depthBufferSize.y - hitPixel.y;
+
 
         sceneZmax = texelFetch(gDepth, ivec2(hitPixel), 0).r;
+
+        PQK += dPQK;
     }
 
+
+
     Q.xy += dQ.xy * stepCount;
-    hitPoint = Q * (1.0 / PQ);
+    hitPoint = Q * (1.0 / PQK.w);
 
     return (rayZmax >= sceneZmax - cb_zThickness) && (rayZmin <= sceneZmax);
 }
@@ -227,10 +230,10 @@ void main() {
 
     bool intersection = traceScreenSpaceRay(rayOriginVS, rayDirectionVS, 0.2, cb_depthBufferSize,
                                             hitPixel, hitPoint);
-    vec3 col;
+    vec3 col = vec3(0.0);
 
     hitPixel *= 1/cb_depthBufferSize;
-
+    hitPixel.xy = vec2(vec4(hitPixel, 1.0,1.0));
     hitPixel = hitPixel * 0.5 + 0.5;
 
     if(intersection)
