@@ -98,13 +98,15 @@ out vec3 hitPoint) {
     //from NDC to pixel space
     vec2 size = textureSize(gDepth, 0);
     vec4 H0 =  Projection * vec4(csOrigin,   1.0);
-    H0.xy *= size;
     //H0.xy = H0.xy/H0.w;
+    H0.xy *= size;
+    //H0.xy = H0.xy * 0.5 + 0.5;
     //H0.xy = 0.5 * (H0.xy + 1) * depthBufferSize;
 
     vec4 H1 =  Projection * vec4(csEndPoint, 1.0);
+    //H1.xy = H1.xy/H1.w;
     H1.xy *= size;
-  //  H1.xy = H1.xy/H1.w;
+    //H1.xy = H1.xy * 0.5 + 0.5;
 //    H1.xy = 0.5 * (H1.xy + 1) * depthBufferSize;
 
 
@@ -174,6 +176,7 @@ out vec3 hitPoint) {
         stepCount += 1.0;
 
         hitPixel = permute ? P.yx : P.xy;
+        hitPixel.y = depthBufferSize.y - hitPixel.y;
 
         rayZmin = prevZMaxEstimate;
         rayZmax = (dQ.z * 0.5 + Q.z) / (dk * 0.5 + K);
@@ -227,11 +230,10 @@ void main() {
     vec3 col;
 
     hitPixel *= 1/cb_depthBufferSize;
-    hitPixel = hitPixel *0.5 + 0.5;
-    hitPixel.xy = hitPixel.xy;
+    hitPixel = hitPixel * 0.5 + 0.5;
 
     if(intersection)
-            col = texture(gColourShininess, hitPixel.xy).rgb;
+            col = texture(gColourShininess, vec2(hitPixel.x, hitPixel.y)).rgb;
     else
             col = vec3(0.0);
     FragColor = vec4(col,1.0);
