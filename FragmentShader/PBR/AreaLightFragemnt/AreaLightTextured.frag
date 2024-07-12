@@ -238,6 +238,6 @@ void main() {
     FragColor = vec4(result, 1.0);
 
     gPosition = vec4(fs_in.FragPos.xyz,1.0);
-    gNormal = vec4(N.rgb,metallic);
+    gNormal = vec4(N.rgb,1.0);
     gShininessColour = vec4(result.rgb,1.0);
 }
