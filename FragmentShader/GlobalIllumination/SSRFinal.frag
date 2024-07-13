@@ -44,6 +44,17 @@ vec3 BinarySerach(in vec3 RaySample, in vec3 PreviousRaySample){
     return MidRaySample;
 }
 
+vec3 PositionFromDepth(float depth) {
+    float z = depth * 2.0 - 1.0;
+
+    vec4 clipSpacePosition = vec4(TexCoords * 2.0 - 1.0, z, 1.0);
+    vec4 viewSpacePosition = invProjection * clipSpacePosition;
+
+    // Perspective division
+    viewSpacePosition.xyz /= viewSpacePosition.w;
+
+    return viewSpacePosition.xyz;
+}
 
 bool RayMarch(
         vec3 ScreenSpaceReflectionVec,
@@ -56,7 +67,7 @@ bool RayMarch(
 
         float ZBufferVal = texture(gDepth, RaySample.xy).r;
 
-        if(RaySample.z > -ZBufferVal){
+        if(RaySample.z > ZBufferVal){
             RaySample.y = 1 - RaySample.y;
             RaySample = BinarySerach(RaySample, PrevRaySample);
             ReflectionColor = texture(gColourShininess, RaySample.xy).rbg;
@@ -80,8 +91,8 @@ void main() {
     float DeviceZ = texture(gDepth, TexCoords).r;
 
     // position of the fragment in world
-    vec4 WorldPosition4 = invProjection * vec4(NDCPos, DeviceZ,0);
-    vec3 WorldPosition = WorldPosition4.xyz ;
+    vec4 WorldPosition4 = invProjection * invView * vec4(NDCPos, DeviceZ,0);
+    vec3 WorldPosition = WorldPosition4.xyz/WorldPosition4.w;
 
     // vector from camera to the target fragment
 
@@ -95,7 +106,7 @@ void main() {
     vec3 ReflectionVector = reflect(normalize(CameraVector), normalize(WorldNormal.xyz));
 
     vec4 PointAlongReflectionVec = vec4(ReflectionVecScale * ReflectionVector + WorldPosition,1.0);
-    vec4 ScreenSpaceReflectionPoint = invProjection * PointAlongReflectionVec;
+    vec4 ScreenSpaceReflectionPoint = Projection * View * PointAlongReflectionVec;
     ScreenSpaceReflectionPoint /=ScreenSpaceReflectionPoint.w;
     ScreenSpaceReflectionPoint.xy = ScreenSpaceReflectionPoint.xy * vec2(0.5, -0.5) + vec2(0.5, 0.5);
 
@@ -112,5 +123,5 @@ void main() {
     else{
         FragColor = vec4(0.0);
     }
-   // FragColor = vec4(ReflectionVector,1.0);
+   //FragColor = vec4(WorldPosition,1.0);
 }
