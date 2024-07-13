@@ -25,7 +25,7 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     uniformValues["MaxSamplerCount"] = Parameter<float>(10, true, 0.0f,400.0f);
     uniformValues["MaxMarchStep"] = Parameter<float>(0.2, true, 0.0f,2.0f);
     uniformValues["MaxBinarySearchSteps"] = Parameter<float>(6.0, true, 0.0f,400.0f);
-    uniformValues["MidRaySampleWeight"] = Parameter<float>(0.5, true, 0.0f,1.0f);
+    uniformValues["MidRaySampleWeight"] = Parameter<float>(0.5, true, 0.0f,4.0f);
 
     /*
     uniformValues["minRayStep"] = Parameter<float>(0.01f, true, 0.0f,10.0f);

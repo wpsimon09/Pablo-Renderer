@@ -183,7 +183,6 @@ out vec3 hitPoint) {
 
         hitPixel.y = depthBufferSize.y - hitPixel.y;
 
-
         sceneZmax = texelFetch(gDepth, ivec2(hitPixel), 0).r;
 
         PQK += dPQK;

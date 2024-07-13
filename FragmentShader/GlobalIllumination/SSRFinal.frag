@@ -34,7 +34,7 @@ vec3 BinarySerach(in vec3 RaySample, in vec3 PreviousRaySample){
         MidRaySample = mix(MinRaySample, MaxRaySample, MidRaySampleWeight);
         float ZBufferVal = texture(gDepth, MidRaySample.xy).r;
 
-        if(MidRaySample.z < ZBufferVal){
+        if(MidRaySample.z > ZBufferVal){
             MaxRaySample = MidRaySample;
         }else{
             MinRaySample = MidRaySample;
@@ -56,8 +56,11 @@ bool RayMarch(
 
         float ZBufferVal = texture(gDepth, RaySample.xy).r;
 
-        if(RaySample.z > ZBufferVal){
-            ReflectionColor = texture(gColourShininess, BinarySerach(RaySample, PrevRaySample).xy).rbg;
+        if(RaySample.z > -ZBufferVal){
+            RaySample.y = 1 - RaySample.y;
+            RaySample = BinarySerach(RaySample, PrevRaySample);
+            ReflectionColor = texture(gColourShininess, RaySample.xy).rbg;
+
             return true;
         }
         PrevRaySample = RaySample;
@@ -71,21 +74,21 @@ void main() {
     vec2 PixelUV = TexCoords;
 
     //convert from 0,1 to -1,1 aka from pixel space to screen space
-    vec2 NDCPos = vec2(2.0f, -2.0f)*PixelUV + vec2(-1.0f, 1.0f);
+    vec2 NDCPos = PixelUV * 2.0 - 2.0;
 
     // depth
     float DeviceZ = texture(gDepth, TexCoords).r;
 
     // position of the fragment in world
     vec4 WorldPosition4 = invProjection * vec4(NDCPos, DeviceZ,0);
-    vec3 WorldPosition = -WorldPosition4.xyz/WorldPosition4.w;
+    vec3 WorldPosition = WorldPosition4.xyz ;
 
     // vector from camera to the target fragment
-    vec3 CameraVector = normalize(WorldPosition - cameraPosition);
+
+    vec3 CameraVector = normalize(WorldPosition + cameraPosition);
 
     //normal vector in world space in 0.0
     vec3 WorldNormal = normalize(texture(gNormal, TexCoords).xyz * 2.0 - 1.0);
-
 
     vec4 ScreenSpacePos = vec4(PixelUV, DeviceZ, 1.0f);
 
@@ -105,10 +108,9 @@ void main() {
 
     if(intersect){
         FragColor = vec4(OutReflectionColor,1.0);
-    //FragColor = vec4(texture(WorldNormal,TexCoords));
     }
     else{
         FragColor = vec4(0.0);
     }
-    //FragColor = vec4(ScreenSpaceReflectionVec,1.0);
+   // FragColor = vec4(ReflectionVector,1.0);
 }
