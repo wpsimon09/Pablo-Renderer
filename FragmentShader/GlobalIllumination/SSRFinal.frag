@@ -85,14 +85,14 @@ void main() {
     vec2 PixelUV = TexCoords;
 
     //convert from 0,1 to -1,1 aka from pixel space to screen space
-    vec2 NDCPos = PixelUV * 2.0 - 2.0;
+    vec2 NDCPos = vec2(2.f,-2.f) * PixelUV + vec2(-1.f,1.f);;
 
     // depth
     float DeviceZ = texture(gDepth, TexCoords).r;
 
     // position of the fragment in world
     vec4 WorldPosition4 = invProjection * invView * vec4(NDCPos, DeviceZ,0);
-    vec3 WorldPosition = WorldPosition4.xyz ;
+    vec3 WorldPosition = WorldPosition4.xyz / WorldPosition4.w ;
 
     // vector from camera to the target fragment
 
@@ -107,8 +107,8 @@ void main() {
 
     vec4 PointAlongReflectionVec = vec4(ReflectionVecScale * ReflectionVector + WorldPosition,1.0);
     vec4 ScreenSpaceReflectionPoint = Projection * View * PointAlongReflectionVec;
-    ScreenSpaceReflectionPoint /= ScreenSpaceReflectionPoint.w;
-    ScreenSpaceReflectionPoint.xy = ScreenSpaceReflectionPoint.xy * 0.5      + 0.5;
+    ScreenSpaceReflectionPoint.xyz /= ScreenSpaceReflectionPoint.w;
+    ScreenSpaceReflectionPoint.xy = ScreenSpaceReflectionPoint.xy * vec2(0.5, -0.5) + vec2(0.5, 0.5);;
 
     vec3 ScreenSpaceReflectionVec = normalize(ScreenSpaceReflectionPoint.xyz - ScreenSpacePos.xyz);
 
@@ -118,11 +118,10 @@ void main() {
 
 
     if(intersect){
-        OutReflectionColor.xy *= OutReflectionColor.xy * 0.5+0.5;
         FragColor = vec4(OutReflectionColor,1.0);
     }
     else{
         FragColor = vec4(0.0);
     }
-   FragColor = vec4(ScreenSpaceReflectionPoint);
+   //FragColor = vec4(ScreenSpaceReflectionPoint.xyz,1.0);
 }
