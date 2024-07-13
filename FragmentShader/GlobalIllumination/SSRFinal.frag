@@ -17,10 +17,32 @@ uniform vec3 cameraPosition;
 uniform float ReflectionVecScale;
 uniform float MaxSamplerCount;
 uniform float MaxMarchStep;
+uniform float MaxBinarySearchSteps;
+uniform float MidRaySampleWeight;
 
 in vec2 TexCoords;
 
 out vec4 FragColor;
+
+
+vec3 BinarySerach(in vec3 RaySample, in vec3 PreviousRaySample){
+    vec3 MinRaySample = PreviousRaySample;
+    vec3 MaxRaySample = RaySample;
+    vec3 MidRaySample;
+
+    for(int i=0; i< MaxBinarySearchSteps; i++){
+        MidRaySample = mix(MinRaySample, MaxRaySample, MidRaySampleWeight);
+        float ZBufferVal = texture(gDepth, MidRaySample.xy).r;
+
+        if(MidRaySample.z < ZBufferVal){
+            MaxRaySample = MidRaySample;
+        }else{
+            MinRaySample = MidRaySample;
+        }
+    }
+
+    return MidRaySample;
+}
 
 
 bool RayMarch(
@@ -28,15 +50,17 @@ bool RayMarch(
         vec3 ScreenSpacePosition,
         out vec3 ReflectionColor
 ){
+    vec3 PrevRaySample = (0 * MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;;
     for(int RayStepIndex = 0; RayStepIndex < MaxSamplerCount; RayStepIndex++){
         vec3 RaySample = (RayStepIndex * MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;
+
         float ZBufferVal = texture(gDepth, RaySample.xy).r;
 
         if(RaySample.z > ZBufferVal){
-            ReflectionColor = texture(gColourShininess, RaySample.xy).rbg;
+            ReflectionColor = texture(gColourShininess, BinarySerach(RaySample, PrevRaySample).xy).rbg;
             return true;
         }
-
+        PrevRaySample = RaySample;
     }
     return false;
 }
@@ -53,13 +77,15 @@ void main() {
     float DeviceZ = texture(gDepth, TexCoords).r;
 
     // position of the fragment in world
-    vec3 WorldPosition = vec3(invProjection * vec4(NDCPos, DeviceZ,0) );
+    vec4 WorldPosition4 = invProjection * vec4(NDCPos, DeviceZ,0);
+    vec3 WorldPosition = -WorldPosition4.xyz/WorldPosition4.w;
 
     // vector from camera to the target fragment
     vec3 CameraVector = normalize(WorldPosition - cameraPosition);
 
     //normal vector in world space in 0.0
-    vec4 WorldNormal = texture(gNormal, TexCoords) * vec4(2.0,2.0,2.0,1) - vec4(1.0,1.0,1.0,0.0);
+    vec3 WorldNormal = normalize(texture(gNormal, TexCoords).xyz * 2.0 - 1.0);
+
 
     vec4 ScreenSpacePos = vec4(PixelUV, DeviceZ, 1.0f);
 
@@ -77,11 +103,12 @@ void main() {
     bool intersect = RayMarch(ScreenSpaceReflectionVec, ScreenSpacePos.xyz, OutReflectionColor);
 
 
-    //FragColor = vec4(texture(WorldNormal,TexCoords));
     if(intersect){
         FragColor = vec4(OutReflectionColor,1.0);
+    //FragColor = vec4(texture(WorldNormal,TexCoords));
     }
     else{
         FragColor = vec4(0.0);
     }
+    //FragColor = vec4(ScreenSpaceReflectionVec,1.0);
 }
