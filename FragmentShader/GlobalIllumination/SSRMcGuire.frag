@@ -98,13 +98,8 @@ out vec3 hitPoint) {
     //from NDC to pixel space
     vec2 size = textureSize(gDepth, 0);
     vec4 H0 =  Projection * vec4(csOrigin,   1.0);
-    //H0.xy = H0.xy/H0.w;
-    //H0.xy *= size;
-    H0.xy = H0.xy * 0.5 + 0.5;
 
     vec4 H1 =  Projection * vec4(csEndPoint, 1.0);
-    H1.xy = H1.xy/H1.w;
-    H1.xy = H1.xy * 0.5 + 0.5;
 
     //from perspective devision
     float k0 = 1.0f / H0.w;
@@ -152,7 +147,7 @@ out vec3 hitPoint) {
     float prevZMaxEstimate = csOrigin.z;
     float rayZmin = prevZMaxEstimate;
     float rayZmax = prevZMaxEstimate;
-    float sceneZmax = rayZmax + 100.0;
+    float sceneZmax = rayZmax + 1e4;
 
     vec4 PQK = vec4(P0, Q0.z, k0);
     vec4 dPQK = vec4(dP, dQ.z, dk);
@@ -172,26 +167,23 @@ out vec3 hitPoint) {
         K += dk;
         stepCount += 1.0;
 
+        hitPixel = permute ? P.yx : P;
+
         rayZmin = prevZMaxEstimate;
-        rayZmax = (dPQK.z * 0.5 + PQK.z) / (dPQK.w * 0.5 + PQK.w);
+        rayZmax = (dQ.z * 0.5 + Q.z) / (dk * 0.5 + K);
         prevZMaxEstimate = rayZmax;
 
         if (rayZmin > rayZmax) {
             swap(rayZmin, rayZmax);
         }
-        hitPixel = permute ? PQK.yx : PQK.xy;
-
-        hitPixel.y = depthBufferSize.y - hitPixel.y;
 
         sceneZmax = texelFetch(gDepth, ivec2(hitPixel), 0).r;
-
-        PQK += dPQK;
     }
 
 
 
     Q.xy += dQ.xy * stepCount;
-    hitPoint = Q * (1.0 / PQK.w);
+    hitPoint = Q * (1.0 / K);
 
     return (rayZmax >= sceneZmax - cb_zThickness) && (rayZmin <= sceneZmax);
 }
