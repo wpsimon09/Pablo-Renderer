@@ -23,18 +23,21 @@ uniform float MidRaySampleWeight;
 uniform float NearPlane;
 uniform float FarPlane;
 
+precision highp float;
+precision highp int;
+
 in vec2 TexCoords;
 
 out vec4 FragColor;
 
 float linearizeDepth(float depth){
-    float z = depth * 2.0 - 1.0; // back to NDC
+    float z = depth * 2.0 - 1.0;
     return (2.0 * NearPlane * FarPlane) / (FarPlane + NearPlane - depth  * (FarPlane - NearPlane));
     return depth;
 }
 vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
     vec3 MinRaySample = PreviousRaySample;
-    //inRaySample.z = linearizeDepth(MinRaySample.z);
+    RaySample.z = linearizeDepth(MinRaySample.z);
     vec3 MaxRaySample = RaySample;
     MaxRaySample.z = linearizeDepth(MaxRaySample.z);
     vec3 MidRaySample;
@@ -59,16 +62,20 @@ bool RayMarch(
 out vec3 ReflectionColor
 ){
     vec3 PrevRaySample = ScreenSpacePosition;
-    for(int RayStepIndex = 0; RayStepIndex < MaxSamplerCount; RayStepIndex++){
-        vec3 RaySample = (RayStepIndex * -MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;
 
-        float ZBufferVal = texture(gDepth, RaySample.xy).r;
+    vec3 RaySample;
+    float ZBufferVal;
+
+    for(int RayStepIndex = 0; RayStepIndex < MaxSamplerCount ||RaySample.z > ZBufferVal; RayStepIndex++){
+        RaySample = (RayStepIndex * -MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;
+
+        ZBufferVal = texture(gDepth, RaySample.xy).r;
         ZBufferVal = linearizeDepth(ZBufferVal);
         if(RaySample.z > ZBufferVal){
             vec3 IntersectionSample = BinarySearch(RaySample, PrevRaySample);
 
             vec2 texCoords = IntersectionSample.xy / vec2(textureSize(gDepth, 0));
-            ReflectionColor = texture(gColourShininess, texCoords).rgb;
+            ReflectionColor = texture(gColourShininess, IntersectionSample.xy).rgb;
 
             return true;
         }
