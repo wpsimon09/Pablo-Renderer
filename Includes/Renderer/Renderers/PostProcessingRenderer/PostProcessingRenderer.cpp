@@ -23,6 +23,7 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
     auto shader = frameBuffer->getShader();
     shader->use();
 
+
     int textureCount = 0;
     for(auto &input: this->renderPassInputs){
         input->setSamplerID(textureCount);
