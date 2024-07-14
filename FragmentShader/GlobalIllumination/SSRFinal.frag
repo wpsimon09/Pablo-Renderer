@@ -30,56 +30,45 @@ out vec4 FragColor;
 float linearizeDepth(float depth){
     float z = depth * 2.0 - 1.0; // back to NDC
     return (2.0 * NearPlane * FarPlane) / (FarPlane + NearPlane - depth  * (FarPlane - NearPlane));
+    return depth;
 }
-
-vec3 BinarySerach(in vec3 RaySample, in vec3 PreviousRaySample){
+vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
     vec3 MinRaySample = PreviousRaySample;
+    //inRaySample.z = linearizeDepth(MinRaySample.z);
     vec3 MaxRaySample = RaySample;
+    MaxRaySample.z = linearizeDepth(MaxRaySample.z);
     vec3 MidRaySample;
 
-    for(int i=0; i< MaxBinarySearchSteps; i++){
-        MidRaySample = mix(MinRaySample, MaxRaySample, MidRaySampleWeight);
+    for(int i = 0; i < MaxBinarySearchSteps; i++){
+        MidRaySample = mix(MinRaySample, MaxRaySample, 0.5);
         float ZBufferVal = texture(gDepth, MidRaySample.xy).r;
         ZBufferVal = linearizeDepth(ZBufferVal);
         if(MidRaySample.z > ZBufferVal){
             MaxRaySample = MidRaySample;
-        }else{
+        } else {
             MinRaySample = MidRaySample;
         }
     }
 
-    return MidRaySample ;
-}
-
-vec3 PositionFromDepth(float depth) {
-    float z = depth * 2.0 - 1.0;
-
-    vec4 clipSpacePosition = vec4(TexCoords * 2.0 - 1.0, z, 1.0);
-    vec4 viewSpacePosition = invProjection * clipSpacePosition;
-
-    // Perspective division
-    viewSpacePosition.xyz /= viewSpacePosition.w;
-
-    return viewSpacePosition.xyz;
+    return MidRaySample;
 }
 
 bool RayMarch(
-        vec3 ScreenSpaceReflectionVec,
-        vec3 ScreenSpacePosition,
-        out vec3 ReflectionColor
+    vec3 ScreenSpaceReflectionVec,
+    vec3 ScreenSpacePosition,
+out vec3 ReflectionColor
 ){
-    vec3 PrevRaySample = (0 * MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;;
+    vec3 PrevRaySample = ScreenSpacePosition;
     for(int RayStepIndex = 0; RayStepIndex < MaxSamplerCount; RayStepIndex++){
-        vec3 RaySample = (RayStepIndex * -MaxMarchStep) *  ScreenSpaceReflectionVec + ScreenSpacePosition;
+        vec3 RaySample = (RayStepIndex * -MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;
 
         float ZBufferVal = texture(gDepth, RaySample.xy).r;
         ZBufferVal = linearizeDepth(ZBufferVal);
         if(RaySample.z > ZBufferVal){
+            vec3 IntersectionSample = BinarySearch(RaySample, PrevRaySample);
 
-            RaySample.y = -RaySample.y;
-            RaySample = BinarySerach(RaySample, PrevRaySample);
-
-            ReflectionColor =texture(gColourShininess, PrevRaySample.xy).rbg;
+            vec2 texCoords = IntersectionSample.xy / vec2(textureSize(gDepth, 0));
+            ReflectionColor = texture(gColourShininess, texCoords).rgb;
 
             return true;
         }
@@ -87,6 +76,7 @@ bool RayMarch(
     }
     return false;
 }
+
 
 
 
