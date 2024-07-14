@@ -28,7 +28,8 @@ in vec2 TexCoords;
 out vec4 FragColor;
 
 float linearizeDepth(float depth){
-    return (2.0 * NearPlane * FarPlane) / (FarPlane + NearPlane - depth * (FarPlane - NearPlane));
+    float z = depth * 2.0 - 1.0; // back to NDC
+    return (2.0 * NearPlane * FarPlane) / (FarPlane + NearPlane - depth  * (FarPlane - NearPlane));
 }
 
 vec3 BinarySerach(in vec3 RaySample, in vec3 PreviousRaySample){
@@ -47,7 +48,7 @@ vec3 BinarySerach(in vec3 RaySample, in vec3 PreviousRaySample){
         }
     }
 
-    return MidRaySample;
+    return MidRaySample ;
 }
 
 vec3 PositionFromDepth(float depth) {
@@ -69,14 +70,16 @@ bool RayMarch(
 ){
     vec3 PrevRaySample = (0 * MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;;
     for(int RayStepIndex = 0; RayStepIndex < MaxSamplerCount; RayStepIndex++){
-        vec3 RaySample = (RayStepIndex * MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;
+        vec3 RaySample = (RayStepIndex * -MaxMarchStep) *  ScreenSpaceReflectionVec + ScreenSpacePosition;
 
         float ZBufferVal = texture(gDepth, RaySample.xy).r;
         ZBufferVal = linearizeDepth(ZBufferVal);
         if(RaySample.z > ZBufferVal){
-            RaySample.y = 1 - RaySample.y;
+
+            RaySample.y = -RaySample.y;
             RaySample = BinarySerach(RaySample, PrevRaySample);
-            ReflectionColor =texture(gColourShininess, RaySample.xy).rbg;
+
+            ReflectionColor =texture(gColourShininess, PrevRaySample.xy).rbg;
 
             return true;
         }
@@ -93,7 +96,7 @@ void main() {
     vec2 PixelUV = TexCoords;
 
     //convert from 0,1 to -1,1 aka from pixel space to screen space
-    vec2 NDCPos = vec2(2.f,2.f) * PixelUV + vec2(1.f,1.f);;
+    vec2 NDCPos = vec2(2.f,-2.f) * PixelUV + vec2(1.f,-1.f);;
 
     // depth
     float DeviceZ = texture(gDepth, TexCoords).r;
@@ -117,7 +120,7 @@ void main() {
     vec4 PointAlongReflectionVec = vec4(ReflectionVecScale * ReflectionVector + WorldPosition,1.0);
     vec4 ScreenSpaceReflectionPoint = Projection * View * PointAlongReflectionVec;
     ScreenSpaceReflectionPoint.xyz /= ScreenSpaceReflectionPoint.w;
-    ScreenSpaceReflectionPoint.xy = ScreenSpaceReflectionPoint.xy * vec2(0.5, 0.5) + vec2(0.5, 0.5);;
+    ScreenSpaceReflectionPoint.xy = ScreenSpaceReflectionPoint.xy * vec2(0.5, -0.5) + vec2(0.5, -   0.5);;
 
     vec3 ScreenSpaceReflectionVec = normalize(ScreenSpaceReflectionPoint.xyz - ScreenSpacePos.xyz);
 
@@ -125,12 +128,16 @@ void main() {
 
     bool intersect = RayMarch(ScreenSpaceReflectionVec, ScreenSpacePos.xyz, OutReflectionColor);
 
+    vec4 Result = vec4(0.0f);
 
     if(intersect){
-        FragColor = vec4(OutReflectionColor,1.0);
+        Result = vec4(OutReflectionColor,1.0);
     }
     else{
-        FragColor = vec4(0.0);
+        Result = vec4(0.0);
     }
-   //FragColor = vec4(ScreenSpae.xy,1.0,1.0);
+
+    vec4 Debug = vec4(vec3(DeviceZ),1.0);
+
+    FragColor = Result;//mix(Result, Debug, 0.2);
 }
