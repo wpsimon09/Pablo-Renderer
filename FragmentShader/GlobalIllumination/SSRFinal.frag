@@ -32,7 +32,7 @@ out vec4 FragColor;
 
 float linearizeDepth(float depth){
     float z = depth * 2.0 - 1.0;
-    return (2.0 * NearPlane * FarPlane) / (FarPlane + NearPlane - depth  * (FarPlane - NearPlane));
+    //return (2.0 * NearPlane * FarPlane) / (FarPlane + NearPlane - depth  * (FarPlane - NearPlane));
     return depth;
 }
 vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
@@ -67,7 +67,7 @@ out vec3 ReflectionColor
     float ZBufferVal;
 
     for(int RayStepIndex = 0; RayStepIndex < MaxSamplerCount ||RaySample.z > ZBufferVal; RayStepIndex++){
-        RaySample = (RayStepIndex * -MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;
+        RaySample = (RayStepIndex * MaxMarchStep) * ScreenSpaceReflectionVec + ScreenSpacePosition;
 
         ZBufferVal = texture(gDepth, RaySample.xy).r;
         ZBufferVal = linearizeDepth(ZBufferVal);
@@ -93,7 +93,7 @@ void main() {
     vec2 PixelUV = TexCoords;
 
     //convert from 0,1 to -1,1 aka from pixel space to screen space
-    vec2 NDCPos = vec2(2.f,-2.f) * PixelUV + vec2(1.f,-1.f);;
+    vec2 NDCPos = vec2(2.f,2.f) * PixelUV + vec2(1.f,1.f);;
 
     // depth
     float DeviceZ = texture(gDepth, TexCoords).r;
@@ -101,7 +101,7 @@ void main() {
 
     // position of the fragment in world
     vec4 WorldPosition4 = invProjection * invView * vec4(NDCPos, DeviceZ,0);
-    vec3 WorldPosition = WorldPosition4.xyz / WorldPosition4.w;
+        vec3 WorldPosition = WorldPosition4.xyz / WorldPosition4.w;
 
     // vector from camera to the target fragment
 
@@ -117,9 +117,9 @@ void main() {
     vec4 PointAlongReflectionVec = vec4(ReflectionVecScale * ReflectionVector + WorldPosition,1.0);
     vec4 ScreenSpaceReflectionPoint = Projection * View * PointAlongReflectionVec;
     ScreenSpaceReflectionPoint.xyz /= ScreenSpaceReflectionPoint.w;
-    ScreenSpaceReflectionPoint.xy = ScreenSpaceReflectionPoint.xy * vec2(0.5, -0.5) + vec2(0.5, -   0.5);;
+    ScreenSpaceReflectionPoint.xy = ScreenSpaceReflectionPoint.xy * vec2(0.5, 0.5) + vec2(0.5, -   0.5);;
 
-    vec3 ScreenSpaceReflectionVec = normalize(ScreenSpaceReflectionPoint.xyz - ScreenSpacePos.xyz);
+    vec3 ScreenSpaceReflectionVec = -normalize(ScreenSpaceReflectionPoint.xyz - ScreenSpacePos.xyz);
 
     vec3 OutReflectionColor = vec3(0.0);
 
@@ -134,7 +134,7 @@ void main() {
         Result = vec4(0.0);
     }
 
-    vec4 Debug = vec4(vec3(DeviceZ),1.0);
+    vec4 Debug = vec4(vec3(ScreenSpaceReflectionPoint.xyz),1.0);
 
-    FragColor = Result;//mix(Result, Debug, 0.2);
+    FragColor = mix(Result, Debug, 0.0);
 }
