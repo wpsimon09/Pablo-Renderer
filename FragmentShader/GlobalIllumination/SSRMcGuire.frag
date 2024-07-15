@@ -220,9 +220,6 @@ void main() {
     vec2 ndc = (2.0 * TexCoords ) - 1.0;
     vec4 viewRay = normalize(vec4(ndc.x, ndc.y, -Depth,1.0));
     //convert from clip space to view space
-    viewRay = invProjection * viewRay;
-    //prespective devision
-    viewRay.xyz /= viewRay.w;
 
     vec3 WorldSpaceNormalVector = normalize(texture(gNormal, TexCoords).xyz);
     vec3 ViewSpaceNormalVector = normalize(vec3(View * vec4(WorldSpaceNormalVector, 0.0)));
@@ -244,5 +241,5 @@ void main() {
         col = vec3(0.0);
     }
 
-    FragColor = vec4(col,  1.0);
+    FragColor = vec4(RayStartViewSpace,  1.0);
 }
