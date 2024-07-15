@@ -159,7 +159,7 @@ out vec3 hitPoint) {
     float rayZmin = prevZMaxEstimate;
     float rayZmax = prevZMaxEstimate;
     float sceneZmax = rayZmax + 1e4;
-    
+
     float end = P1.x * stepDir;
 
     vec2 P = P0;
@@ -169,12 +169,6 @@ out vec3 hitPoint) {
     (stepCount < cb_maxSteps) &&
     ((rayZmax < sceneZmax - cb_zThickness) || (rayZmin > sceneZmax)) && (sceneZmax != 0.0))
     {
-
-        P += dP;
-        Q.z += dQ.z;
-        K += dk;
-        stepCount += 1.0;
-
         hitPixel = permute ? P.yx : P;
 
         rayZmin = prevZMaxEstimate;
@@ -186,6 +180,11 @@ out vec3 hitPoint) {
         }
 
         sceneZmax = texelFetch(gDepth, ivec2(hitPixel), 0).r;
+
+        P += dP;
+        Q.z += dQ.z;
+        K += dk;
+        stepCount += 1.0;
     }
 
 
@@ -215,7 +214,7 @@ void main() {
     vec2 cb_depthBufferSize = textureSize(gDepth,0);
 
     vec3 normalVS = normalize(texture(gNormal, TexCoords).xyz);
-    normalVS = normalize(vec3(vec4(normalVS,1.0) * View));
+    normalVS = normalize(vec3(vec4(normalVS,1.0)));
 
     float depth = texture(gDepth, TexCoords).r;
 
