@@ -108,6 +108,7 @@ out vec3 hitPoint) {
 
     //from NDC to pixel space
     mat4 projectToPixelMatrix = projectionToPixelSpaceMatrix();
+
     vec4 H0 = projectToPixelMatrix * vec4(csOrigin, 1.0);
     vec4 H1 = projectToPixelMatrix * vec4(csEndPoint, 1.0);
     //perspective devision made faster
@@ -190,6 +191,7 @@ out vec3 hitPoint) {
     }
     Q.xy += dQ.xy * stepCount;
     hitPoint = Q * (1.0 / K);
+    hitPoint.y = depthBufferSize.y - hitPoint.y;
 
     return (rayZmax >= sceneZmax - cb_zThickness) && (rayZmin <= sceneZmax);
 }
@@ -213,14 +215,20 @@ void main() {
     vec2 DepthBufferSize = textureSize(gDepth, 0);
     float Depth = texture(gDepth, TexCoords).r;
 
-    vec2 ndc = (2.0 * TexCoords / DepthBufferSize) - 1.0;
-    vec3 viewRay = normalize(vec3(ndc.x, ndc.y, -1));
+    //ray pointing towards negative Z axis (away from camera)
+    // this is in clip space
+    vec2 ndc = (2.0 * TexCoords ) - 1.0;
+    vec4 viewRay = normalize(vec4(ndc.x, ndc.y, -Depth,1.0));
+    //convert from clip space to view space
+    viewRay = invProjection * viewRay;
+    //prespective devision
+    viewRay.xyz /= viewRay.w;
 
     vec3 WorldSpaceNormalVector = normalize(texture(gNormal, TexCoords).xyz);
     vec3 ViewSpaceNormalVector = normalize(vec3(View * vec4(WorldSpaceNormalVector, 0.0)));
 
-    vec3 RayStartViewSpace = normalize(viewRay);
-    vec3 RayDirectionViewSpace = normalize(reflect(viewRay, ViewSpaceNormalVector));
+    vec3 RayStartViewSpace = normalize(viewRay.xyz);
+    vec3 RayDirectionViewSpace = normalize(reflect(RayStartViewSpace, ViewSpaceNormalVector));
 
     vec2 hitPixel = vec2(0.0);
     vec3 hitPoint = vec3(0.0);
@@ -236,5 +244,5 @@ void main() {
         col = vec3(0.0);
     }
 
-    FragColor = vec4(RayDirectionViewSpace,  1.0);
+    FragColor = vec4(col,  1.0);
 }
