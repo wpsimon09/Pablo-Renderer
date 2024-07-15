@@ -64,11 +64,6 @@ mat4 projectionToPixelSpaceMatrix(){
     return ndcToTextureSpace * Projection;
 }
 
-float linearizeDepth(float depth){
-    return (2.0 * cb_nearPlaneZ * cb_farPlaneZ) / (cb_farPlaneZ + cb_nearPlaneZ - depth * (cb_farPlaneZ - cb_nearPlaneZ));
-
-}
-
 float distanceSquared(vec2 a, vec2 b){
     a -= b;
     return dot(a,a);
@@ -86,10 +81,6 @@ void swap(inout float a, inout float b){
     b = t;
 }
 
-
-float linearDepthTexelFetch(vec2 hitPixel){
-    return linearizeDepth(texture(gDepth, hitPixel).r);
-}
 
 bool traceScreenSpaceRay(
     vec3 csOrigin,
@@ -215,15 +206,17 @@ void main() {
     vec3 normalWorldSpace = normalize(texture(gNormal, TexCoords).xyz);
     vec3 normalViewSpace = normalize(vec3(View * vec4(normalWorldSpace, 0.0)));
 
-    vec3 normalVS = normalize(texture(gNormal, TexCoords).xyz);
-    normalVS = normalViewSpace;
+    vec3 normalVS =  normalViewSpace;
+
+    vec3 PositionWS = texture(gPosition, TexCoords).xyz;
+    vec3 positionVS = normalize(vec3(View * vec4(PositionWS,1.0)));
 
     float depth = texture(gDepth, TexCoords).r;
 
-    vec3 rayOriginVS = vec3(vec4(PositionFromDepth(depth),1.0));
+    vec3 rayOriginVS =PositionFromDepth(depth) ;
 
     vec3 toPostionVS = normalize(rayOriginVS);
-    vec3 rayDirectionVS = normalize(reflect(normalize(toPostionVS), normalize(normalVS)));
+    vec3 rayDirectionVS = normalize(reflect(toPostionVS, normalVS));
 
     vec2 hitPixel = vec2(0.0);
     vec3 hitPoint = vec3(0.0);
