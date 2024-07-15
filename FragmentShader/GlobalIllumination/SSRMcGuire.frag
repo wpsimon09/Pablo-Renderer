@@ -60,10 +60,10 @@ uniform float cb_sslr_padding0;
 
 mat4 projectionToPixelSpaceMatrix() {
     mat4 ndcToTextureSpace = mat4(
-        0.5, 0.0, 0.0, 0.0, // Scale x by 0.5
-        0.0, 0.5, 0.0, 0.0, // Scale y by 0.5
-        0.0, 0.0, 1.0, 0.0, // Keep z
-        0.5, 0.5, 0.0, 1.0        // Translate x and y by 0.5
+        0.5, 0.0, 0.0, 0.0,
+        0.0, 0.5, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        0.5, 0.5, 0.0, 1.0
     );
 
     return ndcToTextureSpace * Projection;
@@ -74,12 +74,6 @@ float distanceSquared(vec2 a, vec2 b) {
     return dot(a, a);
 }
 
-bool intersetcsDepthBuffer(float z, float minZ, float maxZ) {
-    float depthScale = min(1.0f, z * cb_strideZCutoff);
-    z += cb_zThickness + mix(0.0f, 2.0f, depthScale);
-    return (maxZ >= z) && (minZ - cb_zThickness <= z);
-}
-
 void swap(inout float a, inout float b) {
     float t = a;
     a = b;
@@ -88,17 +82,15 @@ void swap(inout float a, inout float b) {
 
 vec3 computeClipInfo(float zn, float zf) {
     if (zf == NEG_INF) {
-        return vec3(zn, -1.0f, +1.0f);
+        return vec3(zn, -1.0f, + 1.0f);
     } else {
-        return vec3(zn  * zf, zn - zf, zf);
+        return vec3(zn * zf, zn - zf, zf);
     }
 }
 
 float reconstructCSZ(float depthBufferValue, vec3 clipInfo) {
     return clipInfo[0] / (depthBufferValue * clipInfo[1] + clipInfo[2]);
 }
-
-
 
 bool traceScreenSpaceRay(
     vec3 csOrigin,
@@ -117,16 +109,15 @@ out vec3 hitPoint) {
     //from NDC to pixel space
     mat4 projectToPixelMatrix = projectionToPixelSpaceMatrix();
     vec4 H0 = projectToPixelMatrix * vec4(csOrigin, 1.0);
-
     vec4 H1 = projectToPixelMatrix * vec4(csEndPoint, 1.0);
-
-    //from perspective devision
+    //perspective devision made faster
     float k0 = 1.0f / H0.w;
     float k1 = 1.0f / H1.w;
 
     vec3 Q0 = csOrigin * k0;
     vec3 Q1 = csEndPoint * k1;
 
+    // screen space end points
     vec2 P0 = H0.xy * k0;
     vec2 P1 = H1.xy * k1;
 
@@ -156,6 +147,7 @@ out vec3 hitPoint) {
     dP *= stride;
     dQ *= stride;
     dk *= stride;
+
     P0 += dP * jitter;
     Q0 += dQ * jitter;
     k0 += dk * jitter;
@@ -173,12 +165,16 @@ out vec3 hitPoint) {
     vec2 P = P0;
     float stepCount = 0.0;
 
-    for (vec2 P = P0; ((P.x * stepDir) <= end) &&
-    (stepCount < cb_maxSteps) &&
-    ((rayZmax < sceneZmax - cb_zThickness) ||
-    (rayZmax > sceneZmax)) &&
-    (sceneZmax != 0.0); P += dP) {
-        Q.z += dQ.z; K += dk; stepCount += 1.0;
+    for (vec2 P = P0;
+        ((P.x * stepDir) <= end) &&
+        (stepCount < cb_maxSteps) &&
+        ((rayZmax < sceneZmax - cb_zThickness) || (rayZmax > sceneZmax)) && (sceneZmax != 0.0);
+        P += dP)
+    {
+
+        Q.z += dQ.z;
+        K += dk;
+        stepCount += 1.0;
         hitPixel = permute ? P.yx : P;
 
         rayZmin = prevZMaxEstimate;
@@ -191,30 +187,21 @@ out vec3 hitPoint) {
         }
 
         sceneZmax = texelFetch(gDepth, ivec2(hitPixel), 0).r;
-        // This compiles away when csZBufferIsHyperbolic = false
-        if (false) {
-            sceneZmax = reconstructCSZ(sceneZmax, computeClipInfo(cb_nearPlaneZ, cb_farPlaneZ));
-        }
-
-}
-        // Camera-space z of the background
-
-        Q.xy += dQ.xy * stepCount;
-        hitPoint = Q * (1.0 / K);
-
-        // Matches the new loop condition:
-        return (rayZmax >= sceneZmax - cb_zThickness) && (rayZmin <= sceneZmax);
     }
+    Q.xy += dQ.xy * stepCount;
+    hitPoint = Q * (1.0 / K);
+
+    return (rayZmax >= sceneZmax - cb_zThickness) && (rayZmin <= sceneZmax);
+}
 
 
 
 vec3 PositionFromDepth(float depth) {
-    float z = depth * 2.0 - 1.0;
+    float z = depth;
 
-    vec4 clipSpacePosition = vec4(TexCoords * 2.0 - 1.0, z, 1.0);
+    vec4 clipSpacePosition = vec4(TexCoords * 2.0 - 1.0, -0.01, 1.0);
     vec4 viewSpacePosition = invProjection * clipSpacePosition;
 
-    // Perspective division
     viewSpacePosition.xyz /= viewSpacePosition.w;
 
     return viewSpacePosition.xyz;
@@ -223,38 +210,31 @@ vec3 PositionFromDepth(float depth) {
 
 
 void main() {
-    vec2 cb_depthBufferSize = textureSize(gDepth, 0);
+    vec2 DepthBufferSize = textureSize(gDepth, 0);
+    float Depth = texture(gDepth, TexCoords).r;
 
+    vec2 ndc = (2.0 * TexCoords / DepthBufferSize) - 1.0;
+    vec3 viewRay = normalize(vec3(ndc.x, ndc.y, -1));
 
-    vec3 normalWorldSpace = normalize(texture(gNormal, TexCoords).xyz);
-    vec3 normalViewSpace = normalize(vec3(View * vec4(normalWorldSpace, 0.0)));
+    vec3 WorldSpaceNormalVector = normalize(texture(gNormal, TexCoords).xyz);
+    vec3 ViewSpaceNormalVector = normalize(vec3(View * vec4(WorldSpaceNormalVector, 0.0)));
 
-    vec3 normalVS = normalViewSpace;
-
-    vec3 PositionWS = texture(gPosition, TexCoords).xyz;
-    vec3 positionVS = normalize(vec3(View * vec4(PositionWS, 1.0)));
-
-    float depth = texture(gDepth, TexCoords).r;
-
-    vec3 rayOriginVS = positionVS;
-
-    vec3 toPostionVS = normalize(rayOriginVS);
-    vec3 rayDirectionVS = normalize(reflect(toPostionVS, normalVS));
+    vec3 RayStartViewSpace = normalize(viewRay);
+    vec3 RayDirectionViewSpace = normalize(reflect(viewRay, ViewSpaceNormalVector));
 
     vec2 hitPixel = vec2(0.0);
     vec3 hitPoint = vec3(0.0);
 
-    int which1;
+    bool intersection = traceScreenSpaceRay(RayStartViewSpace, RayDirectionViewSpace, 1.0, DepthBufferSize, hitPixel, hitPoint);
 
-   bool intersection = traceScreenSpaceRay(rayOriginVS,rayDirectionVS, 0.0,cb_depthBufferSize, hitPixel, hitPoint);
+    vec3 col = vec3(0.0);
 
-    vec3 col;
-
-
-    if (intersection){
+    if (intersection) {
         col = texture(gColourShininess, hitPixel).xyz;
     }
-    else
+    else{
         col = vec3(0.0);
-    FragColor = vec4(col, 1.0);
+    }
+
+    FragColor = vec4(RayDirectionViewSpace,  1.0);
 }

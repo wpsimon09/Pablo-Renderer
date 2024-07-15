@@ -20,22 +20,22 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     this->render_pass = SCREEN_SPACE_REFLECTION_PASS;
     this->name = "Screen space reflection pass";
 
-    /*
-    uniformValues["ReflectionVecScale"] = Parameter<float>(0.1, true, 0.0f,10.0f);
+
+    /* uniformValues["ReflectionVecScale"] = Parameter<float>(0.1, true, 0.0f,10.0f);
     uniformValues["MaxSamplerCount"] = Parameter<float>(10, true, 0.0f,400.0f);
     uniformValues["MaxMarchStep"] = Parameter<float>(0.2, true, 0.0f,2.0f);
     uniformValues["MaxBinarySearchSteps"] = Parameter<float>(6.0, true, 0.0f,400.0f);
     uniformValues["MidRaySampleWeight"] = Parameter<float>(0.5, true, 0.0f,4.0f);
     */
 
-    /*uniformValues["minRayStep"] = Parameter<float>(0.01f, true, 0.0f,10.0f);
+
+    /*
+    uniformValues["minRayStep"] = Parameter<float>(0.01f, true, 0.0f,10.0f);
     uniformValues["maxSteps"] = Parameter<float>(40.0f, true, 0.0f,200.0f);
     uniformValues["numBinarySearchSteps"] = Parameter<float>(20.0f, true, 0.0f,200.0f);
     uniformValues["reflectionSpecularFalloffExponent"] = Parameter<float>(2.2f, true, 0.0f,10.0f);
     uniformValues["step"] = Parameter<float>(2.2f, true, 0.0f,10.0f);
     */
-
-
 
 
     uniformValues["cb_zThickness"] = Parameter(0.2f);
