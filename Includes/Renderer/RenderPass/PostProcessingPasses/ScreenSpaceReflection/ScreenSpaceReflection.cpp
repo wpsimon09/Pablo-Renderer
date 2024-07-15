@@ -65,9 +65,6 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
     shader->setVec3("cameraPosition", PabloRenderer::getInstance()->getScene()->camera->getPosition());
 
 
-    uniformValues["NearPlane"] = Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getNearPlane(), false);
-    uniformValues["FarPlane"] = Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getFarPlane(), false);
-
     setParamsToShader(shader);
 
     renderer->render(this->frameBuffer);

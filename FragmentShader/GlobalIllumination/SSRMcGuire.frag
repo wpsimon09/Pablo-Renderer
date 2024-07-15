@@ -106,7 +106,6 @@ out vec3 hitPoint) {
     hitPixel = vec2(-1, -1);
 
     //from NDC to pixel space
-    vec2 size = textureSize(gDepth, 0);
     mat4 projectToPixelMatrix = projectionToPixelSpaceMatrix();
     vec4 H0 =  projectToPixelMatrix * vec4(csOrigin,   1.0);
 
@@ -170,7 +169,6 @@ out vec3 hitPoint) {
     ((rayZmax < sceneZmax - cb_zThickness) || (rayZmin > sceneZmax)) && (sceneZmax != 0.0))
     {
         hitPixel = permute ? P.yx : P;
-
         rayZmin = prevZMaxEstimate;
         rayZmax = (dQ.z * 0.5 + Q.z) / (dk * 0.5 + K);
         prevZMaxEstimate = rayZmax;
@@ -213,8 +211,12 @@ vec3 PositionFromDepth(float depth) {
 void main() {
     vec2 cb_depthBufferSize = textureSize(gDepth,0);
 
+
+    vec3 normalWorldSpace = normalize(texture(gNormal, TexCoords).xyz);
+    vec3 normalViewSpace = normalize(vec3(View * vec4(normalWorldSpace, 0.0)));
+
     vec3 normalVS = normalize(texture(gNormal, TexCoords).xyz);
-    normalVS = normalize(vec3(vec4(normalVS,1.0)));
+    normalVS = normalViewSpace;
 
     float depth = texture(gDepth, TexCoords).r;
 
@@ -232,8 +234,8 @@ void main() {
 
 
     if(intersection)
-            col = texture(gColourShininess, vec2(hitPixel.x, hitPixel.y)).rgb;
+        col = texture(gColourShininess, vec2(hitPixel.x, hitPixel.y)).rgb;
     else
-            col = vec3(0.0);
+        col = vec3(0.0);
     FragColor = vec4(col,1.0);
 }
