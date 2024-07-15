@@ -53,6 +53,16 @@ uniform float cb_fadeEnd ;
 // padding for alignment
 uniform float cb_sslr_padding0 ;
 
+mat4 projectionToPixelSpaceMatrix(){
+    mat4 ndcToTextureSpace = mat4(
+        0.5, 0.0, 0.0, 0.0,       // Scale x by 0.5
+        0.0, 0.5, 0.0, 0.0,       // Scale y by 0.5
+        0.0, 0.0, 1.0, 0.0,       // Keep z
+        0.5, 0.5, 0.0, 1.0        // Translate x and y by 0.5
+    );
+
+    return ndcToTextureSpace * Projection;
+}
 
 float linearizeDepth(float depth){
     return (2.0 * cb_nearPlaneZ * cb_farPlaneZ) / (cb_farPlaneZ + cb_nearPlaneZ - depth * (cb_farPlaneZ - cb_nearPlaneZ));
@@ -97,9 +107,10 @@ out vec3 hitPoint) {
 
     //from NDC to pixel space
     vec2 size = textureSize(gDepth, 0);
-    vec4 H0 =  Projection * vec4(csOrigin,   1.0);
+    mat4 projectToPixelMatrix = projectionToPixelSpaceMatrix();
+    vec4 H0 =  projectToPixelMatrix * vec4(csOrigin,   1.0);
 
-    vec4 H1 =  Projection * vec4(csEndPoint, 1.0);
+    vec4 H1 = projectToPixelMatrix * vec4(csEndPoint, 1.0);
 
     //from perspective devision
     float k0 = 1.0f / H0.w;
@@ -148,10 +159,7 @@ out vec3 hitPoint) {
     float rayZmin = prevZMaxEstimate;
     float rayZmax = prevZMaxEstimate;
     float sceneZmax = rayZmax + 1e4;
-
-    vec4 PQK = vec4(P0, Q0.z, k0);
-    vec4 dPQK = vec4(dP, dQ.z, dk);
-
+    
     float end = P1.x * stepDir;
 
     vec2 P = P0;
@@ -214,7 +222,7 @@ void main() {
     vec3 rayOriginVS = vec3(vec4(PositionFromDepth(depth),1.0));
 
     vec3 toPostionVS = normalize(rayOriginVS);
-    vec3 rayDirectionVS =normalize(reflect(normalize(toPostionVS), normalize(normalVS)));
+    vec3 rayDirectionVS = normalize(reflect(normalize(toPostionVS), normalize(normalVS)));
 
     vec2 hitPixel = vec2(0.0);
     vec3 hitPoint = vec3(0.0);
@@ -223,9 +231,6 @@ void main() {
                                             hitPixel, hitPoint);
     vec3 col = vec3(0.0);
 
-    hitPixel *= 1/cb_depthBufferSize;
-    hitPixel.xy = vec2(vec4(hitPixel, 1.0,1.0));
-    hitPixel = hitPixel * 0.5 + 0.5;
 
     if(intersection)
             col = texture(gColourShininess, vec2(hitPixel.x, hitPixel.y)).rgb;
