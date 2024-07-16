@@ -71,6 +71,7 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
     renderer->clearInputs();
+    this->renderPassResult = renderer->blur(this->renderPassResult, 10);
     this->renderPassResult->shaderName = "SSR";
 
     //gettingFinalResult

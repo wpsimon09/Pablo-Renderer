@@ -17,6 +17,7 @@ std::shared_ptr<Renderer> RendererManager::requestRenderer(RENDERER_TYPE type) {
             return renderer;
         }
     }
+
     return nullptr;
 }
 

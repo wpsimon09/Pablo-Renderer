@@ -9,14 +9,22 @@
 
 class PostProcessingRenderer: public Renderer{
 public:
-    PostProcessingRenderer():Renderer() {this->type = POST_PROCESSING;}
+    PostProcessingRenderer():Renderer() {
+        this->type = POST_PROCESSING;
+    }
 
     void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) override;
 
     void render(std::unique_ptr<FrameBuffer> &frameBuffer) override;
 
+    std::shared_ptr<Texture2D> blur(std::shared_ptr<Texture2D> textureToBlur,int intensity = 0) override;
 protected:
     void renderSceneGraph(SceneNode &sceneNode) override;
+private:
+    std::vector<std::unique_ptr<FrameBuffer>> pingPongFrameBuffers {
+
+    };
+
 };
 
 

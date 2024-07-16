@@ -59,6 +59,11 @@ public:
     virtual void setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase> > inputs) {
     };
 
+    virtual std::shared_ptr<Texture2D> blur(std::shared_ptr<Texture2D> textureToBlur, int intensity = 0) {
+      throw std::logic_error(
+       "Blur is not supported for this renderer, blur is only supported for the Post Proecessing Renderer");
+    }
+
     void clearInputs() {this->renderPassInputs.clear();}
 
     void setScene(std::shared_ptr<Scene> scene){this->scene = scene;}

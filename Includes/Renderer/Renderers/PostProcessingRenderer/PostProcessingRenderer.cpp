@@ -6,6 +6,8 @@
 
 #include "Renderer/PabloRenderer.h"
 
+
+
 void PostProcessingRenderer::setInputsForRenderPass(std::vector<std::shared_ptr<TextureBase>> inputs) {
     this->renderPassInputs = std::move(inputs);
 }
@@ -31,4 +33,31 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
         textureCount++;
     }
     frameBuffer->renderGeomtry();
+}
+
+std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2D> textureToBlur, int intensity) {
+    bool horizontal = true, firstIteration = true;
+
+    auto shader = ShaderManager::getShader(SHADER_BLUR_ANYTHING);
+    shader->use();
+
+    for (int i = 0; i < intensity; i++)
+    {
+        pingPongFrameBuffers[horizontal]->bind();
+        shader->setInt("horizontal", horizontal);
+
+        //use the bright color buffer as a texture for first iteration than swap them
+        //set the texture of the frame buffer to be the previous one if its the first itteration we want it to first color buffer of the main FBO
+        ShaderHelper::setTextureToShader(shader, firstIteration ? *textureToBlur: *pingPongFrameBuffers[!horizontal]->getRenderedResult(), "imageToBlur");
+
+        pingPongFrameBuffers[horizontal]->renderGeomtry();
+
+        horizontal = !horizontal;
+        if (firstIteration)
+        {
+            firstIteration = false;
+        }
+    }
+
+    return std::move(pingPongFrameBuffers[!horizontal]->getRenderedResult());
 }
