@@ -38,6 +38,12 @@ bool rayIsOutofScreen(vec2 ray) {
     return (ray.x > 1 || ray.y > 1 || ray.x < 0 || ray.y < 0) ? true : false;
 }
 
+float LinearizeDepth(float depth) {
+    float z = depth * 2.0 - 1.0; // Back to NDC
+    return depth;
+    //return (2.0 * NearPlane * FarPlane) / (FarPlane + NearPlane - z * (FarPlane - NearPlane));
+}
+
 
 vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
     vec3 MinRaySample = PreviousRaySample;
@@ -72,7 +78,7 @@ vec3 TraceRay(vec3 rayPos, vec3 dir) {
             break;
         }
 
-        sampleDepth = texture(gDepth, rayPos.xy).r;
+        sampleDepth = LinearizeDepth(texture(gDepth, rayPos.xy).r);
         float depthDif = rayPos.z - sampleDepth;
         if (depthDif >= 0 && depthDif < 0.00001) { //we have a hit
                hit = true;
@@ -94,10 +100,10 @@ void main() {
 
     //depth of the given pixel
     float PixelDepth = texture(gDepth, PixelPositionTextureSpace.xy).r;    // 0< <1
-    PixelPositionTextureSpace.z = PixelDepth;
+    PixelPositionTextureSpace.z = LinearizeDepth(PixelDepth);
 
 
-    vec3 NormalView =vec3(vec4(texture(gNormal, TexCoords).rgb, 1.0)  );
+    vec3 NormalView =vec3(vec4(texture(gNormal, TexCoords).rgb, 1.0)*invView  );
 
     vec4 PositionWorldSpace = texture(gPosition, TexCoords);
     vec4 PositionViewSpace = View * PositionWorldSpace;
