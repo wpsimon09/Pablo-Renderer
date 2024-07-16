@@ -20,6 +20,7 @@ uniform float MaxSamplerCount;
 uniform float MaxMarchStep;
 uniform float MaxBinarySearchSteps;
 uniform float MidRaySampleWeight;
+uniform float MaxDistance;
 
 uniform float NearPlane;
 uniform float FarPlane;
@@ -37,13 +38,36 @@ bool rayIsOutofScreen(vec2 ray) {
     return (ray.x > 1 || ray.y > 1 || ray.x < 0 || ray.y < 0) ? true : false;
 }
 
-vec3 TraceRay(vec3 rayPos, vec3 dir, int iterationCount) {
+
+vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
+    vec3 MinRaySample = PreviousRaySample;
+    vec3 MaxRaySample = RaySample;
+
+    vec3 MidRaySample;
+
+    for(int i = 0; i < MaxBinarySearchSteps; i++){
+        MidRaySample = mix(MinRaySample, MaxRaySample, MidRaySampleWeight);
+        float ZBufferVal = texture(gDepth, MidRaySample.xy).r;
+
+        if(MidRaySample.z > ZBufferVal){
+            MaxRaySample = MidRaySample;
+        } else {
+            MinRaySample = MidRaySample;
+        }
+    }
+
+    return MidRaySample;
+}
+
+
+vec3 TraceRay(vec3 rayPos, vec3 dir) {
     float sampleDepth;
     vec3 hitColor = vec3(0);
     bool hit = false;
+    vec3 prevRayPos = rayPos;
 
-    for (int i = 0; i < iterationCount; i++) {
-        rayPos += dir;
+    for (int i = 0; i < MaxSamplerCount; i++) {
+        rayPos += dir * MaxMarchStep;
         if (rayIsOutofScreen(rayPos.xy)) {
             break;
         }
@@ -52,9 +76,11 @@ vec3 TraceRay(vec3 rayPos, vec3 dir, int iterationCount) {
         float depthDif = rayPos.z - sampleDepth;
         if (depthDif >= 0 && depthDif < 0.00001) { //we have a hit
                hit = true;
+               rayPos = BinarySearch(rayPos,prevRayPos);
                hitColor = texture(gColourShininess, rayPos.xy).rgb;
                break;
         }
+        prevRayPos = rayPos;
     }
     return hitColor;
 }
@@ -63,24 +89,29 @@ void main() {
     float maxRayDistance = 100.0f;
 
     //View Space ray calculation
-    vec3 pixelPositionTexture;
-    pixelPositionTexture.xy = TexCoords;
+    vec3 PixelPositionTextureSpace;
+    PixelPositionTextureSpace.xy = TexCoords;
 
-    float pixelDepth = texture(gDepth, pixelPositionTexture.xy).r;    // 0< <1
-    pixelPositionTexture.z = pixelDepth;
+    //depth of the given pixel
+    float PixelDepth = texture(gDepth, PixelPositionTextureSpace.xy).r;    // 0< <1
+    PixelPositionTextureSpace.z = PixelDepth;
 
-    vec3 normalView =vec3(vec4(texture(gNormal, pixelPositionTexture.xy).rgb,1.0) * View);
 
-    vec4 positionView = invProjection * vec4(pixelPositionTexture * 2 - vec3(1), 1);
-    positionView /= positionView.w;
+    vec3 NormalView =vec3(vec4(texture(gNormal, TexCoords).rgb, 1.0)  );
 
-    vec3 reflectionView = normalize(reflect(positionView.xyz, normalView));
+    vec4 PositionWorldSpace = texture(gPosition, TexCoords);
+    vec4 PositionViewSpace = View * PositionWorldSpace;
+    vec4 ViewRay = PositionViewSpace;
+
+
+    vec3 reflectionView = normalize(reflect(ViewRay.xyz, NormalView));
+
     if (reflectionView.z > 0) {
         FragColor = vec4(0, 0, 0, 1);
         return;
     }
 
-    vec3 rayEndPositionView = positionView.xyz + reflectionView * maxRayDistance;
+    vec3 rayEndPositionView = ViewRay.xyz + reflectionView * maxRayDistance;
 
 
     //Texture Space ray calculation
@@ -88,19 +119,19 @@ void main() {
     rayEndPositionTexture /= rayEndPositionTexture.w;
     rayEndPositionTexture.xyz = (rayEndPositionTexture.xyz + vec3(1)) / 2.0f;
 
-    vec3 rayDirectionTexture = rayEndPositionTexture.xyz - pixelPositionTexture;
+    vec3 RayDirection = rayEndPositionTexture.xyz - PixelPositionTextureSpace;
 
     vec2 size = textureSize(gDepth, 0);
 
-    ivec2 screenSpaceStartPosition = ivec2(pixelPositionTexture.x * size.x, pixelPositionTexture.y * size.y);
-    ivec2 screenSpaceEndPosition = ivec2(rayEndPositionTexture.x * size.x, rayEndPositionTexture.y * size.y);
+    vec2 ScreenSpaceStartPosition = ivec2(PixelPositionTextureSpace.x * size.x, PixelPositionTextureSpace.y * size.y);
+    vec2 ScreenSpaceEndPosition = ivec2(rayEndPositionTexture.x * size.x, rayEndPositionTexture.y * size.y);
 
-    ivec2 screenSpaceDistance = screenSpaceEndPosition - screenSpaceStartPosition;
-    int screenSpaceMaxDistance = max(abs(screenSpaceDistance.x), abs(screenSpaceDistance.y)) / 2;
-    rayDirectionTexture /= max(screenSpaceMaxDistance, 0.001f);
+    vec2 RayLength = ScreenSpaceEndPosition - ScreenSpaceStartPosition;
+    float screenSpaceMaxDistance =  max(abs(RayLength.x), abs(RayLength.y)) / MaxDistance;
+    RayDirection /= max(screenSpaceMaxDistance, 0.001f);
 
 
     //trace the ray
-    vec3 outColor = TraceRay(pixelPositionTexture, rayDirectionTexture, screenSpaceMaxDistance);
+    vec3 outColor = TraceRay(PixelPositionTextureSpace, RayDirection);
     FragColor = vec4(outColor, 1);
 }

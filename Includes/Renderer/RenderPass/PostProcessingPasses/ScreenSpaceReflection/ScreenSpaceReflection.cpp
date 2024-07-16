@@ -21,12 +21,13 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     this->name = "Screen space reflection pass";
 
 
-    /* uniformValues["ReflectionVecScale"] = Parameter<float>(0.1, true, 0.0f,10.0f);
+    uniformValues["ReflectionVecScale"] = Parameter<float>(0.1, true, 0.0f,10.0f);
     uniformValues["MaxSamplerCount"] = Parameter<float>(10, true, 0.0f,400.0f);
     uniformValues["MaxMarchStep"] = Parameter<float>(0.2, true, 0.0f,2.0f);
     uniformValues["MaxBinarySearchSteps"] = Parameter<float>(6.0, true, 0.0f,400.0f);
     uniformValues["MidRaySampleWeight"] = Parameter<float>(0.5, true, 0.0f,4.0f);
-    */
+    uniformValues["MaxDistance"] = Parameter<float>(10, true, 1.0f,100.0f);
+
 
 
     /*
@@ -38,6 +39,7 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     */
 
 
+    /*
     uniformValues["cb_zThickness"] = Parameter(0.2f);
     uniformValues["cb_nearPlaneZ"] =Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getNearPlane(), false);
     uniformValues["cb_farPlaneZ"] = Parameter<float>(PabloRenderer::getInstance()->getScene()->camera->getFarPlane(), false);
@@ -46,7 +48,7 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     uniformValues["cb_strideZCutoff"] = Parameter<float>(30.0f, true, 0.0f, 100.0f);
     uniformValues["cb_fadeStart"] = Parameter<float>(200.0f, true, 0.0f, 400.0f);
     uniformValues["cb_fadeEnd"] = Parameter<float>(300.0f, true, 0.0f, 400.0f);
-    uniformValues["cb_sslr_padding0"] = Parameter<float>(0.2f);
+    uniformValues["cb_sslr_padding0"] = Parameter<float>(0.2f);*/
 }
 
 std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture2D> renderedScene,
