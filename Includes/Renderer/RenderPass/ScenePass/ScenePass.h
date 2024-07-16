@@ -16,6 +16,7 @@ private:
     std::shared_ptr<Texture2D> gColourAndShininess;
     std::shared_ptr<Texture2D> gRenderedScene;
     std::shared_ptr<Texture2D> gDepth;
+    std::shared_ptr<Texture2D> gMetalnessRougness;
 public:
     void renderUI() override;
     std::vector<std::shared_ptr<TextureBase>> getAdditionalOutputs() override;

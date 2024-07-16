@@ -1,7 +1,7 @@
 #version 460 core
 
 
-layout (location = 3) out vec4 FragColor;
+layout (location = 4) out vec4 FragColor;
 
 uniform vec3 lightColor;
 

@@ -3,7 +3,8 @@
 layout (location = 0) out vec4 gPosition;
 layout (location = 1) out vec4 gNormal;
 layout (location = 2) out vec4 gShininessColour;
-layout (location = 3) out vec4 FragColor;
+layout (location = 3) out vec2 gMetalnessRougness;
+layout (location = 4) out vec4 FragColor;
 
 
 in VS_OUT {
@@ -222,10 +223,11 @@ void main() {
 
     vec3 finalColor = ambient + Lo;
 
+    FragColor = vec4(finalColor, 1.0);
 
     gPosition = vec4(fs_in.FragPos.xyz,1.0);
     gNormal = vec4(N.xyz, 1.0);
     gShininessColour = vec4(finalColor.rgb ,1.0);
+    gMetalnessRougness = vec2(_valMetallic, _valRougness);
 
-    FragColor = vec4(finalColor, 1.0);
 }

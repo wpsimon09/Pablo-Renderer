@@ -98,7 +98,7 @@ public:
      */
     void saveAsPNG(std::string path);
 
-    void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D> depthMap = nullptr);
+    void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D>gMetalnessRougness , std::shared_ptr<Texture2D> depthMap = nullptr);
 
     bool hasGBufferSupport(){return supportsGBuffer;}
 

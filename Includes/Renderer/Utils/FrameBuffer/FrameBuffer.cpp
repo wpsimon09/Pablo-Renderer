@@ -175,7 +175,7 @@ void FrameBuffer::saveAsPNG(std::string path) {
 }
 
 void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
-    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess,  std::shared_ptr<Texture2D> depthMap) {
+    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D>gMetalnessRougness ,std::shared_ptr<Texture2D> depthMap) {
 
     glDeleteFramebuffers(1, &this->ID);
     glCheckError();
@@ -190,7 +190,6 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
     glCheckError();
 
-
     gPosition->bind();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition->ID, 0);
     glCheckError();
@@ -203,10 +202,14 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gSpecularAndShininess->ID, 0);
     glCheckError();
 
+    gMetalnessRougness->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, gMetalnessRougness->ID, 0);
+    glCheckError();
 
     this->colorAttachment->bind();
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, colorAttachment->ID, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT4, GL_TEXTURE_2D, this->colorAttachment->ID, 0);
     glCheckError();
+
 
     if(depthMap !=nullptr) {
         depthMap->bind();
@@ -214,8 +217,8 @@ void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
         glCheckError();
     }
 
-    GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
-    glDrawBuffers(4, drawBuffers);
+    GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4};
+    glDrawBuffers(5, drawBuffers);
     glCheckError();
 
     if(checkFrameBufferCompleteness())

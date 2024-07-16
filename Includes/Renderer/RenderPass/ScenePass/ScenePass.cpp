@@ -21,12 +21,15 @@ ScenePass::ScenePass():RenderPass() {
     gColourAndShininess->generateMipMaps();
     gColourAndShininess->shaderName = "gColourShininess";
 
+    this->gMetalnessRougness = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RG16F);
+    gMetalnessRougness->shaderName = "gMetalnessRougness";
+
     this->gDepth = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_DEPTH_COMPONENT32F);
     this->gDepth->shaderName = "gDepth";
 
     this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
 
-    this->frameBuffer->transferToGbufferSupport(gPosition, gNormal,gColourAndShininess, gDepth);
+    this->frameBuffer->transferToGbufferSupport(gPosition, gNormal,gColourAndShininess,gMetalnessRougness, gDepth);
 
     this->rendererType = COLOR_DEPTH_STENCIL;
     this->render_pass = SCENE_PASS;
@@ -59,6 +62,9 @@ void ScenePass::renderUI() {
         ImGui::SeparatorText("Colour and Shininess G buffer");
         ImGui::Image(reinterpret_cast<ImTextureID>(gColourAndShininess->ID), imageSize, ImVec2(0, 1), ImVec2(1, 0));
 
+        ImGui::SeparatorText("Rougness and metalness of G buffer");
+        ImGui::Image(reinterpret_cast<ImTextureID>(gMetalnessRougness->ID), imageSize, ImVec2(0, 1), ImVec2(1, 0));
+
         ImGui::TreePop();
     }
 }
@@ -69,7 +75,8 @@ std::vector<std::shared_ptr<TextureBase>> ScenePass::getAdditionalOutputs() {
         this->gNormal,
         this->gColourAndShininess,
         this->gRenderedScene,
-        this->gDepth
+        this->gDepth,
+        this->gMetalnessRougness
     };
     return gBufferTextures;
 }
