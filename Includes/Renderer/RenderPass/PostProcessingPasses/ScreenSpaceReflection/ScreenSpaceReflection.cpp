@@ -21,9 +21,9 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     this->name = "Screen space reflection pass";
 
 
-    uniformValues["ReflectionVecScale"] = Parameter<float>(0.1, true, 0.0f,10.0f);
-    uniformValues["MaxSamplerCount"] = Parameter<float>(10, true, 0.0f,400.0f);
-    uniformValues["MaxMarchStep"] = Parameter<float>(0.2, true, 0.0f,2.0f);
+    uniformValues["ReflectionVecScale"] = Parameter<float>(100, true, 50.0f,400.0f);
+    uniformValues["MaxSamplerCount"] = Parameter<float>(300, true, 0.0f,400.0f);
+    uniformValues["MaxMarchStep"] = Parameter<float>(1.2, true, 0.0f,2.0f);
     uniformValues["MaxBinarySearchSteps"] = Parameter<float>(6.0, true, 0.0f,400.0f);
     uniformValues["MidRaySampleWeight"] = Parameter<float>(0.5, true, 0.0f,4.0f);
     uniformValues["MaxDistance"] = Parameter<float>(10, true, 1.0f,100.0f);
@@ -63,9 +63,6 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
 
     shader->setMat4("View", PabloRenderer::getInstance()->getScene()->camera->getViewMatrix());
     shader->setMat4("invView", glm::inverse(PabloRenderer::getInstance()->getScene()->camera->getViewMatrix()));
-
-    shader->setVec3("cameraPosition", PabloRenderer::getInstance()->getScene()->camera->getPosition());
-
 
     setParamsToShader(shader);
 

@@ -18,7 +18,7 @@ AreaLight::AreaLight(glm::vec3 position, glm::vec3 color) : Light(position, colo
     this->ltcInverse->shaderName = "LTC_Inverse";
     this->ltcInverse->setSamplerID(1);
 
-    this->scale = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(1.2f, 1.0f, 2.2f), "scale");
+    this->scale = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(60.2f, 1.0f, 2.2f), "scale");
     this->rotation = std::make_unique<LightProperty<glm::vec3>>(glm::vec3(0.0f, 0.0f, 0.0f), "rotation");
 
     auto geometry = std::make_unique<PlaneGeometry>();
@@ -84,8 +84,8 @@ void AreaLight::renderUi() {
 
         if (ImGui::TreeNodeEx("Dimensions")) {
 
-            ImGui::SliderFloat("Width", &this->scale->property.x, 0.0f, 10.0f);
-            ImGui::SliderFloat("Height", &this->scale->property.z, 0.0f, 10.0f);
+            ImGui::SliderFloat("Width", &this->scale->property.x, 0.0f, 100.0f);
+            ImGui::SliderFloat("Height", &this->scale->property.z, 0.0f, 100.0f);
 
             ImGui::TreePop();
         }

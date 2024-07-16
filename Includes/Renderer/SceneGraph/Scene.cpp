@@ -12,7 +12,7 @@ Scene::Scene() {
     this->camera = std::make_unique<OrbitCamera>();
 
     this->lights.insert(std::make_pair(DIRECTIONAL,std::make_unique<DirectionalLight>(glm::vec3(0.0f, 3.0f, 3.0f), glm::vec3(20.0f, 20.0f, 20.2f))));
-    this->lights.insert(std::make_pair(AREA, std::make_unique<AreaLight>(glm::vec3(3.0f, 3.0f, 3.0f), glm::vec3(1.0f, 1.0f, 1.0f))));
+    this->lights.insert(std::make_pair(AREA, std::make_unique<AreaLight>(glm::vec3(0.0f, 50.0f, 30.0f), glm::vec3(1.0f, 1.0f, 1.0f))));
 }
 
 

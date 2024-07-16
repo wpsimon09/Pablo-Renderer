@@ -117,7 +117,7 @@ void main() {
         return;
     }
 
-    vec3 rayEndPositionView = ViewRay.xyz + reflectionView * maxRayDistance;
+    vec3 rayEndPositionView = ViewRay.xyz + reflectionView * ReflectionVecScale;
 
 
     //Texture Space ray calculation
