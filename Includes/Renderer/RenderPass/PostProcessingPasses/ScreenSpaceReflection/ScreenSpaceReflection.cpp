@@ -21,12 +21,12 @@ ScreenSpaceReflection::ScreenSpaceReflection() {
     this->name = "Screen space reflection pass";
 
 
-    uniformValues["ReflectionVecScale"] = Parameter<float>(100, true, 50.0f,400.0f);
-    uniformValues["MaxSamplerCount"] = Parameter<float>(300, true, 0.0f,400.0f);
-    uniformValues["MaxMarchStep"] = Parameter<float>(1.2, true, 0.0f,2.0f);
+    uniformValues["ReflectionVecScale"] = Parameter<float>(400, true, 50.0f,400.0f);
+    uniformValues["MaxSamplerCount"] = Parameter<float>(140, true, 0.0f,400.0f);
+    uniformValues["MaxMarchStep"] = Parameter<float>(0.37, true, 0.0f,2.0f);
     uniformValues["MaxBinarySearchSteps"] = Parameter<float>(6.0, true, 0.0f,400.0f);
     uniformValues["MidRaySampleWeight"] = Parameter<float>(0.5, true, 0.0f,4.0f);
-    uniformValues["MaxDistance"] = Parameter<float>(10, true, 1.0f,100.0f);
+    uniformValues["MaxDistance"] = Parameter<float>(36, true, 1.0f,100.0f);
 
 
 
