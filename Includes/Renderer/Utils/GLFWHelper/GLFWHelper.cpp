@@ -66,7 +66,7 @@ bool GLFWHelper::glInit(unsigned int width, unsigned int height) {
 
 
     instance->setWindow(glfwCreateWindow(width == 0 ? screen_W : width, height == 0 ? screen_H : 0, "Pablo-renderer",
-                                         NULL, NULL));
+                                          NULL, NULL));
     if (instance->getWindow() == NULL) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();

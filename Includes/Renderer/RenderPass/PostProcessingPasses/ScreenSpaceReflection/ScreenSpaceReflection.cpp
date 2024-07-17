@@ -70,7 +70,7 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
 
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
-    this->renderPassResult = renderer->blur(this->renderPassResult, 10);
+    this->renderPassResult = renderer->blur(this->renderPassResult, this->blurIntensity);
     this->renderPassResult->shaderName = "ssr";
     renderer->clearInputs();
 
@@ -99,4 +99,6 @@ void ScreenSpaceReflection::renderUI() {
             ImGui::BulletText(s.c_str());
         }
     }
+    ImGui::SeparatorText("Blur intenstiy");
+    ImGui::SliderInt("Blur", &this->blurIntensity, 0,30);
 }

@@ -32,4 +32,3 @@ ShaderHelper::setTextureToShader(std::shared_ptr<Shader> shader, const TextureBa
     glBindTexture(texture.type, texture.ID);
     glCheckError();
 }
-

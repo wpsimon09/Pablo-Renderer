@@ -25,7 +25,7 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> c
 
     //COLOR ATTACHMENT
     if(customColorAttachement == nullptr){
-        this->colorAttachment = std::make_unique<Texture2D>(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F);
+        this->colorAttachment = std::make_shared<Texture2D>(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F);
     }
     else{
         this->colorAttachment = std::move(customColorAttachement);

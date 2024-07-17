@@ -38,8 +38,8 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
 std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2D> textureToBlur, int intensity) {
     bool horizontal = true, firstIteration = true;
 
-    pingPongFrameBuffers[0].setColorAttachment(textureToBlur);
-    pingPongFrameBuffers[1].setColorAttachment(textureToBlur);
+   // pingPongFrameBuffers[0].setColorAttachment(textureToBlur);
+    //pingPongFrameBuffers[1].setColorAttachment(textureToBlur);
 
     auto shader = ShaderManager::getShader(SHADER_BLUR_ANYTHING);
     shader->use();
@@ -47,6 +47,10 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2
     for (int i = 0; i < intensity; i++)
     {
         pingPongFrameBuffers[horizontal].bind();
+        glViewport(0,0, pingPongFrameBuffers[horizontal].getWidht(), pingPongFrameBuffers[horizontal].getHeihgt());
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
+
         shader->setInt("horizontal", horizontal);
 
         //use the bright color buffer as a texture for first iteration than swap them

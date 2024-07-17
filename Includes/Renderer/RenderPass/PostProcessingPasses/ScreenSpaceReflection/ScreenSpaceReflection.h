@@ -16,9 +16,10 @@ public:
 private:
     std::unique_ptr<FrameBuffer> mergeFrameBufer;
     std::map<std::string, Parameter<float>> uniformValues;
-
+    int blurIntensity = 10;
 
     void setParamsToShader(std::shared_ptr<Shader> shader);
+
 
 public:
     void renderUI() override;
