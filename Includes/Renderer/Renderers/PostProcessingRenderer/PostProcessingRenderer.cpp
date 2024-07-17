@@ -43,14 +43,14 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2
 
     for (int i = 0; i < intensity; i++)
     {
-        pingPongFrameBuffers[horizontal]->bind();
+        pingPongFrameBuffers[horizontal].bind();
         shader->setInt("horizontal", horizontal);
 
         //use the bright color buffer as a texture for first iteration than swap them
         //set the texture of the frame buffer to be the previous one if its the first itteration we want it to first color buffer of the main FBO
-        ShaderHelper::setTextureToShader(shader, firstIteration ? *textureToBlur: *pingPongFrameBuffers[!horizontal]->getRenderedResult(), "imageToBlur");
+        ShaderHelper::setTextureToShader(shader, firstIteration ? *textureToBlur: *pingPongFrameBuffers[!horizontal].getRenderedResult(), "imageToBlur");
 
-        pingPongFrameBuffers[horizontal]->renderGeomtry();
+        pingPongFrameBuffers[horizontal].renderGeomtry();
 
         horizontal = !horizontal;
         if (firstIteration)
@@ -59,5 +59,5 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2
         }
     }
 
-    return std::move(pingPongFrameBuffers[!horizontal]->getRenderedResult());
+    return pingPongFrameBuffers[!horizontal].getRenderedResult();
 }

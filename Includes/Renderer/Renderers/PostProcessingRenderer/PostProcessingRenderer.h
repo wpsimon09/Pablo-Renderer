@@ -9,7 +9,9 @@
 
 class PostProcessingRenderer: public Renderer{
 public:
-    PostProcessingRenderer():Renderer() {
+    PostProcessingRenderer():Renderer(),
+    pingPongFrameBuffers{FrameBuffer(1980,1020),FrameBuffer(1980,1020)}
+    {
         this->type = POST_PROCESSING;
     }
 
@@ -21,9 +23,7 @@ public:
 protected:
     void renderSceneGraph(SceneNode &sceneNode) override;
 private:
-    std::vector<std::unique_ptr<FrameBuffer>> pingPongFrameBuffers {
-
-    };
+    FrameBuffer pingPongFrameBuffers[2];
 
 };
 

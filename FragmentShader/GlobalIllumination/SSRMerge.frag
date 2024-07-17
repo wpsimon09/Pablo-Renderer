@@ -13,5 +13,5 @@ void main() {
     vec4 scene = texture(renderedScene, TexCoords);
 
     FragColor = vec4(mix(ssr.rgb,scene.rgb,0.5),1.0) ;
-   // FragColor = vec4(ssr.rgb, 1.0);
+    FragColor = vec4(ssr.rgb, 1.0);
 }
