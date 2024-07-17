@@ -38,6 +38,9 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
 std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2D> textureToBlur, int intensity) {
     bool horizontal = true, firstIteration = true;
 
+    pingPongFrameBuffers[0].setColorAttachment(textureToBlur);
+    pingPongFrameBuffers[1].setColorAttachment(textureToBlur);
+
     auto shader = ShaderManager::getShader(SHADER_BLUR_ANYTHING);
     shader->use();
 
