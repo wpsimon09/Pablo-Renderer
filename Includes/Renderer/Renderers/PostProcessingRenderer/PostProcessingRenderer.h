@@ -10,7 +10,8 @@
 class PostProcessingRenderer: public Renderer{
 public:
     PostProcessingRenderer():Renderer(),
-    pingPongFrameBuffers{FrameBuffer(1980,1020),FrameBuffer(1980,1020)}
+    pingPongFrameBuffers{FrameBuffer(1980,1020),FrameBuffer(1980,1020)},
+    convolutionFrameBuffer(1980, 1020)
     {
         this->type = POST_PROCESSING;
     }
@@ -19,6 +20,8 @@ public:
 
     void render(std::unique_ptr<FrameBuffer> &frameBuffer) override;
 
+
+
     std::shared_ptr<Texture2D> blurToMipMaps(std::shared_ptr<Texture2D> textureToConvolve, int mipNumbers) override;
 
     std::shared_ptr<Texture2D> blur(std::shared_ptr<Texture2D> textureToBlur,int intensity = 0) override;
@@ -26,6 +29,7 @@ protected:
     void renderSceneGraph(SceneNode &sceneNode) override;
 private:
     FrameBuffer pingPongFrameBuffers[2];
+    FrameBuffer convolutionFrameBuffer;
 
 };
 

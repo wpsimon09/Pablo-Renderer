@@ -19,5 +19,5 @@ std::shared_ptr<Texture2D> SceneImageConvolutionPass::render(std::shared_ptr<Tex
     this->inputs.emplace_back(renderedScene);
 
     renderer->setInputsForRenderPass(this->inputs);
-    //renderer->
+    renderer->blurToMipMaps(renderedScene, 6);
 }

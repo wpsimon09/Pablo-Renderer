@@ -72,17 +72,39 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2
 
 std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr<Texture2D> textureToConvolve,
     int mipNumbers) {
+    bool horizontal = true, firstIteration = true;
 
-    if(textureToConvolve->())
-    for (int mip = 0; mip < maxMipMapLevels; ++mip) {
-        unsigned int mipW =  static_cast<unsigned int>(512 * std::pow(0.5, mip));
-        unsigned int mipH =  static_cast<unsigned int>(512 * std::pow(0.5, mip));
+    // pingPongFrameBuffers[0].setColorAttachment(textureToBlur);
+    //pingPongFrameBuffers[1].setColorAttachment(textureToBlur);
 
-        this->frameBufferCube->updateDimetions(mipW, mipH);
+    auto shader = ShaderManager::getShader(SHADER_BLUR_ANYTHING);
+    shader->use();
 
-        float rougness = (float)mip/(float)(maxMipMapLevels-1);
-        shader->setFloat("rougness", rougness);
+    for (int i = 0; i < intensity; i++)
+    {
+        pingPongFrameBuffers[horizontal].bind();
+        glViewport(0,0, pingPongFrameBuffers[horizontal].getWidht(), pingPongFrameBuffers[horizontal].getHeihgt());
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
-        this->frameBufferCube->renderToSelf(input, mip);
+        shader->setInt("horizontal", horizontal);
+
+        //use the bright color buffer as a texture for first iteration than swap them
+        //set the texture of the frame buffer to be the previous one if its the first itteration we want it to first color buffer of the main FBO
+        ShaderHelper::setTextureToShader(shader, firstIteration ? *textureToBlur: *pingPongFrameBuffers[!horizontal].getRenderedResult(), "imageToBlur");
+
+        pingPongFrameBuffers[horizontal].renderGeomtry();
+
+        horizontal = !horizontal;
+        if (firstIteration)
+        {
+            firstIteration = false;
+        }
+    }
+
+
+    //coppy the results of the itteration to tthe mip of the image texture provided which should have generated mip maps
+    //or just render to quad and stor the result to the mip level of the quead however this would require to create a new shader, one that can store to the mip chain of the image 
+    return pingPongFrameBuffers[!horizontal].getRenderedResult();
 
 }

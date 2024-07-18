@@ -74,7 +74,14 @@ public:
      */
     void drawInsideSelf(bool useColourAttachemntAsTexture =true);
 
-    /***
+    /**
+     * @brief Updates the dimentions of the frame buffer
+     * @param width new widht
+     * @param height new height
+     */
+    void updateDimetions(float width, float height);
+
+     /***
      * Sets the color attachment of frame buffer that is supposed to be rendered
      * @param colorAttachment color attachment to use
      */
@@ -97,6 +104,8 @@ public:
      * @param path path into which the png will be stored
      */
     void saveAsPNG(std::string path);
+
+    void setColorAttachmentToMipLevel(std::shared_ptr<Texture2D> texture, int mipLevel);
 
     void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D>gMetalnessRougness , std::shared_ptr<Texture2D> depthMap = nullptr);
 

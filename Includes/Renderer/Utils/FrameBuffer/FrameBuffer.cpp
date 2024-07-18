@@ -80,6 +80,15 @@ void FrameBuffer::drawInsideSelf(bool useColourAttachemntAsTexture) {
     this->objectGeometry->render();
 }
 
+void FrameBuffer::updateDimetions(float width, float height) {
+    this->bind();
+    this->renderBuffer->updateDimetions(width, height);
+    this->renderBuffer->bind();
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
+    glCheckError();
+    this->unbind();
+}
+
 void FrameBuffer::setShader(std::shared_ptr<Shader> shader) {
     this->shader = shader;
     this->objectMaterial->shader = shader;
@@ -174,8 +183,14 @@ void FrameBuffer::saveAsPNG(std::string path) {
         std::cout<<"Frame buffer saved to the path" + path <<std::endl;
 }
 
+void FrameBuffer::setColorAttachmentToMipLevel(std::shared_ptr<Texture2D> texture, int mipLevel) {
+    this->bind();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, texture->ID, mipLevel);
+    glCheckError();
+}
+
 void FrameBuffer::transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition,
-    std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D>gMetalnessRougness ,std::shared_ptr<Texture2D> depthMap) {
+                                           std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D>gMetalnessRougness ,std::shared_ptr<Texture2D> depthMap) {
 
     glDeleteFramebuffers(1, &this->ID);
     glCheckError();
