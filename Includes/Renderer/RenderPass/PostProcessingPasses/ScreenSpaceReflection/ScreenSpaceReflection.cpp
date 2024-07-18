@@ -70,13 +70,16 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
 
     this->renderPassResult = this->frameBuffer->getRenderedResult();
 
-    this->renderPassResult = renderer->blur(this->renderPassResult, this->blurIntensity);
+    //this->renderPassResult = renderer->blur(this->renderPassResult, this->blurIntensity);
     this->renderPassResult->shaderName = "ssr";
     renderer->clearInputs();
 
     //gettingFinalResult
     renderedScene->shaderName = "renderedScene";
-    renderer->setInputsForRenderPass({this->renderPassResult, renderedScene});
+    renderer->setInputsForRenderPass(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs());
+    renderer->addInput(this->renderPassResult);
+    renderer->addInput(renderedScene);
+
     renderer->render(this->mergeFrameBufer);
     this->renderPassResult = this->mergeFrameBufer->getRenderedResult();
     return this->renderPassResult;

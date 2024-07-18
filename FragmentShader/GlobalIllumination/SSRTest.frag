@@ -66,7 +66,7 @@ vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
 }
 
 
-bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 HitColour) {
+bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 ReflectedUV) {
     float sampleDepth;
     vec3 hitColor = vec3(0);
     bool hit = false;
@@ -83,8 +83,9 @@ bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 HitColour) 
         float depthDif = currentRayPos.z - sampleDepth;
         if (depthDif >= 0 && depthDif < 0.00001) { //we have a hit
                hit = true;
-               currentRayPos = BinarySearch(currentRayPos, prevRayPos);
-               HitColour = texture(gColourShininess, currentRayPos.xy).rgb;
+               //currentRayPos = BinarySearch(currentRayPos, prevRayPos);
+              // HitColour = texture(gColourShininess, currentRayPos.xy).rgb;
+               ReflectedUV = vec3(currentRayPos.xy, 1.0);
                return true;
         }
         prevRayPos = currentRayPos;

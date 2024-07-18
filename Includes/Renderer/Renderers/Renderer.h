@@ -64,6 +64,10 @@ public:
        "Blur is not supported for this renderer, blur is only supported for the Post Proecessing Renderer");
     }
 
+    virtual void addInput(std::shared_ptr<TextureBase> input) {
+        this->renderPassInputs.emplace_back(input);
+    }
+
     void clearInputs() {this->renderPassInputs.clear();}
 
     void setScene(std::shared_ptr<Scene> scene){this->scene = scene;}
