@@ -3,6 +3,8 @@
 //
 #include "Texture.h"
 
+#include "Debug/DebugLogger.h"
+
 Texture::Texture(GLenum type,const char*shaderName, glm::vec2 dimensions, GLenum colorChannels,GLenum internalFomrat) {
     glGenTextures(1, &this->ID);
     glBindTexture(type, this->ID);
@@ -53,7 +55,13 @@ void Texture::changeFilteringMethod(GLenum mag, GLenum min) {
 
 void Texture::generateMipmap() {
     glBindTexture(this->type, this->ID);
+    glCheckError();
     glGenerateMipmap(this->type);
+    glCheckError();
+    glTexParameteri(this->type, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glCheckError();
+    glTexParameteri(this->type, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glCheckError();
     std::cout<<" Generated mip map for the texture with ID: "<<this->ID<<std::endl;
 }
 

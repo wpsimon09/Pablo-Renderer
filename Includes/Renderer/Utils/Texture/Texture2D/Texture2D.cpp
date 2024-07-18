@@ -24,7 +24,7 @@ Texture2D::Texture2D() {
 
 }
 
-Texture2D::Texture2D(int width, int height, float *data, GLenum format) {
+Texture2D::Texture2D(int width, int height, float *data, GLenum format,bool createMipMaps) {
     this->type = GL_TEXTURE_2D;
     this->isPBRMaterial = false;
     this->wasFound = true;
@@ -49,8 +49,15 @@ Texture2D::Texture2D(int width, int height, float *data, GLenum format) {
     glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glCheckError();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glCheckError();
+
+    if(createMipMaps) {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glCheckError();
+    }else {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glCheckError();
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glCheckError();

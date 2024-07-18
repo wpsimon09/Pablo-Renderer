@@ -53,6 +53,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/RenderPass/PostProcessingPasses/ScreenSpaceReflection/ScreenSpaceReflection.h
         Includes/Renderer/Utils/Parameters/Parameter.cpp
         Includes/Renderer/Utils/Parameters/Parameter.h
+        Includes/Renderer/RenderPass/PostProcessingPasses/ConvoluteSceneImagePass/SceneImageConvolutionPass.cpp
+        Includes/Renderer/RenderPass/PostProcessingPasses/ConvoluteSceneImagePass/SceneImageConvolutionPass.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

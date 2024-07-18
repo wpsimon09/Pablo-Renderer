@@ -35,6 +35,7 @@ void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
     frameBuffer->renderGeomtry();
 }
 
+
 std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2D> textureToBlur, int intensity) {
     bool horizontal = true, firstIteration = true;
 
@@ -67,4 +68,21 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2
     }
 
     return pingPongFrameBuffers[!horizontal].getRenderedResult();
+}
+
+std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr<Texture2D> textureToConvolve,
+    int mipNumbers) {
+
+    if(textureToConvolve->())
+    for (int mip = 0; mip < maxMipMapLevels; ++mip) {
+        unsigned int mipW =  static_cast<unsigned int>(512 * std::pow(0.5, mip));
+        unsigned int mipH =  static_cast<unsigned int>(512 * std::pow(0.5, mip));
+
+        this->frameBufferCube->updateDimetions(mipW, mipH);
+
+        float rougness = (float)mip/(float)(maxMipMapLevels-1);
+        shader->setFloat("rougness", rougness);
+
+        this->frameBufferCube->renderToSelf(input, mip);
+
 }

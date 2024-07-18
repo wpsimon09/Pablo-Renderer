@@ -34,6 +34,7 @@ class Texture
             this->ID=texutureID;
         }
 
+
 private:
         glm::vec2 dimensions;
         GLenum colorChannels;
