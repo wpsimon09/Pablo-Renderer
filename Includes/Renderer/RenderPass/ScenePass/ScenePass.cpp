@@ -21,7 +21,7 @@ ScenePass::ScenePass():RenderPass() {
     gColourAndShininess->generateMipMaps();
     gColourAndShininess->shaderName = "gColourShininess";
 
-    this->gMetalnessRougness = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RG16F);
+    this->gMetalnessRougness = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_RGBA16F);
     gMetalnessRougness->shaderName = "gMetalnessRougness";
 
     this->gDepth = std::make_shared<Texture2D>(screenDimentions.x, screenDimentions.y, GL_DEPTH_COMPONENT32F);

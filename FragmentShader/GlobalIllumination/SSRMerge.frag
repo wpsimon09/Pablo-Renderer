@@ -6,6 +6,7 @@ in vec2 TexCoords;
 uniform sampler2D ssr;
 uniform sampler2D renderedScene;
 uniform sampler2D gColourShininess;
+uniform sampler2D gMetalnessRougness;
 
 out vec4 FragColor;
 
@@ -18,5 +19,10 @@ void main() {
 
     FragColor = vec4(scene.rgb,1.0) ;
     FragColor.rgb += reflectedColour;
-    //FragColor = vec4(reflectedUV,0.0, 1.0);
+
+    FragColor = vec4(mix(vec3(reflectedUV,1.0), reflectedColour,0.5) ,1.0);
+
+    vec2 MetalnsessRougness = texture(gMetalnessRougness, TexCoords).xy;
+
+    FragColor = vec4(MetalnsessRougness,0.5, 1.0);
 }
