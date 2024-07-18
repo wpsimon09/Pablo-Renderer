@@ -43,16 +43,16 @@ int main() {
     auto pot = std::make_unique<ModelSceneNode>("/home/wpsimon09/Desktop/Models/marble_bust_01_2k.gltf/marble_bust_01_2k.gltf", true);
     pot->transformation->setPosition(40.0, 0.0f, 30.0f);
     pot->transformation->setScale(60.0f, 60.0f, 60.0f);
-    pot->castsShadow(false);
+    pot->castsShadow(true);
 
 
 
     auto gridSceneNode = std::make_unique<SceneNode>(std::move(gridRenderable));
     gridSceneNode->transformation->setPosition(glm::vec3(0.0f, -1.2f, 0.0f));
 
-
     auto color1 = std::make_shared<PBRColor>(glm::vec3(0.8f, 0.0f, 1.0f), false, true);
     assetsManager->storeMaterial(color1);
+
     auto color2 = std::make_shared<PBRColor>(glm::vec3(0.8f, 1.0f, 1.0f), false, true);
     assetsManager->storeMaterial(color2);
 
@@ -73,11 +73,13 @@ int main() {
     floor->transformations->setPosition(0.2f, 0.0f, 50.0f);
     floor->transformations->setScale(90.0f, 1.0f, 90.0f);
     floor->recievesShadow = true;
+
     floor->setBackFaceCull(false);
 
     auto sphere = std::make_unique<Renderable>(sphereGeometry, color3, "sphere");
     sphere->transformations->setScale(10.0F,10.0f, 10.0f);
     sphere->transformations->setPosition(-30.0f, 10.0f, 30.0f);
+    sphere->castsShadwo = true;
 
     const std::shared_ptr<Scene> scene = std::make_shared<Scene>();
     scene->setIblPipeLine(iblPipeLine);

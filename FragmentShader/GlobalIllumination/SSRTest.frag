@@ -66,29 +66,30 @@ vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
 }
 
 
-vec3 TraceRay(vec3 rayPos, vec3 dir) {
+bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 HitColour) {
     float sampleDepth;
     vec3 hitColor = vec3(0);
     bool hit = false;
-    vec3 prevRayPos = rayPos;
+    vec3 prevRayPos = RayStartingPossition;
+    vec3 currentRayPos = RayStartingPossition;
 
     for (int i = 0; i < MaxSamplerCount; i++) {
-        rayPos += dir * MaxMarchStep;
-        if (rayIsOutofScreen(rayPos.xy)) {
+        currentRayPos += RayDirection * MaxMarchStep;
+        if (rayIsOutofScreen(currentRayPos.xy)) {
             break;
         }
 
-        sampleDepth = LinearizeDepth(texture(gDepth, rayPos.xy).r);
-        float depthDif = rayPos.z - sampleDepth;
+        sampleDepth = LinearizeDepth(texture(gDepth,currentRayPos.xy).r);
+        float depthDif = currentRayPos.z - sampleDepth;
         if (depthDif >= 0 && depthDif < 0.00001) { //we have a hit
                hit = true;
-               rayPos = BinarySearch(rayPos,prevRayPos);
-               hitColor = texture(gColourShininess, rayPos.xy).rgb;
-               break;
+               currentRayPos = BinarySearch(currentRayPos, prevRayPos);
+               HitColour = texture(gColourShininess, currentRayPos.xy).rgb;
+               return true;
         }
-        prevRayPos = rayPos;
+        prevRayPos = currentRayPos;
     }
-    return hitColor;
+    return false;
 }
 
 void main() {
@@ -138,6 +139,11 @@ void main() {
 
 
     //trace the ray
-    vec3 outColor = TraceRay(PixelPositionTextureSpace, RayDirection);
-    FragColor = vec4(outColor, 1);
+    vec3 outColor;
+
+    bool intersects = TraceRay(PixelPositionTextureSpace, RayDirection, outColor);
+    if(intersects)
+        FragColor = vec4(outColor, 1);
+    else
+        FragColor = vec4(0.0);
 }
