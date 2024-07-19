@@ -106,7 +106,7 @@ public:
      */
     void saveAsPNG(std::string path);
 
-    void setColorAttachmentToMipLevel(std::shared_ptr<Texture2D> texture, int mipLevel);
+    void setCurrentMipLevel(std::shared_ptr<Texture2D> texture, int mipLevel);
 
     void transferToGbufferSupport(std::shared_ptr<Texture2D> gPosition, std::shared_ptr<Texture2D> gNormal, std::shared_ptr<Texture2D> gSpecularAndShininess, std::shared_ptr<Texture2D>gMetalnessRougness , std::shared_ptr<Texture2D> depthMap = nullptr);
 

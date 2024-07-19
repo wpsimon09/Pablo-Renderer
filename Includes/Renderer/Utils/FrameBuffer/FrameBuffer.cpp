@@ -183,7 +183,7 @@ void FrameBuffer::saveAsPNG(std::string path) {
         std::cout<<"Frame buffer saved to the path" + path <<std::endl;
 }
 
-void FrameBuffer::setColorAttachmentToMipLevel(std::shared_ptr<Texture2D> texture, int mipLevel) {
+void FrameBuffer::setCurrentMipLevel(std::shared_ptr<Texture2D> texture, int mipLevel) {
     this->bind();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, texture->ID, mipLevel);
     glCheckError();

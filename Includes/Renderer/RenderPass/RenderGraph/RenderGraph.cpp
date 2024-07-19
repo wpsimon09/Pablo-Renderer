@@ -5,6 +5,7 @@
 
 #include "RenderGraph.h"
 
+#include "Renderer/RenderPass/PostProcessingPasses/ConvoluteSceneImagePass/SceneImageConvolutionPass.h"
 #include "Renderer/RenderPass/PostProcessingPasses/ScreenSpaceReflection/ScreenSpaceReflection.h"
 
 RenderGraph::RenderGraph(std::shared_ptr<Scene> scene) {
@@ -18,7 +19,9 @@ void RenderGraph::init() {
     this->pixelPicking = std::make_unique<PixelPicking>();
 
     this->postProcessingPass = std::make_unique<PostProcessingPass>();
+
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ScreenSpaceReflection>());
+    this->postProcessingPass->addPostProcessingPass(std::make_unique<SceneImageConvolutionPass>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ChromaticAberration>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<Pixelation>());
 }
