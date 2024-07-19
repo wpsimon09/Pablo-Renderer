@@ -74,9 +74,6 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
     int mipNumbers) {
     bool horizontal = true, firstIteration = true;
 
-    // pingPongFrameBuffers[0].setColorAttachment(textureToBlur);
-    //pingPongFrameBuffers[1].setColorAttachment(textureToBlur);
-
 
 
 
