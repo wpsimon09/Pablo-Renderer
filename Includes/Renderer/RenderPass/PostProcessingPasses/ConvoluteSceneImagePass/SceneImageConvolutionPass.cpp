@@ -21,3 +21,7 @@ std::shared_ptr<Texture2D> SceneImageConvolutionPass::render(std::shared_ptr<Tex
     renderer->setInputsForRenderPass(this->inputs);
     renderer->blurToMipMaps(renderedScene, 6);
 }
+
+void SceneImageConvolutionPass::renderUI() {
+    RenderPass::renderUI();
+}
