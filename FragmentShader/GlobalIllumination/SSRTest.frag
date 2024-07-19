@@ -25,17 +25,17 @@ uniform float MaxDistance;
 uniform float NearPlane;
 uniform float FarPlane;
 
-precision highp float;
-precision highp int;
-
 in vec2 TexCoords;
 
 out vec4 FragColor;
 
+precision highp float;
+precision highp int;
+
 
 
 bool rayIsOutofScreen(vec2 ray) {
-    return (ray.x > 1 || ray.y > 1 || ray.x < 0 || ray.y < 0) ? true : false;
+    return (ray.x > 1|| ray.y > 1 || ray.x < 0 || ray.y < 0) ? true : false;
 }
 
 float LinearizeDepth(float depth) {
@@ -52,7 +52,7 @@ vec3 BinarySearch(in vec3 RaySample, in vec3 PreviousRaySample){
     vec3 MidRaySample;
 
     for(int i = 0; i < MaxBinarySearchSteps; i++){
-        MidRaySample = mix(MinRaySample, MaxRaySample, MidRaySampleWeight);
+        MidRaySample = mix(MinRaySample, MaxRaySample, 0.5);
         float ZBufferVal = texture(gDepth, MidRaySample.xy).r;
 
         if(MidRaySample.z > ZBufferVal){
@@ -83,13 +83,14 @@ bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 ReflectedUV
         float depthDif = currentRayPos.z - sampleDepth;
         if (depthDif >= 0 && depthDif < 0.00001) { //we have a hit
                hit = true;
-               //currentRayPos = BinarySearch(currentRayPos, prevRayPos);
-              // HitColour = texture(gColourShininess, currentRayPos.xy).rgb;
-               ReflectedUV = vec3(currentRayPos.xy, 1.0);
+               currentRayPos = BinarySearch(currentRayPos, prevRayPos);
+               //vec3 HitColour = texture(gColourShininess, currentRayPos.xy).rgb;
+               ReflectedUV = vec3(currentRayPos.xy,1.0);
                return true;
         }
         prevRayPos = currentRayPos;
     }
+    ReflectedUV = vec3(1.0,0.0,0.0);
     return false;
 }
 

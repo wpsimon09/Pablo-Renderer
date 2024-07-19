@@ -38,7 +38,7 @@ public:
      * @param customColorAttachement texture to be used as a color attachment which can be later retried
      * @param generateMipMapChain true if colour attachment of the frame buffer should be texture with generated mip chain
      */
-    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, std::shared_ptr<Shader> customShader = nullptr,std::unique_ptr<Texture2D> customColorAttachement = nullptr, bool generateMipMapChain = false );
+    FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT, std::shared_ptr<Shader> customShader = nullptr,std::unique_ptr<Texture2D> customColorAttachement = nullptr, bool generateMipMapChain = false, int levels = 6 );
 
     /***
      * Gets the result of the rendering to this frame buffer

@@ -90,7 +90,7 @@ Texture2D::Texture2D(int width, int height, GLenum foramt,bool createMipMaps,int
     glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glCheckError();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,createMipMaps ? GL_LINEAR_MIPMAP_LINEAR:GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,createMipMaps ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR);
     glCheckError();
 
     if(createMipMaps) {

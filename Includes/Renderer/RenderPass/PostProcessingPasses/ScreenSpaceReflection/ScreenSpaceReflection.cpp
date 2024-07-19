@@ -7,9 +7,11 @@
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
 ScreenSpaceReflection::ScreenSpaceReflection() {
+    //this one preforms ray marching
     auto shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS);
     this->frameBuffer =  std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
 
+    //this one preforms the colour sampling
     shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING);
     this->mergeFrameBufer= std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
 
@@ -82,7 +84,6 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
 
     renderer->render(this->mergeFrameBufer);
     this->renderPassResult = this->mergeFrameBufer->getRenderedResult();
-    this->renderPassResult = renderer->blur(renderPassResult, this->blurIntensity);
     return this->renderPassResult;
 }
 

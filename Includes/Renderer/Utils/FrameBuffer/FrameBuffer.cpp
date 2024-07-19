@@ -5,7 +5,7 @@
 #include "FrameBuffer.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
-FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement, bool generateMipMapChain):Renderable() {
+FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement, bool generateMipMapChain, int levels ):Renderable() {
     if(customShader == nullptr){
         this->shader = ShaderManager::getShader(SHADER_FRAME_BUFFER);
     }
@@ -25,7 +25,7 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> c
 
     //COLOR ATTACHMENT
     if(customColorAttachement == nullptr){
-        this->colorAttachment = std::make_shared<Texture2D>(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F, generateMipMapChain);;
+        this->colorAttachment = std::make_shared<Texture2D>(SCR_WIDTH, SCR_HEIGHT, GL_RGBA16F, generateMipMapChain, levels);;
     }
     else{
         this->colorAttachment = std::move(customColorAttachement);
