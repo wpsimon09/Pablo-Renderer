@@ -77,20 +77,28 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
 
     auto horizontalShader = ShaderManager::getShader(SHADER_BLUR_HORIZONTAL);
     auto verticalShader = ShaderManager::getShader(SHADER_BLUR_VERTICAL);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     for (int mip = 0; mip < mipNumbers; ++mip) {
         unsigned int mipW =  static_cast<unsigned int>(this->convolutionFrameBuffer.getWidht() * std::pow(0.5, mip));
         unsigned int mipH =  static_cast<unsigned int>(this->convolutionFrameBuffer.getHeihgt() * std::pow(0.5, mip));
 
         this->convolutionFrameBuffer.updateDimetions(mipW, mipH);
+        this->convolutionFrameBuffer.setCurrentMipLevel(mip);
+        glViewport(0, 0, this->convolutionFrameBuffer.getWidht(), this->convolutionFrameBuffer.getHeihgt());
 
         float rougness = (float)mip/(float)(mipNumbers-1);
-       // horizontalShader->setFloat("rougness", rougness);
+        verticalShader->use();
+        ShaderHelper::setTextureToShader(verticalShader, *textureToConvolve, "Scene");
+        convolutionFrameBuffer.renderGeomtry();
 
+        horizontalShader->use();
+        ShaderHelper::setTextureToShader(horizontalShader, *textureToConvolve, "Scene");
+        convolutionFrameBuffer.renderGeomtry();
     }
 
 
     //coppy the results of the itteration to tthe mip of the image texture provided which should have generated mip maps
     //or just render to quad and stor the result to the mip level of the quead however this would require to create a new shader, one that can store to the mip chain of the image
-    return pingPongFrameBuffers[false].getRenderedResult();
+    return convolutionFrameBuffer.getRenderedResult();
 }

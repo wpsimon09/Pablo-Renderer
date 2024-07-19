@@ -97,11 +97,12 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
                      "FragmentShader/Postprocessing/GausianPingPongBlur.frag",
                      "BLUR ANYTHING"),
 
-    UncompiledShader(SHADER_BLUR_ANYTHING, "VertexShader/FrameBufferDebugVertex.glsl",
+    UncompiledShader(SHADER_BLUR_HORIZONTAL, "VertexShader/FrameBufferDebugVertex.glsl",
                      "FragmentShader/Postprocessing/BlurHorizontaly.frag",
                      "BLUR HORIZONTALY"),
 
-    UncompiledShader(SHADER_BLUR_ANYTHING, "VertexShader/FrameBufferDebugVertex.glsl",
+    UncompiledShader(SHADER_BLUR_VERTICAL
+        , "VertexShader/FrameBufferDebugVertex.glsl",
                      "FragmentShader/Postprocessing/BlurVertically.frag",
                      "BLUR VERTCIALY"),
 };

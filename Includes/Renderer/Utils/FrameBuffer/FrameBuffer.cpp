@@ -87,6 +87,9 @@ void FrameBuffer::updateDimetions(float width, float height) {
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
     glCheckError();
     this->unbind();
+
+    this->width = width;
+    this->height = height;
 }
 
 void FrameBuffer::setShader(std::shared_ptr<Shader> shader) {
@@ -183,9 +186,9 @@ void FrameBuffer::saveAsPNG(std::string path) {
         std::cout<<"Frame buffer saved to the path" + path <<std::endl;
 }
 
-void FrameBuffer::setCurrentMipLevel(std::shared_ptr<Texture2D> texture, int mipLevel) {
+void FrameBuffer::setCurrentMipLevel(int mipLevel) {
     this->bind();
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, texture->ID, mipLevel);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D, this->colorAttachment->ID, mipLevel);
     glCheckError();
 }
 
