@@ -35,7 +35,7 @@ public:
      * @param height height of the texture
      * @param foramt format for texture to use @def GL_RGB
      */
-    explicit Texture2D(int width, int height, GLenum foramt = GL_RGB, bool createMipMaps = false);
+    explicit Texture2D(int width, int height, GLenum foramt = GL_RGB, bool createMipMaps = false, int numberOfMipLevels = 10);
 
     /***
      * Creates texture with passed data

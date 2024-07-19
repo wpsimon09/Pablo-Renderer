@@ -86,6 +86,11 @@ public:
     int bundleID;
 
     /**
+     * @brief True if the texture has generated MipMap chain
+     */
+    bool hasMipMaps = false;
+
+    /**
      * @brief Specifies texture type only applicable if the texture is Part of the texture bundle or texture is PBR material
      */
     MATERIAL_TEXTURE_TYPE textureType = UNDEFINED;

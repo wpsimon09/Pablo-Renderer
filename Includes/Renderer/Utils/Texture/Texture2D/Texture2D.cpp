@@ -24,7 +24,7 @@ Texture2D::Texture2D() {
 
 }
 
-Texture2D::Texture2D(int width, int height, float *data, GLenum format,bool createMipMaps) {
+Texture2D::Texture2D(int width, int height, float *data, GLenum format) {
     this->type = GL_TEXTURE_2D;
     this->isPBRMaterial = false;
     this->wasFound = true;
@@ -49,22 +49,16 @@ Texture2D::Texture2D(int width, int height, float *data, GLenum format,bool crea
     glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glCheckError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glCheckError();
 
-    if(createMipMaps) {
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glCheckError();
-    }else {
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glCheckError();
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
 
     glBindTexture(GL_TEXTURE_2D, 0);
     glCheckError();
 }
 
 
-Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
+Texture2D::Texture2D(int width, int height, GLenum foramt,bool createMipMaps,int numberOfMipLevels): TextureBase() {
     this->type = GL_TEXTURE_2D;
     this->isPBRMaterial = false;
     this->wasFound = true;
@@ -84,21 +78,26 @@ Texture2D::Texture2D(int width, int height, GLenum foramt): TextureBase() {
     glBindTexture(GL_TEXTURE_2D, this->ID);
     glCheckError();
 
-    glTexStorage2D(GL_TEXTURE_2D, 1, foramt, width, height);
+    glTexStorage2D(GL_TEXTURE_2D, createMipMaps ? numberOfMipLevels : 1, foramt, width, height);
     glCheckError();
 
-
-    // ------------------
-    // PBR_TEXTURE_MAPS PARAMETERS
-    // -------------------
+    // --------------------
+    // SAMPELING PARAMETERS
+    // --------------------
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glCheckError();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glCheckError();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glCheckError();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,createMipMaps ? GL_LINEAR_MIPMAP_LINEAR:GL_LINEAR);
+    glCheckError();
+
+    if(createMipMaps) {
+        this->hasMipMaps = true;
+        glGenerateMipmap(GL_TEXTURE_2D);
+        glCheckError();
+    }
 
     // RELEASE
     glBindTexture(GL_TEXTURE_2D,0);
