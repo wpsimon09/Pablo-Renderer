@@ -77,7 +77,8 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
 
     auto horizontalShader = ShaderManager::getShader(SHADER_BLUR_HORIZONTAL);
     auto verticalShader = ShaderManager::getShader(SHADER_BLUR_VERTICAL);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    textureToConvolve->samplerID = 0;
 
     for (int mip = 0; mip < mipNumbers; ++mip) {
         unsigned int mipW =  static_cast<unsigned int>(this->convolutionFrameBuffer.getWidht() * std::pow(0.5, mip));
@@ -86,6 +87,8 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
         this->convolutionFrameBuffer.updateDimetions(mipW, mipH);
         this->convolutionFrameBuffer.setCurrentMipLevel(mip);
         glViewport(0, 0, this->convolutionFrameBuffer.getWidht(), this->convolutionFrameBuffer.getHeihgt());
+        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
         float rougness = (float)mip/(float)(mipNumbers-1);
         verticalShader->use();

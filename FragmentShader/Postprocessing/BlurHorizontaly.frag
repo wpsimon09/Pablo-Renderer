@@ -15,5 +15,4 @@ void main() {
         color += texture(Scene  , TexCoords + vec2(0.0, i)) * kernel[i + 3];
     }
     FragCol = color;
-
 }
