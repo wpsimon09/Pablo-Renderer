@@ -84,10 +84,10 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
         unsigned int mipW =  static_cast<unsigned int>(this->convolutionFrameBuffer.getWidht() * std::pow(0.5, mip));
         unsigned int mipH =  static_cast<unsigned int>(this->convolutionFrameBuffer.getHeihgt() * std::pow(0.5, mip));
 
-        this->convolutionFrameBuffer.updateDimetions(mipW, mipH);
+       // this->convolutionFrameBuffer.updateDimetions(mipW, mipH);
         this->convolutionFrameBuffer.setCurrentMipLevel(mip);
-        glViewport(0, 0, this->convolutionFrameBuffer.getWidht(), this->convolutionFrameBuffer.getHeihgt());
-        //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glViewport(0, 0, mipW, mipH);
+        glClear(GL_COLOR_BUFFER_BIT);
 
 
         float rougness = (float)mip/(float)(mipNumbers-1);
@@ -95,6 +95,7 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
         ShaderHelper::setTextureToShader(verticalShader, *textureToConvolve, "Scene");
         convolutionFrameBuffer.renderGeomtry();
 
+        glClear(GL_COLOR_BUFFER_BIT);
         horizontalShader->use();
         ShaderHelper::setTextureToShader(horizontalShader, *textureToConvolve, "Scene");
         convolutionFrameBuffer.renderGeomtry();

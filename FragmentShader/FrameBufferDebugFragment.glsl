@@ -14,7 +14,7 @@ float blueOffset  = -0.006;
 
 
 void main(){
-    vec3 color = texture(FragmentColor, TexCoords).rgb;
+    vec3 color = textureLod(FragmentColor, TexCoords,0).rgb;
 
     FragColor = vec4(color,1.0);
 }
