@@ -33,9 +33,9 @@ float isocaleTriangleOpposite(float adjecentLength, float coneTheta){
 // a - adjecent side of the isoscale triangle
 // h - hieight of the ajencent triangle
 float isoscalesTriangleInRadius(float a, float h){
-    float a2 = a*a;
+    float a2  = a*a;
     float fh2 = 4.0 * h * h;
-    return (a*(sqrt(a2, fh2)-a))/(4.0 * h);
+    return (a*(sqrt(a2 + fh2)-a))/(4.0 * h);
 }
 
 vec4 coneSampleWightColor(vec2 samplerPos, float mipChanel, float gloss){
@@ -48,6 +48,7 @@ float isoscaleTriangleNextAdjecent(float adjencentLength, float incircleRadius){
 }
 
 void main() {
+    vec4 raySS = textureLod(ConvolvedScene, TexCoords,4).xyzw;
 
-    FragColor = vec4(0.0);
+    FragColor = raySS;
 }

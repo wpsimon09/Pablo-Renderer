@@ -23,6 +23,17 @@ void ConeTracingPass::renderUI() {
 std::shared_ptr<Texture2D> ConeTracingPass::render(std::shared_ptr<Texture2D> renderedScene,
     std::shared_ptr<Renderer> renderer) {
 
+    auto gBuffers = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs();
+    auto RayTracingBuffer = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCREEN_SPACE_REFLECTION_PASS).get().getRenderedResult();
+    RayTracingBuffer->shaderName = "RayTracingBuffer";
+
+    auto ConvolvedScene = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_CONVOLUTION_PASS).get().getRenderedResult();;
+    ConvolvedScene->shaderName = "ConvolvedScene";
+
+    renderer->setInputsForRenderPass(gBuffers);
+    renderer->addInput(RayTracingBuffer);
+    renderer->addInput(ConvolvedScene);
+
     renderer->render(this->frameBuffer);
 
     this->renderPassResult = this->frameBuffer->getRenderedResult();

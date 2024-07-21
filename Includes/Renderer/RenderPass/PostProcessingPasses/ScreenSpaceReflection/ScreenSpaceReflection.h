@@ -19,7 +19,6 @@ private:
 
     void setParamsToShader(std::shared_ptr<Shader> shader);
 
-
 public:
     void renderUI() override;
 };

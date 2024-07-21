@@ -85,7 +85,7 @@ bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 ReflectedUV
                hit = true;
                currentRayPos = BinarySearch(currentRayPos, prevRayPos);
                //vec3 HitColour = texture(gColourShininess, currentRayPos.xy).rgb;
-               ReflectedUV = vec3(currentRayPos.xy,1.0);
+               ReflectedUV = vec3(currentRayPos.xyz);
                return true;
         }
         prevRayPos = currentRayPos;
