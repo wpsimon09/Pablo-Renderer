@@ -10,7 +10,7 @@
 class PostProcessingRenderer: public Renderer{
 public:
     PostProcessingRenderer():Renderer(),
-    pingPongFrameBuffers{FrameBuffer(1920,1080),FrameBuffer(1920,1080)},
+    pingPongFrameBuffers{FrameBuffer(1920,1080, nullptr, nullptr, false, 0, false),FrameBuffer(1920,1080, nullptr, nullptr, false, 0, false)},
     convolutionFrameBuffer(1920, 1080, nullptr, nullptr, true, 10, false)
     {
         this->type = POST_PROCESSING;

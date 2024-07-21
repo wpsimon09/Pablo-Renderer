@@ -6,7 +6,7 @@
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
 SceneImageConvolutionPass::SceneImageConvolutionPass() {
-    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight());
+    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(), nullptr, nullptr, false, 0, false);
     this->rendererType = POST_PROCESSING;
     this->isPostProcessingPass = true;
     this->render_pass = SCENE_CONVOLUTION_PASS;

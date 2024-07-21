@@ -8,7 +8,7 @@
 
 Pixelation::Pixelation() {
     auto shader  = ShaderManager::getShader(SHADER_PIXELATION);
-    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader), nullptr, false, 0, false);
     this->rendererType = POST_PROCESSING;
     this->isPostProcessingPass = true;
     this->render_pass = PIXELATION_POST_PROCESSING_PASS;

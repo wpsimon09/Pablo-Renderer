@@ -9,11 +9,11 @@
 ScreenSpaceReflection::ScreenSpaceReflection() {
     //this one preforms ray marching
     auto shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS);
-    this->frameBuffer =  std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+    this->frameBuffer =  std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader), nullptr, false, 0, false);
 
     //this one preforms the colour sampling
     shader = ShaderManager::getShader(SHADER_SCREEN_SPACE_REFLECTIONS_COLOUR_SAMPLING);
-    this->mergeFrameBufer= std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+    this->mergeFrameBufer= std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader), nullptr, false, 0, false);
 
     this->isActive = true;
     this->isPostProcessingPass = true;

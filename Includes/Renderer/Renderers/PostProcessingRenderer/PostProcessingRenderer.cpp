@@ -19,7 +19,7 @@ void PostProcessingRenderer::renderSceneGraph(SceneNode &sceneNode) {
 void PostProcessingRenderer::render(std::unique_ptr<FrameBuffer> &frameBuffer) {
     frameBuffer->bind();
     glViewport(0,0, frameBuffer->getWidht(), frameBuffer->getHeihgt());
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT );
     glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
     auto shader = frameBuffer->getShader();
@@ -49,7 +49,7 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2
     {
         pingPongFrameBuffers[horizontal].bind();
         glViewport(0,0, pingPongFrameBuffers[horizontal].getWidht(), pingPongFrameBuffers[horizontal].getHeihgt());
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.01f, 0.01f, 0.01f, 1.0f);
 
         shader->setInt("horizontal", horizontal);

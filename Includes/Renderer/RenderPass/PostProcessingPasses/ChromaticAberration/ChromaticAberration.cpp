@@ -8,7 +8,7 @@
 
 ChromaticAberration::ChromaticAberration() {
     auto shader = ShaderManager::getShader(SHADER_CHROMATIC_ABBERATION);
-    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader));
+    this->frameBuffer = std::make_unique<FrameBuffer>(GLFWHelper::getScreenWidth(),GLFWHelper::getScreenHeight(),std::move(shader), nullptr, false, 0, false);
     this->rendererType = POST_PROCESSING;
     this->render_pass = CHROMATIC_ABBERATION_POST_PROCESSING_PASS;
     this->isPostProcessingPass = true;
