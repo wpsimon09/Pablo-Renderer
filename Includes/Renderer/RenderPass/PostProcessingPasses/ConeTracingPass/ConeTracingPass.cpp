@@ -45,6 +45,8 @@ std::shared_ptr<Texture2D> ConeTracingPass::render(std::shared_ptr<Texture2D> re
     renderer->addInput(RayTracingBuffer);
     renderer->addInput(ConvolvedScene);
 
+    setParamsToShader(shader);
+
     renderer->render(this->frameBuffer);
 
     this->renderPassResult = this->frameBuffer->getRenderedResult();

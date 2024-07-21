@@ -16,8 +16,6 @@ public:
 private:
     int blurIntensity = 2;
 
-    std::map<std::string, Parameter<float>> uniformValues;
-
 public:
     void renderUI() override;
 };

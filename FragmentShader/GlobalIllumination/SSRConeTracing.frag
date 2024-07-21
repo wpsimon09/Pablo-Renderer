@@ -39,10 +39,10 @@ float roughnessToSpecularPower(float roughness) {
 
 float specPowerToConeAngle(float specularPower){
     if(specularPower >= exp2(CONST_SPECULAR_EXPONENT)){
-        return 0.0;
+        //return 0.0;
     }
     const float xi = 0.244;
-    float exponent = 1.0 /(specularPower + 1.0);
+    float exponent = 1.0 /(max(specularPower,0.001) );
     return acos(pow(xi, exponent));
 }
 
@@ -75,11 +75,11 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
 }
 
 void main() {
-    vec4 raySS = textureLod(RayTracingBuffer, TexCoords).xyzw;
+    vec4 raySS = textureLod(RayTracingBuffer, TexCoords,0).xyzw;
     float depth = texture(gDepth, TexCoords).r;
     vec3 positionSS = vec3(TexCoords, depth);
 
-    vec2 depthBufferSize = textureSize(gDepth);
+    vec2 depthBufferSize = textureSize(gDepth,0);
 
     vec3 positionVS = texture(gPosition, TexCoords).rgb;
     positionVS = vec3(View * vec4(positionVS, 1.0));
@@ -123,7 +123,7 @@ void main() {
         totalColor += newColor;
 
         if(totalColor.a >= 1.0){
-            break;
+           // break;
         }
 
         adjencentLength= isoscaleTriangleNextAdjecent(adjencentLength, incircleSize);
@@ -134,5 +134,5 @@ void main() {
     vec3 specular = fresnelSchlick(abs(dot(normalsVS, toEye)), specularAll.rgb);
 
 
-    FragColor = vec4(totalColor * vec4(specular,1.0));
+    FragColor = vec4(specularAll.rgb,1.0);
 }
