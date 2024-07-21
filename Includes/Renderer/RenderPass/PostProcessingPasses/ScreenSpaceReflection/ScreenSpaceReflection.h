@@ -14,10 +14,9 @@ public:
     std::shared_ptr<Texture2D>
     render(std::shared_ptr<Texture2D> renderedScene, std::shared_ptr<Renderer> renderer) override;
 private:
-    std::map<std::string, Parameter<float>> uniformValues;
     int blurIntensity = 2;
 
-    void setParamsToShader(std::shared_ptr<Shader> shader);
+    std::map<std::string, Parameter<float>> uniformValues;
 
 public:
     void renderUI() override;

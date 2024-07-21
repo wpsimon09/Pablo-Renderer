@@ -70,23 +70,10 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
     return this->renderPassResult;
 }
 
-void ScreenSpaceReflection::setParamsToShader(std::shared_ptr<Shader> shader) {
-    shader->use();
-    for(auto param: this->uniformValues) {
-        shader->setFloat(param.first, param.second.getValueConst());
-    }
-}
 
 void ScreenSpaceReflection::renderUI() {
     RenderPass::renderUI();
-    for(auto &param: this->uniformValues) {
-        if(param.second.canBeChanged())
-            ImGui::SliderFloat(param.first.c_str(), &param.second.getValue(), param.second.getMin(), param.second.getMax());
-        else {
-            std::string s = param.first + ":" + std::to_string(param.second.getValue());
-            ImGui::BulletText(s.c_str());
-        }
-    }
+
     ImGui::SeparatorText("Blur intenstiy");
     ImGui::SliderInt("Blur", &this->blurIntensity, 0,30);
 }

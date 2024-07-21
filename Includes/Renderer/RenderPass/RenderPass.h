@@ -10,6 +10,7 @@
 #include "Renderer/Utils/FrameBuffer/FrameBuffer.h"
 #include "Renderer/Renderers/OGLRenderer/OGLRenderer.h"
 #include "Renderer/SceneGraph/Scene.h"
+#include "Renderer/Utils/Parameters/Parameter.h"
 #include "Renderer/Utils/RendererManager/RendererManager.h"
 
 /**
@@ -98,6 +99,8 @@ public:
     virtual std::vector<std::shared_ptr<TextureBase>> getAdditionalOutputs() {return std::vector<std::shared_ptr<TextureBase>> {};};
 
 protected:
+   void setParamsToShader(std::shared_ptr<Shader> shader);
+
     /**
      * @brief Type of the render pass
      */
@@ -135,6 +138,8 @@ protected:
      * @todo set this texture to be colour attachment of the frame buffer by default
      */
     std::shared_ptr<Texture2D> renderPassResult;
+
+    std::map<std::string, Parameter<float>> uniformValues;
 };
 
 
