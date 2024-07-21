@@ -16,14 +16,7 @@ void main() {
     vec4 ssr =   texture(ssr, TexCoords);
     vec2 reflectedUV = ssr.xy;
     vec3 reflectedColour = texture(gColourShininess, reflectedUV).rgb;
-
     vec4 scene = textureLod(renderedScene, TexCoords,0);
 
-    //FragColor = vec4(scene.rgb,1.0) ;
-
     FragColor = vec4(mix(reflectedColour,scene.rgb ,0.5) ,1.0);
-
-    //vec2 MetalnsessRougness = texture(gMetalnessRougness, TexCoords).xy;
-
-    //FragColor = vec4(reflectedUV,0.5, 1.0);
 }

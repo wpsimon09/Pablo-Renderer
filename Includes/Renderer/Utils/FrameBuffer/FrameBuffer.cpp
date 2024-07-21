@@ -5,7 +5,7 @@
 #include "FrameBuffer.h"
 #include "Renderer/Utils/GLFWHelper/GLFWHelper.h"
 
-FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement, bool generateMipMapChain, int levels ):Renderable() {
+FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> customShader ,std::unique_ptr<Texture2D> customColorAttachement, bool generateMipMapChain, int levels,bool createDepthBuffer ):Renderable() {
     if(customShader == nullptr){
         this->shader = ShaderManager::getShader(SHADER_FRAME_BUFFER);
     }
@@ -18,10 +18,12 @@ FrameBuffer::FrameBuffer(int SCR_WIDTH, int SCR_HEIGHT,std::shared_ptr<Shader> c
     glBindFramebuffer(GL_FRAMEBUFFER, this->ID);
 
     // RENDER BUFFER CONFIG
-    this->renderBuffer = std::make_unique<RenderBuffer>(SCR_WIDTH, SCR_HEIGHT);
-    this->renderBuffer->bind();
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
-    glCheckError();
+    if(createDepthBuffer) {
+        this->renderBuffer = std::make_unique<RenderBuffer>(SCR_WIDTH, SCR_HEIGHT);
+        this->renderBuffer->bind();
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, this->renderBuffer->ID);
+        glCheckError();
+    }
 
     //COLOR ATTACHMENT
     if(customColorAttachement == nullptr){
