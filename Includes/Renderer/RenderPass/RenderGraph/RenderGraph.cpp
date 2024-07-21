@@ -5,6 +5,7 @@
 
 #include "RenderGraph.h"
 
+#include "Renderer/RenderPass/PostProcessingPasses/ConeTracingPass/ConeTracingPass.h"
 #include "Renderer/RenderPass/PostProcessingPasses/ConvoluteSceneImagePass/SceneImageConvolutionPass.h"
 #include "Renderer/RenderPass/PostProcessingPasses/ScreenSpaceReflection/ScreenSpaceReflection.h"
 
@@ -22,6 +23,7 @@ void RenderGraph::init() {
 
     this->postProcessingPass->addPostProcessingPass(std::make_unique<SceneImageConvolutionPass>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ScreenSpaceReflection>());
+    this->postProcessingPass->addPostProcessingPass(std::make_unique<ConeTracingPass>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ChromaticAberration>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<Pixelation>());
 }

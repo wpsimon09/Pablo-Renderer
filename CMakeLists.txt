@@ -55,6 +55,8 @@ add_executable(${CMAKE_PROJECT_NAME}
         Includes/Renderer/Utils/Parameters/Parameter.h
         Includes/Renderer/RenderPass/PostProcessingPasses/ConvoluteSceneImagePass/SceneImageConvolutionPass.cpp
         Includes/Renderer/RenderPass/PostProcessingPasses/ConvoluteSceneImagePass/SceneImageConvolutionPass.h
+        Includes/Renderer/RenderPass/PostProcessingPasses/ConeTracingPass/ConeTracingPass.cpp
+        Includes/Renderer/RenderPass/PostProcessingPasses/ConeTracingPass/ConeTracingPass.h
 )
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES

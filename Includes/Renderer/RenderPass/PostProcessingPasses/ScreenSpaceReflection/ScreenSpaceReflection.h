@@ -14,7 +14,6 @@ public:
     std::shared_ptr<Texture2D>
     render(std::shared_ptr<Texture2D> renderedScene, std::shared_ptr<Renderer> renderer) override;
 private:
-    std::unique_ptr<FrameBuffer> mergeFrameBufer;
     std::map<std::string, Parameter<float>> uniformValues;
     int blurIntensity = 2;
 

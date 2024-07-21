@@ -105,6 +105,11 @@ const std::vector<UncompiledShader> __uncompiledShaders = {
         , "VertexShader/FrameBufferDebugVertex.glsl",
                      "FragmentShader/Postprocessing/BlurVertically.frag",
                      "BLUR VERTCIALY"),
+
+    UncompiledShader(SHADER_SSR_CONE_TRACING
+    , "VertexShader/GlobalIllumination/SSRVertex.vert",
+                 "FragmentShader/GlobalIllumination/SSRConeTracing.frag",
+                     "SSR CONE TRACING"),
 };
 
 #endif //PABLO_RENDERER_UNCOMPILEDSHADERS_H
