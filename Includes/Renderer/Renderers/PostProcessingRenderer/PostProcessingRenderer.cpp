@@ -89,23 +89,17 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
         glViewport(0, 0, mipW, mipH);
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-        auto shader = convolutionFrameBuffer.getShader();
-        auto restult = this->blur(textureToConvolve,mip);
-        ShaderHelper::setTextureToShader(shader, *restult, "FragmentColor" );
-
-        this->convolutionFrameBuffer.renderGeomtry();
-        /*
         verticalShader->use();
-        float texOffsetY = 1/mipW;
+        float texOffsetY = 1/mipH;
+        verticalShader->setFloat("texOffSetY", texOffsetY);
         ShaderHelper::setTextureToShader(verticalShader, *textureToConvolve, "Scene");
         convolutionFrameBuffer.renderGeomtry();
 
-
-        glClear(GL_COLOR_BUFFER_BIT);
         horizontalShader->use();
         float texOffsetX = 1/mipW;
+        horizontalShader->setFloat("texOffsetX", texOffsetY);
         ShaderHelper::setTextureToShader(horizontalShader, *textureToConvolve, "Scene");
-        convolutionFrameBuffer.renderGeomtry();*/
+        convolutionFrameBuffer.renderGeomtry();
     }
 
 
