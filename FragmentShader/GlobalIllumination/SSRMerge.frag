@@ -17,7 +17,7 @@ void main() {
     vec2 reflectedUV = ssr.xy;
     vec3 reflectedColour = texture(gColourShininess, reflectedUV).rgb;
 
-    vec4 scene = texture(renderedScene, TexCoords);
+    vec4 scene = textureLod(renderedScene, TexCoords,0);
 
     //FragColor = vec4(scene.rgb,1.0) ;
 

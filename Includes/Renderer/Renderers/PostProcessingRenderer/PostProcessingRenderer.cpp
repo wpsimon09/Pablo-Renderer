@@ -95,6 +95,7 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr
         ShaderHelper::setTextureToShader(verticalShader, *textureToConvolve, "Scene");
         convolutionFrameBuffer.renderGeomtry();
 
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
         horizontalShader->use();
         float texOffsetX = 1/mipW;
         horizontalShader->setFloat("texOffsetX", texOffsetY);
