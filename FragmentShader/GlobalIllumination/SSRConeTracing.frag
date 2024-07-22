@@ -26,7 +26,8 @@ uniform mat4 View;
 uniform mat4 invView;
 
 float roughnessToSpecularPower(float roughness) {
-    float specularPower =1.0/(roughness * roughness);
+
+    float specularPower = 2 / (max(pow(roughness,4), 0.001) -2) ;
 
     return specularPower;
 }
@@ -56,8 +57,8 @@ float isoscalesTriangleInRadius(float a, float h){
 }
 
 vec4 coneSampleWightColor(vec2 samplerPos, float mipChanel, float gloss){
-    vec3 sampledColor = texture(ConvolvedScene, samplerPos, mipChanel).rgb;
-    return vec4 (sampledColor * gloss, gloss);
+    vec3 sampledColor = textureLod(ConvolvedScene, samplerPos, mipChanel ).rgb;
+    return vec4 (sampledColor  * gloss, gloss);
 }
 
 float isoscaleTriangleNextAdjecent(float adjencentLength, float incircleRadius){
@@ -108,7 +109,7 @@ void main() {
         //retrieves sample position in Screen Space
         vec2 samplePos = positionSS.xy + adjecentUnit *(adjencentLength - incircleSize);
 
-        mipChannel = clamp(log2(incircleSize*max(depthBufferSize.x, depthBufferSize.y)), 0.0, maxMipLevel);
+        mipChannel = clamp(log2(incircleSize*max(depthBufferSize.x, depthBufferSize.y)), 0.0, 1.0);
 
         vec4 newColor = coneSampleWightColor(samplePos, mipChannel, glossMult);
 
@@ -129,8 +130,9 @@ void main() {
     vec3 toEye = -toPositionVS;
     vec3 specular = fresnelSchlick(abs(dot(normalsVS, toEye)), specularAll.rgb);
 
+    totalColor.rgb *=specular;
 
 
 
-    FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.5),1.0);
+    FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.1),1.0);
 }
