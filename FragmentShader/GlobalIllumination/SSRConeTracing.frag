@@ -26,12 +26,7 @@ uniform mat4 View;
 uniform mat4 invView;
 
 float roughnessToSpecularPower(float roughness) {
-    roughness = clamp(roughness, 0.0f, 1.0f);
-
-    float minSpecularPower = 1.0f;
-    float maxSpecularPower = 256.0f; // Corresponds to CNST_MAX_SPECULAR_EXP of 8
-
-    float specularPower = minSpecularPower + (1.0f - roughness) * (maxSpecularPower - minSpecularPower);
+    float specularPower =1.0/(roughness * roughness);
 
     return specularPower;
 }
@@ -107,7 +102,7 @@ void main() {
     //cone tracing using ScreenSpace Iscale triangles
     for(int i = 0; i<maxSamples; i++) {
         float oppositeLength = isocaleTriangleOpposite(adjencentLength, coneTheta);
-        float incircleSize = isoscalesTriangleInRadius(oppositeLength, adjencentLength);
+        float incircleSize   = isoscalesTriangleInRadius(oppositeLength, adjencentLength);
 
         //retrieves sample position in Screen Space
         vec2 samplePos = positionSS.xy + adjecentUnit *(adjencentLength - incircleSize);
@@ -134,5 +129,5 @@ void main() {
     vec3 specular = fresnelSchlick(abs(dot(normalsVS, toEye)), specularAll.rgb);
 
 
-    FragColor = vec4(specularAll.rgb,1.0);
+    FragColor = vec4(totalColor);
 }
