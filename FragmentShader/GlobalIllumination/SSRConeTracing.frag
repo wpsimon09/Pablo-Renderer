@@ -7,7 +7,7 @@ in vec2 TexCoords;
 out vec4 FragColor;
 
 uniform float maxMipNum;
-uniform int maxSamples;
+uniform float maxSamples;
 
 uniform sampler2D gPosition;
 uniform sampler2D gDepth;
@@ -34,7 +34,7 @@ float roughnessToSpecularPower(float roughness) {
 
 float specPowerToConeAngle(float specularPower){
     if(specularPower >= exp2(CONST_SPECULAR_EXPONENT)){
-        //return 0.0;
+        return 0.0;
     }
     const float xi = 0.244;
     float exponent = 1.0 /(max(specularPower,0.001) );
@@ -99,6 +99,7 @@ void main() {
     float maxMipLevel = maxMipNum;
     float glossMult = gloss;
 
+    float mipChannel;
     //cone tracing using ScreenSpace Iscale triangles
     for(int i = 0; i<maxSamples; i++) {
         float oppositeLength = isocaleTriangleOpposite(adjencentLength, coneTheta);
@@ -107,7 +108,7 @@ void main() {
         //retrieves sample position in Screen Space
         vec2 samplePos = positionSS.xy + adjecentUnit *(adjencentLength - incircleSize);
 
-        float mipChannel = clamp(log2(incircleSize * max(depthBufferSize.x, depthBufferSize.y)), 0.0, maxMipLevel);
+        mipChannel = clamp(log2(incircleSize ), 0.0, maxMipLevel);
 
         vec4 newColor = coneSampleWightColor(samplePos, mipChannel, glossMult);
 
@@ -118,7 +119,7 @@ void main() {
         totalColor += newColor;
 
         if(totalColor.a >= 1.0){
-           // break;
+            break;
         }
 
         adjencentLength= isoscaleTriangleNextAdjecent(adjencentLength, incircleSize);
