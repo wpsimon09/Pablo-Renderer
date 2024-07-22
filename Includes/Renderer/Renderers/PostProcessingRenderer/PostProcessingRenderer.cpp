@@ -70,8 +70,8 @@ std::shared_ptr<Texture2D> PostProcessingRenderer::blur(std::shared_ptr<Texture2
     return pingPongFrameBuffers[!horizontal].getRenderedResult();
 }
 
-std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr<Texture2D> textureToConvolve,
-    int mipNumbers) {
+std::shared_ptr<Texture2D> PostProcessingRenderer::blurToMipMaps(std::shared_ptr<TextureBase> textureToConvolve,
+                                                                 int mipNumbers) {
 
     this->convolutionFrameBuffer.bind();
 

@@ -108,7 +108,7 @@ void main() {
         //retrieves sample position in Screen Space
         vec2 samplePos = positionSS.xy + adjecentUnit *(adjencentLength - incircleSize);
 
-        mipChannel = clamp(log2(incircleSize ), 0.0, maxMipLevel);
+        mipChannel = clamp(log2(incircleSize*max(depthBufferSize.x, depthBufferSize.y)), 0.0, maxMipLevel);
 
         vec4 newColor = coneSampleWightColor(samplePos, mipChannel, glossMult);
 
@@ -130,5 +130,7 @@ void main() {
     vec3 specular = fresnelSchlick(abs(dot(normalsVS, toEye)), specularAll.rgb);
 
 
-    FragColor = vec4(totalColor);
+
+
+    FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.5),1.0);
 }

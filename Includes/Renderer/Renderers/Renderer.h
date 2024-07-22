@@ -64,7 +64,7 @@ public:
        "Blur is not supported for this renderer, blur is only supported for the Post Proecessing Renderer");
     }
 
-    virtual std::shared_ptr<Texture2D> blurToMipMaps(std::shared_ptr<Texture2D> textureToConvolve, int mipNumbers) {
+    virtual std::shared_ptr<Texture2D> blurToMipMaps(std::shared_ptr<TextureBase> textureToConvolve, int mipNumbers) {
       throw std::logic_error("Convolution is not supported ofr this type of renderer");
     };
 

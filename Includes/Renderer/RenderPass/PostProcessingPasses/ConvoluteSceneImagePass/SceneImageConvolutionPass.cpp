@@ -15,11 +15,8 @@ SceneImageConvolutionPass::SceneImageConvolutionPass() {
 }
 
 std::shared_ptr<Texture2D> SceneImageConvolutionPass::render(std::shared_ptr<Texture2D> renderedScene, std::shared_ptr<Renderer> renderer) {
-    renderedScene->shaderName = "sceneResults";
-    this->inputs.emplace_back(renderedScene);
 
-    renderer->setInputsForRenderPass(this->inputs);
-    this->renderPassResult = renderer->blurToMipMaps(renderedScene, 10);
+    this->renderPassResult = renderer->blurToMipMaps(PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_PASS).get().getAdditionalOutputs()[2], 10);
     return renderPassResult;
 }
 

@@ -20,7 +20,7 @@ public:
 
     void render(std::unique_ptr<FrameBuffer> &frameBuffer) override;
 
-    std::shared_ptr<Texture2D> blurToMipMaps(std::shared_ptr<Texture2D> textureToConvolve, int mipNumbers) override;
+    std::shared_ptr<Texture2D> blurToMipMaps(std::shared_ptr<TextureBase> textureToConvolve, int mipNumbers) override;
 
     std::shared_ptr<Texture2D> blur(std::shared_ptr<Texture2D> textureToBlur,int intensity = 0) override;
 protected:
