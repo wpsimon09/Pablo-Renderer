@@ -27,9 +27,9 @@ uniform mat4 invView;
 
 float roughnessToSpecularPower(float roughness) {
 
-    float specularPower = 2 / (max(pow(roughness,2), 0.001) -2) ;
+    float specularPower = (2 / (max(pow(roughness,2), 0.001)))-2 ;
 
-    return 120;
+    return specularPower;
 }
 
 
@@ -139,7 +139,7 @@ void main() {
 
     //totalColor.rgb *=specular;
 
-    FragColor = vec4(totalColor.rgb,1.0);
+    FragColor = vec4(vec3(specularPower/255),1.0);
 
     //FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.1),1.0);
 }
