@@ -105,7 +105,6 @@ void main() {
     float PixelDepth = texture(gDepth, PixelPositionTextureSpace.xy).r;    // 0< <1
     PixelPositionTextureSpace.z = LinearizeDepth(PixelDepth);
 
-
     vec3 NormalView =vec3(vec4(texture(gNormal, TexCoords).rgb, 1.0)*invView  );
 
     vec4 PositionWorldSpace = texture(gPosition, TexCoords);

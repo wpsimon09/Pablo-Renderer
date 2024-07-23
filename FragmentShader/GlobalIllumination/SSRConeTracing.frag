@@ -72,6 +72,10 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
 
 void main() {
     vec4 raySS = textureLod(RayTracingBuffer, TexCoords,0).xyzw;
+
+    if(raySS.w <= 0.0){
+        return;
+    }
     float depth = texture(gDepth, TexCoords).r;
     vec3 positionSS = vec3(TexCoords, depth);
 
@@ -81,7 +85,7 @@ void main() {
     positionVS = vec3(View * vec4(positionVS, 1.0));
 
     vec3 toPositionVS = normalize(positionVS);
-    vec3 normalsVS = vec3(vec4(texture(gNormal, TexCoords).rgb, 1.0)*invView);
+    vec3 normalsVS = normalize(vec3(vec4(texture(gNormal, TexCoords).rgb, 1.0)*invView));
 
     vec4 specularAll = texture(gMetalnessRougness, TexCoords);
     float gloss = 1.0 - specularAll.a;
@@ -101,15 +105,18 @@ void main() {
     float glossMult = gloss;
 
     float mipChannel;
+    vec2 samplePos;
+    float incircleSize;
+    float oppositeLength;
     //cone tracing using ScreenSpace Iscale triangles
     for(int i = 0; i<maxSamples; i++) {
-        float oppositeLength = isocaleTriangleOpposite(adjencentLength, coneTheta);
-        float incircleSize   = isoscalesTriangleInRadius(oppositeLength, adjencentLength);
+        oppositeLength = isocaleTriangleOpposite(adjencentLength, coneTheta);
+        incircleSize   = isoscalesTriangleInRadius(oppositeLength, adjencentLength);
 
         //retrieves sample position in Screen Space
-        vec2 samplePos = positionSS.xy + adjecentUnit *(adjencentLength - incircleSize);
+        samplePos = positionSS.xy + adjecentUnit *(adjencentLength - incircleSize);
 
-        mipChannel = clamp(log2(incircleSize*max(depthBufferSize.x, depthBufferSize.y)), 0.0, 1.0);
+        mipChannel = log2(incircleSize * max(depthBufferSize.x, depthBufferSize.y));
 
         vec4 newColor = coneSampleWightColor(samplePos, mipChannel, glossMult);
 
@@ -130,9 +137,9 @@ void main() {
     vec3 toEye = -toPositionVS;
     vec3 specular = fresnelSchlick(abs(dot(normalsVS, toEye)), specularAll.rgb);
 
-    totalColor.rgb *=specular;
+    //totalColor.rgb *=specular;
 
+    FragColor = vec4(adjencentLength,0.0,0.0,1.0);
 
-
-    FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.1),1.0);
+    //FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.1),1.0);
 }
