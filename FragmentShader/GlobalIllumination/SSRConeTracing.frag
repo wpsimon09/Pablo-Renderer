@@ -57,8 +57,8 @@ float isoscalesTriangleInRadius(float a, float h){
 }
 
 vec4 coneSampleWightColor(vec2 samplerPos, float mipChanel, float gloss){
-    vec3 sampledColor = textureLod(ConvolvedScene, samplerPos, mipChanel ).rgb;
-    return vec4 (sampledColor  * gloss, gloss);
+    vec3 sampledColor = textureLod(ConvolvedScene, samplerPos,0).rgb;
+    return vec4 (sampledColor ,1.0);
 }
 
 float isoscaleTriangleNextAdjecent(float adjencentLength, float incircleRadius){
@@ -130,18 +130,18 @@ void main() {
             break;
         }
 
-        adjencentLength = isoscaleTriangleNextAdjecent(adjencentLength, incircleSize);
-        glossMult *= gloss;
+        //adjencentLength = isoscaleTriangleNextAdjecent(adjencentLength, incircleSize);
+        //glossMult *= gloss;
     }
 
     vec3 toEye = -toPositionVS;
     vec3 specular = fresnelSchlick(abs(dot(normalsVS, toEye)), specularAll.rgb);
 
-    totalColor.rgb *=specular;
+    //totalColor.rgb *=specular;
 
     //totalColor = texture(gColourShininess, raySS.xy);
 
-    FragColor = vec4(totalColor.rgb,1.0);
+    vec3 color = texture(gColourShininess, raySS.xy).rgb;
 
-   // FragColor = vec4(mix(texture(gRenderedScene, TexCoords).rgb,totalColor.rbg, 0.5),1.0);
+    FragColor = vec4(mix(texture(gRenderedScene, TexCoords).rgb,color, 0.5),1.0);
 }

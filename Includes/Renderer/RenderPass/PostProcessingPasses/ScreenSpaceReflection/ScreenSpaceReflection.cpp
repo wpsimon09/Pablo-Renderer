@@ -66,7 +66,7 @@ std::shared_ptr<Texture2D> ScreenSpaceReflection::render(std::shared_ptr<Texture
 
     renderer->render(this->frameBuffer);
 
-    this->renderPassResult = this->frameBuffer->getRenderedResult();
+    this->renderPassResult = renderer->blur(this->frameBuffer->getRenderedResult(),blurIntensity);
     return this->renderPassResult;
 }
 
