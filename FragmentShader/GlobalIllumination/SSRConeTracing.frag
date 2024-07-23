@@ -27,9 +27,9 @@ uniform mat4 invView;
 
 float roughnessToSpecularPower(float roughness) {
 
-    float specularPower = 2 / (max(pow(roughness,4), 0.001) -2) ;
+    float specularPower = 2 / (max(pow(roughness,2), 0.001) -2) ;
 
-    return specularPower;
+    return 120;
 }
 
 
@@ -71,7 +71,7 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
 }
 
 void main() {
-    vec4 raySS = textureLod(RayTracingBuffer, TexCoords,0).xyzw;
+    vec4 raySS = texture(RayTracingBuffer, TexCoords).xyzw;
 
     if(raySS.w <= 0.0){
         return;
@@ -96,7 +96,7 @@ void main() {
     //ray start position (positionSS) and ray hit position in screen space
     // deltaP is vector from orgin to hit coordinates
     vec2 deltaP = raySS.xy - positionSS.xy;
-    float adjencentLength = length(deltaP);
+    float adjencentLength = length(deltaP.xy);
     vec2 adjecentUnit = normalize(deltaP);
 
     vec4 totalColor = vec4(0.0);
@@ -130,7 +130,7 @@ void main() {
             break;
         }
 
-        adjencentLength= isoscaleTriangleNextAdjecent(adjencentLength, incircleSize);
+        adjencentLength = isoscaleTriangleNextAdjecent(adjencentLength, incircleSize);
         glossMult *= gloss;
     }
 
@@ -139,7 +139,7 @@ void main() {
 
     //totalColor.rgb *=specular;
 
-    FragColor = vec4(adjencentLength,0.0,0.0,1.0);
+    FragColor = vec4(totalColor.rgb,1.0);
 
     //FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.1),1.0);
 }
