@@ -27,9 +27,9 @@ uniform mat4 invView;
 
 float roughnessToSpecularPower(float roughness) {
 
-    float specularPower = (2 / (max(pow(roughness,2), 0.001)))-2 ;
+    float specularPower = (2 / (max(pow(roughness,4), 0.001)))-2 ;
 
-    return specularPower;
+    return roughness*roughness;
 }
 
 
@@ -82,7 +82,7 @@ void main() {
     vec2 depthBufferSize = textureSize(gDepth,0);
 
     vec3 positionVS = texture(gPosition, TexCoords).rgb;
-    positionVS = vec3(View * vec4(positionVS, 1.0));
+    positionVS = vec3( View * vec4(positionVS, 1.0));
 
     vec3 toPositionVS = normalize(positionVS);
     vec3 normalsVS = normalize(vec3(vec4(texture(gNormal, TexCoords).rgb, 1.0)*invView));
@@ -111,12 +111,12 @@ void main() {
     //cone tracing using ScreenSpace Iscale triangles
     for(int i = 0; i<maxSamples; i++) {
         oppositeLength = isocaleTriangleOpposite(adjencentLength, coneTheta);
-        incircleSize   = isoscalesTriangleInRadius(oppositeLength, adjencentLength);
+        incircleSize   = isoscalesTriangleInRadius(adjencentLength, oppositeLength);
 
         //retrieves sample position in Screen Space
         samplePos = positionSS.xy + adjecentUnit *(adjencentLength - incircleSize);
 
-        mipChannel = log2(incircleSize * max(depthBufferSize.x, depthBufferSize.y));
+        mipChannel = clamp(log2(incircleSize * max(depthBufferSize.x, depthBufferSize.y) ) ,0.0, maxMipLevel);
 
         vec4 newColor = coneSampleWightColor(samplePos, mipChannel, glossMult);
 
@@ -137,9 +137,11 @@ void main() {
     vec3 toEye = -toPositionVS;
     vec3 specular = fresnelSchlick(abs(dot(normalsVS, toEye)), specularAll.rgb);
 
-    //totalColor.rgb *=specular;
+    totalColor.rgb *=specular;
 
-    FragColor = vec4(vec3(specularPower/255),1.0);
+    //totalColor = texture(gColourShininess, raySS.xy);
 
-    //FragColor = vec4(mix(totalColor.rbg, texture(gRenderedScene, TexCoords).rgb, 0.1),1.0);
+    FragColor = vec4(totalColor.rgb,1.0);
+
+   // FragColor = vec4(mix(texture(gRenderedScene, TexCoords).rgb,totalColor.rbg, 0.5),1.0);
 }
