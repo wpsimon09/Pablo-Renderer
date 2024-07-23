@@ -1,7 +1,7 @@
 # Pablo rendering engine
 
 As title suggests Pablo is a rendering engine and OpenGL abstraction framework that supports PBR materials and 3D models together with 
-**Image based lightning**
+Image based lightning, Screen Space Reflections and more.
 
 It provides fast and convenient way of rendering various geometry with different materials 
 
@@ -13,7 +13,7 @@ This renderer is build using
 
 **[GLAD](https://glad.dav1d.de)** for OpenGL functions initialization
 
-**[Assimp](https://assimp-docs.readthedocs.io/en/v5.3.0/)** for model loading
+**[Assimp](https://assimp-docs.readthedocs.io/en/v5.3.0/)** for model parsing
 
 **[Dear imgui](https://github.com/ocornut/imgui)** for UI
 
@@ -25,10 +25,10 @@ This renderer is build using
 - Screen space reflection using real time ray marching 
 - Model loaders 
 - Support for Normal mapping using normal maps in tangent space
-- Anti aliasing up to 16x pixel samples
-- Instance rendering 
+- Anti aliasing
 - Transparent grid
 - SkyBox
+- Pixel picking
 - Debug view for textures or frame buffer textures
 - Flexible class structure
 - SceneGraph design pattern
@@ -38,6 +38,7 @@ This renderer is build using
 - Model Loading from UI
 - Area lights with LTCs (Linearly transform cosines)
 - Screenshots of different render passes
+- Realtime change of Attached materials
 ----
 
 # Example
@@ -49,7 +50,7 @@ To create sphere using IBL within the framework the code would look like this
 auto pabloRenderer = PabloRenderer::getInstance();
 pabloRenderer->init();
 
-//create and ran IBL pipeline
+//create and run IBL pipeline
 auto iblPipeLine = std::make_shared<IBLPipeLine>("Assets/Textures/HDR/hill.hdr");
 iblPipeLine->generateIBLTextures();
 
@@ -77,7 +78,6 @@ Or we can simply do it via UI by clicking `Add new` button and following instruc
 
 ![img.png](Assets/ReadmeImages/pablo-tutorial.png)
 
-As of now renderer's shader only support one directional light and 1 area light if selected which is going to change in the near future
 
 # Images
 ![Pablo](Assets/ReadmeImages/pablo-4.png)
@@ -89,5 +89,10 @@ As of now renderer's shader only support one directional light and 1 area light 
 # Video
 
 [pablo-showcase.webm](https://github.com/wpsimon09/Pablo-Renderer/assets/95319163/856c0591-6892-4c1b-8b06-fc91c60da89c)
+
+# Note
+development of Pablo has ended as I plan to rewrite it using Vulkan and use different structure of the code which would be quite difficult to implement in this code base
+
+Pablo Renderer will return 
 
 
