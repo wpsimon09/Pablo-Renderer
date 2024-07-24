@@ -143,5 +143,5 @@ void main() {
 
     vec3 color = texture(gColourShininess, raySS.xy).rgb;
 
-    FragColor = vec4(mix(texture(gRenderedScene, TexCoords).rgb,color, 0.5),1.0);
+    FragColor = vec4(mix(texture(gRenderedScene, TexCoords).rgb,raySS.rgb, 0.5),1.0);
 }

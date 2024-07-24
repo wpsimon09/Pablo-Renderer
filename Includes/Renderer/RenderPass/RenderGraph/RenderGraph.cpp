@@ -21,7 +21,7 @@ void RenderGraph::init() {
 
     this->postProcessingPass = std::make_unique<PostProcessingPass>();
 
-    this->postProcessingPass->addPostProcessingPass(std::make_unique<SceneImageConvolutionPass>());
+    //this->postProcessingPass->addPostProcessingPass(std::make_unique<SceneImageConvolutionPass>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ScreenSpaceReflection>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ConeTracingPass>());
     this->postProcessingPass->addPostProcessingPass(std::make_unique<ChromaticAberration>());

@@ -6,6 +6,7 @@ uniform sampler2D gPosition;
 uniform sampler2D gColourShininess;
 uniform sampler2D gRenderedScene;
 uniform sampler2D gDepth;
+uniform sampler2D gMetalnessRougness;
 
 uniform mat4 Projection;
 uniform mat4 invProjection;
@@ -31,6 +32,9 @@ out vec4 FragColor;
 
 precision highp float;
 precision highp int;
+
+#define Scale vec3(.8, .8, .8)
+#define K 19.19
 
 
 
@@ -84,8 +88,8 @@ bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 ReflectedUV
         if (depthDif >= 0 && depthDif < 0.00001) { //we have a hit
                hit = true;
                currentRayPos = BinarySearch(currentRayPos, prevRayPos);
-               //vec3 HitColour = texture(gColourShininess, currentRayPos.xy).rgb;
-               ReflectedUV = vec3(currentRayPos.xyz);
+
+               ReflectedUV = texture(gColourShininess, currentRayPos.xy).rgb;
                return true;
         }
         prevRayPos = currentRayPos;
@@ -93,6 +97,14 @@ bool TraceRay(vec3 RayStartingPossition, vec3 RayDirection, out vec3 ReflectedUV
     ReflectedUV = vec3(1.0,0.0,0.0);
     return false;
 }
+
+vec3 hash(vec3 a)
+{
+    a = fract(a * Scale);
+    a += dot(a, a.yxz + K);
+    return fract((a.xxy + a.yxx)*a.zyx);
+}
+
 
 void main() {
     float maxRayDistance = 100.0f;
@@ -111,16 +123,19 @@ void main() {
     vec4 PositionViewSpace = View * PositionWorldSpace;
     vec4 ViewRay = PositionViewSpace;
 
+    vec2 RoughnessMetalness = texture(gMetalnessRougness,TexCoords).rg;
 
-    vec3 reflectionView = normalize(reflect(ViewRay.xyz, NormalView));
+    vec3 jitt = mix(vec3(0.0), vec3(hash(ViewRay.xyz)),RoughnessMetalness.r);
+
+    vec3 reflectionView = normalize(reflect(ViewRay.xyz * jitt, NormalView));
 
     if (reflectionView.z > 0) {
         FragColor = vec4(0, 0, 0, 1);
         return;
     }
 
-    vec3 rayEndPositionView = ViewRay.xyz + reflectionView * ReflectionVecScale;
 
+    vec3 rayEndPositionView = ViewRay.xyz + reflectionView * ReflectionVecScale;
 
     //Texture Space ray calculation
     vec4 rayEndPositionTexture = Projection * vec4(rayEndPositionView, 1);
@@ -137,6 +152,7 @@ void main() {
     vec2 RayLength = ScreenSpaceEndPosition - ScreenSpaceStartPosition;
     float screenSpaceMaxDistance =  max(abs(RayLength.x), abs(RayLength.y)) / MaxDistance;
     RayDirection /= max(screenSpaceMaxDistance, 0.001f);
+
 
 
     //trace the ray

@@ -30,8 +30,8 @@ std::shared_ptr<Texture2D> ConeTracingPass::render(std::shared_ptr<Texture2D> re
     auto RayTracingBuffer = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCREEN_SPACE_REFLECTION_PASS).get().getRenderedResult();
     RayTracingBuffer->shaderName = "RayTracingBuffer";
 
-    auto ConvolvedScene = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_CONVOLUTION_PASS).get().getRenderedResult();;
-    ConvolvedScene->shaderName = "ConvolvedScene";
+    //auto ConvolvedScene = PabloRenderer::getInstance()->getRenderGraph().getRenderPass(SCENE_CONVOLUTION_PASS).get().getRenderedResult();;
+    //ConvolvedScene->shaderName = "ConvolvedScene";
 
     auto shader  = frameBuffer->getShader();
     shader->use();
@@ -43,7 +43,7 @@ std::shared_ptr<Texture2D> ConeTracingPass::render(std::shared_ptr<Texture2D> re
 
     renderer->setInputsForRenderPass(gBuffers);
     renderer->addInput(RayTracingBuffer);
-    renderer->addInput(ConvolvedScene);
+    //renderer->addInput(ConvolvedScene);
 
     setParamsToShader(shader);
 
